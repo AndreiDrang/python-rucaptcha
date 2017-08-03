@@ -4,7 +4,7 @@ import os, shutil
 import time, datetime
 
 class CommonCaptcha:
-    def __init__(self, recaptcha_api, sleep_time = 6):
+    def __init__(self, recaptcha_api, sleep_time = 5):
         self.url_request = "http://2captcha.com/in.php"
         self.url_response = "http://2captcha.com/res.php"
         self.RECAPTCHA_KEY = recaptcha_api
@@ -52,7 +52,7 @@ class CommonCaptcha:
                                                 "http://rucaptcha.com/res.php?key={0}&action=get&id={1}&json=1"
                                                 .format(self.RECAPTCHA_KEY, captcha_id))
             if captcha_response.json()["request"] == 'CAPCHA_NOT_READY':
-                time.sleep(5)
+                time.sleep(self.sleep_time)
             else:
                 return (captcha_response.json())['request']
 
