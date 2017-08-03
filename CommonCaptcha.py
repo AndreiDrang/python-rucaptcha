@@ -44,7 +44,7 @@ class CommonCaptcha:
         # удаляем файл капчи и врменные файлы
         os.remove("images\{0}.jpg".format(captcha_link))
         # Ожидаем решения капчи
-        time.sleep(5)
+        time.sleep(self.sleep_time)
         while True:
             # отправляем запрос на результат решения капчи, если ещё капча не решена - ожидаем 5 сек
             # если всё ок - идём дальше
