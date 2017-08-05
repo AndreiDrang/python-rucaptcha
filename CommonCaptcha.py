@@ -54,7 +54,7 @@ class CommonCaptcha:
             if captcha_response.json()["request"] == 'CAPCHA_NOT_READY':
                 time.sleep(self.sleep_time)
             else:
-                return (captcha_response.json())['request']
+                return captcha_response.json()['request']
 
     def __del__(self):
         if os.path.exists("common_captcha_images"):
