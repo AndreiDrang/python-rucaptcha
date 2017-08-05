@@ -1,7 +1,7 @@
 import httplib2
 import requests
 
-class SolvingTextCaptcha:
+class TextCaptcha:
 	def __init__(self, recaptcha_api, sleep_time = 6):
 		self.url_request = "http://2captcha.com/in.php"
 		self.url_response = "http://2captcha.com/res.php"
