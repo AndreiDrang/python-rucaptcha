@@ -1,13 +1,16 @@
 {% block content %}
-  <div class="container-fluid">
+  <div class="container-fluid" style="height: 130px">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header" align="center">
           <a class="navbar-brand" href="/index" title="Переход к рабочему месту">
-              <img style="max-width:150px; margin-top: -1px;"
+              <img style="width:200px; height: 90px;"
                    src="/static/image/logo.gif" alt="Index page">
           </a>
       </div>
-      <p class="navbar-text"><h3>Добро пожаловать на сайт для тестирования библиотеки по работе с API RuCaptcha.</h3></p>
-
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <p class="navbar-text">
+          <h3>Добро пожаловать на сайт для тестирования работы приложений с различными видами капчи.
+          <br>И, по совместительству, сайт с описанием возмостей и функционала библиотеки для работы с API RuCaptcha, на языке Python.</h3>
+      </div>
   </div>
 {% endblock %}

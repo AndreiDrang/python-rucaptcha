@@ -1,23 +1,28 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
-      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-      <link href="/static/bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet">
-      <script type="text/javascript" src="/static/bootstrap/js/bootstrap.js"></script>
-      <title>Captcha-Tester</title>
-      {% block header %}
-          {% include 'header.html' %}
-      {% endblock %}
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/static/image/logo.gif" type="image/png">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link href="/static/bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="/static/bootstrap/js/bootstrap.js"></script>
+    <title>Captcha-Tester</title>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
   <body>
-    <div>
-        {% block page %}
-            {% include doc %}
-        {% endblock %}
+    <header>
+      {% block header %}
+        {% include 'header.html' %}
+      {% endblock %}
+    </header>
+    {% block page %}
+      {% include doc %}
+    {% endblock %}
 
-        {% block footer %}
-          <p>{% include 'footer.html' %}</p>
-        {% endblock %}
-
-    </div>
   </body>
+  <footer>
+    {% block footer %}
+      <p>{% include 'footer.html' %}</p>
+    {% endblock %}
+  </footer>
 </html>

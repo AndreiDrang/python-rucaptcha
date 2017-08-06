@@ -1,0 +1,14 @@
+{% block content %}
+<br>
+  <form  name="new_cashbox" enctype="multipart/form-data" method="post">
+    <label>Обычная капча</label>
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <div class="input-group">
+      <div style="width:100px;" class="input-group-addon">
+        Прямая ссылка
+      </div>
+      <input style="height: 30px; width: 200px" maxlength="400" value="{{ payload.common_captcha_source }}">
+    </div>
+      <img src="{{ payload.common_captcha_source }}" style="max-height:350px; max-width:350px">
+  </form>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% block content %}
+    <div class="well bs-sidebar" id="sidebar" style="background-color:#eaeaea">
+        <ul class="nav nav-pills nav-stacked">
+            <li>
+                <a href="https://rucaptcha.com/">
+                    <button title="Переход на сайт сервиса" style="width:100%;"
+                            type="button" class="btn btn-default"
+                            data-toggle="modal">
+                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                        Сайт RuCaptcha
+                    </button>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/AndreiDrang/python-rucaptcha">
+                    <button title="Переход на сайт с исходным кодом библиотеки" style="width:100%;"
+                            type="button" class="btn btn-default"
+                            data-toggle="modal">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                        Исходные файлы библиотеки
+                    </button>
+                </a>
+            </li>
+            <li>
+                <a href="/help">
+                    <button title="Страница с мануалом по использованию библиотеки" style="width:100%;"
+                            type="button" class="btn btn-default"
+                            data-toggle="modal">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        Помощь
+                    </button>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <button title="И т.д." style="width:100%;"
+                            type="button" class="btn btn-default"
+                            data-toggle="modal">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                        И т.д.
+                    </button>
+                </a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
