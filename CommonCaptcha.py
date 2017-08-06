@@ -1,7 +1,8 @@
 import httplib2
 import requests
 import os, shutil
-import time, datetime
+import time
+import hashlib
 
 class CommonCaptcha:
     def __init__(self, recaptcha_api, sleep_time = 5):
@@ -20,14 +21,16 @@ class CommonCaptcha:
 
     # Работа с капчёй
     def captcha_handler(self, captcha_link):
+        # Высчитываем хэш изображения, для того что бы сохранить его под уникальным именем
+        image_hash = hashlib.sha224(captcha_link.encode('utf-8')).hexdigest()
         # Скачиваем изображение и сохраняем на диск в папку images
         cache = httplib2.Http('.cache')
         response, content = cache.request(captcha_link)
-        out = open('images\{0}.jpg'.format(captcha_link), 'wb')
+        out = open('common_captcha_images\im-{0}.jpg'.format(image_hash), 'wb')
         out.write(content)
         out.close()
 
-        with open('images\{0}.jpg'.format(captcha_link), 'rb') as captcha_image:
+        with open('common_captcha_images\im-{0}.jpg'.format(image_hash), 'rb') as captcha_image:
             # Отправляем изображение файлом
             files = {'file': captcha_image}
             # Создаём пайлоад, вводим ключ от сайта, выбираем метод ПОСТ и ждём ответа в JSON-формате
@@ -42,7 +45,7 @@ class CommonCaptcha:
                                            files=files).json())['request']
 
         # удаляем файл капчи и врменные файлы
-        os.remove("images\{0}.jpg".format(captcha_link))
+        os.remove("common_captcha_images\{0}.jpg".format(image_hash))
         # Ожидаем решения капчи
         time.sleep(self.sleep_time)
         while True:

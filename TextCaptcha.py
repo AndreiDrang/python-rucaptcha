@@ -3,19 +3,18 @@ import time
 
 
 class TextCaptcha:
-	def __init__(self, recaptcha_api, captcha_text, sleep_time=6):
+	def __init__(self, recaptcha_api, sleep_time=6):
 		self.url_request = "http://2captcha.com/in.php"
 		self.url_response = "http://2captcha.com/res.php"
 		self.RECAPTCHA_KEY = recaptcha_api
 		self.sleep_time = sleep_time
-		self.captcha_text = captcha_text
 
-	def handle_captcha(self):
+	def handle_captcha(self, captcha_text):
 		# Создаём пайлоад, вводим ключ от сайта, выбираем метод ПОСТ и ждём ответа. в JSON-формате
 		payload = {"key": self.RECAPTCHA_KEY,
 					"method": "textcaptcha",
 					"json": 1,
-					"textinstructions": self.captcha_text}
+					"textinstructions": captcha_text}
 		# Отправляем на рукапча текст капчи и ждём ответа
 		#  в результате получаем JSON ответ с номером решаемой капчи
 		captcha_id = (requests.request('POST',
