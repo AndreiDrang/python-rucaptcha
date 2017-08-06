@@ -7,8 +7,8 @@
       <div style="width:100px;" class="input-group-addon">
         Прямая ссылка
       </div>
-      <input style="height: 30px; width: 200px" maxlength="400" value="{{ payload.common_captcha_source }}">
+      <input style="height: 30px; width: 200px" maxlength="400" value="/static/image/common_image_example/{{ payload.common_captcha_source }}">
     </div>
-      <img src="{{ payload.common_captcha_source }}" style="max-height:350px; max-width:350px">
+      <img src="/static/image/common_image_example/{{ payload.common_captcha_source }}" style="max-height:350px; max-width:350px">
   </form>
 {% endblock %}
