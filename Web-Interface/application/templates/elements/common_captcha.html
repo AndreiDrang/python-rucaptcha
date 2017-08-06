@@ -1,14 +1,27 @@
 {% block content %}
 <br>
-  <form  name="new_cashbox" enctype="multipart/form-data" method="post">
+  <form  name="new_cashbox" enctype="multipart/form-data" method="post" style="height: 270px">
     <label>Обычная капча</label>
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
     <div class="input-group">
-      <div style="width:100px;" class="input-group-addon">
-        Прямая ссылка
-      </div>
-      <input style="height: 30px; width: 200px" maxlength="400" value="/static/image/common_image_example/{{ payload.common_captcha_source }}">
+        <div style="width:100px;" class="input-group-addon">
+            Прямая ссылка
+        </div>
+        <input style="height: 30px; width: 200px" maxlength="400" name="common_captcha_src"
+               value="/static/image/common_image_example/{{ payload.common_captcha_source }}">
     </div>
       <img src="/static/image/common_image_example/{{ payload.common_captcha_source }}" style="max-height:350px; max-width:350px">
+      <div class="input-group">
+          <div style="width:100px;" class="input-group-addon">
+              Результат
+          </div>
+          <input style="height: 30px; width: 200px" maxlength="400" name="common_captcha_answer">
+      </div>
+      <div>
+          <button type="submit" name="common_captcha_btn" class="btn btn-default" data-toggle="tooltip"
+                  data-placement="left" onclick="this.style.display='none';">
+              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+              Отправить
+          </button>
+      </div>
   </form>
 {% endblock %}
