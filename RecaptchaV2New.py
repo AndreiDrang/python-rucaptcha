@@ -25,4 +25,4 @@ class ReCaptcha:
 			if str(captcha_response.content) == 'CAPCHA_NOT_READY':
 				time.sleep(self.sleep_time)
 			else:
-				return = (str(captcha_response.content).split('|'))[1]
+				return str(captcha_response.content).split('|')[1]
