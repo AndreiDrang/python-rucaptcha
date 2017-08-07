@@ -9,9 +9,9 @@ class ReCaptcha:
 		self.sleep_time = sleep_time
 
 	#Работа с капчей
-	def handle_captcha(self, ):
+	def handle_captcha(self, RECAPTCHA_KEY, site_key):
 		captcha_download = 'http://rucaptcha.com/in.php?key={0}&method=userrecaptcha&googlekey={1}'\
-			.format(recaptcha_key,site_key)
+			.format(RECAPTCHA_KEY,site_key)
 		# проверяем капчу
 		http = urllib3.PoolManager()
 		answer = http.request('GET', captcha_download)
