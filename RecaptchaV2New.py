@@ -13,27 +13,33 @@ class ReCaptcha:
 	#Работа с капчей
 	#тестовый ключ сайта
 	def captcha_handler(self, site_key="6Lf77CsUAAAAALLFD1wIhbfQRD07VxhvPbyQFaQJ", page_url='http://127.0.0.1:5000/'):
-		captcha_download = 'http://rucaptcha.com/in.php?key={0}&method=userrecaptcha&googlekey={1}&pageurl={2}'\
+		
+		captcha_download = 'http://rucaptcha.com/in.php?key={0}&method=userrecaptcha&googlekey={1}&pageurl={2}&json=1'\
 			.format(self.RECAPTCHA_KEY, site_key, page_url)
 		
-		# проверяем капчу
-		http = urllib3.PoolManager()
-		answer = http.request('GET', captcha_download)
-		
+		answer = requests.request('GET', captcha_download)
+		print(answer.json())
+		#пейлоад с ключем сайта, методом, и ответом в json формате
+		payload = {"key": self.RECAPTCHA_KEY,
+					"method": "post",
+					"json": 1}
+
 		#получаем ID капчи
-		print(str(answer.data), '!!!')
-		captcha_id = (str(answer.data).split('|'))
-		answer = 'http://rucaptcha.com/res.php?key={0}&action=get&id={1}'.format(self.RECAPTCHA_KEY, captcha_id)
+		captcha_id = {(requests.request('POST',
+										"http://rucaptcha.com/in.php",
+										data=payload).json())['request']}
+		print(captcha_id)
+		answer = 'http://rucaptcha.com/res.php?key={0}&action=get&id={1}&json=1'.format(self.RECAPTCHA_KEY, captcha_id)
 		
 		# Ожидаем решения капчи
-		time.sleep(self.sleep_time)
+		time.sleep(self.sleep_time * 4)
+		
 		while True:
 			captcha_response = requests.request('GET', answer)
-			if str(captcha_response.content) == 'CAPCHA_NOT_READY':
+			if captcha_response.json()["request"] == 'CAPCHA_NOT_READY':
 				time.sleep(self.sleep_time)
 			else:
-				print(str(captcha_response.content).split('|'), '!!!!')
-				return str(captcha_response.content).split('|')[1]
+				return captcha_response.json()["request"]
 
 
 
