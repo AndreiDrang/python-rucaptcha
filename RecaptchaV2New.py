@@ -21,3 +21,11 @@ def captcha():
             answer = (str(captcha_response.content).split('|'))[1]
             break
     return answer
+
+
+class ReCaptcha:
+	def __init__(self):
+		pass
+
+	def handle_captcha(self):
+		pass
