@@ -1,4 +1,4 @@
-from application import Database
+from .dbconnect import Database
 
 # Обработчик капчи
 class CaptchaHandler:

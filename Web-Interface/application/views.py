@@ -2,7 +2,7 @@ from flask import render_template, redirect, request, url_for, session
 from application import app
 import os
 import random
-from application import Database
+from .dbconnect import Database
 
 
 @app.route('/', methods = ["GET", "POST"])
