@@ -24,8 +24,12 @@ def captcha():
 
 
 class ReCaptcha:
-	def __init__(self):
-		pass
+	def __init__(self, recaptcha_api, sleep_time=5):
+		self.url_request = "http://2captcha.com/in.php"
+        self.url_response = "http://2captcha.com/res.php"
+        self.RECAPTCHA_KEY = recaptcha_api
+        self.sleep_time = sleep_time
 
+    #Работа с капчей
 	def handle_captcha(self):
 		pass
