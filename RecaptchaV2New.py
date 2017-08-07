@@ -11,13 +11,13 @@ class ReCaptcha:
 	#Работа с капчей
 	def handle_captcha(self, RECAPTCHA_KEY, site_key):
 		captcha_download = 'http://rucaptcha.com/in.php?key={0}&method=userrecaptcha&googlekey={1}'\
-			.format(RECAPTCHA_KEY,site_key)
+			.format(RECAPTCHA_KEY, site_key)
 		# проверяем капчу
 		http = urllib3.PoolManager()
 		answer = http.request('GET', captcha_download)
 		#получаем ID капчи
 		captcha_id = (str(answer.data).split('|'))[1]
-		answer = 'http://rucaptcha.com/res.php?key={0}&action=get&id={1}'.format(recaptcha_key, captcha_id)
+		answer = 'http://rucaptcha.com/res.php?key={0}&action=get&id={1}'.format(RECAPTCHA_KEY, captcha_id)
 		# Ожидаем решения капчи
 		time.sleep(self.sleep_time)
 		while True:
@@ -25,6 +25,4 @@ class ReCaptcha:
 			if str(captcha_response.content) == 'CAPCHA_NOT_READY':
 				time.sleep(self.sleep_time)
 			else:
-				answer = (str(captcha_response.content).split('|'))[1]
-				break
-		return answer
+				return = (str(captcha_response.content).split('|'))[1]
