@@ -15,15 +15,15 @@ class ReCaptcha:
 		# проверяем капчу
 		http = urllib3.PoolManager()
 		answer = http.request('GET', captcha_download)
-		# get captcha ID
+		#получаем ID капчи
 		captcha_id = (str(answer.data).split('|'))[1]
 		answer = 'http://rucaptcha.com/res.php?key={0}&action=get&id={1}'.format(recaptcha_key, captcha_id)
 		# Ожидаем решения капчи
-		time.sleep(13)
+		time.sleep(self.sleep_time)
 		while True:
 			captcha_response = requests.request('GET', answer)
 			if str(captcha_response.content) == 'CAPCHA_NOT_READY':
-				time.sleep( 5 )
+				time.sleep(self.sleep_time)
 			else:
 				answer = (str(captcha_response.content).split('|'))[1]
 				break
