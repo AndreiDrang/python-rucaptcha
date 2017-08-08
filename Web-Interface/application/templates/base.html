@@ -2,27 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="/static/image/logo.gif" type="image/png">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <link href="/static/bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet">
-    <script type="text/javascript" src="/static/bootstrap/js/bootstrap.js"></script>
-    <title>Captcha-Tester</title>
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+      <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+      <link rel="shortcut icon" href="/static/image/logo.gif" type="image/png">
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+      <link href="/static/bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet">
+      <script type="text/javascript" src="/static/bootstrap/js/bootstrap.js"></script>
+      <title>Captcha-Tester</title>
+      <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
   <body>
-    <header>
+  <header>
       {% block header %}
-        {% include 'header.html' %}
+          {% include 'header.html' %}
       {% endblock %}
-    </header>
-    {% block page %}
+  </header>
+  {% block page %}
       {% include doc %}
-    {% endblock %}
+  {% endblock %}
 
   </body>
   <footer>
-    {% block footer %}
-      <p>{% include 'footer.html' %}</p>
-    {% endblock %}
+      {% block footer %}
+          {% include 'footer.html' %}
+      {% endblock %}
   </footer>
 </html>

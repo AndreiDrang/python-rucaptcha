@@ -6,6 +6,9 @@
         <div style="width:100px;" class="input-group-addon">
             Прямая ссылка
         </div>
+        <input type="hidden" style="height: 30px; width: 200px" maxlength="400" name="common_captcha_src"
+               value="{{ payload.common_captcha_source }}">
+
         <input style="height: 30px; width: 200px" maxlength="400" name="common_captcha_src"
                value="http://127.0.0.1:5000/static/image/common_image_example/{{ payload.common_captcha_source }}">
     </div>
