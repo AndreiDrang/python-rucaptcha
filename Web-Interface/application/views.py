@@ -15,7 +15,7 @@ def index():
 	payload = {
 		"common_captcha_source": common_captcha_source()
 	}
-	# Обработка форм
+	# Обработка ПОСТ запросов
 	if request.method == 'POST':
 		# Скрытие записки
 		if "common_captcha_btn" in request.form:
@@ -25,6 +25,18 @@ def index():
 		elif "recaptcha_new_btn" in request.form:
 			return recaptcha_v2_new_answer(request.form["g-recaptcha-response"])
 			
+	# Обработка ГЕТ запросов
+	elif request.method == 'GET':
+		if "get_common_captcha" in request.args["captcha_type"]:
+			data = {'captcha_src': "http://85.255.8.26/static/image/common_image_example/"+common_captcha_source()}
+			
+			js = json.dumps(data)
+			
+			response = Response(js, status=200, mimetype='application/json')
+			response.headers['Link'] = 'http://85.255.8.26/'
+			
+			return response
+		
 
 	return render_template('base.html', doc = '/index.html', payload=payload)
 
