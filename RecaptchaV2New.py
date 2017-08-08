@@ -26,11 +26,14 @@ class ReCaptcha:
 		
 		# Ожидаем решения капчи
 		time.sleep(self.sleep_time * 4)
-		
+		answer = requests.request('GET', "http://rucaptcha.com/in.php?key={0}&action=get&id={1}&json=1"
+											.format(self.RECAPTCHA_KEY, captcha_id))
+
 		while True:
-			captcha_response = requests.request('GET', answer)
+			captcha_response = requests.request('GET', "http://rucaptcha.com/res.php?key={0}&action=get&id={1}&json=1"
+											.format(self.RECAPTCHA_KEY, captcha_id))
 			if captcha_response.json()["request"] == 'CAPCHA_NOT_READY':
-				time.sleep(self.sleep_time)
+				time.sleep(6)
 			else:
 				return captcha_response.json()["request"]
 
