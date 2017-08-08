@@ -1,5 +1,5 @@
 {% block content %}
-    <form  action="?" style="height: 150px" enctype="multipart/form-data" method="POST">
+    <form  style="height: 150px" enctype="multipart/form-data" method="POST">
         <label>Рекапча v.2 новая</label>
         <div class="g-recaptcha" data-sitekey="6Lf77CsUAAAAALLFD1wIhbfQRD07VxhvPbyQFaQJ"></div>
         <button type="submit" name="recaptcha_new_btn" class="btn btn-default" data-toggle="tooltip"
@@ -10,10 +10,5 @@
     </form>
     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
             async defer>
-    </script>
-    <script type="text/javascript">
-        var onloadCallback = function() {
-            alert("grecaptcha is ready!");
-        };
     </script>
 {% endblock %}
