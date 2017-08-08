@@ -65,3 +65,4 @@ class CommonCaptcha:
             shutil.rmtree("common_captcha_images")
         if os.path.exists(".cache"):
             shutil.rmtree(".cache")
+
