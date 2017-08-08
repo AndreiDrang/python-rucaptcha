@@ -17,15 +17,15 @@ class ReCaptcha:
 		captcha_download = 'http://rucaptcha.com/in.php?key={0}&method=userrecaptcha&googlekey={1}&pageurl={2}&json=1'\
 			.format(self.RECAPTCHA_KEY, site_key, page_url)
 		
-		answer = requests.request('GET', captcha_download)
-
 		#получаем ID капчи
+		answer = requests.request('GET', captcha_download)
 		captcha_id = answer.json()['request']
 		
-		# Ожидаем решения капчи
+		# Ожидаем решения капчи 20 секунд
 		time.sleep(self.sleep_time * 4)
 
 		while True:
+			#отправляем запрос на результат решения капчи, если не решена ожидаем 6 секунд
 			captcha_response = requests.request('GET', "http://rucaptcha.com/res.php?key={0}&action=get&id={1}&json=1"
 											.format(self.RECAPTCHA_KEY, captcha_id))
 			if captcha_response.json()["request"] == 'CAPCHA_NOT_READY':
