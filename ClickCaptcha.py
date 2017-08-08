@@ -1,3 +1,5 @@
+import requests
+import os
 class ClickCaptcha:
 	
 	def __init__(self, recaptcha_api, sleep_time=5):
@@ -13,3 +15,4 @@ class ClickCaptcha:
 		#получить ID капчи или код ошибки
 		#ждем 5 секунд
 		#отправляем запрос GET к http://rucaptcha.com/res.ph чтобы получить результат
+		#если капча решена, сервер вернет координаты точек по которым нужно кликнуть
