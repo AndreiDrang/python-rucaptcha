@@ -18,16 +18,12 @@ class ReCaptcha:
 			.format(self.RECAPTCHA_KEY, site_key, page_url)
 		
 		answer = requests.request('GET', captcha_download)
-		print(answer.json())
 
 		#получаем ID капчи
 		captcha_id = answer.json()['request']
-		print(captcha_id)
 		
 		# Ожидаем решения капчи
 		time.sleep(self.sleep_time * 4)
-		answer = requests.request('GET', "http://rucaptcha.com/in.php?key={0}&action=get&id={1}&json=1"
-											.format(self.RECAPTCHA_KEY, captcha_id))
 
 		while True:
 			captcha_response = requests.request('GET', "http://rucaptcha.com/res.php?key={0}&action=get&id={1}&json=1"
