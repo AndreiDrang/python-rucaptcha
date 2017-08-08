@@ -6,7 +6,7 @@ import hashlib
 
 
 class CommonCaptcha:
-    def __init__(self, recaptcha_api, sleep_time = 5):
+    def __init__(self, recaptcha_api, sleep_time=5):
         self.url_request = "http://2captcha.com/in.php"
         self.url_response = "http://2captcha.com/res.php"
         self.RECAPTCHA_KEY = recaptcha_api
