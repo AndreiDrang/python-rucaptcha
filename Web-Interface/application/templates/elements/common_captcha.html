@@ -1,5 +1,4 @@
 {% block content %}
-<br>
   <form  name="new_cashbox" enctype="multipart/form-data" method="post" style="height: 270px">
     <label>Обычная капча</label>
     <div class="input-group">
@@ -13,12 +12,6 @@
                value="http://85.255.8.26/static/image/common_image_example/{{ payload.common_captcha_source }}">
     </div>
       <img src="http://85.255.8.26/static/image/common_image_example/{{ payload.common_captcha_source }}" style="max-height:350px; max-width:350px">
-      <div class="input-group">
-          <div style="width:100px;" class="input-group-addon">
-              Результат
-          </div>
-          <input style="height: 30px; width: 200px" maxlength="400" name="common_captcha_answer">
-      </div>
       <div>
           <button type="submit" name="common_captcha_btn" class="btn btn-default" data-toggle="tooltip"
                   data-placement="left" onclick="this.style.display='none';">

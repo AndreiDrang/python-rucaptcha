@@ -1,9 +1,15 @@
 {% block content %}
-    <form  style="height: 150px" enctype="multipart/form-data" method="POST">
+    <form  style="height: 270px" enctype="multipart/form-data" method="POST">
         <label>Рекапча v.2 новая</label>
+        <div class="input-group">
+            <div style="width:100px;" class="input-group-addon">
+                Публичный ключ re-капчи
+            </div>
+            <input style="height: 30px; width: 200px" value="6Lf77CsUAAAAALLFD1wIhbfQRD07VxhvPbyQFaQJ">
+        </div>
         <div class="g-recaptcha" data-sitekey="6Lf77CsUAAAAALLFD1wIhbfQRD07VxhvPbyQFaQJ"></div>
         <button type="submit" name="recaptcha_new_btn" class="btn btn-default" data-toggle="tooltip"
-                data-placement="left" onclick="this.style.display='none';">
+                data-placement="left">
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
             Отправить
         </button>

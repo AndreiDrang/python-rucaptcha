@@ -1,58 +1,113 @@
 {% block content %}
-<div class="container-fluid cont-wrap ng-scope">
-    <div style="margin-left: 50px; margin-right: 200px">
-    <div class="row">
-        <div class="col-sm-3">
-            {% block user_menu %}
-                {% include 'elements/user_menu.html' %}
-            {% endblock %}
+    <div style="margin-left: 50px; margin-right: 50px">
+        <div id="two_column>">
+            <div id="first_column">
+                <div>
+                    {% block common_captcha %}
+                        {% include 'elements/common_captcha.html' %}
+                    {% endblock %}
+                </div>
+                <div style="height: 100px; margin-top: 15px">
+                    <label>Текстовая капча</label>
+                    <br/>
+                    <button type="submit" name="big_captcha_btn" class="btn btn-default" data-toggle="tooltip" data-placement="left" 		onclick="this.style.display=&#39;none&#39;;">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        Отправить
+                    </button>
+                    <br/>
+                </div>
+                <div style="height: 100px; margin-top: 15px">
+                    <label>Большая капча</label>
+                    <br/>
+                    <button type="submit" name="big_captcha_btn" class="btn btn-default" data-toggle="tooltip" data-placement="left" 		onclick="this.style.display=&#39;none&#39;;">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        Отправить
+                    </button>
+                    <br/>
+                </div>
+
+                <div style="height: 100px; margin-top: 15px">
+                    <label>SolveMedia audio captcha</label>
+                    <br/>
+                    <button type="submit" name="big_captcha_btn" class="btn btn-default" data-toggle="tooltip" data-placement="left" 		onclick="this.style.display=&#39;none&#39;;">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        Отправить
+                    </button>
+                    <br/>
+                </div>
+
+                <div style="height: 100px; margin-top: 15px">
+                    <label>KeyCaptcha</label>
+                    <br/>
+                    <button type="submit" name="big_captcha_btn" class="btn btn-default" data-toggle="tooltip" data-placement="left" 		onclick="this.style.display=&#39;none&#39;;">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        Отправить
+                    </button>
+                    <br/>
+                </div>
+
+            </div>
         </div>
-        <div class="col-sm-8">
-            <div class="col-sm-6">
-                {% block common_captcha %}
-                    {% include 'elements/common_captcha.html' %}
-                {% endblock %}
-            </div>
-            <div class="col-sm-6">
-                Текстовая капча
-            </div>
-            <div class="col-sm-6">
-                Большая капча
-            </div>
-            <div class="col-sm-6">
+
+        <div id="second_column">
+            <div>
                 {% block recaptcha_v2_new %}
                     {% include 'elements/recaptcha_v2_new.html' %}
                 {% endblock %}
             </div>
-            <div class="col-sm-6">
-                {% block recaptcha_v2_invisible %}
-                    {% include 'elements/recaptcha_v2_invisible.html' %}
-                {% endblock %}
+
+            <div style="height: 100px; margin-top: 15px">
+                <label>
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        <a href="/invisible_recaptcha">
+                            Перейти к Invisible ReCaptcha
+                        </a>
+                    </span>
+                </label>
             </div>
-            <div class="col-sm-6">
-                Click Captcha
+
+            <div style="height: 100px; margin-top: 15px">
+                <label>Click Captcha</label>
+            	<br/>
+                <button type="submit" name="big_captcha_btn" class="btn btn-default" data-toggle="tooltip" data-placement="left" 		onclick="this.style.display=&#39;none&#39;;">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Отправить
+                </button>
+                <br/>
             </div>
-            <div class="col-sm-6">
-                Rotate Captcha
+
+            <div style="height: 100px; margin-top: 15px">
+                <label>Rotate Captcha</label>
+            	<br/>
+                <button type="submit" name="big_captcha_btn" class="btn btn-default" data-toggle="tooltip" data-placement="left" 		onclick="this.style.display=&#39;none&#39;;">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Отправить
+                </button>
+                <br/>
             </div>
-            <div class="col-sm-6">
-                Fun Captcha
+
+            <div  style="height: 100px; margin-top: 15px">
+                <label>Fun Captcha</label>
+            	<br/>
+                <button type="submit" name="big_captcha_btn" class="btn btn-default" data-toggle="tooltip" data-placement="left" 		onclick="this.style.display=&#39;none&#39;;">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Отправить
+                </button>
+                <br/>
             </div>
-            <div class="col-sm-6">
-                Audio ReCaptcha V2
+
+            <div  style="height: 100px; margin-top: 15px">
+                <label> Audio ReCaptcha V2</label>
+                <br/>
+                <button type="submit" name="big_captcha_btn" class="btn btn-default" data-toggle="tooltip" data-placement="left" 		onclick="this.style.display=&#39;none&#39;;">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Отправить
+                </button>
+                <br/>
             </div>
-            <div class="col-sm-6">
-                SolveMedia audio captcha
-            </div>
-            <div class="col-sm-6">
-                KeyCaptcha
-            </div>
+
         </div>
-        <div class="col-sm-1">
-            Дополнительная информация
-        </div>
+
     </div>
-    </div>
-</div>
 
 {% endblock %}

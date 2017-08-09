@@ -1,0 +1,11 @@
+{% block content %}
+    <div style="margin-left: 10px; margin-right: 50px">
+        <div id="two_column>">
+            <div id="first_column">
+                {% block recaptcha_v2_invisible %}
+                    {% include 'elements/recaptcha_v2_invisible.html' %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

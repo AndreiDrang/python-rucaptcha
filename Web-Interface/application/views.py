@@ -14,8 +14,24 @@ def index():
 	payload = {
 		"common_captcha_source": common_captcha_source()
 	}
-
+	# Обработка ПОСТ запросов
+	if request.method == 'POST':
+		if "recaptcha_invisible_btn" in request.form:
+			print(request.form)
+		# Обработка новой рекапчи
+		elif "recaptcha_new_btn" in request.form:
+			print(request.form)
 	return render_template('base.html', doc = '/index.html', payload=payload)
+
+
+@app.route('/invisible_recaptcha/', methods = ["GET", "POST"])
+def invisible_recaptcha():
+	# Обработка ПОСТ запросов
+	if request.method == 'POST':
+		if "recaptcha_invisible_btn" in request.form:
+			print(request.form)
+			
+	return render_template('base.html', doc = '/invisible_recaptcha.html')
 
 @app.route('/api/', methods= ["GET", "POST"])
 def api():
