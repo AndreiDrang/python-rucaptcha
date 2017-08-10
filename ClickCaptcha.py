@@ -58,9 +58,10 @@ class ClickCaptcha:
 												"http://rucaptcha.com/res.php?key={0}&action=get&id={1}&json=1".
 												format(self.RECAPTCHA_KEY, captcha_id))
 			#если капча решена, сервер вернет координаты точек по которым нужно кликнуть
-			if captcha_response.json()["request"] == 'CAPTCHA_NOT_READY':
+			if captcha_response.json()["request"] == 'CAPCHA_NOT_READY':
 				time.sleep(6)
 			else:
+				print(captcha_response.json())
 				return captcha_response.json()["request"]
 
 
