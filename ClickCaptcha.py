@@ -6,13 +6,12 @@ import time
 
 
 class ClickCaptcha:
-	
 	def __init__(self, recaptcha_api, sleep_time=5):
 		self.RECAPTCHA_KEY = recaptcha_api
 		self.sleep_time = sleep_time
 		self.img_path = os.path.normpath('click_images')
-		#создать папку для сохранения картинок
 		
+		#создать папку для сохранения картинок
 		try:
 			if not os.path.exists(self.img_path):
 				os.mkdir(self.img_path)
@@ -46,11 +45,10 @@ class ClickCaptcha:
 											"http://rucaptcha.com/in.php",
 											data=payload,
 											files=files).json())["request"]
-			print(captcha_id)
 		#удаляем временные файлы и картинку
 		#os.remove(os.path.join(self.img_path, "img-{0}.jpg".format(image_hash)))
 		#ждем 5 секунд
-		time.sleep(self.sleep_time * 4)
+		time.sleep(self.sleep_time)
 		
 		while True:
 			#отправляем запрос на результат решения капчи
@@ -61,7 +59,6 @@ class ClickCaptcha:
 			if captcha_response.json()["request"] == 'CAPCHA_NOT_READY':
 				time.sleep(6)
 			else:
-				print(captcha_response.json())
 				return captcha_response.json()["request"]
 
 
