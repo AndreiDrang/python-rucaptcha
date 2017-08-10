@@ -29,8 +29,15 @@ class ClickCaptcha:
 		out.write(content)
 		out.close()
 
+		with open(os.path.join(self.img_path, "img-{0}.jpg".format(image_hash)), 'rb') as captcha_image:
+			files = {"file": captcha_image}
+			#отправить запрос POST к http://rucaptcha.com/in.php c параметром coordiantescaptcha=1
+			payload = {"key": self.RECAPTCHA_KEY, "method": "post", "coordinatecaptcha": 1, "json": 1}
+			captcha_id = (requests.request("POST",
+											"http://rucaptcha.com/in.php",
+											data=payload,
+											files=files).json()).["request"]
 
-		#отправить запрос POST к http://rucaptcha.com/in.php c параметром coordiantescaptcha=1
 		#получить ID капчи или код ошибки
 		#ждем 5 секунд
 		#отправляем запрос GET к http://rucaptcha.com/res.ph чтобы получить результат
