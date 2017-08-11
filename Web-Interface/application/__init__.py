@@ -1,5 +1,4 @@
 from flask import Flask
-from .captcha_handlers import CaptchaHandler
 from .dbconnect import Database
 
 app = Flask(__name__)

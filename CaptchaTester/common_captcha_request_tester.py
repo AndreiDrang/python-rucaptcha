@@ -1,6 +1,6 @@
 import requests
-import CommonCaptcha
 
+import CommonCaptcha
 
 # Введите ключ от рукапчи
 RUCAPTCHA_KEY = ""

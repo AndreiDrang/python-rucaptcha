@@ -32,4 +32,4 @@ class ReCaptcha:
 			else:
 				return captcha_response.json()["request"]
 			
-#ReCaptcha(recaptcha_api="").captcha_handler(site_key="6Lf77CsUAAAAALLFD1wIhbfQRD07VxhvPbyQFaQJ", page_url='http://127.0.0.1:5000/')
+#print(ReCaptcha(recaptcha_api="").captcha_handler(site_key="6Lf77CsUAAAAALLFD1wIhbfQRD07VxhvPbyQFaQJ", page_url='http://85.255.8.26/index/'))
