@@ -5,6 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Web-Interface" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CaptchaTester" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/python-captcha" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
