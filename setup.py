@@ -10,7 +10,6 @@ setup(
     packages=find_packages(),
     install_requires=[
         'requests==2.18',
-        'flask==0.12',
     ],
     description='Python 3 RuCaptcha library.',
     author_email='drang.andray@gmail.com',
