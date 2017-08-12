@@ -6,7 +6,20 @@ import hashlib
 
 
 class CommonCaptcha:
+    '''
+    Данный метод подходит как для загрузки и решения обычной капчи
+    так и для большой капчи.
+    Требуется передать API ключ сайта, ссылку на изображение и,по желанию, время ожидания решения капчи
+    Подробней информацию смотрите в методе 'captcha_handler'
+    '''
+    
     def __init__(self, recaptcha_api, sleep_time=5):
+        '''
+        Инициализация нужных переменных, создание папки для изображений и кэша
+        После завершения работы - удалются временные фалйы и папки
+        :param recaptcha_api:  АПИ ключ капчи из кабинета пользователя
+        :param sleep_time: Вермя ожидания решения капчи
+        '''
         self.url_request = "http://2captcha.com/in.php"
         self.url_response = "http://2captcha.com/res.php"
         self.RECAPTCHA_KEY = recaptcha_api
@@ -22,6 +35,12 @@ class CommonCaptcha:
 
     # Работа с капчёй
     def captcha_handler(self, captcha_link):
+        '''
+        Метод получает от вас ссылку на изображение, скачивает его, отправляет изображение на сервер
+        RuCaptcha, дожидается решения капчи и вовзращает вам результат
+        :param captcha_link: Ссылка на изображение
+        :return: Ответ на капчу
+        '''
         # Высчитываем хэш изображения, для того что бы сохранить его под уникальным именем
         image_hash = hashlib.sha224(captcha_link.encode('utf-8')).hexdigest()
         # Скачиваем изображение и сохраняем на диск в папку images
