@@ -2,6 +2,15 @@
 .gitignore
 .idea/workspace.xml
 Web-Interface/.idea
-.cache/
 .idea/codeStyleSettings.xml
-common_captcha_images/
+dist
+/.pypirc.ini
+/python_rucaptcha.egg-info/
+/Web-Interface/.idea/
+.idea/dataSources.local.xml
+.idea/dataSources.xml
+.idea/dataSources/
+.idea/deployment.xml
+.idea/webServers.xml
+__pycache__/
+python_rucaptcha.egg-info/
