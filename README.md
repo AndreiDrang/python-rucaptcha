@@ -1,7 +1,7 @@
 # python-rucaptcha
 Python library for RuCaptcha.
-***
-https://pypi.python.org/pypi?:action=display&name=python-rucaptcha&version=0.1
+
+On [PyPi](https://pypi.python.org/pypi?:action=display&name=python-rucaptcha&version=0.1).
 ***
 Библиотека на языке Python 3 для работы с сервисом ручного решения капчи [RuCaptcha](https://rucaptcha.com/).
 ***
