@@ -1,0 +1,27 @@
+{% block content %}
+    <form  style="height: 300px" enctype="multipart/form-data" method="POST">
+        <label>SolveMedia Captcha</label>
+        <div class="input-group">
+            <div style="width:100px;" class="input-group-addon">
+                Публичный ключ c-key
+            </div>
+            <input style="height: 30px; width: 200px" value="xv5l9hrk6f2BGcEjj8nfKJopiM.WbuFO">
+        </div>
+        <script type="text/javascript"
+                src="http://api.solvemedia.com/papi/challenge.script?k=xv5l9hrk6f2BGcEjj8nfKJopiM.WbuFO">
+        </script>
+        <noscript>
+            <iframe src="http://api.solvemedia.com/papi/challenge.noscript?k=xv5l9hrk6f2BGcEjj8nfKJopiM.WbuFO"
+                    height="300" width="500" frameborder="0"></iframe><br/>
+            <textarea name="adcopy_challenge" rows="3" cols="40">
+            </textarea>
+            <input type="hidden" name="adcopy_response"
+                   value="manual_challenge"/>
+        </noscript>
+        <button type="submit" name="solvemedia_btn" class="btn btn-default" data-toggle="tooltip"
+                data-placement="left">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            Отправить
+        </button>
+    </form>
+{% endblock %}
