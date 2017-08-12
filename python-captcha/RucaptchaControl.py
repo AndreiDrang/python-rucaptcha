@@ -1,6 +1,6 @@
 import requests
 
-class RucaptchaControl:
+class RuСaptchaControl:
     def __init__(self, recaptcha_api):
         self.get_url = "http://rucaptcha.com/res.php"
         self.RECAPTCHA_KEY = recaptcha_api

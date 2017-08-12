@@ -9,7 +9,7 @@ class TextCaptcha:
 		self.RECAPTCHA_KEY = recaptcha_api
 		self.sleep_time = sleep_time
 
-	def handle_captcha(self, captcha_text):
+	def captcha_handler(self, captcha_text):
 		# Создаём пайлоад, вводим ключ от сайта, выбираем метод ПОСТ и ждём ответа. в JSON-формате
 		payload = {"key": self.RECAPTCHA_KEY,
 					"method": "textcaptcha",

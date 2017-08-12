@@ -1,4 +1,4 @@
-from flask import Response, render_template, redirect, request, url_for, session
+from flask import Response, render_template, request
 from application import app
 import os
 import random
@@ -12,7 +12,8 @@ from .dbconnect import Database
 @app.route('/index/', methods = ["GET", "POST"])
 def index():
 	payload = {
-		"common_captcha_source": common_captcha_source()
+		"common_captcha_source": common_captcha_source(),
+		"text_captcha_source": text_captcha_source()
 	}
 	# Обработка ПОСТ запросов
 	if request.method == 'POST':
@@ -33,7 +34,24 @@ def invisible_recaptcha():
 			
 	return render_template('base.html', doc = '/invisible_recaptcha.html')
 
-@app.route('/api/', methods= ["GET", "POST"])
+
+
+
+# Функция которая возвращает рандомное изображение обычной капчи
+def common_captcha_source():
+	# Получаем список всех изображений и возвращаем рандомную картинку
+	images_list = os.listdir('application/static/image/common_image_example/')
+	return random.choice(images_list)
+
+# Функция которая возвращает рандомный вопрос текстовой капчи
+def text_captcha_source():
+	# Получаем список всех изображений и возвращаем рандомную картинку
+	text_captcha_list = Database().get_text_captcha()
+	return random.choice(text_captcha_list)
+'''
+API response
+'''
+@app.route('/api/', methods=["GET", "POST"])
 def api():
 	# Обработка ПОСТ запросов
 	if request.method == 'POST':
@@ -48,7 +66,7 @@ def api():
 		# Обработка невидимой рекапчи
 		elif "recaptcha_invisible_btn" in request.form:
 			print(request.form)
-			#return recaptcha_v2_new_answer(request.form["g-recaptcha-response"])
+		# return recaptcha_v2_new_answer(request.form["g-recaptcha-response"])
 	
 	# Обработка ГЕТ запросов
 	elif request.method == 'GET':
@@ -60,17 +78,6 @@ def api():
 			response = Response(js, status=200, mimetype='application/json')
 			response.headers['Link'] = 'http://85.255.8.26/'
 			return response
-
-
-# Функция которая возвращает рандомное изображение обычной капчи
-def common_captcha_source():
-	# Получаем список всех изображений и возвращаем рандомную картинку
-	images_list = os.listdir('application/static/image/common_image_example/')
-	return random.choice(images_list)
-	
-'''
-API response
-'''
 # Обработчик капчи изображением
 def common_captcha_answer(captcha_name, user_answer):
 	if user_answer == captcha_name.split(".")[0]:

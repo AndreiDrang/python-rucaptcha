@@ -2,7 +2,7 @@ import requests
 import time
 
 
-class ReCaptcha:
+class ReCaptchaV2:
 	def __init__(self, recaptcha_api, sleep_time=16):
 		self.url_request = "http://2captcha.com/in.php"
 		self.url_response = "http://2captcha.com/res.php"
@@ -32,4 +32,4 @@ class ReCaptcha:
 			else:
 				return captcha_response.json()["request"]
 			
-#ReCaptcha(recaptcha_api="").captcha_handler(site_key="6Lf77CsUAAAAALLFD1wIhbfQRD07VxhvPbyQFaQJ", page_url='http://127.0.0.1:5000/')
+#print(ReCaptchaV2(recaptcha_api="").captcha_handler(site_key="6LcC7SsUAAAAAN3AOB-clPIsrKfnBUlO2QkC_vQ7", page_url='http://85.255.8.26/invisible_recaptcha/'))

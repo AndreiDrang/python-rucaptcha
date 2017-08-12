@@ -1,3 +1,3 @@
 from CommonCaptcha import CommonCaptcha
-from RecaptchaV2New import ReCaptcha
+from RecaptchaV2 import ReCaptcha
 from RucaptchaControl import RucaptchaControl
