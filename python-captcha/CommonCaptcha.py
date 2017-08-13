@@ -1,9 +1,10 @@
 import httplib2
 import requests
 import os, shutil
+import tempfile
 import time
 import hashlib
-
+from config import url_request, url_response
 
 class CommonCaptcha:
     '''
@@ -20,10 +21,11 @@ class CommonCaptcha:
         :param recaptcha_api:  АПИ ключ капчи из кабинета пользователя
         :param sleep_time: Вермя ожидания решения капчи
         '''
-        self.url_request = "http://2captcha.com/in.php"
-        self.url_response = "http://2captcha.com/res.php"
         self.RECAPTCHA_KEY = recaptcha_api
         self.sleep_time = sleep_time
+        self.temp = tempfile.TemporaryFile(mode='w+b',
+                                                prefix='img-',
+                                                suffix='.jpg')
         self.img_path = os.path.normpath('common_captcha_images')
         try:
             if not os.path.exists(self.img_path):
@@ -41,6 +43,7 @@ class CommonCaptcha:
         :param captcha_link: Ссылка на изображение
         :return: Ответ на капчу
         '''
+
         # Высчитываем хэш изображения, для того что бы сохранить его под уникальным именем
         image_hash = hashlib.sha224(captcha_link.encode('utf-8')).hexdigest()
         # Скачиваем изображение и сохраняем на диск в папку images
@@ -60,7 +63,7 @@ class CommonCaptcha:
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
             captcha_id = (requests.request('POST',
-                                           "http://rucaptcha.com/in.php",
+                                           url_request,
                                            data=payload,
                                            files=files).json())['request']
 
@@ -72,7 +75,7 @@ class CommonCaptcha:
             # отправляем запрос на результат решения капчи, если ещё капча не решена - ожидаем 5 сек
             # если всё ок - идём дальше
             captcha_response = requests.request('GET',
-                                                "http://rucaptcha.com/res.php?key={0}&action=get&id={1}&json=1"
+                                                url_response+"?key={0}&action=get&id={1}&json=1"
                                                 .format(self.RECAPTCHA_KEY, captcha_id))
             if captcha_response.json()["request"] == 'CAPCHA_NOT_READY':
                 time.sleep(self.sleep_time)
@@ -80,8 +83,6 @@ class CommonCaptcha:
                 return captcha_response.json()['request']
 
     def __del__(self):
-        if os.path.exists("common_captcha_images"):
-            shutil.rmtree("common_captcha_images")
         if os.path.exists(".cache"):
             shutil.rmtree(".cache")
 

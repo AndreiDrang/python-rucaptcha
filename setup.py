@@ -4,7 +4,7 @@ from os.path import join, dirname
 
 setup(
     name='python-rucaptcha',
-    version='0.1',
+    version='0.3',
     author='AndreiDrang, redV0ID',
     
     packages=find_packages(),
