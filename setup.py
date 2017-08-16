@@ -3,8 +3,8 @@ from setuptools import setup, find_packages
 from os.path import join, dirname
 
 setup(
-    name='python-rucaptcha',
-    version='0.3',
+    name='python_rucaptcha',
+    version='0.5.a1',
     author='AndreiDrang, redV0ID',
     
     packages=find_packages(),
