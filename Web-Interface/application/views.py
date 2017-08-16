@@ -5,6 +5,7 @@ import random
 import json
 import requests
 
+from .solve_media_captcha_check import SolveMedia
 from .dbconnect import Database
 
 
@@ -20,8 +21,11 @@ def index():
 		if "recaptcha_invisible_btn" in request.form:
 			print(request.form)
 		# Обработка новой рекапчи
-		elif "recaptcha_new_btn" in request.form:
-			print(request.form)
+		elif "solvemedia_btn" in request.form:
+			return SolveMedia().answer_handler(request.form["adcopy_response"],
+			                            request.form["adcopy_challenge"],
+			                            request.environ['REMOTE_ADDR'])
+
 	return render_template('base.html', doc = '/index.html', payload=payload)
 
 
@@ -49,7 +53,7 @@ def text_captcha_source():
 	text_captcha_list = Database().get_text_captcha()
 	return random.choice(text_captcha_list)
 '''
-API response
+API responses
 '''
 @app.route('/api/', methods=["GET", "POST"])
 def api():
@@ -66,6 +70,11 @@ def api():
 		# Обработка невидимой рекапчи
 		elif "recaptcha_invisible_btn" in request.form:
 			print(request.form)
+		# Solvemedia капча
+		elif "solvemedia_btn" in request.form:
+			return SolveMedia().answer_handler(request.form["adcopy_response"],
+					                            request.form["adcopy_challenge"],
+					                            request.environ['REMOTE_ADDR'])
 		# return recaptcha_v2_new_answer(request.form["g-recaptcha-response"])
 	
 	# Обработка ГЕТ запросов
@@ -78,6 +87,7 @@ def api():
 			response = Response(js, status=200, mimetype='application/json')
 			response.headers['Link'] = 'http://85.255.8.26/'
 			return response
+		
 # Обработчик капчи изображением
 def common_captcha_answer(captcha_name, user_answer):
 	if user_answer == captcha_name.split(".")[0]:
@@ -86,7 +96,7 @@ def common_captcha_answer(captcha_name, user_answer):
 		js = json.dumps(data)
 		
 		response = Response(js, status=200, mimetype='application/json')
-		response.headers['Link'] = 'http://127.0.0.1:5000'
+		response.headers['Link'] = 'http://85.255.8.26/'
 		
 		return response
 	else:
@@ -95,7 +105,7 @@ def common_captcha_answer(captcha_name, user_answer):
 		js = json.dumps(data)
 		
 		response = Response(js, status=200, mimetype='application/json')
-		response.headers['Link'] = 'http://127.0.0.1:5000'
+		response.headers['Link'] = 'http://85.255.8.26/'
 		
 		return response
 # Обработчик новой рекапчи версии 2
@@ -104,7 +114,7 @@ def recaptcha_v2_new_answer(g_recaptcha_response):
 	payload = {
 				"secret": "6Lf77CsUAAAAAMJ1yJWbEG1VyVYKIQZWVQJRg25t",
 				"response": g_recaptcha_response,
-			}
+				}
 	# Отсылаем запрос на правильность капчи
 	captcha_answer = requests.post("https://www.google.com/recaptcha/api/siteverify", data=payload)
 
@@ -114,7 +124,7 @@ def recaptcha_v2_new_answer(g_recaptcha_response):
 		js = json.dumps(data)
 		
 		response = Response(js, status=200, mimetype='application/json')
-		response.headers['Link'] = 'http://127.0.0.1:5000'
+		response.headers['Link'] = 'http://85.255.8.26/'
 		
 		return response
 	else:
@@ -126,7 +136,7 @@ def recaptcha_v2_new_answer(g_recaptcha_response):
 		js = json.dumps(data)
 		
 		response = Response(js, status=200, mimetype='application/json')
-		response.headers['Link'] = 'http://127.0.0.1:5000'
+		response.headers['Link'] = 'http://85.255.8.26/'
 		
 		return response
 # Обработчик невидимой капчи
@@ -145,7 +155,7 @@ def recaptcha_invisible_answer(g_recaptcha_response):
 			js = json.dumps(data)
 			
 			response = Response(js, status=200, mimetype='application/json')
-			response.headers['Link'] = 'http://127.0.0.1:5000'
+			response.headers['Link'] = 'http://85.255.8.26/'
 			
 			return response
 		else:
@@ -157,7 +167,7 @@ def recaptcha_invisible_answer(g_recaptcha_response):
 			js = json.dumps(data)
 			
 			response = Response(js, status=200, mimetype='application/json')
-			response.headers['Link'] = 'http://127.0.0.1:5000'
+			response.headers['Link'] = 'http://85.255.8.26/'
 			
 			return response
 
