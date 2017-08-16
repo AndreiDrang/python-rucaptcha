@@ -4,7 +4,7 @@ import os, shutil
 import tempfile
 import time
 import hashlib
-from config import url_request, url_response
+from config import url_request, url_response, app_key
 
 class CommonCaptcha:
     '''
@@ -59,7 +59,8 @@ class CommonCaptcha:
             # Создаём пайлоад, вводим ключ от сайта, выбираем метод ПОСТ и ждём ответа в JSON-формате
             payload = {"key": self.RECAPTCHA_KEY,
                        "method": "post",
-                       "json": 1}
+                       "json": 1,
+                       "soft_id":app_key}
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
             captcha_id = (requests.request('POST',

@@ -108,6 +108,7 @@ def common_captcha_answer(captcha_name, user_answer):
 		response.headers['Link'] = 'http://85.255.8.26/'
 		
 		return response
+
 # Обработчик новой рекапчи версии 2
 def recaptcha_v2_new_answer(g_recaptcha_response):
 	# Проверяем решил ли юзер капчу
@@ -139,6 +140,7 @@ def recaptcha_v2_new_answer(g_recaptcha_response):
 		response.headers['Link'] = 'http://85.255.8.26/'
 		
 		return response
+
 # Обработчик невидимой капчи
 def recaptcha_invisible_answer(g_recaptcha_response):
 		# Проверяем решил ли юзер капчу
