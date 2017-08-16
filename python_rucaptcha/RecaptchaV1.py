@@ -1,4 +1,5 @@
-import CommonCaptcha
+from python_rucaptcha import CommonCaptcha
+
 
 class RecaptchaV1:
 	'''

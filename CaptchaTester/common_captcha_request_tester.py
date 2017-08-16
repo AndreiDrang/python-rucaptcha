@@ -1,6 +1,7 @@
 import requests
 
-import CommonCaptcha
+from python_rucaptcha import CommonCaptcha
+
 """
 Этот пример показывает то как нужно работать с модулем для распознования обычной капчи,
 на примере нашего сайта.

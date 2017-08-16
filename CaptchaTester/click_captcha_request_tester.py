@@ -1,5 +1,4 @@
-import requests
-import ClickCaptcha
+from python_rucaptcha import ClickCaptcha
 
 #pass your api key
 RUCAPTCHA_KEY = ''

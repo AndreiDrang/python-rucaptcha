@@ -14,3 +14,5 @@ dist
 .idea/webServers.xml
 __pycache__/
 python_rucaptcha.egg-info/
+
+\.idea/

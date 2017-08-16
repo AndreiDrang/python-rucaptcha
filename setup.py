@@ -7,7 +7,7 @@ setup(
     version='0.1',
     author='AndreiDrang, redV0ID',
     
-    packages=find_packages(),
+    packages=['python_rucaptcha'],
     install_requires=[
         'requests==2.18',
         'flask==0.12',
