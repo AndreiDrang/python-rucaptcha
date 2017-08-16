@@ -5,7 +5,7 @@ import random
 import json
 import requests
 
-from .libsolvemedia import SolveMedia
+from .solve_media_captcha_check import SolveMedia
 from .dbconnect import Database
 
 
