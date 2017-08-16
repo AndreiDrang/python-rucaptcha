@@ -28,14 +28,10 @@
                     {% endblock %}
                 </div>
 
-                <div style="height: 100px; margin-top: 15px">
-                    <label>KeyCaptcha</label>
-                    <br/>
-                    <button type="submit" name="big_captcha_btn" class="btn btn-default" data-toggle="tooltip" data-placement="left" 		onclick="this.style.display=&#39;none&#39;;">
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                        Отправить
-                    </button>
-                    <br/>
+                <div>
+                    {% block key_captcha %}
+                        {% include 'elements/key_captcha.html' %}
+                    {% endblock %}
                 </div>
 
             </div>
@@ -78,25 +74,6 @@
                 <br/>
             </div>
 
-            <div  style="height: 100px; margin-top: 15px">
-                <label>Fun Captcha</label>
-            	<br/>
-                <button type="submit" name="big_captcha_btn" class="btn btn-default" data-toggle="tooltip" data-placement="left" 		onclick="this.style.display=&#39;none&#39;;">
-                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                    Отправить
-                </button>
-                <br/>
-            </div>
-
-            <div  style="height: 100px; margin-top: 15px">
-                <label> Audio ReCaptcha V2</label>
-                <br/>
-                <button type="submit" name="big_captcha_btn" class="btn btn-default" data-toggle="tooltip" data-placement="left" 		onclick="this.style.display=&#39;none&#39;;">
-                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                    Отправить
-                </button>
-                <br/>
-            </div>
 
         </div>
 
