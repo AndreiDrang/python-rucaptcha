@@ -23,9 +23,6 @@ class ImageCaptcha:
         '''
         self.RECAPTCHA_KEY = recaptcha_api
         self.sleep_time = sleep_time
-        self.temp = tempfile.TemporaryFile(mode='w+b',
-                                                prefix='img-',
-                                                suffix='.jpg')
         self.img_path = os.path.normpath('common_captcha_images')
         try:
             if not os.path.exists(self.img_path):
