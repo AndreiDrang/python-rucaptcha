@@ -5,6 +5,7 @@ import random
 import json
 import requests
 
+from .key_captcha_parser import key_captcha_data_handler
 from .solve_media_captcha_check import SolveMedia
 from .dbconnect import Database
 
@@ -14,7 +15,8 @@ from .dbconnect import Database
 def index():
 	payload = {
 		"common_captcha_source": common_captcha_source(),
-		"text_captcha_source": text_captcha_source()
+		"text_captcha_source": text_captcha_source(),
+		"key_captcha_data": key_captcha_data_handler(),
 	}
 	# Обработка ПОСТ запросов
 	if request.method == 'POST':

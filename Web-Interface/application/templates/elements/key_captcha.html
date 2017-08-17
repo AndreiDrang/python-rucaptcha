@@ -6,31 +6,38 @@
             <div style="width:50%;" class="input-group-addon">
                 s_s_c_user_id
             </div>
-            <input style="height: 30px; width: 200px" value="1">
+            <input style="height: 30px; width: 200px" value="{{ payload.key_captcha_data.s_s_c_user_id }}">
         </div>
         <div class="input-group">
             <div style="width:50%;" class="input-group-addon">
                 s_s_c_session_id
             </div>
-            <input style="height: 30px; width: 200px" value="2">
+            <input style="height: 30px; width: 200px" value="{{ payload.key_captcha_data.s_s_c_session_id }}">
         </div>
         <div class="input-group">
             <div style="width:50%;" class="input-group-addon">
                 s_s_c_web_server_sign
             </div>
-            <input style="height: 30px; width: 200px" value="3">
+            <input style="height: 30px; width: 200px" value="{{ payload.key_captcha_data.s_s_c_web_server_sign }}">
         </div>
         <div class="input-group">
             <div style="width:50%;" class="input-group-addon">
                 s_s_c_web_server_sign2
             </div>
-            <input style="height: 30px; width: 200px" value="4">
+            <input style="height: 30px; width: 200px" value="{{ payload.key_captcha_data.s_s_c_web_server_sign2 }}">
         </div>
-        <button
-                type="submit"
-                name="key_captcha_btn">
+        <div class="input-group">
+            <div style="width:50%;" class="input-group-addon">
+                Ссылка
+            </div>
+            <input style="height: 30px; width: 200px" value="https://www.keycaptcha.com/signup/">
+        </div>
+        <label>
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-            Отправить
-        </button>
+            <a href="https://www.keycaptcha.com/signup/">
+                Перейти к Key Captcha
+            </a>
+            </span>
+        </label>
     </form>
 {% endblock %}
