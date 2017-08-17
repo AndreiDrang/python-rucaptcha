@@ -1,7 +1,11 @@
 import requests
 
+<<<<<<< HEAD
 from python_rucaptcha import CommonCaptcha
 
+=======
+import ImageCaptcha
+>>>>>>> dev
 """
 Этот пример показывает то как нужно работать с модулем для распознования обычной капчи,
 на примере нашего сайта.
@@ -17,7 +21,7 @@ captcha_link = requests.get("http://85.255.8.26/api/", params={"captcha_type":"g
 Тут нужно воспользоваться бибилотекой, отослать на решение ссылку на капчу и получить ответ
 далее его записать в user_answer и отправить на проверку уже на наш сайт
 """
-user_answer = CommonCaptcha.CommonCaptcha(recaptcha_api=RUCAPTCHA_KEY).captcha_handler(captcha_link=captcha_link)
+user_answer = ImageCaptcha.ImageCaptcha(recaptcha_api=RUCAPTCHA_KEY).captcha_handler(captcha_link=captcha_link)
 
 # Вычленяем из ссылки название капчи
 captcha_name = captcha_link.split("/")[-1]

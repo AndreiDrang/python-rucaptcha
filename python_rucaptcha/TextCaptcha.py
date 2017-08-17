@@ -1,11 +1,10 @@
 import requests
 import time
+from config import url_request, url_response, app_key
 
 
 class TextCaptcha:
 	def __init__(self, recaptcha_api, sleep_time=6):
-		self.url_request = "http://2captcha.com/in.php"
-		self.url_response = "http://2captcha.com/res.php"
 		self.RECAPTCHA_KEY = recaptcha_api
 		self.sleep_time = sleep_time
 
@@ -14,11 +13,12 @@ class TextCaptcha:
 		payload = {"key": self.RECAPTCHA_KEY,
 					"method": "textcaptcha",
 					"json": 1,
-					"textinstructions": captcha_text}
+					"textinstructions": captcha_text,
+                    "soft_id": app_key}
 		# Отправляем на рукапча текст капчи и ждём ответа
 		#  в результате получаем JSON ответ с номером решаемой капчи
 		captcha_id = (requests.request('POST',
-										"http://rucaptcha.com/in.php",
+										url_request,
 										data=payload).json())['request']
 		# Ожидаем решения капчи
 		time.sleep(self.sleep_time)
@@ -26,7 +26,7 @@ class TextCaptcha:
 			# отправляем запрос на результат решения капчи, если ещё капча не решена - ожидаем 5 сек
 			#  если всё ок - идём дальше
 			captcha_response = requests.request('GET',
-												"http://rucaptcha.com/res.php?key={0}&action=get&id={1}&json=1"
+												url_response+"?key={0}&action=get&id={1}&json=1"
 												.format(self.RECAPTCHA_KEY, captcha_id))
 			if captcha_response.json()["request"] == 'CAPCHA_NOT_READY':
 				time.sleep(self.sleep_time)
