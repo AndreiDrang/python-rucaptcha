@@ -6,7 +6,7 @@ import time
 import hashlib
 from config import url_request, url_response, app_key
 
-class CommonCaptcha:
+class ImageCaptcha:
     '''
     Данный метод подходит как для загрузки и решения обычной капчи
     так и для большой капчи.

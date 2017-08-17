@@ -1,4 +1,4 @@
-import CommonCaptcha
+import ImageCaptcha
 
 class RecaptchaV1:
 	'''
@@ -16,7 +16,7 @@ class RecaptchaV1:
 		'''
 		self.recaptcha_api = recaptcha_api
 		self.sleep_time = sleep_time
-		self.common_captcha = CommonCaptcha.CommonCaptcha(recaptcha_api=self.recaptcha_api, sleep_time=self.sleep_time)
+		self.common_captcha = ImageCaptcha.ImageCaptcha(recaptcha_api=self.recaptcha_api, sleep_time=self.sleep_time)
 		
 		
 	def captcha_handler(self, recaptcha_challenge_field):
