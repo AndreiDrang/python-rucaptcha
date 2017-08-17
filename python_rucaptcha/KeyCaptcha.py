@@ -14,47 +14,23 @@ class KeyCaptcha:
 		self.s_s_c_session_id = key_captcha_data['s_s_c_session_id']
 		self.s_s_c_web_server_sign = key_captcha_data['s_s_c_web_server_sign']
 		self.s_s_c_web_server_sign2 = key_captcha_data['s_s_c_web_server_sign2']
+		self.page_url = key_captcha_data['page_url']
 		
 		self.RECAPTCHA_KEY = recaptcha_api
 		self.sleep_time = sleep_time
-		try:
-			if not os.path.exists(self.img_path):
-				os.mkdir(self.img_path)
-			if not os.path.exists(".cache"):
-				os.mkdir(".cache")
-		except Exception as err:
-			print(err)
-	
 
-	def captcha_handler(self, captcha_link):
+
+	def captcha_handler(self):
+		captcha_id = (requests.post(url_request+"""?key={0}&s_s_c_user_id={1}&s_s_c_session_id={2}&
+									            s_s_c_web_server_sign={3}&s_s_c_web_server_sign2={4}&
+									            method=keycaptcha&pageurl={5}&json=1&soft_id={6}"""
+		                                        .format(self.RECAPTCHA_KEY, self.s_s_c_user_id, self.s_s_c_session_id,
+		                                                self.s_s_c_web_server_sign, self.s_s_c_web_server_sign2,
+		                                                self.page_url, app_key)
+									).json())['request']
 
 		
-		# Высчитываем хэш изображения, для того что бы сохранить его под уникальным именем
-		image_hash = hashlib.sha224(captcha_link.encode('utf-8')).hexdigest()
-		# Скачиваем изображение и сохраняем на диск в папку images
-		cache = httplib2.Http('.cache')
-		response, content = cache.request(captcha_link)
-		out = open(os.path.join(self.img_path, 'im-{0}.jpg'.format(image_hash)), 'wb')
-		out.write(content)
-		out.close()
-		
-		with open(os.path.join(self.img_path, 'im-{0}.jpg'.format(image_hash)), 'rb') as captcha_image:
-			# Отправляем изображение файлом
-			files = {'file': captcha_image}
-			# Создаём пайлоад, вводим ключ от сайта, выбираем метод ПОСТ и ждём ответа в JSON-формате
-			payload = {"key": self.RECAPTCHA_KEY,
-			           "method": "post",
-			           "json": 1,
-			           "soft_id": app_key}
-			# Отправляем на рукапча изображение капчи и другие парметры,
-			# в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
-			captcha_id = (requests.request('POST',
-			                               url_request,
-			                               data=payload,
-			                               files=files).json())['request']
-		
-		# удаляем файл капчи и врменные файлы
-		os.remove(os.path.join(self.img_path, "im-{0}.jpg".format(image_hash)))
+
 		# Ожидаем решения капчи
 		time.sleep(self.sleep_time)
 		while True:
@@ -67,7 +43,12 @@ class KeyCaptcha:
 				time.sleep(self.sleep_time)
 			else:
 				return captcha_response.json()['request']
-	
-	def __del__(self):
-		if os.path.exists(".cache"):
-			shutil.rmtree(".cache")
+
+data = {
+	"s_s_c_user_id": 15,
+	"s_s_c_session_id": '6fdf7cb25b2f1dda68741b4d6d13cbc3',
+	"s_s_c_web_server_sign": '053e491bc45a535c613c90cdf26b8f72',
+	"s_s_c_web_server_sign2": 'ec55f8fb286bcf019c761298003fe059',
+	"page_url": 'https://www.keycaptcha.com/signup/',
+}
+print(KeyCaptcha(recaptcha_api='5b0290c40569c2d322f085deb32b8c91', key_captcha_data=data).captcha_handler())
