@@ -51,4 +51,8 @@ data = {
 	"s_s_c_web_server_sign2": 'ec55f8fb286bcf019c761298003fe059',
 	"page_url": 'https://www.keycaptcha.com/signup/',
 }
+<<<<<<< HEAD
 print(KeyCaptcha(recaptcha_api='5b0290c40569c2d322f085deb32b8c91', key_captcha_data=data).captcha_handler())
+=======
+#print(KeyCaptcha(recaptcha_api='', key_captcha_data=data).captcha_handler())
+>>>>>>> dev
