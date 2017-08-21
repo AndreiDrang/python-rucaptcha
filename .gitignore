@@ -3,7 +3,6 @@
 .idea/workspace.xml
 Web-Interface/.idea
 .idea/codeStyleSettings.xml
-dist
 /.pypirc.ini
 /python_rucaptcha.egg-info/
 /Web-Interface/.idea/
