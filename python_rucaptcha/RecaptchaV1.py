@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-from python_rucaptcha import CommonCaptcha
-
-=======
 import ImageCaptcha
->>>>>>> dev
 
 class RecaptchaV1:
 	'''
