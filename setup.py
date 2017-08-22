@@ -3,7 +3,7 @@ from os.path import join, dirname
 
 setup(
 	name='python-rucaptcha',
-	version='0.6',
+	version='0.6.a1',
 	author='AndreiDrang, redV0ID',
 	
 	packages=['python_rucaptcha'],
