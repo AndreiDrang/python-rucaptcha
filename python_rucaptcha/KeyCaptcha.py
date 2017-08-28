@@ -1,9 +1,5 @@
-import httplib2
 import requests
-import os, shutil
-import tempfile
 import time
-import hashlib
 from config import url_request, url_response, app_key
 
 
@@ -29,8 +25,6 @@ class KeyCaptcha:
 		                                                self.page_url, app_key)
 									).json())['request']
 
-		
-
 		# Ожидаем решения капчи
 		time.sleep(self.sleep_time)
 		while True:
@@ -44,12 +38,4 @@ class KeyCaptcha:
 			else:
 				return captcha_response.json()['request']
 
-data = {
-	"s_s_c_user_id": 15,
-	"s_s_c_session_id": '6fdf7cb25b2f1dda68741b4d6d13cbc3',
-	"s_s_c_web_server_sign": '053e491bc45a535c613c90cdf26b8f72',
-	"s_s_c_web_server_sign2": 'ec55f8fb286bcf019c761298003fe059',
-	"page_url": 'https://www.keycaptcha.com/signup/',
-}
 
-#print(KeyCaptcha(recaptcha_api='', key_captcha_data=data).captcha_handler())

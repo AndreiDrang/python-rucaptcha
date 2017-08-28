@@ -16,6 +16,6 @@ __pycache__/
 python_rucaptcha.egg-info/
 
 \.idea/
-/CaptchaTester/temp_config.py
-CaptchaTester/common_captcha_images/
+CaptchaTester/temp_config.py
 Web-Interface/
+!/CaptchaTester/temp_config.py

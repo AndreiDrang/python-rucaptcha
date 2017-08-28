@@ -32,5 +32,3 @@ class ReCaptchaV2:
 				time.sleep(6)
 			else:
 				return captcha_response.json()["request"]
-			
-#print(ReCaptchaV2(recaptcha_api="").captcha_handler(site_key="6LcC7SsUAAAAAN3AOB-clPIsrKfnBUlO2QkC_vQ7", page_url='http://85.255.8.26/invisible_recaptcha/'))
