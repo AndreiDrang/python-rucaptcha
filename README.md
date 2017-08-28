@@ -1,9 +1,25 @@
 # python-rucaptcha
-Python library for RuCaptcha.
+Python 3 library for RuCaptcha.
 
-On [PyPi](https://pypi.python.org/pypi?:action=display&name=python-rucaptcha&version=0.5a1).
+On [PyPi](https://pypi.python.org/pypi?:action=display&name=python-rucaptcha&version=0.7rc1).
+
+## How to install?
+
+### pip
+
+```bash
+pip install python-rucaptcha
+```
+
+
+### Source
+```bash
+git clone https://github.com/AndreiDrang/python-rucaptcha.git
+cd python-rucaptcha
+python setup.py install
+```
 ***
-Библиотека на языке Python 3 для работы с сервисом ручного решения капчи [RuCaptcha](https://rucaptcha.com/).
+Библиотека на языке Python 3 для работы с сервисом решения капчи [RuCaptcha](https://rucaptcha.com/).
 
 На данный момент реализованы следующие методы:
 
