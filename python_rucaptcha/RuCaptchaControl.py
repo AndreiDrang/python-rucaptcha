@@ -1,7 +1,8 @@
 import requests
 from config import url_response
 
-class RuСaptchaControl:
+
+class RuCaptchaControl:
     def __init__(self, recaptcha_api):
         self.RECAPTCHA_KEY = recaptcha_api
 

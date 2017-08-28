@@ -1,9 +1,8 @@
-from setuptools import setup, find_packages
-from os.path import join, dirname
+from setuptools import setup
 
 setup(
 	name='python-rucaptcha',
-	version='0.6.a1',
+	version='0.7.b1',
 	author='AndreiDrang, redV0ID',
 	
 	packages=['python_rucaptcha'],

@@ -1,7 +1,6 @@
 import httplib2
 import requests
 import os, shutil
-import tempfile
 import time
 import hashlib
 from config import url_request, url_response, app_key
@@ -83,4 +82,6 @@ class ImageCaptcha:
     def __del__(self):
         if os.path.exists(".cache"):
             shutil.rmtree(".cache")
+        if os.path.exists(self.img_path):
+            shutil.rmtree(self.img_path)
 
