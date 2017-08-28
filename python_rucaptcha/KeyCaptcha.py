@@ -5,14 +5,14 @@ from config import url_request, url_response, app_key
 
 class KeyCaptcha:
 	
-	def __init__(self, recaptcha_api, key_captcha_data, sleep_time=5):
+	def __init__(self, rucaptcha_key, key_captcha_data, sleep_time=5):
 		self.s_s_c_user_id = key_captcha_data['s_s_c_user_id']
 		self.s_s_c_session_id = key_captcha_data['s_s_c_session_id']
 		self.s_s_c_web_server_sign = key_captcha_data['s_s_c_web_server_sign']
 		self.s_s_c_web_server_sign2 = key_captcha_data['s_s_c_web_server_sign2']
 		self.page_url = key_captcha_data['page_url']
 		
-		self.RECAPTCHA_KEY = recaptcha_api
+		self.RECAPTCHA_KEY = rucaptcha_key
 		self.sleep_time = sleep_time
 
 

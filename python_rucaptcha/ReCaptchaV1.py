@@ -6,17 +6,17 @@ class RecaptchaV1:
 	Требуется передать API ключ сайта, ссылку на изображение и,по желанию, время ожидания решения капчи
 	Подробней информацию смотрите в методе 'captcha_handler'
 	'''
-	def __init__(self, recaptcha_api, sleep_time=5):
+	def __init__(self, rucaptcha_key, sleep_time=5):
 		'''
 		Инициализация нужных переменных, создание папки для изображений и кэша
         После завершения работы - удалются временные фалйы и папки
         Основная работа просиходит через метод решения обычной капчи
-		:param recaptcha_api:  АПИ ключ капчи из кабинета пользователя
+		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
 		:param sleep_time: Вермя ожидания решения капчи
 		'''
-		self.recaptcha_api = recaptcha_api
+		self.rucaptcha_key = rucaptcha_key
 		self.sleep_time = sleep_time
-		self.common_captcha = ImageCaptcha.ImageCaptcha(recaptcha_api=self.recaptcha_api, sleep_time=self.sleep_time)
+		self.common_captcha = ImageCaptcha.ImageCaptcha(rucaptcha_key=self.rucaptcha_key, sleep_time=self.sleep_time)
 		
 		
 	def captcha_handler(self, recaptcha_challenge_field):

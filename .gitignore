@@ -1,12 +1,10 @@
 # Created by .ignore support plugin (hsz.mobi)
 .gitignore
 .idea/workspace.xml
-Web-Interface/.idea
 .idea/codeStyleSettings.xml
-dist
+
 /.pypirc.ini
 /python_rucaptcha.egg-info/
-/Web-Interface/.idea/
 .idea/dataSources.local.xml
 .idea/dataSources.xml
 .idea/dataSources/
@@ -17,5 +15,6 @@ python_rucaptcha.egg-info/
 
 \.idea/
 CaptchaTester/temp_config.py
-Web-Interface/
-!/CaptchaTester/temp_config.py
+
+dist/
+/Web-Interface/

@@ -13,14 +13,14 @@ class ImageCaptcha:
     Подробней информацию смотрите в методе 'captcha_handler'
     '''
     
-    def __init__(self, recaptcha_api, sleep_time=5):
+    def __init__(self, rucaptcha_key, sleep_time=5):
         '''
         Инициализация нужных переменных, создание папки для изображений и кэша
         После завершения работы - удалются временные фалйы и папки
-        :param recaptcha_api:  АПИ ключ капчи из кабинета пользователя
+        :param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
         :param sleep_time: Вермя ожидания решения капчи
         '''
-        self.RECAPTCHA_KEY = recaptcha_api
+        self.RECAPTCHA_KEY = rucaptcha_key
         self.sleep_time = sleep_time
         self.img_path = os.path.normpath('common_captcha_images')
         try:

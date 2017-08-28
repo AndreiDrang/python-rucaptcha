@@ -4,10 +4,10 @@ from config import url_request, url_response, app_key
 
 
 class ReCaptchaV2:
-	def __init__(self, recaptcha_api, sleep_time=16):
+	def __init__(self, rucaptcha_key, sleep_time=16):
 		self.url_request = "http://2captcha.com/in.php"
 		self.url_response = "http://2captcha.com/res.php"
-		self.RECAPTCHA_KEY = recaptcha_api
+		self.RECAPTCHA_KEY = rucaptcha_key
 		self.sleep_time = sleep_time
 	
 	# Работа с капчей

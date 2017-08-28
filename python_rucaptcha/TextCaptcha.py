@@ -4,8 +4,8 @@ from config import url_request, url_response, app_key
 
 
 class TextCaptcha:
-	def __init__(self, recaptcha_api, sleep_time=6):
-		self.RECAPTCHA_KEY = recaptcha_api
+	def __init__(self, rucaptcha_key, sleep_time=6):
+		self.RECAPTCHA_KEY = rucaptcha_key
 		self.sleep_time = sleep_time
 
 	def captcha_handler(self, captcha_text):
