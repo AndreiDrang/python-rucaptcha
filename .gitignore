@@ -1,20 +1,11 @@
 # Created by .ignore support plugin (hsz.mobi)
 .gitignore
-.idea/workspace.xml
-.idea/codeStyleSettings.xml
-
-/.pypirc.ini
-/python_rucaptcha.egg-info/
-.idea/dataSources.local.xml
-.idea/dataSources.xml
-.idea/dataSources/
-.idea/deployment.xml
-.idea/webServers.xml
-__pycache__/
 python_rucaptcha.egg-info/
 
 \.idea/
-CaptchaTester/temp_config.py
 
-dist/
-/Web-Interface/
+
+Web-Interface/
+/ico.png
+dist/python-rucaptcha-0.7b1.tar.gz
+dist/python-rucaptcha-0.7rc1.tar.gz

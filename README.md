@@ -19,6 +19,7 @@ cd python-rucaptcha
 python setup.py install
 ```
 ***
+
 Библиотека на языке Python 3 для работы с сервисом решения капчи [RuCaptcha](https://rucaptcha.com/).
 
 На данный момент реализованы следующие методы:
