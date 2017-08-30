@@ -6,8 +6,8 @@ from python_rucaptcha import ImageCaptcha
 Этот пример показывает то как нужно работать с модулем для распознования обычной капчи изображением,
 на примере нашего сайта.
 В общем случае вам потребуется получение:
-1. Получить ссылку на изображение капчи(сртрока 14 в примере)
-2. Передать эту ссылку в модуль ImageCaptcha(строка 19 в примере)
+1. Получить ссылку на изображение капчи(сртрока 15 в примере)
+2. Передать эту ссылку в модуль ImageCaptcha(строка 20 в примере)
 """
 # Введите ключ от рукапчи из своего аккаунта
 RUCAPTCHA_KEY = ""
@@ -19,6 +19,12 @@ captcha_link = requests.get("http://85.255.8.26/api/", params={"captcha_type":"g
 """
 user_answer = ImageCaptcha.ImageCaptcha(recaptcha_api=RUCAPTCHA_KEY).captcha_handler(captcha_link=captcha_link)
 
+'''
+user_answer - это и есть решение Вашей капчи
+
+Дальше идёт пример проверки правильности решения капчи на примере сайта
+'''
+
 # Вычленяем из ссылки название капчи
 captcha_name = captcha_link.split("/")[-1]
 # Для проверки правильности разгадки капчи нужно послать ПОСТ запрос c именем капчи и ответом юзера
@@ -26,4 +32,4 @@ server_answer = requests.post("http://85.255.8.26/api/", data={"common_captcha_s
 	                                                         "common_captcha_answer":user_answer,
 	                                                         "common_captcha_btn": True})
 # Есть два типа ответа: OK и FAIL
-print(server_answer.json()["request"])
+print(server_answer)
