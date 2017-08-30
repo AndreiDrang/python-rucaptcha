@@ -17,7 +17,7 @@ captcha_link = requests.get("http://85.255.8.26/api/", params={"captcha_type":"g
 Тут нужно воспользоваться бибилотекой, отослать на решение ссылку на капчу и получить ответ
 далее его записать в user_answer и отправить на проверку уже на наш сайт
 """
-user_answer = ImageCaptcha.ImageCaptcha(recaptcha_api=RUCAPTCHA_KEY).captcha_handler(captcha_link=captcha_link)
+user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_link=captcha_link)
 
 '''
 user_answer - это и есть решение Вашей капчи
@@ -29,7 +29,7 @@ user_answer - это и есть решение Вашей капчи
 captcha_name = captcha_link.split("/")[-1]
 # Для проверки правильности разгадки капчи нужно послать ПОСТ запрос c именем капчи и ответом юзера
 server_answer = requests.post("http://85.255.8.26/api/", data={"common_captcha_src":captcha_name,
-	                                                         "common_captcha_answer":user_answer,
-	                                                         "common_captcha_btn": True})
+	                                                           "common_captcha_answer":user_answer,
+	                                                           "common_captcha_btn": True})
 # Есть два типа ответа: OK и FAIL
-print(server_answer)
+print(server_answer.json()["request"])
