@@ -4,6 +4,7 @@ import os, shutil
 import time
 import hashlib
 from config import url_request, url_response, app_key
+from errors import RuCaptchaError
 
 class ImageCaptcha:
     '''
@@ -57,12 +58,13 @@ class ImageCaptcha:
                        "method": "post",
                        "json": 1,
                        "soft_id":app_key}
+
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
             captcha_id = (requests.request('POST',
-                                           url_request,
-                                           data=payload,
-                                           files=files).json())['request']
+                                            url_request,
+                                            data=payload,
+                                            files=files).json())['request']
 
         # удаляем файл капчи и врменные файлы
         os.remove(os.path.join(self.img_path, "im-{0}.jpg".format(image_hash)))

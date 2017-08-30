@@ -1,9 +1,11 @@
-class Error(Exception):
+class RuCaptchaError(Exception):
     """Базовый класс для всех исключений в этом модуле."""
-    pass
+    def __init__(self, description):
+
+        pass
 
 
-class WrongUserKeyError(Error):
+class WrongUserKeyError(RuCaptchaError):
     """Исключение порождается при неправильном RuCaptcha KEY.
     Вы указали значение параметра key в неверном формате, ключ должен содержать 32 символа.
     Прекратите отправку запросов и проверьте ваш ключ API.
@@ -12,7 +14,7 @@ class WrongUserKeyError(Error):
     """
 
 
-class NonExistentKeyError(Error):
+class NonExistentKeyError(RuCaptchaError):
     """Исключение порождается при несуществующем RuCaptcha KEY.
     Ключ, который вы указали не существует.
     Прекратите отправку запросов и проверьте ваш ключ API.
@@ -21,7 +23,7 @@ class NonExistentKeyError(Error):
     """
 
 
-class ZeroBalanceError(Error):
+class ZeroBalanceError(RuCaptchaError):
     """Исключение порождается при отсутствии средств на балансе.
     На вашем счету недостаточно средств.
     Прекратите отправку запросов. Пополните баланс вашего счета, чтобы продолжить работу с сервисом.
@@ -30,7 +32,7 @@ class ZeroBalanceError(Error):
     """
 
 
-class PageUrlError(Error):
+class PageUrlError(RuCaptchaError):
     """Исключение порождается при неправильном PageUrl.
    	Параметр pagurl не задан в запросе.
    	Остановите отправку запросов и измените ваш код, чтобы передавать правильное значение параметра pagurl.
@@ -39,7 +41,7 @@ class PageUrlError(Error):
     """
 
 
-class NoSlotsError(Error):
+class NoSlotsError(RuCaptchaError):
     """Исключение порождается при отсутсвии свободных слотов в очереди на решение ваших капч.
     Вы можете получить данную ошибку в двух случаях:
     1. Очередь ваших капч, которые еще не распределены на работников, слишком длинная.
@@ -53,7 +55,7 @@ class NoSlotsError(Error):
     """
 
 
-class ZerroCaptchaSizeError(Error):
+class ZerroCaptchaSizeError(RuCaptchaError):
     """Исключение порождается при некорректной загрузке изображения.
     Размер вашего изображения менее 100 байт.
     Проверьте файл изображения.
@@ -62,7 +64,7 @@ class ZerroCaptchaSizeError(Error):
     """
 
 
-class ToBigCaptchaSizeError(Error):
+class ToBigCaptchaSizeError(RuCaptchaError):
     """Исключение порождается при некорректной загрузке изображения.
     Размер вашего изображения более 100 Кбайт.
     Проверьте файл изображения.
@@ -72,7 +74,7 @@ class ToBigCaptchaSizeError(Error):
     """
 
 
-class WrongCaptchaFormatError(Error):
+class WrongCaptchaFormatError(RuCaptchaError):
     """Исключение порождается при загрузке некорректного изображения.
     Файл имеет неподдерживаемое расширение.
     Допустимые расширения: jpg, jpeg, gif, png.
@@ -82,7 +84,7 @@ class WrongCaptchaFormatError(Error):
     """
 
 
-class NotSupportedCaptchaTypeError(Error):
+class NotSupportedCaptchaTypeError(RuCaptchaError):
     """Исключение порождается при загрузке некорректного изображения.
     Сервер не может опознать тип вашего файла.
     Проверьте файл изображения.
@@ -90,7 +92,7 @@ class NotSupportedCaptchaTypeError(Error):
     ERROR_IMAGE_TYPE_NOT_SUPPORTED - искючение из таблицы.
     """
 
-class IPNotAllowedError(Error):
+class IPNotAllowedError(RuCaptchaError):
     """Исключение порождается при запросе к серверу от неразрешённого IP адреса.
     Запрос отправлен с IP адреса, который не добавлен в список разрешенных вами IP адресов.
     Проверьте список адресов.
@@ -98,7 +100,7 @@ class IPNotAllowedError(Error):
     ERROR_IP_NOT_ALLOWED - искючение из таблицы.
     """
 
-class BannedIPError(Error):
+class BannedIPError(RuCaptchaError):
     """Исключение порождается при чрезмерном количестве попыток авторизации с неверным ключём.
     Ваш IP адрес заблокирован за чрезмерное количество попыток авторизации с неверным ключем авторизации.
     Для разблокировки обратитесь в службу технической поддержки.
@@ -106,7 +108,7 @@ class BannedIPError(Error):
     IP_BANNED - искючение из таблицы.
     """
 
-class BlockedimageCaptchaError(Error):
+class BlockedimageCaptchaError(RuCaptchaError):
     """Исключение порождается при загрузке некоректного изображения с сайта.
     Вы отправили изображение, которые помечено в нашей базе данных как нераспознаваемое.
     Обычно это происходит, если сайт, на котором вы решаете капчу,
@@ -116,7 +118,7 @@ class BlockedimageCaptchaError(Error):
     ERROR_CAPTCHAIMAGE_BLOCKED - искючение из таблицы.
     """
 
-class IPBannedByGoogleError(Error):
+class IPBannedByGoogleError(RuCaptchaError):
     """Исключение порождается при блокировке вашего IP в гугле.
     Приенимо только к Audio ReCaptcha V2.
     Ошибка означает, что Google забанил ваш IP адрес и выдает аудиозапись об этом вместо капчи.
@@ -125,7 +127,7 @@ class IPBannedByGoogleError(Error):
     ERROR_YOUR_IP_IS_BANNED_BY_GOOGLE  - искючение из таблицы.
     """
 
-class NNNNError(Error):
+class NNNNError(RuCaptchaError):
     """Исключение порождается при превышении лимитов запросов.
     Вы превысили лимит запросов и ваш аккаунт временно заблокирован.
     Вам необходимо установить правильные тайм-ауты.
@@ -181,7 +183,7 @@ class Number1005Error(NNNNError):
     ERROR: 1005 - искючение из таблицы.
     """
 
-class CaptchaNotReadyError(Error):
+class CaptchaNotReadyError(RuCaptchaError):
     """Исключение порождается при неготовности капчи.
     Ваша капча еще не решена.
     Подождите 5 секунд и повторите ваш запрос.
@@ -189,7 +191,7 @@ class CaptchaNotReadyError(Error):
     CAPCHA_NOT_READY - исключение из таблицы.
     """
 
-class UnsolvableCaptchaError(Error):
+class UnsolvableCaptchaError(RuCaptchaError):
     """Исключение порождается при невозможности решить капчу.
     Мы не можем решить вашу капчу - три наших работника не смогли ее решить, либо мы не получили ответ в течении 90 секунд.
     Мы не спишем с вас деньги за этот запрос.
@@ -199,7 +201,7 @@ class UnsolvableCaptchaError(Error):
     """
 
 
-class WrongCaptchaIDFormatError(Error):
+class WrongCaptchaIDFormatError(RuCaptchaError):
     """Исключение порождается при некорректном формате номера капчи.
     Вы отправили ID капчи в неправильном формате.
     ID состоит только из цифр.
@@ -208,7 +210,7 @@ class WrongCaptchaIDFormatError(Error):
     ERROR_WRONG_ID_FORMAT - исключение из таблицы.
     """
 
-class WrongCaptchaIDError(Error):
+class WrongCaptchaIDError(RuCaptchaError):
     """Исключение порождается при некорректном номере капчи.
     Вы отправили неверный ID капчи.
     Проверьте ID вашей капчи или код, который отвечает за получение и отправку ID.
@@ -216,7 +218,7 @@ class WrongCaptchaIDError(Error):
     ERROR_WRONG_CAPTCHA_ID - исключение из таблицы.
     """
 
-class BadDuplicatesError(Error):
+class BadDuplicatesError(RuCaptchaError):
     """Исключение порождается при невозможности решить 100% капч.
     Ошибка возвращается, если вы используете функцию 100% распознавания.
     Ошибка означает, что мы достигли максимального числа попыток, но требуемое количество совпадений достигнуто не было.
@@ -225,7 +227,7 @@ class BadDuplicatesError(Error):
     ERROR_BAD_DUPLICATES - исключение из таблицы.
     """
 
-class ReportNotRecordedError(Error):
+class ReportNotRecordedError(RuCaptchaError):
     """Исключение порождается при некорректной загрузке изображения.
     Ошибка возвращается при отправке жалобы на неверный ответ если вы уже пожаловались на большое количество верно решенных капч.
     Убедитесь, что вы отправляете жалобы только в случае неправильного решения.
