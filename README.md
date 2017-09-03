@@ -1,4 +1,7 @@
 # python-rucaptcha
+
+[![Code Climate](https://codeclimate.com/github/AndreiDrang/python-rucaptcha/badges/gpa.svg)](https://codeclimate.com/github/AndreiDrang/python-rucaptcha)
+
 Python 3 library for RuCaptcha.
 
 On [PyPi](https://pypi.python.org/pypi/python-rucaptcha/0.9).
