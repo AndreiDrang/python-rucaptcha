@@ -14,9 +14,9 @@ class RecaptchaV1:
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
 		:param sleep_time: Вермя ожидания решения капчи
 		'''
-		self.rucaptcha_key = rucaptcha_key
+		self.RUCAPTCHA_KEY = rucaptcha_key
 		self.sleep_time = sleep_time
-		self.common_captcha = ImageCaptcha.ImageCaptcha(rucaptcha_key=self.rucaptcha_key, sleep_time=self.sleep_time)
+		self.common_captcha = ImageCaptcha.ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, sleep_time=self.sleep_time)
 		
 		
 	def captcha_handler(self, recaptcha_challenge_field):

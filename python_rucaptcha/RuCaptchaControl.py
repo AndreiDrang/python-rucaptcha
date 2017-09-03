@@ -4,7 +4,7 @@ from config import url_response
 
 class RuCaptchaControl:
     def __init__(self, rucaptcha_key):
-        self.RECAPTCHA_KEY = rucaptcha_key
+        self.RUCAPTCHA_KEY = rucaptcha_key
 
     def get_balance(self):
         answer = requests.get(url_response+"?action=getbalance&json=1&key={0}".format(self.RECAPTCHA_KEY))

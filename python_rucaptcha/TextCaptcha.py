@@ -5,12 +5,12 @@ from config import url_request, url_response, app_key
 
 class TextCaptcha:
 	def __init__(self, rucaptcha_key, sleep_time=6):
-		self.RECAPTCHA_KEY = rucaptcha_key
+		self.RUCAPTCHA_KEY = rucaptcha_key
 		self.sleep_time = sleep_time
 
 	def captcha_handler(self, captcha_text):
 		# Создаём пайлоад, вводим ключ от сайта, выбираем метод ПОСТ и ждём ответа. в JSON-формате
-		payload = {"key": self.RECAPTCHA_KEY,
+		payload = {"key": self.RUCAPTCHA_KEY,
 					"method": "textcaptcha",
 					"json": 1,
 					"textinstructions": captcha_text,
@@ -27,7 +27,7 @@ class TextCaptcha:
 			#  если всё ок - идём дальше
 			captcha_response = requests.request('GET',
 												url_response+"?key={0}&action=get&id={1}&json=1"
-												.format(self.RECAPTCHA_KEY, captcha_id))
+												.format(self.RUCAPTCHA_KEY, captcha_id))
 			if captcha_response.json()["request"] == 'CAPCHA_NOT_READY':
 				time.sleep(self.sleep_time)
 			else:

@@ -21,7 +21,7 @@ class ImageCaptcha:
         :param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
         :param sleep_time: Вермя ожидания решения капчи
         '''
-        self.RECAPTCHA_KEY = rucaptcha_key
+        self.RUCAPTCHA_KEY = rucaptcha_key
         self.sleep_time = sleep_time
         self.img_path = os.path.normpath('common_captcha_images')
         try:
@@ -46,15 +46,14 @@ class ImageCaptcha:
         # Скачиваем изображение и сохраняем на диск в папку images
         cache = httplib2.Http('.cache')
         response, content = cache.request(captcha_link)
-        out = open(os.path.join(self.img_path, 'im-{0}.jpg'.format(image_hash)), 'wb')
-        out.write(content)
-        out.close()
+        with open(os.path.join(self.img_path, 'im-{0}.jpg'.format(image_hash)), 'wb') as out:
+            out.write(content)
 
         with open(os.path.join(self.img_path, 'im-{0}.jpg'.format(image_hash)), 'rb') as captcha_image:
             # Отправляем изображение файлом
             files = {'file': captcha_image}
             # Создаём пайлоад, вводим ключ от сайта, выбираем метод ПОСТ и ждём ответа в JSON-формате
-            payload = {"key": self.RECAPTCHA_KEY,
+            payload = {"key": self.RUCAPTCHA_KEY,
                        "method": "post",
                        "json": 1,
                        "soft_id":app_key}
@@ -75,7 +74,7 @@ class ImageCaptcha:
             # если всё ок - идём дальше
             captcha_response = requests.request('GET',
                                                 url_response+"?key={0}&action=get&id={1}&json=1"
-                                                .format(self.RECAPTCHA_KEY, captcha_id))
+                                                .format(self.RUCAPTCHA_KEY, captcha_id))
             if captcha_response.json()["request"] == 'CAPCHA_NOT_READY':
                 time.sleep(self.sleep_time)
             else:

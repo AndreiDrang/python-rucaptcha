@@ -13,17 +13,25 @@ class KeyCaptcha:
 		self.s_s_c_web_server_sign2 = key_captcha_data['s_s_c_web_server_sign2']
 		self.page_url = key_captcha_data['page_url']
 		
-		self.RECAPTCHA_KEY = rucaptcha_key
+		self.RUCAPTCHA_KEY = rucaptcha_key
 		self.sleep_time = sleep_time
 
 
 	def captcha_handler(self):
-		captcha_id = (requests.post(url_request+"""?key={0}&s_s_c_user_id={1}&s_s_c_session_id={2}&
-									            s_s_c_web_server_sign={3}&s_s_c_web_server_sign2={4}&
-									            method=keycaptcha&pageurl={5}&json=1&soft_id={6}"""
-		                                        .format(self.RECAPTCHA_KEY, self.s_s_c_user_id, self.s_s_c_session_id,
-		                                                self.s_s_c_web_server_sign, self.s_s_c_web_server_sign2,
-		                                                self.page_url, app_key)
+		captcha_id = (requests.post(url_request+"""?key={0}&
+													s_s_c_user_id={1}&s_s_c_session_id={2}&
+									            	s_s_c_web_server_sign={3}&s
+									            	_s_c_web_server_sign2={4}&
+									            	method=keycaptcha&pageurl={5}&j
+									            	son=1&
+									            	soft_id={6}"""
+		                                    .format(self.RUCAPTCHA_KEY,
+													self.s_s_c_user_id,
+													self.s_s_c_session_id,
+		                                            self.s_s_c_web_server_sign,
+													self.s_s_c_web_server_sign2,
+		                                            self.page_url,
+													app_key)
 									).json())['request']
 
 		# Ожидаем решения капчи
@@ -33,10 +41,8 @@ class KeyCaptcha:
 			# если всё ок - идём дальше
 			captcha_response = requests.request('GET',
 			                                    url_response + "?key={0}&action=get&id={1}&json=1"
-			                                    .format(self.RECAPTCHA_KEY, captcha_id))
+			                                    .format(self.RUCAPTCHA_KEY, captcha_id))
 			if captcha_response.json()["request"] == 'CAPCHA_NOT_READY':
 				time.sleep(self.sleep_time)
 			else:
 				return captcha_response.json()['request']
-
-
