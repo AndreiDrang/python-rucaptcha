@@ -52,10 +52,15 @@ class RotateCaptcha:
 
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
-            captcha_id = (requests.request('POST',
+            captcha_id = requests.request('POST',
                                             url_request,
                                             data=payload,
-                                            files=files).json())['request']
+                                            files=files).json()
+
+        if captcha_id['status'] is 0:
+            return RuCaptchaError(captcha_id['request'])
+
+        captcha_id = captcha_id['request']
 
         # удаляем файл капчи и врменные файлы
         os.remove(os.path.join(self.img_path, "im-{0}.jpg".format(image_hash)))
@@ -67,9 +72,11 @@ class RotateCaptcha:
             captcha_response = requests.request('GET',
                                                 url_response+"?key={0}&action=get&id={1}&json=1"
                                                 .format(self.RUCAPTCHA_KEY, captcha_id))
-            if captcha_response.json()["request"] == 'CAPCHA_NOT_READY':
+            if captcha_response.json()['request']=='CAPCHA_NOT_READY':
                 time.sleep(self.sleep_time)
-            else:
+            elif captcha_response.json()["status"]==0:
+                return RuCaptchaError(captcha_response.json()["request"])
+            elif captcha_response.json()["status"]==1 :
                 return captcha_response.json()['request']
 
     def __del__(self):

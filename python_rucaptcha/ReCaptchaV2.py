@@ -1,7 +1,7 @@
 import requests
 import time
 from config import url_request, url_response, app_key
-
+from errors import RuCaptchaError
 
 class ReCaptchaV2:
 	def __init__(self, rucaptcha_key, sleep_time=16):
@@ -18,8 +18,12 @@ class ReCaptchaV2:
 							.format(self.RUCAPTCHA_KEY, site_key, page_url, app_key)
 		
 		# получаем ID капчи
-		answer = requests.request('GET', captcha_sender)
-		captcha_id = answer.json()['request']
+		captcha_id = requests.request('GET', captcha_sender).json()
+		# Фильтрация ошибки
+		if captcha_id['status'] is 0:
+			return RuCaptchaError(captcha_id['request'])
+
+		captcha_id = captcha_id['request']
 		
 		# Ожидаем решения капчи 20 секунд
 		time.sleep(self.sleep_time)
@@ -28,7 +32,10 @@ class ReCaptchaV2:
 			# отправляем запрос на результат решения капчи, если не решена ожидаем 6 секунд
 			captcha_response = requests.request('GET', url_response+"?key={0}&action=get&id={1}&json=1"
 			                                    .format(self.RUCAPTCHA_KEY, captcha_id))
-			if captcha_response.json()["request"] == 'CAPCHA_NOT_READY':
-				time.sleep(6)
-			else:
-				return captcha_response.json()["request"]
+
+			if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
+				time.sleep(self.sleep_time)
+			elif captcha_response.json()["status"] == 0:
+				return RuCaptchaError(captcha_response.json()["request"])
+			elif captcha_response.json()["status"] == 1:
+				return captcha_response.json()['request']

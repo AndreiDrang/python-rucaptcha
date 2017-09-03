@@ -1,8 +1,49 @@
+import time
+
 class RuCaptchaError(Exception):
     """Базовый класс для всех исключений в этом модуле."""
     def __init__(self, description):
+        if description=='ERROR_KEY_DOES_NOT_EXIST':
+            print(NonExistentKeyError.__doc__)
+        elif description=='ERROR_WRONG_CAPTCHA_ID':
+            print(WrongCaptchaIDError.__doc__)
+        elif description=='CAPCHA_NOT_READY':
+            print(CaptchaNotReadyError.__doc__)
+        elif description=='ERROR_WRONG_USER_KEY':
+            print(WrongUserKeyError.__doc__)
+        elif description=='ERROR_ZERO_BALANCE':
+            print(ZeroBalanceError.__doc__)
+        elif description=='ERROR_PAGEURL':
+            print(PageUrlError.__doc__)
+        elif description=='ERROR_NO_SLOT_AVAILABLE':
+            print(NoSlotsError.__doc__)
+        elif description=='ERROR_ZERO_CAPTCHA_FILESIZE':
+            print(ZerroCaptchaSizeError.__doc__)
+        elif description=='ERROR_TOO_BIG_CAPTCHA_FILESIZE':
+            print(ToBigCaptchaSizeError.__doc__)
+        elif description=='ERROR_WRONG_FILE_EXTENSION':
+            print(WrongCaptchaFormatError.__doc__)
+        elif description=='ERROR_IMAGE_TYPE_NOT_SUPPORTED':
+            print(NotSupportedCaptchaTypeError.__doc__)
+        elif description=='ERROR_IP_NOT_ALLOWED':
+            print(IPNotAllowedError.__doc__)
+        elif description=='IP_BANNED':
+            print(BannedIPError.__doc__)
+        elif description=='ERROR_CAPTCHAIMAGE_BLOCKED':
+            print(BlockedimageCaptchaError.__doc__)
+        elif description=='ERROR_YOUR_IP_IS_BANNED_BY_GOOGLE':
+            print(IPBannedByGoogleError.__doc__)
+        elif description=='ERROR_CAPTCHA_UNSOLVABLE':
+            print(UnsolvableCaptchaError.__doc__)
+        elif description=='ERROR_WRONG_ID_FORMAT':
+            print(WrongCaptchaIDFormatError.__doc__)
+        elif description=='ERROR_WRONG_CAPTCHA_ID ':
+            print(WrongCaptchaIDError.__doc__)
+        elif description=='ERROR_BAD_DUPLICATES':
+            print(BadDuplicatesError.__doc__)
+        elif description=='REPORT_NOT_RECORDED':
+            print(ReportNotRecordedError)
 
-        pass
 
 
 class WrongUserKeyError(RuCaptchaError):
@@ -13,7 +54,6 @@ class WrongUserKeyError(RuCaptchaError):
     ERROR_WRONG_USER_KEY - исключение из таблицы.
     """
 
-
 class NonExistentKeyError(RuCaptchaError):
     """Исключение порождается при несуществующем RuCaptcha KEY.
     Ключ, который вы указали не существует.
@@ -21,7 +61,6 @@ class NonExistentKeyError(RuCaptchaError):
 
     EERROR_KEY_DOES_NOT_EXIST - исключение из таблицы.
     """
-
 
 class ZeroBalanceError(RuCaptchaError):
     """Исключение порождается при отсутствии средств на балансе.
@@ -31,7 +70,6 @@ class ZeroBalanceError(RuCaptchaError):
     ERROR_ZERO_BALANCE - исключение из таблицы.
     """
 
-
 class PageUrlError(RuCaptchaError):
     """Исключение порождается при неправильном PageUrl.
    	Параметр pagurl не задан в запросе.
@@ -39,7 +77,6 @@ class PageUrlError(RuCaptchaError):
 
     ERROR_PAGEURL - исключение из таблицы.
     """
-
 
 class NoSlotsError(RuCaptchaError):
     """Исключение порождается при отсутсвии свободных слотов в очереди на решение ваших капч.
@@ -54,7 +91,6 @@ class NoSlotsError(RuCaptchaError):
     ERROR_NO_SLOT_AVAILABLE	 - исключение из таблицы.
     """
 
-
 class ZerroCaptchaSizeError(RuCaptchaError):
     """Исключение порождается при некорректной загрузке изображения.
     Размер вашего изображения менее 100 байт.
@@ -62,7 +98,6 @@ class ZerroCaptchaSizeError(RuCaptchaError):
 
     ERROR_ZERO_CAPTCHA_FILESIZE	 - исключение из таблицы.
     """
-
 
 class ToBigCaptchaSizeError(RuCaptchaError):
     """Исключение порождается при некорректной загрузке изображения.
@@ -73,7 +108,6 @@ class ToBigCaptchaSizeError(RuCaptchaError):
     ERROR_TOO_BIG_CAPTCHA_FILESIZE	 - исключение из таблицы.
     """
 
-
 class WrongCaptchaFormatError(RuCaptchaError):
     """Исключение порождается при загрузке некорректного изображения.
     Файл имеет неподдерживаемое расширение.
@@ -82,7 +116,6 @@ class WrongCaptchaFormatError(RuCaptchaError):
 
     ERROR_WRONG_FILE_EXTENSION - исключение из таблицы.
     """
-
 
 class NotSupportedCaptchaTypeError(RuCaptchaError):
     """Исключение порождается при загрузке некорректного изображения.
@@ -134,6 +167,8 @@ class NNNNError(RuCaptchaError):
 
     ERROR: NNNN - искючение из таблицы.
     """
+    def __init__(self, description):
+        pass
 
 class Number1001Error(NNNNError):
     """Блокировка на 10 минут.
@@ -199,7 +234,6 @@ class UnsolvableCaptchaError(RuCaptchaError):
 
     ERROR_CAPTCHA_UNSOLVABLE - исключение из таблицы.
     """
-
 
 class WrongCaptchaIDFormatError(RuCaptchaError):
     """Исключение порождается при некорректном формате номера капчи.

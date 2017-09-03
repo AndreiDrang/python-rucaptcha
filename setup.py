@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
 	name='python-rucaptcha',
-	version='0.9',
+	version='0.9a1',
 	author='AndreiDrang, redV0ID',
 	
 	packages=['python_rucaptcha'],
@@ -13,6 +13,16 @@ setup(
 	author_email='drang.andray@gmail.com',
 	url='https://github.com/AndreiDrang/python-rucaptcha',
 	license='MIT',
-	keywords='captcha rucaptcha',
+	keywords='''captcha 
+				rucaptcha 
+				python3
+				flask
+				recaptcha
+				captcha
+				security
+				api
+				python-library
+				python-rucaptcha
+				rucaptcha-client''',
 	python_requires='>=3.4',
 )
