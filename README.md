@@ -28,7 +28,7 @@ python setup.py install
 
 2.[Решение KeyCaptcha(пазл).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/KeyCaptcha.py) **НА ДАННЫЙ МОМЕНТ НЕ ПОДДЕРЖИВАЕТСЯ САМИМ СЕРВИСОМ RuCaptcha**
 
-3.[Решение аудиокапчи. Используется для SolveMedia капчи.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/MediaCaptcha.py)**В ПРОЦЕССЕ СОЗДАНИЯ**
+3.[Решение аудиокапчи. Используется для SolveMedia капчи.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/MediaCaptcha.py)
 
 4.[Решение старой ReCaptcha v1.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV1.py)
 
