@@ -6,7 +6,9 @@ Python 3 library for RuCaptcha.
 
 On [PyPi](https://pypi.python.org/pypi?:action=display&name=python-rucaptcha&version=0.9.5).
 
-## How to install?
+Библиотека предназначена для разрабаотчиков ПО и служит для облегчения работы с API сервиса RuCaptcha.
+
+## How to install? Как установить?
 
 ### pip
 
@@ -23,13 +25,11 @@ python setup.py install
 ```
 ***
 
-Библиотека на языке Python 3 для работы с сервисом решения капчи [RuCaptcha](https://rucaptcha.com/).
-
-На данный момент реализованы следующие методы:
+### На данный момент реализованы следующие методы:
 
 1.[Решение капчи-изображения(большие и маленькие).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ImageCaptcha.py)
 
-2.[Решение KeyCaptcha(пазл).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/KeyCaptcha.py) **НА ДАННЫЙ МОМЕНТ НЕ ПОДДЕРЖИВАЕТСЯ САМИМ СЕРВИСОМ RuCaptcha**
+2.[Решение KeyCaptcha(пазл).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/KeyCaptcha.py) ***НЕ ПОДДЕРЖИВАЕТСЯ СЕРВИСОМ RuCaptcha***
 
 3.[Решение аудиокапчи. Используется для SolveMedia капчи.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/MediaCaptcha.py)
 
