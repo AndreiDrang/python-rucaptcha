@@ -4,16 +4,29 @@ from config import url_request, url_response, app_key
 from errors import RuCaptchaError
 
 class ReCaptchaV2:
+	'''
+	Класс служит для работы с новой ReCaptcha от Гугла и Invisible ReCaptcha.
+	Для работы потребуется передать ключ от РуКапчи, затем ключ сайта(подробности его получения в описании на сайте)
+	И так же ссылку на сайт.
+	'''
 	def __init__(self, rucaptcha_key, sleep_time=16):
-		self.url_request = "http://2captcha.com/in.php"
-		self.url_response = "http://2captcha.com/res.php"
+		'''
+		Инициализация нужных переменных.и
+        :param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
+        :param sleep_time: Вермя ожидания решения капчи
+		'''
 		self.RUCAPTCHA_KEY = rucaptcha_key
 		self.sleep_time = sleep_time
 	
 	# Работа с капчей
 	# тестовый ключ сайта
 	def captcha_handler(self, site_key, page_url):
-		
+		'''
+		Метод отвечает за передачу данных на сервер для решения капчи
+		:param site_key: Гугл-ключ сайта
+		:param page_url: Ссылка на страницу на которой находится капча
+		:return: В качестве ответа переждаётся строка которую нужно вставить для отправки гуглу на проверку
+		'''
 		captcha_sender = url_request+'?key={0}&method=userrecaptcha&googlekey={1}&pageurl={2}&json=1&soft_id={3}'\
 							.format(self.RUCAPTCHA_KEY, site_key, page_url, app_key)
 		
