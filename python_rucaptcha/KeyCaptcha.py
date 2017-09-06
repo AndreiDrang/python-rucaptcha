@@ -32,7 +32,12 @@ class KeyCaptcha:
 													self.s_s_c_web_server_sign2,
 		                                            self.page_url,
 													app_key)
-									).json())['request']
+									).json())
+
+		if captcha_id['status'] is 0:
+			return RuCaptchaError(captcha_id['request'])
+
+		captcha_id = captcha_id['request']
 
 		# Ожидаем решения капчи
 		time.sleep(self.sleep_time)
@@ -42,7 +47,9 @@ class KeyCaptcha:
 			captcha_response = requests.request('GET',
 			                                    url_response + "?key={0}&action=get&id={1}&json=1"
 			                                    .format(self.RUCAPTCHA_KEY, captcha_id))
-			if captcha_response.json()["request"] == 'CAPCHA_NOT_READY':
+			if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
 				time.sleep(self.sleep_time)
-			else:
+			elif captcha_response.json()["status"] == 0:
+				return RuCaptchaError(captcha_response.json()["request"])
+			elif captcha_response.json()["status"] == 1:
 				return captcha_response.json()['request']

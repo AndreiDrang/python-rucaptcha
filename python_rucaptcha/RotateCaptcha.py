@@ -1,7 +1,6 @@
-import os, shutil
-import hashlib
-import httplib2, requests
+import requests
 import time
+import tempfile
 
 from config import url_request, url_response, app_key
 from errors import RuCaptchaError
@@ -16,14 +15,6 @@ class RotateCaptcha:
         '''
         self.RUCAPTCHA_KEY = rucaptcha_key
         self.sleep_time = sleep_time
-        self.img_path = os.path.normpath('rotate_captcha_images')
-        try:
-            if not os.path.exists(self.img_path):
-                os.mkdir(self.img_path)
-            if not os.path.exists(".cache"):
-                os.mkdir(".cache")
-        except Exception as err:
-            print(err)
 
     # Работа с капчёй
     def captcha_handler(self, captcha_link):
@@ -33,15 +24,11 @@ class RotateCaptcha:
         :param captcha_link: Ссылка на изображение
         :return: Ответ на капчу
         '''
-        # Высчитываем хэш изображения, для того что бы сохранить его под уникальным именем
-        image_hash = hashlib.sha224(captcha_link.encode('utf-8')).hexdigest()
-        # Скачиваем изображение и сохраняем на диск в папку images
-        cache = httplib2.Http('.cache')
-        response, content = cache.request(captcha_link)
-        with open(os.path.join(self.img_path, 'im-{0}.jpg'.format(image_hash)), 'wb') as out:
+        # Скачиваем изображение
+        content = requests.get(captcha_link).content
+        with tempfile.NamedTemporaryFile(suffix='.jpg') as out:
             out.write(content)
-
-        with open(os.path.join(self.img_path, 'im-{0}.jpg'.format(image_hash)), 'rb') as captcha_image:
+            captcha_image = open(out.name, 'rb')
             # Отправляем изображение файлом
             files = {'file': captcha_image}
             # Создаём пайлоад, вводим ключ от сайта, выбираем метод ПОСТ и ждём ответа в JSON-формате
@@ -49,6 +36,7 @@ class RotateCaptcha:
                        "method": "rotatecaptcha",
                        "json": 1,
                        "soft_id":app_key}
+
 
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
@@ -62,8 +50,6 @@ class RotateCaptcha:
 
         captcha_id = captcha_id['request']
 
-        # удаляем файл капчи и врменные файлы
-        os.remove(os.path.join(self.img_path, "im-{0}.jpg".format(image_hash)))
         # Ожидаем решения капчи
         time.sleep(self.sleep_time)
         while True:
@@ -79,8 +65,3 @@ class RotateCaptcha:
             elif captcha_response.json()["status"]==1 :
                 return captcha_response.json()['request']
 
-    def __del__(self):
-        if os.path.exists(".cache"):
-            shutil.rmtree(".cache")
-        if os.path.exists(self.img_path):
-            shutil.rmtree(self.img_path)

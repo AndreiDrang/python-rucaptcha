@@ -9,9 +9,6 @@ from errors import RuCaptchaError
 
 class MediaCaptcha:
     """
-    !!!ВАЖНО!!!
-    Обязательно, перед работой с данным модулем, - создайте папку "mediacaptcha_audio"
-    !!!ВАЖНО!!!
     Класс MediaCaptcha используется для решения аудиокапчи из ReCaptcha v2 и SolveMediaCaptcha
     """
     def __init__(self, rucaptcha_key, recaptchavoice=False, solveaudio=False, sleep_time=5):
@@ -57,8 +54,7 @@ class MediaCaptcha:
         # Если передана ссылка - скачиваем файл в папку, переименовываем и сохраняем
         elif audio_download_link:
             audio_hash = hashlib.sha224(audio_download_link.encode('utf-8')).hexdigest()
-            cache = httplib2.Http('.cache')
-            response, content = cache.request(audio_download_link)
+            content = requests.get(audio_download_link).content
 
             with open(os.path.join(self.audio_path,'aud-{0}.mp3'.format(audio_hash)), 'wb') as out:
                 out.write(content)

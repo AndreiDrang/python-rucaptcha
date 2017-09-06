@@ -1,5 +1,6 @@
 import requests
 import time
+
 from errors import RuCaptchaError
 from config import url_response
 
