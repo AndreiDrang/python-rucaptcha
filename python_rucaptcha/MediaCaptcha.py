@@ -9,6 +9,9 @@ from errors import RuCaptchaError
 
 class MediaCaptcha:
     """
+    !!!ВАЖНО!!!
+    Обязательно, перед работой с данным модулем, - создайте папку "mediacaptcha_audio"
+    !!!ВАЖНО!!!
     Класс MediaCaptcha используется для решения аудиокапчи из ReCaptcha v2 и SolveMediaCaptcha
     """
     def __init__(self, rucaptcha_key, recaptchavoice=False, solveaudio=False, sleep_time=5):
