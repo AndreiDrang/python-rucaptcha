@@ -1,10 +1,10 @@
-import httplib2
 import requests
-import os, shutil
 import time
-import hashlib
+import tempfile
+
 from config import url_request, url_response, app_key
 from errors import RuCaptchaError
+
 
 class ImageCaptcha:
     '''
@@ -13,7 +13,7 @@ class ImageCaptcha:
     Требуется передать API ключ сайта, ссылку на изображение и,по желанию, время ожидания решения капчи
     Подробней информацию смотрите в методе 'captcha_handler'
     '''
-    
+
     def __init__(self, rucaptcha_key, sleep_time=5):
         '''
         Инициализация нужных переменных, создание папки для изображений и кэша
@@ -23,14 +23,6 @@ class ImageCaptcha:
         '''
         self.RUCAPTCHA_KEY = rucaptcha_key
         self.sleep_time = sleep_time
-        self.img_path = os.path.normpath('common_captcha_images')
-        try:
-            if not os.path.exists(self.img_path):
-                os.mkdir(self.img_path)
-            if not os.path.exists(".cache"):
-                os.mkdir(".cache")
-        except Exception as err:
-            print(err)
 
     # Работа с капчёй
     def captcha_handler(self, captcha_link):
@@ -41,53 +33,40 @@ class ImageCaptcha:
         :return: Ответ на капчу
         '''
 
-        # Высчитываем хэш изображения, для того что бы сохранить его под уникальным именем
-        image_hash = hashlib.sha224(captcha_link.encode('utf-8')).hexdigest()
-        # Скачиваем изображение и сохраняем на диск в папку images
-        cache = httplib2.Http('.cache')
-        response, content = cache.request(captcha_link)
-        with open(os.path.join(self.img_path, 'im-{0}.jpg'.format(image_hash)), 'wb') as out:
+        content = requests.get(captcha_link).content
+        with tempfile.NamedTemporaryFile(suffix='.png') as out:
             out.write(content)
-
-        with open(os.path.join(self.img_path, 'im-{0}.jpg'.format(image_hash)), 'rb') as captcha_image:
+            captcha_image = open(out.name, 'rb')
             # Отправляем изображение файлом
             files = {'file': captcha_image}
             # Создаём пайлоад, вводим ключ от сайта, выбираем метод ПОСТ и ждём ответа в JSON-формате
             payload = {"key": self.RUCAPTCHA_KEY,
                        "method": "post",
                        "json": 1,
-                       "soft_id":app_key}
+                       "soft_id": app_key}
 
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
             captcha_id = (requests.request('POST',
-                                            url_request,
-                                            data=payload,
-                                            files=files).json())
+                                           url_request,
+                                           data=payload,
+                                           files=files).json())
         if captcha_id['status'] is 0:
             return RuCaptchaError(captcha_id['request'])
 
         captcha_id = captcha_id['request']
 
-        # удаляем файл капчи и врменные файлы
-        os.remove(os.path.join(self.img_path, "im-{0}.jpg".format(image_hash)))
         # Ожидаем решения капчи
         time.sleep(self.sleep_time)
         while True:
             # отправляем запрос на результат решения капчи, если ещё капча не решена - ожидаем 5 сек
             # если всё ок - идём дальше
             captcha_response = requests.request('GET',
-                                                url_response+"?key={0}&action=get&id={1}&json=1"
+                                                url_response + "?key={0}&action=get&id={1}&json=1"
                                                 .format(self.RUCAPTCHA_KEY, captcha_id))
-            if captcha_response.json()['request']=='CAPCHA_NOT_READY':
+            if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
                 time.sleep(self.sleep_time)
-            elif captcha_response.json()["status"]==0:
+            elif captcha_response.json()["status"] == 0:
                 return RuCaptchaError(captcha_response.json()["request"])
-            elif captcha_response.json()["status"]==1 :
+            elif captcha_response.json()["status"] == 1:
                 return captcha_response.json()['request']
-
-    def __del__(self):
-        if os.path.exists(".cache"):
-            shutil.rmtree(".cache")
-        if os.path.exists(self.img_path):
-            shutil.rmtree(self.img_path)
