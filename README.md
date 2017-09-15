@@ -27,6 +27,16 @@ python setup.py install
 ### На данный момент реализованы следующие методы:
 
 1.[Решение капчи-изображения(большие и маленькие).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ImageCaptcha.py)
+Краткий пример:
+```python
+from python_rucaptcha import ImageCaptcha
+# Введите ключ от сервиса RuCaptcha, из своего аккаунта
+RUCAPTCHA_KEY = ""
+# Ссылка на изображения для расшифровки
+captcha_link = ""
+# Возвращается строка-расшифровка капчи
+user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_link=captcha_link)
+```
 
 2.[Решение KeyCaptcha(пазл).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/KeyCaptcha.py) ***НЕ ПОДДЕРЖИВАЕТСЯ СЕРВИСОМ RuCaptcha***
 
@@ -35,6 +45,18 @@ python setup.py install
 4.[Решение старой ReCaptcha v1.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV1.py)
 
 5.[Решение новой ReCaptcha v2.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV2.py)
+Краткий пример:
+```python
+from python_rucaptcha import ReCaptchaV2
+# Введите ключ от сервиса RuCaptcha, из своего аккаунта
+RUCAPTCHA_KEY = ""
+# G-ReCaptcha ключ сайта
+SITE_KEY = ""
+# Ссылка на страницу с капчёй
+PAGE_URL = ""
+# Возвращается строка-расшифровка капчи
+answer = ReCaptchaV2.ReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(site_key=SITE_KEY, page_url=PAGE_URL)
+```
 
 6.[Решение RotateCaptcha(повернуть изображение).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/RotateCaptcha.py)
 
