@@ -27,6 +27,7 @@ python setup.py install
 ### На данный момент реализованы следующие методы:
 
 1.[Решение капчи-изображения(большие и маленькие).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ImageCaptcha.py)
+
 Краткий пример:
 ```python
 from python_rucaptcha import ImageCaptcha
@@ -45,6 +46,7 @@ user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_han
 4.[Решение старой ReCaptcha v1.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV1.py)
 
 5.[Решение новой ReCaptcha v2.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV2.py)
+
 Краткий пример:
 ```python
 from python_rucaptcha import ReCaptchaV2
