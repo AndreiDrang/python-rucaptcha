@@ -1,7 +1,7 @@
 import requests
 import time
 
-from config import url_request, url_response, app_key
+from .config import url_request, url_response, app_key
 
 
 class TextCaptcha:

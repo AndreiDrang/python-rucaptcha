@@ -3,8 +3,8 @@ import requests
 import os, shutil
 import time
 import hashlib
-from config import url_request, url_response, app_key
-from errors import RuCaptchaError
+from .config import url_request, url_response, app_key
+from .errors import RuCaptchaError
 
 
 class MediaCaptcha:

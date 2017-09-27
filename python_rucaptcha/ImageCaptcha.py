@@ -2,8 +2,8 @@ import requests
 import time
 import tempfile
 
-from config import url_request, url_response, app_key
-from errors import RuCaptchaError
+from .config import url_request, url_response, app_key
+from .errors import RuCaptchaError
 
 
 class ImageCaptcha:
