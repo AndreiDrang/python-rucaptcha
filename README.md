@@ -3,9 +3,9 @@
 [![Code Climate](https://codeclimate.com/github/AndreiDrang/python-rucaptcha/badges/gpa.svg)](https://codeclimate.com/github/AndreiDrang/python-rucaptcha)
 [![PyPI version](https://badge.fury.io/py/python-rucaptcha.svg)](https://badge.fury.io/py/python-rucaptcha)
 
-Python 3 library for RuCaptcha.
-
 Библиотека предназначена для разрабаотчиков ПО и служит для облегчения работы с API сервиса RuCaptcha.
+
+**Используется Python версии 3.3+.**
 
 ## How to install? Как установить?
 
