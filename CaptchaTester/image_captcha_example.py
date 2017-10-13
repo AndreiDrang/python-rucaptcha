@@ -22,8 +22,8 @@ captcha_link = requests.get("http://85.255.8.26/api/", params={"captcha_type": "
 """
 user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, save_format = 'const').captcha_handler(captcha_link=captcha_link)
 """
-Второй пример демонстрирует сохранения файла как временного (temporary) - это стандартный вариант сохранения, 
-но было выяснено, что он не работает с некоторыми видами капч - если возникают подобные проблемы, 
+Второй пример демонстрирует сохранения файла как временного (temporary) - это стандартный вариант сохранения. 
+Было выяснено, что он не работает с некоторыми видами капч - если возникают подобные проблемы, 
 то стоит использовать первый вариант
 """
 user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, save_format = 'temp').captcha_handler(captcha_link=captcha_link)
