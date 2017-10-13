@@ -5,3 +5,4 @@ Web-Interface/
 /ico.png
 CaptchaTester/__pycache__/
 python_rucaptcha/__pycache__/
+build/

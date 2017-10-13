@@ -5,6 +5,7 @@ import tempfile
 from .config import url_request, url_response, app_key
 from .errors import RuCaptchaError
 
+
 class RotateCaptcha:
     def __init__(self, rucaptcha_key, sleep_time=5):
         '''
