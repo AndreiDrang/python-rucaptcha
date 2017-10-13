@@ -36,15 +36,14 @@ class RotateCaptcha:
             payload = {"key": self.RUCAPTCHA_KEY,
                        "method": "rotatecaptcha",
                        "json": 1,
-                       "soft_id":app_key}
-
+                       "soft_id": app_key}
 
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
             captcha_id = requests.request('POST',
-                                            url_request,
-                                            data=payload,
-                                            files=files).json()
+                                          url_request,
+                                          data=payload,
+                                          files=files).json()
 
         if captcha_id['status'] is 0:
             return RuCaptchaError(captcha_id['request'])
@@ -56,9 +55,13 @@ class RotateCaptcha:
         while True:
             # отправляем запрос на результат решения капчи, если ещё капча не решена - ожидаем 5 сек
             # если всё ок - идём дальше
-            captcha_response = requests.request('GET',
-                                                url_response+"?key={0}&action=get&id={1}&json=1"
-                                                .format(self.RUCAPTCHA_KEY, captcha_id))
+            payload = {'key': self.RUCAPTCHA_KEY,
+                       'action': 'get',
+                       'id': captcha_id,
+                       'json': 1,
+                       }
+            # отправляем запрос на результат решения капчи, если не решена ожидаем 6 секунд
+            captcha_response = requests.post(url_response, data = payload)
             if captcha_response.json()['request']=='CAPCHA_NOT_READY':
                 time.sleep(self.sleep_time)
             elif captcha_response.json()["status"]==0:

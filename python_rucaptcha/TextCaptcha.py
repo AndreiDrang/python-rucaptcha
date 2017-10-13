@@ -12,10 +12,10 @@ class TextCaptcha:
 	def captcha_handler(self, captcha_text):
 		# Создаём пайлоад, вводим ключ от сайта, выбираем метод ПОСТ и ждём ответа. в JSON-формате
 		payload = {"key": self.RUCAPTCHA_KEY,
-					"method": "textcaptcha",
-					"json": 1,
-					"textinstructions": captcha_text,
-                    "soft_id": app_key}
+				   "method": "textcaptcha",
+				   "json": 1,
+				   "textinstructions": captcha_text,
+				   "soft_id": app_key,}
 		# Отправляем на рукапча текст капчи и ждём ответа
 		#  в результате получаем JSON ответ с номером решаемой капчи
 		captcha_id = (requests.request('POST',
@@ -26,9 +26,12 @@ class TextCaptcha:
 		while True:
 			# отправляем запрос на результат решения капчи, если ещё капча не решена - ожидаем 5 сек
 			#  если всё ок - идём дальше
-			captcha_response = requests.request('GET',
-												url_response+"?key={0}&action=get&id={1}&json=1"
-												.format(self.RUCAPTCHA_KEY, captcha_id))
+			payload = {'key': self.RUCAPTCHA_KEY,
+					   'action': 'get',
+					   'id': captcha_id,
+					   'json': 1,}
+			# отправляем запрос на результат решения капчи, если не решена ожидаем
+			captcha_response = requests.post(url_response, data = payload)
 			if captcha_response.json()["request"] == 'CAPCHA_NOT_READY':
 				time.sleep(self.sleep_time)
 			else:

@@ -28,4 +28,3 @@ class RecaptchaV1:
 		'''
 		captcha_link = "www.google.com/recaptcha/api/image?c={0}".format(recaptcha_challenge_field)
 		return self.common_captcha.captcha_handler(captcha_link=captcha_link)
-	

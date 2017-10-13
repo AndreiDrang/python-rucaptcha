@@ -1,7 +1,8 @@
 import requests
 import time
-from config import url_request, url_response, app_key
-from errors import RuCaptchaError
+
+from .config import url_request, url_response, app_key
+from .errors import RuCaptchaError
 
 
 class ReCaptchaV2:
@@ -50,9 +51,8 @@ class ReCaptchaV2:
 			payload = {'key': self.RUCAPTCHA_KEY,
 					   'action': 'get',
 					   'id': captcha_id,
-					   'json': 1,
-					   }
-			# отправляем запрос на результат решения капчи, если не решена ожидаем 6 секунд
+					   'json': 1,}
+			# отправляем запрос на результат решения капчи, если не решена ожидаем
 			captcha_response = requests.post(url_response, data = payload)
 
 			if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
