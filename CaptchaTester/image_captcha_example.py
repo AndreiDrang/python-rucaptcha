@@ -12,12 +12,21 @@ from python_rucaptcha import ImageCaptcha
 # Введите ключ от рукапчи из своего аккаунта
 RUCAPTCHA_KEY = ""
 # Для получения ссылки на обычную капчу нужно послать гет запрос с соответствующим парметром
-captcha_link = requests.get("http://85.255.8.26/api/", params={"captcha_type":"get_common_captcha"}).json()["captcha_src"]
+captcha_link = requests.get("http://85.255.8.26/api/", params={"captcha_type": "get_common_captcha"}).json()["captcha_src"]
 """
 Тут нужно воспользоваться бибилотекой, отослать на решение ссылку на капчу и получить ответ
 далее его записать в user_answer и отправить на проверку уже на наш сайт
+
+
+Первый пример демонстрирует сохранеие файла изображения как обычного файла в папу
 """
-user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_link=captcha_link)
+user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, save_format = 'const').captcha_handler(captcha_link=captcha_link)
+"""
+Второй пример демонстрирует сохранения файла как временного (temporary) - это стандартный вариант сохранения, 
+но было выяснено, что он не работает с некоторыми видами капч - если возникают подобные проблемы, 
+то стоит использовать первый вариант
+"""
+user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, save_format = 'temp').captcha_handler(captcha_link=captcha_link)
 
 '''
 user_answer - это и есть решение Вашей капчи
