@@ -1,3 +1,4 @@
+# v.1.0.a
 import requests
 from python_rucaptcha import ImageCaptcha
 
@@ -10,9 +11,10 @@ from python_rucaptcha import ImageCaptcha
 2. Передать эту ссылку в модуль ImageCaptcha(строка 20 в примере)
 """
 # Введите ключ от рукапчи из своего аккаунта
-RUCAPTCHA_KEY = ""
-# Для получения ссылки на обычную капчу нужно послать гет запрос с соответствующим парметром
-captcha_link = requests.get("http://85.255.8.26/api/", params={"captcha_type": "get_common_captcha"}).json()["captcha_src"]
+RUCAPTCHA_KEY = ''
+# Для получения ссылки на обычную капчу нужно послать GET запрос с соответствующим парметром
+image_link = requests.get("http://85.255.8.26/api/",
+						  params = {"captcha_type": "get_common_captcha"}).json()["captcha_src"]
 """
 Тут нужно воспользоваться бибилотекой, отослать на решение ссылку на капчу и получить ответ
 далее его записать в user_answer и отправить на проверку уже на наш сайт
@@ -20,25 +22,79 @@ captcha_link = requests.get("http://85.255.8.26/api/", params={"captcha_type": "
 
 Первый пример демонстрирует сохранеие файла изображения как обычного файла в папу
 """
-user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, save_format = 'const').captcha_handler(captcha_link=captcha_link)
+user_answer_const = ImageCaptcha.ImageCaptcha(rucaptcha_key = RUCAPTCHA_KEY,
+											  save_format = 'const').captcha_handler(captcha_link = image_link)
+
 """
 Второй пример демонстрирует сохранения файла как временного (temporary) - это стандартный вариант сохранения. 
 Было выяснено, что он не работает с некоторыми видами капч - если возникают подобные проблемы, 
 то стоит использовать первый вариант
 """
-user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, save_format = 'temp').captcha_handler(captcha_link=captcha_link)
+user_answer_temp = ImageCaptcha.ImageCaptcha(rucaptcha_key = RUCAPTCHA_KEY,
+											 save_format = 'temp').captcha_handler(captcha_link = image_link)
 
 '''
-user_answer - это и есть решение Вашей капчи
+user_answer_... - это JSON строка с соответствующими полями
 
-Дальше идёт пример проверки правильности решения капчи на примере сайта
+captchaSolve - решение капчи,
+taskId - находится Id задачи на решение капчи,
+errorId - 0 - если всё хорошо, 1 - если есть ошибка,
+errorBody - тело ошибки, если есть.
+{
+    "captchaSolve": string,
+    "taskId" - int,
+    "errorId": int, 1 or 0,
+    "errorBody": string,
+}
 '''
 
-# Вычленяем из ссылки название капчи
-captcha_name = captcha_link.split("/")[-1]
-# Для проверки правильности разгадки капчи нужно послать ПОСТ запрос c именем капчи и ответом юзера
-server_answer = requests.post("http://85.255.8.26/api/", data={"common_captcha_src":captcha_name,
-	                                                           "common_captcha_answer":user_answer,
-	                                                           "common_captcha_btn": True})
-# Есть два типа ответа: OK и FAIL
-print(server_answer.json()["request"])
+if user_answer_const['errorId'] == 0:
+	# решение капчи
+	print(user_answer_const['captchaSolve'])
+	print(user_answer_const['taskId'])
+elif user_answer_const['errorId'] == 1:
+	# Тело ошибки, если есть
+	print(user_answer_const['errorBody'])
+
+if user_answer_temp['errorId'] == 0:
+	# решение капчи
+	print(user_answer_temp['captchaSolve'])
+	print(user_answer_temp['taskId'])
+elif user_answer_temp['errorId'] == 1:
+	# Тело ошибки, если есть
+	print(user_answer_temp['errorBody'])
+
+'''
+Так же класс в качестве параметра может принимать список необязательных переменных, таких как:
+phrase = 0, 
+regsense = 0, 
+numeric = 0, 
+calc = 0, 
+min_len = 0, 
+max_len = 0, 
+language = 0,
+textinstructions = '', 
+pingback = ''
+и прочие.
+
+Полный пример выглядит так:
+'''
+user_answer_full = ImageCaptcha.ImageCaptcha(rucaptcha_key = RUCAPTCHA_KEY,
+											 save_format = 'temp',
+											 phrase = 0,
+											 regsense = 0,
+											 numeric = 0,
+											 calc = 0,
+											 min_len = 0,
+											 max_len = 0,
+											 language = 0,
+											 textinstructions = '',
+											 pingback = '').captcha_handler(captcha_link = image_link)
+
+if user_answer_full['errorId'] == 0:
+	# решение капчи
+	print(user_answer_full['captchaSolve'])
+	print(user_answer_full['taskId'])
+elif user_answer_full['errorId'] == 1:
+	# Тело ошибки, если есть
+	print(user_answer_full['errorBody'])
