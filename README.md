@@ -35,9 +35,17 @@ from python_rucaptcha import ImageCaptcha
 # Введите ключ от сервиса RuCaptcha, из своего аккаунта
 RUCAPTCHA_KEY = ""
 # Ссылка на изображения для расшифровки
-captcha_link = ""
+image_link = ""
 # Возвращается строка-расшифровка капчи
-user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_link=captcha_link)
+user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_link=image_link)
+
+if user_answer['errorId'] == 0:
+	# решение капчи
+	print(user_answer['captchaSolve'])
+	print(user_answer['taskId'])
+elif user_answer['errorId'] == 1:
+	# Тело ошибки, если есть
+	print(user_answer['errorBody'])
 ```
 
 2.[Решение KeyCaptcha(пазл).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/KeyCaptcha.py) ***НЕ ПОДДЕРЖИВАЕТСЯ СЕРВИСОМ RuCaptcha***
@@ -58,13 +66,38 @@ SITE_KEY = ""
 # Ссылка на страницу с капчёй
 PAGE_URL = ""
 # Возвращается строка-расшифровка капчи
-answer = ReCaptchaV2.ReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(site_key=SITE_KEY, page_url=PAGE_URL)
+user_answer = ReCaptchaV2.ReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(site_key=SITE_KEY, page_url=PAGE_URL)
+
+if user_answer['errorId'] == 0:
+	# решение капчи
+	print(user_answer['captchaSolve'])
+	print(user_answer['taskId'])
+elif user_answer['errorId'] == 1:
+	# Тело ошибки, если есть
+	print(user_answer['errorBody'])
 ```
 
 6.[Решение RotateCaptcha(повернуть изображение).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/RotateCaptcha.py)
 
 7.[Решение текстовой капчи.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/TextCaptcha.py)
+Краткий пример:
+```python
+from python_rucaptcha import TextCaptcha
+# Введите ключ от рукапчи из своего аккаунта
+RUCAPTCHA_KEY = ''
+# Вопрос
+text_question = 'Если завтра суббота, то какой сегодня день?'
 
+user_answer = TextCaptcha.TextCaptcha(rucaptcha_key = RUCAPTCHA_KEY).captcha_handler(captcha_text = text_question)
+
+if user_answer['errorId'] == 0:
+	# решение капчи
+	print(user_answer['captchaSolve'])
+	print(user_answer['taskId'])
+elif user_answer['errorId'] == 1:
+	# Тело ошибки, если есть
+	print(user_answer['errorBody'])
+```
 8.[Модуль для получения инофрмации о балансе аккаунта и отправке жалоб.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/RuCaptchaControl.py)
 ***
 Кроме того, для тестирования различных типов капчи предоставляется [специальный сайт](http://85.255.8.26/), на котором собраны все имеющиеся типы капчи, с удобной системой тестирования ваших скриптов.

@@ -17,7 +17,7 @@ image_link = requests.get("http://85.255.8.26/api/",
 						  params = {"captcha_type": "get_common_captcha"}).json()["captcha_src"]
 """
 Тут нужно воспользоваться бибилотекой, отослать на решение ссылку на капчу и получить ответ
-далее его записать в user_answer и отправить на проверку уже на наш сайт
+далее его записать в user_answer
 
 
 Первый пример демонстрирует сохранеие файла изображения как обычного файла в папу
@@ -27,8 +27,8 @@ user_answer_const = ImageCaptcha.ImageCaptcha(rucaptcha_key = RUCAPTCHA_KEY,
 
 """
 Второй пример демонстрирует сохранения файла как временного (temporary) - это стандартный вариант сохранения. 
-Было выяснено, что он не работает с некоторыми видами капч - если возникают подобные проблемы, 
-то стоит использовать первый вариант
+Было выяснено, что он не работает с некоторыми видами капч - если возникают проблемы, то стоит использовать первый 
+вариант
 """
 user_answer_temp = ImageCaptcha.ImageCaptcha(rucaptcha_key = RUCAPTCHA_KEY,
 											 save_format = 'temp').captcha_handler(captcha_link = image_link)

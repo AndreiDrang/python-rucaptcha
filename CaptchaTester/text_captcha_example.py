@@ -11,10 +11,7 @@ RUCAPTCHA_KEY = ''
 text_question = 'Если завтра суббота, то какой сегодня день?'
 """
 Тут нужно воспользоваться бибилотекой, отослать на решение ссылку на капчу и получить ответ
-далее его записать в user_answer и отправить на проверку уже на наш сайт
-
-
-Первый пример демонстрирует сохранеие файла изображения как обычного файла в папу
+далее его записать в user_answer
 """
 user_answer = TextCaptcha.TextCaptcha(rucaptcha_key = RUCAPTCHA_KEY).captcha_handler(captcha_text = text_question)
 
