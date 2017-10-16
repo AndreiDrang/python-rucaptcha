@@ -42,7 +42,7 @@ errorId - 0 - если всё хорошо, 1 - если есть ошибка,
 errorBody - тело ошибки, если есть.
 {
     "captchaSolve": string,
-    "taskId" - int,
+    "taskId": int,
     "errorId": int, 1 or 0,
     "errorBody": string,
 }
