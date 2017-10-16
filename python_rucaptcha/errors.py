@@ -1,48 +1,46 @@
-import time
-
 class RuCaptchaError(Exception):
     """Базовый класс для всех исключений в этом модуле."""
-    def __init__(self, description):
+    def errors(self, description):
         if description=='ERROR_KEY_DOES_NOT_EXIST':
-            print(NonExistentKeyError.__doc__)
+            return NonExistentKeyError.__doc__
         elif description=='ERROR_WRONG_CAPTCHA_ID':
-            print(WrongCaptchaIDError.__doc__)
+            return WrongCaptchaIDError.__doc__
         elif description=='CAPCHA_NOT_READY':
-            print(CaptchaNotReadyError.__doc__)
+            return CaptchaNotReadyError.__doc__
         elif description=='ERROR_WRONG_USER_KEY':
-            print(WrongUserKeyError.__doc__)
+            return WrongUserKeyError.__doc__
         elif description=='ERROR_ZERO_BALANCE':
-            print(ZeroBalanceError.__doc__)
+            return ZeroBalanceError.__doc__
         elif description=='ERROR_PAGEURL':
-            print(PageUrlError.__doc__)
+            return PageUrlError.__doc__
         elif description=='ERROR_NO_SLOT_AVAILABLE':
-            print(NoSlotsError.__doc__)
+            return NoSlotsError.__doc__
         elif description=='ERROR_ZERO_CAPTCHA_FILESIZE':
-            print(ZerroCaptchaSizeError.__doc__)
+            return ZerroCaptchaSizeError.__doc__
         elif description=='ERROR_TOO_BIG_CAPTCHA_FILESIZE':
-            print(ToBigCaptchaSizeError.__doc__)
+            return ToBigCaptchaSizeError.__doc__
         elif description=='ERROR_WRONG_FILE_EXTENSION':
-            print(WrongCaptchaFormatError.__doc__)
+            return WrongCaptchaFormatError.__doc__
         elif description=='ERROR_IMAGE_TYPE_NOT_SUPPORTED':
-            print(NotSupportedCaptchaTypeError.__doc__)
+            return NotSupportedCaptchaTypeError.__doc__
         elif description=='ERROR_IP_NOT_ALLOWED':
-            print(IPNotAllowedError.__doc__)
+            return IPNotAllowedError.__doc__
         elif description=='IP_BANNED':
-            print(BannedIPError.__doc__)
+            return BannedIPError.__doc__
         elif description=='ERROR_CAPTCHAIMAGE_BLOCKED':
-            print(BlockedimageCaptchaError.__doc__)
+            return BlockedimageCaptchaError.__doc__
         elif description=='ERROR_YOUR_IP_IS_BANNED_BY_GOOGLE':
-            print(IPBannedByGoogleError.__doc__)
+            return IPBannedByGoogleError.__doc__
         elif description=='ERROR_CAPTCHA_UNSOLVABLE':
-            print(UnsolvableCaptchaError.__doc__)
+            return UnsolvableCaptchaError.__doc__
         elif description=='ERROR_WRONG_ID_FORMAT':
-            print(WrongCaptchaIDFormatError.__doc__)
+            return WrongCaptchaIDFormatError.__doc__
         elif description=='ERROR_WRONG_CAPTCHA_ID ':
-            print(WrongCaptchaIDError.__doc__)
+            return WrongCaptchaIDError.__doc__
         elif description=='ERROR_BAD_DUPLICATES':
-            print(BadDuplicatesError.__doc__)
+            return BadDuplicatesError.__doc__
         elif description=='REPORT_NOT_RECORDED':
-            print(ReportNotRecordedError)
+            return ReportNotRecordedError
 
 
 
@@ -167,7 +165,7 @@ class NNNNError(RuCaptchaError):
 
     ERROR: NNNN - искючение из таблицы.
     """
-    def __init__(self, description):
+    def nnnn_errors(self, description):
         pass
 
 class Number1001Error(NNNNError):
