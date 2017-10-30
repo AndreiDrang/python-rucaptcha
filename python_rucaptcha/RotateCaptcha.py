@@ -14,8 +14,29 @@ class RotateCaptcha:
         :param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
         :param sleep_time: Вермя ожидания решения капчи
         '''
-        self.RUCAPTCHA_KEY = rucaptcha_key
+
         self.sleep_time = sleep_time
+        # пайлоад POST запроса на отправку капчи на сервер
+        self.post_payload = {"key": rucaptcha_key,
+                             'method': 'rotatecaptcha',
+                             "json": 1,
+                             "soft_id": app_key}
+
+        # пайлоад GET запроса на получение результата решения капчи
+        self.get_payload = {'key': rucaptcha_key,
+                            'action': 'get',
+                            'json': 1,
+                            }
+        # результат возвращаемый методом *captcha_handler*
+        # в captchaSolve - решение капчи,
+        # в taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+        # в errorId - 0 - если всё хорошо, 1 - если есть ошибка,
+        # в errorBody - тело ошибки, если есть.
+        self.result = {"captchaSolve": None,
+                       "taskId": None,
+                       "errorId": None,
+                       "errorBody": None
+                       }
 
     # Работа с капчёй
     def captcha_handler(self, captcha_link):
@@ -32,40 +53,49 @@ class RotateCaptcha:
             captcha_image = open(out.name, 'rb')
             # Отправляем изображение файлом
             files = {'file': captcha_image}
-            # Создаём пайлоад, вводим ключ от сайта, выбираем метод ПОСТ и ждём ответа в JSON-формате
-            payload = {"key": self.RUCAPTCHA_KEY,
-                       "method": "rotatecaptcha",
-                       "json": 1,
-                       "soft_id": app_key}
-
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
-            captcha_id = requests.request('POST',
-                                          url_request,
-                                          data=payload,
-                                          files=files).json()
+            captcha_id = requests.request('POST', url_request, data=self.post_payload, files=files).json()
 
+        # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id['status'] is 0:
-            return RuCaptchaError(captcha_id['request'])
+            self.result.update({'errorId': 1,
+                                'errorBody': RuCaptchaError().errors(captcha_id['request'])
+                                }
+                               )
+            return self.result
+        # иначе берём ключ отправленной на решение капчи и ждём решения
+        else:
+            captcha_id = captcha_id['request']
+            # вписываем в taskId ключ отправленной на решение капчи
+            self.result.update({"taskId": captcha_id})
+            # обновляем пайлоад, вносим в него ключ отправленной на решение капчи
+            self.get_payload.update({'id': captcha_id})
 
-        captcha_id = captcha_id['request']
-
-        # Ожидаем решения капчи
+        # Ожидаем решения капчи 20 секунд
         time.sleep(self.sleep_time)
+
         while True:
-            # отправляем запрос на результат решения капчи, если ещё капча не решена - ожидаем 5 сек
-            # если всё ок - идём дальше
-            payload = {'key': self.RUCAPTCHA_KEY,
-                       'action': 'get',
-                       'id': captcha_id,
-                       'json': 1,
-                       }
-            # отправляем запрос на результат решения капчи, если не решена ожидаем 6 секунд
-            captcha_response = requests.post(url_response, data = payload)
-            if captcha_response.json()['request']=='CAPCHA_NOT_READY':
+            # отправляем запрос на результат решения капчи, если не решена ожидаем
+            captcha_response = requests.post(url_response, data=self.get_payload)
+    
+            # если капча ещё не решена - ожидаем
+            if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
                 time.sleep(self.sleep_time)
-            elif captcha_response.json()["status"]==0:
-                return RuCaptchaError(captcha_response.json()["request"])
-            elif captcha_response.json()["status"]==1 :
-                return captcha_response.json()['request']
+    
+            # при ошибке во время решения
+            elif captcha_response.json()["status"] == 0:
+                self.result.update({'errorId': 1,
+                                    'errorBody': RuCaptchaError().errors(captcha_response.json()["request"])
+                                    }
+                                   )
+                return self.result
+    
+            # при решении капчи
+            elif captcha_response.json()["status"] == 1:
+                self.result.update({'errorId': 0,
+                                    'captchaSolve': captcha_response.json()['request']
+                                    }
+                                   )
+                return self.result
 
