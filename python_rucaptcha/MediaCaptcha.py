@@ -30,7 +30,6 @@ class MediaCaptcha:
         except Exception as err:
             print(err)
             
-        
         # Тело пост запроса при отправке капчи на решение
         self.post_payload = {"key": rucaptcha_key,
                              "method": "post",
@@ -42,8 +41,6 @@ class MediaCaptcha:
             self.post_payload.update({'recaptchavoice': 1})
         elif solveaudio:
             self.post_payload.update({'solveaudio': 1})
-        
-        
         
         # Если переданы ещё параметры - вносим их в payload
         if kwargs:
@@ -94,7 +91,6 @@ class MediaCaptcha:
         with open(os.path.join(self.audio_path, 'aud-{0}.mp3'.format(audio_hash)), 'rb') as captcha_audio:
             # Отправляем аудио файлом
             files = {'file': captcha_audio}
-
 
             # Отправляем на рукапча аудио капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
