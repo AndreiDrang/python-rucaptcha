@@ -54,3 +54,29 @@ if answer_invisible['errorId'] == 0:
 elif answer_invisible['errorId'] == 1:
 	# Тело ошибки, если есть
 	print(answer_invisible['errorBody'])
+
+"""
+Пример асинхронной работы 
+"""
+import asyncio
+
+
+async def run():
+	try:
+		answer_aio_re2 = await ReCaptchaV2.aioReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(site_key=SITE_KEY,
+																									   page_url=PAGE_URL)
+		if answer_aio_re2['errorId'] == 0:
+			# решение капчи
+			print(answer_aio_re2['captchaSolve'])
+			print(answer_aio_re2['taskId'])
+		elif answer_aio_re2['errorId'] == 1:
+			# Тело ошибки, если есть
+			print(answer_aio_re2['errorBody'])
+	except Exception as err:
+		print(err)
+
+
+if __name__ == '__main__':
+	loop = asyncio.get_event_loop()
+	loop.run_until_complete(run())
+	loop.close()
