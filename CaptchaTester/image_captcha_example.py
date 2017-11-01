@@ -98,3 +98,30 @@ if user_answer_full['errorId'] == 0:
 elif user_answer_full['errorId'] == 1:
 	# Тело ошибки, если есть
 	print(user_answer_full['errorBody'])
+
+"""
+Асинхронный пример
+Асинхронный способ поддерживает все параметры обычного метода
+"""
+import asyncio
+
+
+async def run():
+	try:
+		answer_aio_image = await ImageCaptcha.aioImageCaptcha(rucaptcha_key = RUCAPTCHA_KEY)\
+															 .captcha_handler(captcha_link = image_link)
+		if answer_aio_image['errorId'] == 0:
+			# решение капчи
+			print(answer_aio_image['captchaSolve'])
+			print(answer_aio_image['taskId'])
+		elif answer_aio_image['errorId'] == 1:
+			# Тело ошибки, если есть
+			print(answer_aio_image['errorBody'])
+	except Exception as err:
+		print(err)
+
+
+if __name__ == '__main__':
+	loop = asyncio.get_event_loop()
+	loop.run_until_complete(run())
+	loop.close()
