@@ -7,6 +7,8 @@
 
 **Добавлен асинхронный способ работы, все примеры показаны в [папке с примерами](https://github.com/AndreiDrang/python-rucaptcha/tree/master/CaptchaTester)**.
 
+Если нужна версия без асинхронности вообще - качайте [релиз 1.0](https://github.com/AndreiDrang/python-rucaptcha/releases)
+
 **Используется Python версии 3.3+.**
 
 ## How to install? Как установить?
