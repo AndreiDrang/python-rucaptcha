@@ -25,5 +25,5 @@ setup(
 				python-library
 				python-rucaptcha
 				rucaptcha-client''',
-    python_requires = '>=3.3',
+    python_requires = '>=3.5',
     )
