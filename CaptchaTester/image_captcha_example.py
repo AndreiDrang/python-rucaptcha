@@ -1,6 +1,18 @@
-# v.1.0.a
+# v.1.6.1
 import requests
 from python_rucaptcha import ImageCaptcha
+"""
+UPDATE
+!!!ТОЛЬКО ДЛЯ СИНХРОННОГО МЕТОДА!!!
+Добавлена возможность подключения к сайту, для получения изображения - через прокси.
+Для этого нужно передать параметры, как и для бибилиотеки requests `.captcha_handler(......, 
+                                                                                     proxies = {})`
+
+Добавлена возможность скачивания изображений с незащищённых сайтов.
+Для этого нужно передать параметры, как и для бибилиотеки requests `.captcha_handler(......, 
+                                                                                     verify = False)`
+"""
+
 
 """
 Этот пример показывает то как нужно работать с модулем для распознования обычной капчи изображением,
@@ -22,7 +34,9 @@ image_link = requests.get("http://85.255.8.26/api/",
 Первый пример демонстрирует сохранеие файла изображения как обычного файла в папу
 """
 user_answer_const = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
-                                              save_format='const').captcha_handler(captcha_link=image_link)
+                                              save_format='const').captcha_handler(captcha_link=image_link,
+                                                                                   verify = False,
+                                                                                   proxies = {})
 
 """
 Второй пример демонстрирует сохранения файла как временного (temporary) - это стандартный вариант сохранения. 
@@ -30,7 +44,9 @@ user_answer_const = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
 вариант
 """
 user_answer_temp = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
-                                             save_format='temp').captcha_handler(captcha_link=image_link)
+                                             save_format='temp').captcha_handler(captcha_link=image_link,
+                                                                                 verify = False,
+                                                                                 proxies = {})
 
 '''
 user_answer_... - это JSON строка с соответствующими полями
@@ -88,7 +104,9 @@ user_answer_full = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
                                              max_len=0,
                                              language=0,
                                              textinstructions='',
-                                             pingback='').captcha_handler(captcha_link=image_link)
+                                             pingback='').captcha_handler(captcha_link=image_link,
+                                                                          verify = False,
+                                                                          proxies = {})
 
 if user_answer_full['errorId'] == 0:
     # решение капчи
@@ -161,7 +179,9 @@ if __name__ == '__main__':
     loop.close()
 
 # Синхронный
-user_answer_local = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_file=captcha_file)
+user_answer_local = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_file=captcha_file,
+                                                                                           verify = False,
+                                                                                           proxies = {})
 
 if user_answer_local['errorId'] == 0:
     # решение капчи

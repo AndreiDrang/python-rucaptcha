@@ -122,7 +122,7 @@ class ImageCaptcha:
         return captcha_id
 
     # Работа с капчёй
-    def captcha_handler(self, captcha_link=None, captcha_file=None):
+    def captcha_handler(self, captcha_link=None, captcha_file=None, **kwargs):
         """
         Метод получает от вас ссылку на изображение, скачивает его, отправляет изображение на сервер
         RuCaptcha, дожидается решения капчи и вовзращает вам результат
@@ -140,7 +140,7 @@ class ImageCaptcha:
         # если передан URL - используем его
         elif captcha_link:
             try:
-                content = requests.get(captcha_link).content
+                content = requests.get(url = captcha_link, **kwargs).content
             except Exception as error:
                 self.result.update({'errorId': 1,
                                     'errorBody': error,
@@ -334,7 +334,7 @@ class aioImageCaptcha:
         elif captcha_link:
             try:
                 async with aiohttp.ClientSession() as session:
-                    async with session.get(captcha_link) as resp:
+                    async with session.get(url = captcha_link) as resp:
                         content = await resp.content.read()
             except Exception as error:
                 self.result.update({'errorId': 1,

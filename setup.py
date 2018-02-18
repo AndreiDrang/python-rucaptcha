@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name = 'python-rucaptcha',
-    version = '1.6',
+    version = '1.6.1',
     author = 'AndreiDrang, redV0ID',
 
     packages = ['python_rucaptcha'],
@@ -10,7 +10,7 @@ setup(
         'requests>=2.18',
         'aiohttp>=2.3'
         ],
-    description = 'Python 3 RuCaptcha library.',
+    description = 'Python 3 RuCaptcha library with AIO module.',
     author_email = 'drang.andray@gmail.com',
     url = 'https://github.com/AndreiDrang/python-rucaptcha',
     license = 'MIT',
