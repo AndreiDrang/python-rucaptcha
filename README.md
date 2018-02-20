@@ -6,6 +6,8 @@
 
 **Добавлен асинхронный способ работы, все примеры показаны в [папке с примерами](https://github.com/AndreiDrang/python-rucaptcha/tree/master/CaptchaTester)**.
 
+Если вы работаете на OS Windows с ImageCaptcha - используйте *captcha_handler(save_format = 'const')*.
+
 Если нужна версия без асинхронности вообще - качайте [релиз 1.0](https://github.com/AndreiDrang/python-rucaptcha/releases)
 
 **Используется Python версии 3.5.3+.**
