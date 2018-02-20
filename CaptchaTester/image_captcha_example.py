@@ -1,13 +1,15 @@
-# v.1.6.1
+# v.1.6.2
 import requests
 from python_rucaptcha import ImageCaptcha
+
 """
-UPDATE
+UPDATE 1.6.1
 !!!ТОЛЬКО ДЛЯ СИНХРОННОГО МЕТОДА!!!
 Добавлена возможность подключения к сайту, для получения изображения - через прокси.
 Для этого нужно передать параметры, как и для бибилиотеки requests `.captcha_handler(......, 
                                                                                      proxies = {})`
 
+!!!ТОЛЬКО ДЛЯ СИНХРОННОГО МЕТОДА!!!
 Добавлена возможность скачивания изображений с незащищённых сайтов.
 Для этого нужно передать параметры, как и для бибилиотеки requests `.captcha_handler(......, 
                                                                                      verify = False)`
@@ -26,6 +28,11 @@ RUCAPTCHA_KEY = ''
 # Для получения ссылки на обычную капчу нужно послать GET запрос с соответствующим парметром
 image_link = requests.get("http://85.255.8.26/api/",
                           params={"captcha_type": "get_common_captcha"}).json()["captcha_src"]
+
+"""
+Синхронный метод
+"""
+
 """
 Тут нужно воспользоваться бибилотекой, отослать на решение ссылку на капчу и получить ответ
 далее его записать в user_answer
@@ -34,9 +41,7 @@ image_link = requests.get("http://85.255.8.26/api/",
 Первый пример демонстрирует сохранеие файла изображения как обычного файла в папу
 """
 user_answer_const = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
-                                              save_format='const').captcha_handler(captcha_link=image_link,
-                                                                                   verify = False,
-                                                                                   proxies = {})
+                                              save_format='const').captcha_handler(captcha_link=image_link)
 
 """
 Второй пример демонстрирует сохранения файла как временного (temporary) - это стандартный вариант сохранения. 
@@ -44,9 +49,7 @@ user_answer_const = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
 вариант
 """
 user_answer_temp = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
-                                             save_format='temp').captcha_handler(captcha_link=image_link,
-                                                                                 verify = False,
-                                                                                 proxies = {})
+                                             save_format='temp').captcha_handler(captcha_link=image_link)
 
 '''
 user_answer_... - это JSON строка с соответствующими полями
@@ -117,8 +120,31 @@ elif user_answer_full['errorId'] == 1:
     print(user_answer_full['errorBody'])
 
 """
+Пример для работы с локальными файлами
+"""
+# папка в которой находится изображение, один из вариантов написания
+captcha_file = r'D:\Python\933588.png'
+# так же есть возможность передать так:
+# captcha_file = 'D:\/Python\/933588.png'
+user_answer_local = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_file=captcha_file)
+
+if user_answer_local['errorId'] == 0:
+    # решение капчи
+    print(user_answer_local['captchaSolve'])
+    print(user_answer_local['taskId'])
+elif user_answer_local['errorId'] == 1:
+    # Тело ошибки, если есть
+    print(user_answer_local['errorBody'])
+    
+"""
 Асинхронный пример
 Асинхронный способ поддерживает все параметры обычного метода
+
+UPDATE 1.6.2
+Добавлена поддержка прокси для асинхронного метода
+!!!Поддерживаются только HTTP прокси!!!
+Подробнее про него можно посмотреть тут:
+https://docs.aiohttp.org/en/stable/client_advanced.html#proxy-support
 """
 import asyncio
 
@@ -178,15 +204,26 @@ if __name__ == '__main__':
     loop.run_until_complete(run())
     loop.close()
 
-# Синхронный
-user_answer_local = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_file=captcha_file,
-                                                                                           verify = False,
-                                                                                           proxies = {})
+"""
+UPDATE 1.6.2 с прокси
+!!!Поддерживаются только HTTP прокси!!!
+"""
+async def run():
+    try:
+        answer_aio_image = await ImageCaptcha.aioImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY)\
+                                            .captcha_handler(captcha_link=image_link, proxy='http://85.21.83.186:8080')
+        if answer_aio_image['errorId'] == 0:
+            # решение капчи
+            print(answer_aio_image['captchaSolve'])
+            print(answer_aio_image['taskId'])
+        elif answer_aio_image['errorId'] == 1:
+            # Тело ошибки, если есть
+            print(answer_aio_image['errorBody'])
+    except Exception as err:
+        print(err)
 
-if user_answer_local['errorId'] == 0:
-    # решение капчи
-    print(user_answer_local['captchaSolve'])
-    print(user_answer_local['taskId'])
-elif user_answer_local['errorId'] == 1:
-    # Тело ошибки, если есть
-    print(user_answer_local['errorBody'])
+
+if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(run())
+    loop.close()

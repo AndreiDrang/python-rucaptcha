@@ -1,6 +1,5 @@
 # python-rucaptcha
 
-[![Code Climate](https://codeclimate.com/github/AndreiDrang/python-rucaptcha/badges/gpa.svg)](https://codeclimate.com/github/AndreiDrang/python-rucaptcha)
 [![PyPI version](https://badge.fury.io/py/python-rucaptcha.svg)](https://badge.fury.io/py/python-rucaptcha)
 
 Библиотека предназначена для разрабаотчиков ПО и служит для облегчения работы с API сервиса RuCaptcha.
@@ -9,7 +8,7 @@
 
 Если нужна версия без асинхронности вообще - качайте [релиз 1.0](https://github.com/AndreiDrang/python-rucaptcha/releases)
 
-**Используется Python версии 3.3+.**
+**Используется Python версии 3.5.3+.**
 
 ## How to install? Как установить?
 
@@ -28,6 +27,14 @@ python setup.py install
 ```
 ***
 По всем вопросам можете писать в [Telegram](https://t.me/joinchat/CD2EtQ5Pm0dmoSQQMTkVlw) чат.
+***
+### Последние обновления
+v.1.6.2 - Добавлена поддержка прокси для Капчи-Изображения(асинхронный и синхронные методы). Добавлена KeyCaptcha и примеры для неё.
+***
+### Будущие обновления
+v.1.6.* - Добавление асинхронного метода для KeyCaptcha.
+
+v.1.7.* - Добавление FunCaptcha.
 ***
 ### На данный момент реализованы следующие методы:
 
@@ -52,7 +59,31 @@ elif user_answer['errorId'] == 1:
 	print(user_answer['errorBody'])
 ```
 
-2.[Решение KeyCaptcha(пазл).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/KeyCaptcha.py) 
+2.[Решение KeyCaptcha(пазл-капча).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/KeyCaptcha.py)
+
+Краткий пример:
+```python
+from python_rucaptcha import KeyCaptcha
+# Введите ключ от сервиса RuCaptcha, из своего аккаунта
+RUCAPTCHA_KEY = ''
+
+answer = KeyCaptcha.KeyCaptcha(rucaptcha_key=RUCAPTCHA_KEY) \
+	.captcha_handler(s_s_c_user_id=15,
+                     s_s_c_session_id='8f460599bebe02cb0dd096b1fe70b089',
+                     s_s_c_web_server_sign='edd2c221c05aece19f6db93a36b42272',
+                     s_s_c_web_server_sign2='15989edaad1b4dc056ec8fa05abc7c9a',
+                     page_url='https://www.keycaptcha.com/signup/')
+
+# капча решена верно, ошибка = 0
+if answer['errorId'] == 0:
+	# решение капчи
+	print(answer['captchaSolve'])
+	print(answer['taskId'])
+# во время решения капчи возникли ошибки, ошибка = 1
+elif answer['errorId'] == 1:
+	# Тело ошибки, если есть
+	print(answer['errorBody'])
+``` 
 
 3.[Решение аудиокапчи. Используется для SolveMedia капчи.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/MediaCaptcha.py) ***НЕ ПОДДЕРЖИВАЕТСЯ СЕРВИСОМ RuCaptcha***
 

@@ -109,15 +109,12 @@ class ImageCaptcha:
         :param content: Ссылка на локальный файл
         :return: ID капчи в сервисе
         """
-        try:
-            with open(content, 'rb') as captcha_image:
-                # Отправляем на рукапча изображение капчи и другие парметры,
-                # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
-                self.post_payload.update({"body": base64.b64encode(captcha_image.read()).decode('utf-8')})
-                captcha_id = (requests.post(url_request, data=self.post_payload).json())
 
-        except IOError:
-            return 'File not found!'
+        with open(content, 'rb') as captcha_image:
+            # Отправляем на рукапча изображение капчи и другие парметры,
+            # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
+            self.post_payload.update({"body": base64.b64encode(captcha_image.read()).decode('utf-8')})
+            captcha_id = (requests.post(url_request, data=self.post_payload).json())
 
         return captcha_id
 
@@ -154,10 +151,21 @@ class ImageCaptcha:
             elif self.save_format == 'temp':
                 captcha_id = self.image_temp_saver(content)
             else:
-                return """Wrong 'save_format' parameter. Valid formats: 'const' or 'temp'.\n 
-                        Неправильный 'save_format' параметр. Возможные форматы: 'const' или 'temp'."""
+                # если передан неверный параметр в способ сохранения изображения
+                self.result.update({'errorId': 1,
+                                    'errorBody': """Wrong 'save_format' parameter. Valid formats: 'const' or 'temp'.\n
+                                Неправильный 'save_format' параметр. Возможные форматы: 'const' или 'temp'.""",
+                                    }
+                                   )
+                return self.result
+
         else:
-            return """You did not send any file local link or URL."""
+            # если не передан ни один из параметров
+            self.result.update({'errorId': 1,
+                                'errorBody': 'You did not send any file local link or URL.',
+                                }
+                               )
+            return self.result
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id['status'] is 0:
@@ -302,20 +310,16 @@ class aioImageCaptcha:
         :param content: Ссылка на локальный файл
         :return: ID капчи в сервисе
         """
-        try:
-            with open(content, 'rb') as captcha_image:
-                # Отправляем на рукапча изображение капчи и другие парметры,
-                # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
-                self.post_payload.update({"body": base64.b64encode(captcha_image.read()).decode('utf-8')})
-                captcha_id = (requests.post(url_request, data=self.post_payload).json())
-
-        except IOError:
-            return 'File not found!'
+        with open(content, 'rb') as captcha_image:
+            # Отправляем на рукапча изображение капчи и другие парметры,
+            # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
+            self.post_payload.update({"body": base64.b64encode(captcha_image.read()).decode('utf-8')})
+            captcha_id = (requests.post(url_request, data=self.post_payload).json())
 
         return captcha_id
 
     # Работа с капчёй
-    async def captcha_handler(self, captcha_link=None, captcha_file=None):
+    async def captcha_handler(self, captcha_link=None, captcha_file=None, proxy=None):
         """
         Метод получает от вас ссылку на изображение, скачивает его, отправляет изображение на сервер
         RuCaptcha, дожидается решения капчи и вовзращает вам результат
@@ -334,7 +338,7 @@ class aioImageCaptcha:
         elif captcha_link:
             try:
                 async with aiohttp.ClientSession() as session:
-                    async with session.get(url = captcha_link) as resp:
+                    async with session.get(url = captcha_link, proxy=proxy) as resp:
                         content = await resp.content.read()
             except Exception as error:
                 self.result.update({'errorId': 1,
@@ -349,11 +353,19 @@ class aioImageCaptcha:
             elif self.save_format == 'temp':
                 captcha_id = await self.image_temp_saver(content)
             else:
-                return """Wrong 'save_format' parameter. Valid formats: 'const' or 'temp'.\n 
-                        Неправильный 'save_format' параметр. Возможные форматы: 'const' или 'temp'."""
+                self.result.update({'errorId': 1,
+                                    'errorBody': """Wrong 'save_format' parameter. Valid formats: 'const' or 'temp'.\n
+                        Неправильный 'save_format' параметр. Возможные форматы: 'const' или 'temp'.""",
+                                    }
+                                   )
+                return self.result
 
         else:
-            return """You did not send any file local link or URL."""
+            self.result.update({'errorId': 1,
+                                'errorBody': 'You did not send any file local link or URL.',
+                                }
+                               )
+            return self.result
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id['status'] is 0:
