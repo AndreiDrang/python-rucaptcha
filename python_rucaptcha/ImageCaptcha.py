@@ -7,7 +7,7 @@ import asyncio
 import aiohttp
 import base64
 
-from .config import url_request, url_response, app_key
+from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key
 from .errors import RuCaptchaError
 
 
@@ -19,7 +19,7 @@ class ImageCaptcha:
     Подробней информацию смотрите в методе 'captcha_handler'
     """
 
-    def __init__(self, rucaptcha_key, sleep_time=5, save_format='temp', **kwargs):
+    def __init__(self, rucaptcha_key, sleep_time=5, save_format='temp', service_type='2captcha', **kwargs):
         """
         Инициализация нужных переменных, создание папки для изображений и кэша
         После завершения работы - удалются временные фалйы и папки
@@ -27,13 +27,20 @@ class ImageCaptcha:
         :param sleep_time: Вермя ожидания решения капчи
         :param save_format: Формат в котором будет сохраняться изображение, либо как временный фпйл - 'temp',
                             либо как обычное изображение в папку созданную библиотекой - 'const'.
+        :param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
+                             и "rucaptcha"
         :param kwargs: Служит для передачи необязательных параметров.
 
         Подробней с примерами можно ознакомиться в 'CaptchaTester/image_captcha_example.py'
         """
         self.RUCAPTCHA_KEY = rucaptcha_key
         self.sleep_time = sleep_time
-        self.save_format = save_format
+        # проверяем переданный параметр способа сохранения капчи
+        if save_format in ['const', 'temp']:
+            self.save_format = save_format
+        else:
+            raise ValueError('Передан неверный формат сохранения файла изображения. Возможные варинты: `temp` и `const`.'
+                             'Wrong `save_format` parameter. Valid params: `const` or `temp`.')
         # пайлоад POST запроса на отправку капчи на сервер
         self.post_payload = {"key": self.RUCAPTCHA_KEY,
                              "method": "base64",
@@ -44,6 +51,17 @@ class ImageCaptcha:
         if kwargs:
             for key in kwargs:
                 self.post_payload.update({key: kwargs[key]})
+
+        # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
+        if service_type == '2captcha':
+            self.url_request = url_request_2captcha
+            self.url_response = url_response_2captcha
+        elif service_type == 'rucaptcha':
+            self.url_request = url_request_rucaptcha
+            self.url_response = url_response_rucaptcha
+        else:
+            raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
+                             'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
 
         # пайлоад GET запроса на получение результата решения капчи
         self.get_payload = {'key': self.RUCAPTCHA_KEY,
@@ -71,7 +89,7 @@ class ImageCaptcha:
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
             self.post_payload.update({"body": base64.b64encode(captcha_image.read()).decode('utf-8')})
-            captcha_id = (requests.post(url_request, data=self.post_payload).json())
+            captcha_id = (requests.post(self.url_request, data=self.post_payload).json())
 
         return captcha_id
 
@@ -95,7 +113,7 @@ class ImageCaptcha:
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
             self.post_payload.update({"body": base64.b64encode(captcha_image.read()).decode('utf-8')})
-            captcha_id = (requests.post(url_request, data=self.post_payload).json())
+            captcha_id = (requests.post(self.url_request, data=self.post_payload).json())
 
         # удаляем файл капчи
         os.remove(os.path.join(img_path, "im-{0}.png".format(image_hash)))
@@ -114,7 +132,7 @@ class ImageCaptcha:
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
             self.post_payload.update({"body": base64.b64encode(captcha_image.read()).decode('utf-8')})
-            captcha_id = (requests.post(url_request, data=self.post_payload).json())
+            captcha_id = (requests.post(self.url_request, data=self.post_payload).json())
 
         return captcha_id
 
@@ -186,7 +204,7 @@ class ImageCaptcha:
         time.sleep(self.sleep_time)
         while True:
             # отправляем запрос на результат решения капчи, если не решена ожидаем
-            captcha_response = requests.post(url_response, data=self.get_payload)
+            captcha_response = requests.post(self.url_response, data=self.get_payload)
 
             # если капча ещё не решена - ожидаем
             if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
@@ -217,7 +235,7 @@ class aioImageCaptcha:
     Подробней информацию смотрите в методе 'captcha_handler'
     """
 
-    def __init__(self, rucaptcha_key, sleep_time=5, save_format='temp', **kwargs):
+    def __init__(self, rucaptcha_key, sleep_time=5, save_format='temp', service_type='2captcha',  **kwargs):
         """
         Инициализация нужных переменных, создание папки для изображений и кэша
         После завершения работы - удалются временные фалйы и папки
@@ -231,7 +249,14 @@ class aioImageCaptcha:
         """
         self.RUCAPTCHA_KEY = rucaptcha_key
         self.sleep_time = sleep_time
-        self.save_format = save_format
+
+        # проверяем переданный параметр способа сохранения капчи
+        if save_format in ['const', 'temp']:
+            self.save_format = save_format
+        else:
+            raise ValueError('Передан неверный формат сохранения файла изображения. Возможные варинты: `temp` и `const`.'
+                             'Wrong `save_format` parameter. Valid params: `const` or `temp`.')
+
         # пайлоад POST запроса на отправку капчи на сервер
         self.post_payload = {"key": self.RUCAPTCHA_KEY,
                              "method": "base64",
@@ -242,6 +267,17 @@ class aioImageCaptcha:
         if kwargs:
             for key in kwargs:
                 self.post_payload.update({key: kwargs[key]})
+
+        # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
+        if service_type == '2captcha':
+            self.url_request = url_request_2captcha
+            self.url_response = url_response_2captcha
+        elif service_type == 'rucaptcha':
+            self.url_request = url_request_rucaptcha
+            self.url_response = url_response_rucaptcha
+        else:
+            raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
+                             'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
 
         # пайлоад GET запроса на получение результата решения капчи
         self.get_payload = {'key': self.RUCAPTCHA_KEY,
@@ -269,7 +305,7 @@ class aioImageCaptcha:
             # Отправляем изображение файлом
             self.post_payload.update({"body": base64.b64encode(captcha_image.read()).decode('utf-8')})
             async with aiohttp.ClientSession() as session:
-                async with session.post(url_request, data=self.post_payload) as resp:
+                async with session.post(self.url_request, data=self.post_payload) as resp:
                     captcha_id = await resp.json()
 
         return captcha_id
@@ -295,7 +331,7 @@ class aioImageCaptcha:
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
             self.post_payload.update({"body": base64.b64encode(captcha_image.read()).decode('utf-8')})
             async with aiohttp.ClientSession() as session:
-                async with session.post(url_request, data=self.post_payload) as resp:
+                async with session.post(self.url_request, data=self.post_payload) as resp:
                     captcha_id = await resp.json()
 
         # удаляем файл капчи
@@ -314,7 +350,7 @@ class aioImageCaptcha:
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
             self.post_payload.update({"body": base64.b64encode(captcha_image.read()).decode('utf-8')})
-            captcha_id = (requests.post(url_request, data=self.post_payload).json())
+            captcha_id = (requests.post(self.url_request, data=self.post_payload).json())
 
         return captcha_id
 
@@ -352,13 +388,6 @@ class aioImageCaptcha:
                 captcha_id = await self.image_const_saver(content)
             elif self.save_format == 'temp':
                 captcha_id = await self.image_temp_saver(content)
-            else:
-                self.result.update({'errorId': 1,
-                                    'errorBody': """Wrong 'save_format' parameter. Valid formats: 'const' or 'temp'.\n
-                        Неправильный 'save_format' параметр. Возможные форматы: 'const' или 'temp'.""",
-                                    }
-                                   )
-                return self.result
 
         else:
             self.result.update({'errorId': 1,
@@ -387,7 +416,7 @@ class aioImageCaptcha:
         # отправляем запрос на результат решения капчи, если не решена ожидаем
         async with aiohttp.ClientSession() as session:
             while True:
-                async with session.post(url_response, data=self.get_payload) as resp:
+                async with session.post(self.url_response, data=self.get_payload) as resp:
                     captcha_response = await resp.json()
 
                     # если капча ещё не решена - ожидаем
