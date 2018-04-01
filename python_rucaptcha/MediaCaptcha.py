@@ -3,7 +3,7 @@ import os, shutil
 import time
 import hashlib
 
-from .config import url_request, url_response, app_key
+from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key
 from .errors import RuCaptchaError
 
 
@@ -11,7 +11,7 @@ class MediaCaptcha:
     """
     Класс MediaCaptcha используется для решения аудиокапчи из ReCaptcha v2 и SolveMediaCaptcha
     """
-    def __init__(self, rucaptcha_key, recaptchavoice=False, solveaudio=False, sleep_time=5, **kwargs):
+    def __init__(self, rucaptcha_key, service_type='2captcha', recaptchavoice=False, solveaudio=False, sleep_time=5, **kwargs):
         """
         Метод создаёт папки, принимает параметры для работы c различными типами капчи.
         :param rucaptcha_key: Ключ от сайта RuCaptcha
@@ -19,17 +19,25 @@ class MediaCaptcha:
         :param solveaudio: Передать True, если передаваемая капча является SolveMedia
         :param sleep_time: Время ожидания решения капчи
         """
+        # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
+        if service_type == '2captcha':
+            self.url_request = url_request_2captcha
+            self.url_response = url_response_2captcha
+        elif service_type == 'rucaptcha':
+            self.url_request = url_request_rucaptcha
+            self.url_response = url_response_rucaptcha
+        else:
+            raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
+                             'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
 
         self.sleep_time = sleep_time
         self.audio_path = os.path.normpath('mediacaptcha_audio')
-        try:
-            if not os.path.exists(self.audio_path):
-                os.mkdir(self.audio_path)
-            if not os.path.exists(".cache"):
-                os.mkdir(".cache")
-        except Exception as err:
-            print(err)
-            
+
+        if not os.path.exists(self.audio_path):
+            os.mkdir(self.audio_path)
+        if not os.path.exists(".cache"):
+            os.mkdir(".cache")
+
         # Тело пост запроса при отправке капчи на решение
         self.post_payload = {"key": rucaptcha_key,
                              "method": "post",
@@ -95,7 +103,7 @@ class MediaCaptcha:
             # Отправляем на рукапча аудио капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
             captcha_id = requests.request('POST',
-                                           url_request,
+                                           self.url_request,
                                            data=self.post_payload,
                                            files=files).json()
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
@@ -119,7 +127,7 @@ class MediaCaptcha:
         time.sleep(self.sleep_time)
         while True:
             # отправляем запрос на результат решения капчи, если не решена ожидаем
-            captcha_response = requests.post(url_response, data = self.get_payload)
+            captcha_response = requests.post(self.url_response, data = self.get_payload)
 
             # если капча ещё не решена - ожидаем
             if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':

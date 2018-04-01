@@ -2,12 +2,12 @@ import requests
 import time
 import tempfile
 
-from .config import url_request, url_response, app_key
+from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key
 from .errors import RuCaptchaError
 
 
 class RotateCaptcha:
-    def __init__(self, rucaptcha_key, sleep_time=5):
+    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=5):
         '''
         Инициализация нужных переменных, создание папки для изображений и кэша
         После завершения работы - удалются временные фалйы и папки
@@ -27,6 +27,17 @@ class RotateCaptcha:
                             'action': 'get',
                             'json': 1,
                             }
+
+        if service_type == '2captcha':
+            self.url_request = url_request_2captcha
+            self.url_response = url_response_2captcha
+        elif service_type == 'rucaptcha':
+            self.url_request = url_request_rucaptcha
+            self.url_response = url_response_rucaptcha
+        else:
+            raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
+                             'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
+
         # результат возвращаемый методом *captcha_handler*
         # в captchaSolve - решение капчи,
         # в taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
@@ -55,7 +66,7 @@ class RotateCaptcha:
             files = {'file': captcha_image}
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
-            captcha_id = requests.request('POST', url_request, data=self.post_payload, files=files).json()
+            captcha_id = requests.request('POST', self.url_request, data=self.post_payload, files=files).json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id['status'] is 0:
@@ -77,7 +88,7 @@ class RotateCaptcha:
 
         while True:
             # отправляем запрос на результат решения капчи, если не решена ожидаем
-            captcha_response = requests.post(url_response, data=self.get_payload)
+            captcha_response = requests.post(self.url_response, data=self.get_payload)
     
             # если капча ещё не решена - ожидаем
             if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':

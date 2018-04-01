@@ -1,11 +1,11 @@
 import requests
 
 from .errors import RuCaptchaError
-from .config import url_response
+from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key
 
 
 class RuCaptchaControl:
-    def __init__(self, rucaptcha_key):
+    def __init__(self, rucaptcha_key, service_type='2captcha'):
         """
         Модуль отвечает за дополнительные действия с аккаунтом и капчей.
         :param rucaptcha_key: Ключ от RuCaptcha
@@ -20,6 +20,17 @@ class RuCaptchaControl:
         self.result = {"serverAnswer": None,
                        "errorId": None,
                        "errorBody": None}
+
+        # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
+        if service_type == '2captcha':
+            self.url_request = url_request_2captcha
+            self.url_response = url_response_2captcha
+        elif service_type == 'rucaptcha':
+            self.url_request = url_request_rucaptcha
+            self.url_response = url_response_rucaptcha
+        else:
+            raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
+                             'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
 
     def additional_methods(self, action, **kwargs):
         """
@@ -45,7 +56,7 @@ class RuCaptchaControl:
 
         try:
             # отправляем на сервер данные с вашим запросом
-            answer = requests.post(url_response, data = self.payload)
+            answer = requests.post(self.url_response, data = self.payload)
         except Exception as error:
             self.result.update({'errorId': 1,
                                 'errorBody': error,
