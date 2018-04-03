@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name = 'python-rucaptcha',
-    version = '1.6.4',
+    version = '1.6.5',
     author = 'AndreiDrang, redV0ID',
 
     packages = ['python_rucaptcha'],

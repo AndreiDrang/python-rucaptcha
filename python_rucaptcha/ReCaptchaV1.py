@@ -1,5 +1,9 @@
 import ImageCaptcha
 
+'''
+C 01.04.2018 - Не поддерживается Гуглом!!!
+'''
+
 class RecaptchaV1:
 	'''
 	Данный метод подходит для решения ReCaptcha V1.

@@ -15,6 +15,8 @@ class MediaCaptcha:
         """
         Метод создаёт папки, принимает параметры для работы c различными типами капчи.
         :param rucaptcha_key: Ключ от сайта RuCaptcha
+		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
+                             и "rucaptcha"
         :param recaptchavoice: Передать True, если передаваемая капча является ReCaptcha
         :param solveaudio: Передать True, если передаваемая капча является SolveMedia
         :param sleep_time: Время ожидания решения капчи

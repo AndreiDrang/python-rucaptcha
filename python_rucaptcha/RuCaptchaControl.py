@@ -9,6 +9,8 @@ class RuCaptchaControl:
         """
         Модуль отвечает за дополнительные действия с аккаунтом и капчей.
         :param rucaptcha_key: Ключ от RuCaptcha
+		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
+                             и "rucaptcha"
         """
         self.payload = {'key': rucaptcha_key,
                         'json': 1,

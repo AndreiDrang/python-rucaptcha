@@ -18,7 +18,12 @@ class ReCaptchaV2:
         """
 		Инициализация нужных переменных.
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
+		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
+                             и "rucaptcha"
 		:param sleep_time: Вермя ожидания решения капчи
+		:param proxy: Для решения рекапчи через прокси - передаётся прокси и данные для аутентификации.
+		                ` логин:пароль@IP_адрес:ПОРТ` / `login:password@IP:port`.
+		:param proxytype: Тип используемого прокси. Доступные: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
 		"""
         self.RUCAPTCHA_KEY = rucaptcha_key
         self.sleep_time = sleep_time
@@ -129,7 +134,12 @@ class aioReCaptchaV2:
         """
 		Инициализация нужных переменных.
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
-		:param sleep_time: Вермя ожидания решения капчи
+		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
+                             и "rucaptcha"
+		:param sleep_time: Время ожидания решения капчи
+		:param proxy: Для решения рекапчи через прокси - передаётся прокси и данные для аутентификации.
+		                ` логин:пароль@IP_адрес:ПОРТ` / `login:password@IP:port`.
+		:param proxytype: Тип используемого прокси. Доступные: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
 		"""
         self.sleep_time = sleep_time
         # пайлоад POST запроса на отправку капчи на сервер

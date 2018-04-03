@@ -6,8 +6,18 @@ from .errors import RuCaptchaError
 
 
 class KeyCaptcha:
+    '''
+    Класс служит для решения KeyCaptcha
+    '''
 
     def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=5):
+        '''
+
+        :param rucaptcha_key: АПИ ключ капчи из кабинета пользователя
+        :param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
+                             и "rucaptcha"
+        :param sleep_time: Время ожидания решения капчи
+        '''
         self.RUCAPTCHA_KEY = rucaptcha_key
         self.sleep_time = sleep_time
         # пайлоад GET запроса на получение результата решения капчи
