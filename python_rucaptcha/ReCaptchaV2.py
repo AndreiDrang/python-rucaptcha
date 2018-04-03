@@ -14,7 +14,7 @@ class ReCaptchaV2:
 	И так же ссылку на сайт.
 	"""
 
-    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=16):
+    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=10, proxy='', proxytype=''):
         """
 		Инициализация нужных переменных.
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
@@ -27,6 +27,12 @@ class ReCaptchaV2:
                              'method': 'userrecaptcha',
                              "json": 1,
                              "soft_id": app_key}
+
+        # добавление прокси для решения капчи с того же IP
+        if proxy and proxytype:
+            self.post_payload.update({'proxy': proxy,
+                                      'proxytype': proxytype})
+
         # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
         if service_type == '2captcha':
             self.url_request = url_request_2captcha
@@ -63,7 +69,8 @@ class ReCaptchaV2:
 		:param page_url: Ссылка на страницу на которой находится капча
 		:return: В качестве ответа переждаётся строка которую нужно вставить для отправки гуглу на проверку
 		'''
-        self.post_payload.update({'googlekey': site_key, 'pageurl': page_url})
+        self.post_payload.update({'googlekey': site_key,
+                                  'pageurl': page_url})
         # получаем ID капчи
         captcha_id = requests.post(self.url_request, data=self.post_payload).json()
 
@@ -118,7 +125,7 @@ class aioReCaptchaV2:
 	И так же ссылку на сайт.
 	"""
 
-    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=10):
+    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=10, proxy='', proxytype=''):
         """
 		Инициализация нужных переменных.
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
@@ -131,6 +138,12 @@ class aioReCaptchaV2:
                              "json": 1,
                              "soft_id": app_key
                              }
+
+        # добавление прокси для решения капчи с того же IP
+        if proxy and proxytype:
+            self.post_payload.update({'proxy': proxy,
+                                      'proxytype': proxytype})
+
         # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
         if service_type == '2captcha':
             self.url_request = url_request_2captcha
