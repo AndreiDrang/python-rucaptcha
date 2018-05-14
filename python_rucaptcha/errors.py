@@ -41,7 +41,21 @@ class RuCaptchaError(Exception):
             return BadDuplicatesError.__doc__
         elif description=='REPORT_NOT_RECORDED':
             return ReportNotRecordedError
+        elif description=='ERROR: 1001':
+            return Number1001Error.__doc__
+        elif description=='ERROR: 1002':
+            return Number1002Error.__doc__
+        elif description=='ERROR: 1003':
+            return Number1003Error.__doc__
+        elif description=='ERROR: 1004':
+            return Number1004Error.__doc__
+        elif description=='ERROR: 1005':
+            return Number1005Error.__doc__
 
+
+class ReadError(Exception):
+    def __init__(self, error):
+        Exception.__init__(self, f"\n\tОшибка порождается при невозможности открыть переднный файл!\n\t\t{error}")
 
 
 class WrongUserKeyError(RuCaptchaError):
@@ -158,17 +172,8 @@ class IPBannedByGoogleError(RuCaptchaError):
     ERROR_YOUR_IP_IS_BANNED_BY_GOOGLE  - искючение из таблицы.
     """
 
-class NNNNError(RuCaptchaError):
-    """Исключение порождается при превышении лимитов запросов.
-    Вы превысили лимит запросов и ваш аккаунт временно заблокирован.
-    Вам необходимо установить правильные тайм-ауты.
 
-    ERROR: NNNN - искючение из таблицы.
-    """
-    def nnnn_errors(self, description):
-        pass
-
-class Number1001Error(NNNNError):
+class Number1001Error(RuCaptchaError):
     """Блокировка на 10 минут.
     Вы получили 120 ответов ERROR_NO_SLOT_AVAILABLE за одну минуту
         из-за того, что ваша максимальная ставка ниже, чем текущая ставка на сервере.
@@ -176,14 +181,14 @@ class Number1001Error(NNNNError):
     ERROR: 1001 - искючение из таблицы.
     """
 
-class Number1002Error(NNNNError):
+class Number1002Error(RuCaptchaError):
     """Блокировка на 5 минут.
     Вы получили 120 ответов ERROR_ZERO_BALANCE за одну минуту из-за того, что на вашем счету недостаточно средств.
 
     ERROR: 1002 - искючение из таблицы.
     """
 
-class Number1003Error(NNNNError):
+class Number1003Error(RuCaptchaError):
     """Блокировка на 30 секунд.
     Вы получаете ответ ERROR_NO_SLOT_AVAILABLE потому что загружаете очень много капч
         и на сервере скопилась большая очередь из ваших капч, которые не распределены работникам.
@@ -193,14 +198,14 @@ class Number1003Error(NNNNError):
     ERROR: 1003 - искючение из таблицы.
     """
 
-class Number1004Error(NNNNError):
+class Number1004Error(RuCaptchaError):
     """Блокировка на 10 минут.
     Ваш IP адрес заблокирован, потому что мы получили 5 запросов с некорректным ключем API с вашего IP.
 
     ERROR: 1004 - искючение из таблицы.
     """
 
-class Number1005Error(NNNNError):
+class Number1005Error(RuCaptchaError):
     """Блокировка на 5 минут.
     Вы делаете слишком много запросов к res.php для получения ответов.
 
