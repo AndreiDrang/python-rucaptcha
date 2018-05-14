@@ -1,6 +1,8 @@
 import requests
 import time
 import tempfile
+from urllib3.exceptions import MaxRetryError
+from requests.adapters import HTTPAdapter
 
 from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key
 from .errors import RuCaptchaError
@@ -15,7 +17,10 @@ class RotateCaptcha:
         :param sleep_time: Вермя ожидания решения капчи
         '''
 
+        if sleep_time<5:
+            raise ValueError(f'Параметр `sleep_time` должен быть не менее 10. Вы передали - {sleep_time}')
         self.sleep_time = sleep_time
+
         # пайлоад POST запроса на отправку капчи на сервер
         self.post_payload = {"key": rucaptcha_key,
                              'method': 'rotatecaptcha',
@@ -49,6 +54,11 @@ class RotateCaptcha:
                        "errorBody": None
                        }
 
+        # создаём сессию
+        self.session = requests.Session()
+        # выставляем кол-во попыток подключения к серверу при ошибке
+        self.session.mount('http://', HTTPAdapter(max_retries=5))
+
     # Работа с капчёй
     def captcha_handler(self, captcha_link):
         '''
@@ -58,7 +68,7 @@ class RotateCaptcha:
         :return: Ответ на капчу
         '''
         # Скачиваем изображение
-        content = requests.get(captcha_link).content
+        content = self.session.get(captcha_link).content
         with tempfile.NamedTemporaryFile(suffix='.jpg') as out:
             out.write(content)
             captcha_image = open(out.name, 'rb')
@@ -66,7 +76,7 @@ class RotateCaptcha:
             files = {'file': captcha_image}
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
-            captcha_id = requests.request('POST', self.url_request, data=self.post_payload, files=files).json()
+            captcha_id = self.session.post(self.url_request, data=self.post_payload, files=files).json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id['status'] is 0:
@@ -87,26 +97,41 @@ class RotateCaptcha:
         time.sleep(self.sleep_time)
 
         while True:
-            # отправляем запрос на результат решения капчи, если не решена ожидаем
-            captcha_response = requests.post(self.url_response, data=self.get_payload)
-    
-            # если капча ещё не решена - ожидаем
-            if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
-                time.sleep(self.sleep_time)
-    
-            # при ошибке во время решения
-            elif captcha_response.json()["status"] == 0:
-                self.result.update({'errorId': 1,
-                                    'errorBody': RuCaptchaError().errors(captcha_response.json()["request"])
-                                    }
-                                   )
-                return self.result
-    
-            # при решении капчи
-            elif captcha_response.json()["status"] == 1:
-                self.result.update({'errorId': 0,
-                                    'captchaSolve': captcha_response.json()['request']
-                                    }
-                                   )
-                return self.result
+            try:
+                # отправляем запрос на результат решения капчи, если не решена ожидаем
+                captcha_response = self.session.post(self.url_response, data=self.get_payload)
+
+                # если капча ещё не решена - ожидаем
+                if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
+                    time.sleep(self.sleep_time)
+
+                # при ошибке во время решения
+                elif captcha_response.json()["status"] == 0:
+                    self.result.update({'errorId': 1,
+                                        'errorBody': RuCaptchaError().errors(captcha_response.json()["request"])
+                                        }
+                                       )
+                    return self.result
+
+                # при решении капчи
+                elif captcha_response.json()["status"] == 1:
+                    self.result.update({'errorId': 0,
+                                        'captchaSolve': captcha_response.json()['request']
+                                        }
+                                       )
+                    return self.result
+
+            except (TimeoutError, ConnectionError, MaxRetryError) as error:
+                    self.result.update({'errorId': 1,
+                                        'errorBody': error
+                                        }
+                                       )
+                    return self.result
+
+            except Exception as error:
+                    self.result.update({'errorId': 1,
+                                        'errorBody': error
+                                        }
+                                       )
+                    return self.result
 

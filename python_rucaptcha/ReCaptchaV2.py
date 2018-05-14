@@ -2,6 +2,8 @@ import requests
 import time
 import asyncio
 import aiohttp
+from requests.adapters import HTTPAdapter
+from urllib3.exceptions import MaxRetryError
 
 from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key
 from .errors import RuCaptchaError
@@ -14,7 +16,7 @@ class ReCaptchaV2:
 	И так же ссылку на сайт.
 	"""
 
-    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=10, proxy='', proxytype=''):
+    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=10, invisible=0, proxy='', proxytype=''):
         """
 		Инициализация нужных переменных.
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
@@ -24,13 +26,21 @@ class ReCaptchaV2:
 		:param proxy: Для решения рекапчи через прокси - передаётся прокси и данные для аутентификации.
 		                ` логин:пароль@IP_адрес:ПОРТ` / `login:password@IP:port`.
 		:param proxytype: Тип используемого прокси. Доступные: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
+		:param invisible: Для решения невидимой ReCaptcha нужно выставить параметр 1
 		"""
-        self.RUCAPTCHA_KEY = rucaptcha_key
+        # проверка введённого времени и изменение если минимальный порог нарушен
+        if sleep_time < 10:
+            raise ValueError(f'\nПараметр `sleep_time` должен быть не менее 10(рекомендуемое - 20 секунд). '
+                             f'\n\tВы передали - {sleep_time}')
         self.sleep_time = sleep_time
+        # проверка допустимости переданного параметра для невидимой/обыкновенной капчи
+        if invisible not in (0, 1):
+            raise ValueError(f'\nПараметр `invisible` может быть равен 1 или 0. \n\tВы передали - {invisible}')
         # пайлоад POST запроса на отправку капчи на сервер
-        self.post_payload = {"key": self.RUCAPTCHA_KEY,
+        self.post_payload = {"key": rucaptcha_key,
                              'method': 'userrecaptcha',
                              "json": 1,
+                             'invisible': invisible,
                              "soft_id": app_key}
 
         # добавление прокси для решения капчи с того же IP
@@ -50,7 +60,7 @@ class ReCaptchaV2:
                              'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
 
         # пайлоад GET запроса на получение результата решения капчи
-        self.get_payload = {'key': self.RUCAPTCHA_KEY,
+        self.get_payload = {'key': rucaptcha_key,
                             'action': 'get',
                             'json': 1,
                             }
@@ -64,6 +74,11 @@ class ReCaptchaV2:
                        "errorId": None,
                        "errorBody": None
                        }
+
+        # создаём сессию
+        self.session = requests.Session()
+        # выставляем кол-во попыток подключения к серверу при ошибке
+        self.session.mount('http://', HTTPAdapter(max_retries=5))
 
     # Работа с капчей
     # тестовый ключ сайта
@@ -95,31 +110,46 @@ class ReCaptchaV2:
             self.get_payload.update({'id': captcha_id})
 
         # Ожидаем решения капчи 20 секунд
+        # Ожидаем решения капчи
         time.sleep(self.sleep_time)
-
         while True:
-            # отправляем запрос на результат решения капчи, если не решена ожидаем
-            captcha_response = requests.post(self.url_response, data=self.get_payload)
+            try:
+                # отправляем запрос на результат решения капчи, если не решена ожидаем
+                captcha_response = self.session.post(self.url_response, data=self.get_payload)
 
-            # если капча ещё не решена - ожидаем
-            if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
-                time.sleep(self.sleep_time)
+                # если капча ещё не решена - ожидаем
+                if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
+                    time.sleep(self.sleep_time)
 
-            # при ошибке во время решения
-            elif captcha_response.json()["status"] == 0:
-                self.result.update({'errorId': 1,
-                                    'errorBody': RuCaptchaError().errors(captcha_response.json()["request"])
-                                    }
-                                   )
-                return self.result
+                # при ошибке во время решения
+                elif captcha_response.json()["status"] == 0:
+                    self.result.update({'errorId': 1,
+                                        'errorBody': RuCaptchaError().errors(captcha_response.json()["request"])
+                                        }
+                                       )
+                    return self.result
 
-            # при решении капчи
-            elif captcha_response.json()["status"] == 1:
-                self.result.update({'errorId': 0,
-                                    'captchaSolve': captcha_response.json()['request']
-                                    }
-                                   )
-                return self.result
+                # при решении капчи
+                elif captcha_response.json()["status"] == 1:
+                    self.result.update({'errorId': 0,
+                                        'captchaSolve': captcha_response.json()['request']
+                                        }
+                                       )
+                    return self.result
+
+            except (TimeoutError, ConnectionError, MaxRetryError) as error:
+                    self.result.update({'errorId': 1,
+                                        'errorBody': error
+                                        }
+                                       )
+                    return self.result
+
+            except Exception as error:
+                    self.result.update({'errorId': 1,
+                                        'errorBody': error
+                                        }
+                                       )
+                    return self.result
 
 
 # асинхронный метод для решения РеКапчи 2
@@ -130,7 +160,7 @@ class aioReCaptchaV2:
 	И так же ссылку на сайт.
 	"""
 
-    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=10, proxy='', proxytype=''):
+    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=10, invisible=0, proxy='', proxytype=''):
         """
 		Инициализация нужных переменных.
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
@@ -140,12 +170,19 @@ class aioReCaptchaV2:
 		:param proxy: Для решения рекапчи через прокси - передаётся прокси и данные для аутентификации.
 		                ` логин:пароль@IP_адрес:ПОРТ` / `login:password@IP:port`.
 		:param proxytype: Тип используемого прокси. Доступные: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
+		:param invisible: Для решения невидимой ReCaptcha нужно выставить параметр 1
 		"""
+        if sleep_time < 10:
+            raise ValueError(f'Параметр `sleep_time` должен быть не менее 10. Вы передали - {sleep_time}')
         self.sleep_time = sleep_time
+        # проверка допустимости переданного параметра для невидимой/обыкновенной капчи
+        if invisible not in (0, 1):
+            raise ValueError(f'\nПараметр `invisible` может быть равен 1 или 0. \n\tВы передали - {invisible}')
         # пайлоад POST запроса на отправку капчи на сервер
         self.post_payload = {"key": rucaptcha_key,
                              'method': 'userrecaptcha',
                              "json": 1,
+                             'invisible': invisible,
                              "soft_id": app_key
                              }
 
@@ -215,25 +252,33 @@ class aioReCaptchaV2:
         # отправляем запрос на результат решения капчи, если не решена ожидаем
         async with aiohttp.ClientSession() as session:
             while True:
-                async with session.post(self.url_response, data=self.get_payload) as resp:
-                    captcha_response = await resp.json()
+                try:
+                    async with session.post(self.url_response, data=self.get_payload) as resp:
+                        captcha_response = await resp.json()
 
-                    # если капча ещё не решена - ожидаем
-                    if captcha_response['request'] == 'CAPCHA_NOT_READY':
-                        await asyncio.sleep(self.sleep_time)
+                        # если капча ещё не решена - ожидаем
+                        if captcha_response['request'] == 'CAPCHA_NOT_READY':
+                            await asyncio.sleep(self.sleep_time)
 
-                    # при ошибке во время решения
-                    elif captcha_response["status"] == 0:
-                        self.result.update({'errorId': 1,
-                                            'errorBody': RuCaptchaError().errors(captcha_response["request"])
-                                            }
-                                           )
-                        return self.result
+                        # при ошибке во время решения
+                        elif captcha_response["status"] == 0:
+                            self.result.update({'errorId': 1,
+                                                'errorBody': RuCaptchaError().errors(captcha_response["request"])
+                                                }
+                                               )
+                            return self.result
 
-                    # при решении капчи
-                    elif captcha_response["status"] == 1:
-                        self.result.update({'errorId': 0,
-                                            'captchaSolve': captcha_response['request']
-                                            }
-                                           )
-                        return self.result
+                        # при решении капчи
+                        elif captcha_response["status"] == 1:
+                            self.result.update({'errorId': 0,
+                                                'captchaSolve': captcha_response['request']
+                                                }
+                                               )
+                            return self.result
+
+                except Exception as error:
+                    self.result.update({'errorId': 1,
+                                        'errorBody': error,
+                                        }
+                                       )
+                    return self.result

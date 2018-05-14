@@ -1,5 +1,7 @@
 import requests
 import time
+from urllib3.exceptions import MaxRetryError
+from requests.adapters import HTTPAdapter
 
 from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key
 from .errors import RuCaptchaError
@@ -19,6 +21,8 @@ class KeyCaptcha:
         :param sleep_time: Время ожидания решения капчи
         '''
         self.RUCAPTCHA_KEY = rucaptcha_key
+        if sleep_time < 5:
+            raise ValueError(f'Параметр `sleep_time` должен быть не менее 5. Вы передали - {sleep_time}')
         self.sleep_time = sleep_time
         # пайлоад GET запроса на получение результата решения капчи
         self.get_payload = {'key': self.RUCAPTCHA_KEY,
@@ -46,6 +50,11 @@ class KeyCaptcha:
                        "errorId": None,
                        "errorBody": None}
 
+        # создаём сессию
+        self.session = requests.Session()
+        # выставляем кол-во попыток подключения к серверу при ошибке
+        self.session.mount('http://', HTTPAdapter(max_retries=5))
+
     def captcha_handler(self, **kwargs):
         # считываем все переданные параметры KeyCaptcha
         try:
@@ -62,7 +71,7 @@ class KeyCaptcha:
             return self.result
 
         # передаём параметры кей капчи для решения
-        captcha_id = requests.post(url=self.url_request, json={'key': self.RUCAPTCHA_KEY,
+        captcha_id = self.session.post(url=self.url_request, json={'key': self.RUCAPTCHA_KEY,
                                                           's_s_c_user_id': self.s_s_c_user_id,
                                                           's_s_c_session_id': self.s_s_c_session_id,
                                                           's_s_c_web_server_sign': self.s_s_c_web_server_sign,
@@ -94,25 +103,40 @@ class KeyCaptcha:
             # Ожидаем решения капчи
             time.sleep(self.sleep_time)
             while True:
-                # отправляем запрос на результат решения капчи, если не решена ожидаем
-                captcha_response = requests.post(self.url_response, data=self.get_payload)
+                try:
+                    # отправляем запрос на результат решения капчи, если не решена ожидаем
+                    captcha_response = self.session.post(self.url_response, data=self.get_payload)
 
-                # если капча ещё не решена - ожидаем
-                if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
-                    time.sleep(self.sleep_time)
+                    # если капча ещё не решена - ожидаем
+                    if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
+                        time.sleep(self.sleep_time)
 
-                # при ошибке решения - пораждаем исключение
-                elif captcha_response.json()["status"] == 0:
-                    self.result.update({'errorId': 1,
-                                        'errorBody': RuCaptchaError().errors(captcha_response.json()["request"])
-                                        }
-                                       )
-                    return self.result
+                    # при ошибке во время решения
+                    elif captcha_response.json()["status"] == 0:
+                        self.result.update({'errorId': 1,
+                                            'errorBody': RuCaptchaError().errors(captcha_response.json()["request"])
+                                            }
+                                           )
+                        return self.result
 
-                # если капча решена - возвращаем ответ
-                elif captcha_response.json()["status"] == 1:
-                    self.result.update({'errorId': 0,
-                                        'captchaSolve': captcha_response.json()['request']
-                                        }
-                                       )
-                    return self.result
+                    # при решении капчи
+                    elif captcha_response.json()["status"] == 1:
+                        self.result.update({'errorId': 0,
+                                            'captchaSolve': captcha_response.json()['request']
+                                            }
+                                           )
+                        return self.result
+
+                except (TimeoutError, ConnectionError, MaxRetryError) as error:
+                        self.result.update({'errorId': 1,
+                                            'errorBody': error
+                                            }
+                                           )
+                        return self.result
+
+                except Exception as error:
+                        self.result.update({'errorId': 1,
+                                            'errorBody': error
+                                            }
+                                           )
+                        return self.result

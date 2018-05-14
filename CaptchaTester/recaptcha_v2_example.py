@@ -1,6 +1,9 @@
 from python_rucaptcha import ReCaptchaV2
 
-
+"""
+UPDATE 1.6.6
+Добавление параметра для невидимой капчи - `invisible`(допустимые значения 1 и 0)
+"""
 RUCAPTCHA_KEY = ""
 """
 Этот пример показывает работу модуля решения ReCaptcha v2 New
@@ -21,8 +24,8 @@ SITE_KEY = '6LcC7SsUAAAAAN3AOB-clPIsrKfnBUlO2QkC_vQ7'
 PAGE_URL = 'http://85.255.8.26/invisible_recaptcha/'
 
 # Пример работы с модулем ReCaptchaV2
-answer_invisible = ReCaptchaV2.ReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(site_key=SITE_KEY,
-                                                                                        page_url=PAGE_URL)
+answer_invisible = ReCaptchaV2.ReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY, invisible=1).captcha_handler(site_key=SITE_KEY,
+																									 page_url=PAGE_URL)
 '''
 answer_... - это JSON строка с соответствующими полями
 

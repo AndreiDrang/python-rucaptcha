@@ -1,8 +1,15 @@
 # v.1.6.2
 import requests
+import asyncio
+
 from python_rucaptcha import ImageCaptcha
+from python_rucaptcha import errors
 
 """
+UPDATE 1.6.6
+Добавлена возможность передачи изображения в формате base64
+Добавление проверки на минимальное введённое время
+Добавлен корректный перехват ошибки при невозможности чтения изображения из указанной папки - `errors.ReadError`
 UPDATE 1.6.1
 !!!ТОЛЬКО ДЛЯ СИНХРОННОГО МЕТОДА!!!
 Добавлена возможность подключения к сайту, для получения изображения - через прокси.
@@ -24,7 +31,7 @@ UPDATE 1.6.1
 2. Передать эту ссылку в модуль ImageCaptcha(строка 20 в примере)
 """
 # Введите ключ от рукапчи из своего аккаунта
-RUCAPTCHA_KEY = ''
+RUCAPTCHA_KEY = 'aafb515dff0075f94b1f3328615bc0fd'
 # Для получения ссылки на обычную капчу нужно послать GET запрос с соответствующим парметром
 image_link = requests.get("http://85.255.8.26/api/",
                           params={"captcha_type": "get_common_captcha"}).json()["captcha_src"]
@@ -50,6 +57,14 @@ user_answer_const = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
 """
 user_answer_temp = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
                                              save_format='temp').captcha_handler(captcha_link=image_link)
+
+"""
+Пример работы с передачей файла капчи уже закодированного в base64
+"""
+# закодировано: 976979
+base_64_file = open('base64image.txt', 'rb')
+
+user_answer_base64 = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_base64=base_64_file)
 
 '''
 user_answer_... - это JSON строка с соответствующими полями
@@ -81,6 +96,14 @@ if user_answer_temp['errorId'] == 0:
 elif user_answer_temp['errorId'] == 1:
     # Тело ошибки, если есть
     print(user_answer_temp['errorBody'])
+
+if user_answer_base64['errorId'] == 0:
+    # решение капчи
+    print(user_answer_base64['captchaSolve'])
+    print(user_answer_base64['taskId'])
+elif user_answer_base64['errorId'] == 1:
+    # Тело ошибки, если есть
+    print(user_answer_base64['errorBody'])
 
 '''
 Так же класс в качестве параметра может принимать список необязательных переменных, таких как:
@@ -123,19 +146,24 @@ elif user_answer_full['errorId'] == 1:
 Пример для работы с локальными файлами
 """
 # папка в которой находится изображение, один из вариантов написания
-captcha_file = r'D:\Python\933588.png'
-# так же есть возможность передать так:
-# captcha_file = 'D:\/Python\/933588.png'
-user_answer_local = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_file=captcha_file)
+captcha_file = '088636.png'
 
-if user_answer_local['errorId'] == 0:
-    # решение капчи
-    print(user_answer_local['captchaSolve'])
-    print(user_answer_local['taskId'])
-elif user_answer_local['errorId'] == 1:
-    # Тело ошибки, если есть
-    print(user_answer_local['errorBody'])
-    
+# так же есть возможность передать так:
+# captcha_file = r'D:\Python\933588.png'
+# captcha_file = 'D:\/Python\/933588.png'
+try:
+    user_answer_local = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_file=captcha_file)
+    if user_answer_local['errorId'] == 0:
+        # решение капчи
+        print(user_answer_local['captchaSolve'])
+        print(user_answer_local['taskId'])
+    elif user_answer_local['errorId'] == 1:
+        # Тело ошибки, если есть
+        print(user_answer_local['errorBody'])
+
+# отлов ошибки при проблемах чтения файла-изображения
+except errors.ReadError as err:
+    print(err)
 """
 Асинхронный пример
 Асинхронный способ поддерживает все параметры обычного метода
@@ -146,7 +174,6 @@ UPDATE 1.6.2
 Подробнее про него можно посмотреть тут:
 https://docs.aiohttp.org/en/stable/client_advanced.html#proxy-support
 """
-import asyncio
 
 
 async def run():
@@ -165,7 +192,7 @@ async def run():
 
 
 if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
     loop.run_until_complete(run())
     loop.close()
 
@@ -175,19 +202,17 @@ if __name__ == '__main__':
 Пример для работы с локальными файлами
 """
 # папка в которой находится изображение, один из вариантов написания
-captcha_file = r'D:\Python\933588.png'
+# captcha_file = r'D:\Python\933588.png'
 # так же есть возможность передать так:
 # captcha_file = 'D:\/Python\/933588.png'
 
 
 # Асинхронный
-import asyncio
-
 
 async def run():
     try:
         answer_aio_local_image = await ImageCaptcha.aioImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY)\
-								 .captcha_handler(captcha_file=captcha_file)
+            .captcha_handler(captcha_file=captcha_file)
         if answer_aio_local_image['errorId'] == 0:
             # решение капчи
             print(answer_aio_local_image['captchaSolve'])
@@ -200,18 +225,20 @@ async def run():
 
 
 if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(run())
+    loop = asyncio.new_event_loop()
+    loop.run_until_complete(run)
     loop.close()
 
 """
 UPDATE 1.6.2 с прокси
 !!!Поддерживаются только HTTP прокси!!!
 """
+
+
 async def run():
     try:
         answer_aio_image = await ImageCaptcha.aioImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY)\
-                                            .captcha_handler(captcha_link=image_link, proxy='http://85.21.83.186:8080')
+            .captcha_handler(captcha_link=image_link, proxy='http://85.21.83.186:8080')
         if answer_aio_image['errorId'] == 0:
             # решение капчи
             print(answer_aio_image['captchaSolve'])
@@ -224,6 +251,6 @@ async def run():
 
 
 if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
     loop.run_until_complete(run())
     loop.close()

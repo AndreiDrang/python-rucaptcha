@@ -8,9 +8,7 @@
 
 Если вы работаете на OS Windows с ImageCaptcha - используйте *captcha_handler(save_format = 'const')*.
 
-Если нужна версия без асинхронности вообще - качайте [релиз 1.0](https://github.com/AndreiDrang/python-rucaptcha/releases)
-
-**Используется Python версии 3.5.3+.**
+**Используется Python версии 3.6+.**
 
 ## How to install? Как установить?
 
@@ -42,6 +40,12 @@ python setup.py install
 
 **v.1.6.4** - Добавлена поддержка прокси для ReCaptchaV2 & Invisible ReCaptcha.
 
+**v.1.6.6** - Много правок в обработке ошибок от сервера(правка `ERROR: NNNN`) и системных(при чтении капчи-изображения).
+Добавление `max_retries=5` попыток подключения к серверу(для синхронного метода) всех типов капчи. 
+Добавление обязательного параметра для решения `Invisible ReCaptcha` - `invisible`.
+Добавление `base64` в качестве варианта передачи изображения в base64 формате в `captcha_handler`.
+Удаление нерабочего вида капчи - `ReCaptcha v1`. Переезд синтаксиса форматирования строк на `Python 3.6` - `f''`.
+Обновление примеров, `__doc__` для методов классов(с учётом новых параметров.) 
 ***
 ### Будущие обновления
 v.1.6.* - Добавление асинхронного метода для KeyCaptcha.
@@ -99,9 +103,7 @@ elif answer['errorId'] == 1:
 
 3.[Решение аудиокапчи. Используется для SolveMedia капчи.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/MediaCaptcha.py) ***НЕ ПОДДЕРЖИВАЕТСЯ СЕРВИСОМ RuCaptcha***
 
-4.[Решение старой ReCaptcha v1.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV1.py)
-
-5.[Решение новой ReCaptcha v2.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV2.py)
+4.[Решение новой ReCaptcha v2.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV2.py)
 
 Краткий пример:
 ```python
@@ -124,9 +126,9 @@ elif user_answer['errorId'] == 1:
 	print(user_answer['errorBody'])
 ```
 
-6.[Решение RotateCaptcha(повернуть изображение).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/RotateCaptcha.py)
+5.[Решение RotateCaptcha(повернуть изображение).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/RotateCaptcha.py)
 
-7.[Решение текстовой капчи.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/TextCaptcha.py)
+6.[Решение текстовой капчи.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/TextCaptcha.py)
 Краткий пример:
 ```python
 from python_rucaptcha import TextCaptcha
@@ -145,7 +147,7 @@ elif user_answer['errorId'] == 1:
 	# Тело ошибки, если есть
 	print(user_answer['errorBody'])
 ```
-8.[Модуль для получения инофрмации о балансе аккаунта и отправке жалоб.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/RuCaptchaControl.py)
+7.[Модуль для получения инофрмации о балансе аккаунта и отправке жалоб.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/RuCaptchaControl.py)
 ***
 Кроме того, для тестирования различных типов капчи предоставляется [специальный сайт](http://85.255.8.26/), на котором собраны все имеющиеся типы капчи, с удобной системой тестирования ваших скриптов.
 
