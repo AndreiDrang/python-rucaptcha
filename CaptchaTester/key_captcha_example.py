@@ -1,4 +1,6 @@
-# v.1.6.2
+# v.1.8
+import asyncio
+
 from python_rucaptcha import KeyCaptcha
 
 """
@@ -24,10 +26,10 @@ RUCAPTCHA_KEY = ''
 
 answer = KeyCaptcha.KeyCaptcha(rucaptcha_key=RUCAPTCHA_KEY) \
 	.captcha_handler(s_s_c_user_id=15,
-                     s_s_c_session_id='8f460599bebe02cb0dd096b1fe70b089',
-                     s_s_c_web_server_sign='edd2c221c05aece19f6db93a36b42272',
-                     s_s_c_web_server_sign2='15989edaad1b4dc056ec8fa05abc7c9a',
-                     page_url='https://www.keycaptcha.com/signup/')
+					 s_s_c_session_id='8f460599bebe02cb0dd096b1fe70b089',
+					 s_s_c_web_server_sign='edd2c221c05aece19f6db93a36b42272',
+					 s_s_c_web_server_sign2='15989edaad1b4dc056ec8fa05abc7c9a',
+					 page_url='https://www.keycaptcha.com/signup/')
 
 '''
 answer - это JSON строка с соответствующими полями
@@ -37,10 +39,10 @@ taskId - находится Id задачи на решение капчи,
 errorId - 0 - если всё хорошо, 1 - если есть ошибка,
 errorBody - тело ошибки, если есть.
 {
-    "captchaSolve": string,
-    "taskId": int,
-    "errorId": int, 1 or 0,
-    "errorBody": string,
+	"captchaSolve": string,
+	"taskId": int,
+	"errorId": int, 1 or 0,
+	"errorBody": string,
 }
 '''
 
@@ -53,3 +55,32 @@ if answer['errorId'] == 0:
 elif answer['errorId'] == 1:
 	# Тело ошибки, если есть
 	print(answer['errorBody'])
+
+
+"""
+Пример асинхронного кода
+"""
+
+
+async def run():
+	try:
+		answer = await KeyCaptcha.aioKeyCaptcha(rucaptcha_key = RUCAPTCHA_KEY).captcha_handler(s_s_c_user_id=15,
+					 s_s_c_session_id='8f460599bebe02cb0dd096b1fe70b089',
+					 s_s_c_web_server_sign='edd2c221c05aece19f6db93a36b42272',
+					 s_s_c_web_server_sign2='15989edaad1b4dc056ec8fa05abc7c9a',
+					 page_url='https://www.keycaptcha.com/signup/')
+		if answer['errorId'] == 0:
+			# решение капчи
+			print(answer['captchaSolve'])
+			print(answer['taskId'])
+		elif answer['errorId'] == 1:
+			# Тело ошибки, если есть
+			print(answer['errorBody'])
+	except Exception as err:
+		print(f'ERRRRORORO - {err}')
+
+
+if __name__ == '__main__':
+	loop = asyncio.new_event_loop()
+	loop.run_until_complete(run())
+	loop.close()

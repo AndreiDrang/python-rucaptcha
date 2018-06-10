@@ -1,5 +1,7 @@
 import requests
 import time
+import aiohttp
+import asyncio
 from urllib3.exceptions import MaxRetryError
 from requests.adapters import HTTPAdapter
 
@@ -12,7 +14,7 @@ class KeyCaptcha:
     Класс служит для решения KeyCaptcha
     '''
 
-    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=5):
+    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=15):
         '''
 
         :param rucaptcha_key: АПИ ключ капчи из кабинета пользователя
@@ -21,7 +23,7 @@ class KeyCaptcha:
         :param sleep_time: Время ожидания решения капчи
         '''
         self.RUCAPTCHA_KEY = rucaptcha_key
-        if sleep_time < 5:
+        if sleep_time < 15:
             raise ValueError(f'Параметр `sleep_time` должен быть не менее 5. Вы передали - {sleep_time}')
         self.sleep_time = sleep_time
         # пайлоад GET запроса на получение результата решения капчи
@@ -72,14 +74,14 @@ class KeyCaptcha:
 
         # передаём параметры кей капчи для решения
         captcha_id = self.session.post(url=self.url_request, json={'key': self.RUCAPTCHA_KEY,
-                                                          's_s_c_user_id': self.s_s_c_user_id,
-                                                          's_s_c_session_id': self.s_s_c_session_id,
-                                                          's_s_c_web_server_sign': self.s_s_c_web_server_sign,
-                                                          's_s_c_web_server_sign2': self.s_s_c_web_server_sign2,
-                                                          'method': 'keycaptcha',
-                                                          'pageurl': self.page_url,
-                                                          'json': 1,
-                                                          'soft_id': app_key}).json()
+                                                                   's_s_c_user_id': self.s_s_c_user_id,
+                                                                   's_s_c_session_id': self.s_s_c_session_id,
+                                                                   's_s_c_web_server_sign': self.s_s_c_web_server_sign,
+                                                                   's_s_c_web_server_sign2': self.s_s_c_web_server_sign2,
+                                                                   'method': 'keycaptcha',
+                                                                   'pageurl': self.page_url,
+                                                                   'json': 1,
+                                                                   'soft_id': app_key}).json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id['status'] is 0:
@@ -140,3 +142,153 @@ class KeyCaptcha:
                                             }
                                            )
                         return self.result
+
+
+# асинхронный метод для решения FunCaptcha
+class aioKeyCaptcha:
+    '''
+    Класс служит для решения KeyCaptcha
+    '''
+
+    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=15, **kwargs):
+        '''
+
+        :param rucaptcha_key: АПИ ключ капчи из кабинета пользователя
+        :param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
+                             и "rucaptcha"
+        :param sleep_time: Время ожидания решения капчи
+        '''
+        self.RUCAPTCHA_KEY = rucaptcha_key
+        if sleep_time < 15:
+            raise ValueError(f'Параметр `sleep_time` должен быть не менее 5. Вы передали - {sleep_time}')
+        self.sleep_time = sleep_time
+        # пайлоад GET запроса на получение результата решения капчи
+        self.get_payload = {'key': self.RUCAPTCHA_KEY,
+                            'action': 'get',
+                            'json': 1,
+                            }
+        # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
+        if service_type == '2captcha':
+            self.url_request = url_request_2captcha
+            self.url_response = url_response_2captcha
+        elif service_type == 'rucaptcha':
+            self.url_request = url_request_rucaptcha
+            self.url_response = url_response_rucaptcha
+        else:
+            raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
+                             'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
+
+        # пайлоад POST запроса на отправку капчи на сервер
+        self.post_payload = {"key": rucaptcha_key,
+                             'method': 'keycaptcha',
+                             "json": 1,
+                             "soft_id": app_key}
+        # Если переданы ещё параметры - вносим их в payload
+        if kwargs:
+            for key in kwargs:
+                self.post_payload.update({key: kwargs[key]})
+
+        # пайлоад GET запроса на получение результата решения капчи
+        self.get_payload = {'key': rucaptcha_key,
+                            'action': 'get',
+                            'json': 1,
+                            }
+        # результат возвращаемый методом *captcha_handler*
+        # в captchaSolve - решение капчи,
+        # в taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+        # в errorId - 0 - если всё хорошо, 1 - если есть ошибка,
+        # в errorBody - тело ошибки, если есть.
+        self.result = {"captchaSolve": None,
+                       "taskId": None,
+                       "errorId": None,
+                       "errorBody": None
+                       }
+
+    # Работа с капчей
+    async def captcha_handler(self, **kwargs):
+        # считываем все переданные параметры KeyCaptcha
+        try:
+            self.s_s_c_user_id = kwargs['s_s_c_user_id']
+            self.s_s_c_session_id = kwargs['s_s_c_session_id']
+            self.s_s_c_web_server_sign = kwargs['s_s_c_web_server_sign']
+            self.s_s_c_web_server_sign2 = kwargs['s_s_c_web_server_sign2']
+            self.page_url = kwargs['page_url']
+        except KeyError as error:
+            self.result.update({'errorId': 1,
+                                'errorBody': error
+                                }
+                               )
+            return self.result
+        try:
+            # получаем ID капчи
+            async with aiohttp.ClientSession() as session:
+                async with session.post(url=self.url_request, data={'key': self.RUCAPTCHA_KEY,
+                                                                    's_s_c_user_id': self.s_s_c_user_id,
+                                                                    's_s_c_session_id': self.s_s_c_session_id,
+                                                                    's_s_c_web_server_sign': self.s_s_c_web_server_sign,
+                                                                    's_s_c_web_server_sign2': self.s_s_c_web_server_sign2,
+                                                                    'method': 'keycaptcha',
+                                                                    'pageurl': self.page_url,
+                                                                    'json': 1,
+                                                                    'soft_id': app_key}) as resp:
+
+                    captcha_id = await resp.json()
+
+        except Exception as error:
+            self.result.update({'errorId': 1,
+                                'errorBody': error
+                                }
+                               )
+            return self.result
+
+        # если вернулся ответ с ошибкой то записываем её и возвращаем результат
+        if captcha_id['status'] is 0:
+            self.result.update({'errorId': 1,
+                                'errorBody': RuCaptchaError().errors(captcha_id['request'])
+                                }
+                               )
+            return self.result
+        captcha_id = captcha_id['request']
+
+        # отправляем запрос на результат решения капчи, если ещё капча не решена - ожидаем 5 сек
+        # если всё ок - идём дальше
+        # вписываем в taskId ключ отправленной на решение капчи
+        self.result.update({"taskId": captcha_id})
+        # обновляем пайлоад, вносим в него ключ отправленной на решение капчи
+        self.get_payload.update({'id': captcha_id})
+
+        # Ожидаем решения капчи
+        await asyncio.sleep(self.sleep_time)
+        # отправляем запрос на результат решения капчи, если не решена ожидаем
+        async with aiohttp.ClientSession() as session:
+            while True:
+                try:
+                    async with session.post(self.url_response, data=self.get_payload) as resp:
+                        captcha_response = await resp.json()
+
+                        # если капча ещё не решена - ожидаем
+                        if captcha_response['request'] == 'CAPCHA_NOT_READY':
+                            await asyncio.sleep(self.sleep_time)
+
+                        # при ошибке во время решения
+                        elif captcha_response["status"] == 0:
+                            self.result.update({'errorId': 1,
+                                                'errorBody': RuCaptchaError().errors(captcha_response["request"])
+                                                }
+                                               )
+                            return self.result
+
+                        # при успешном решении капчи
+                        elif captcha_response["status"] == 1:
+                            self.result.update({'errorId': 0,
+                                                'captchaSolve': captcha_response['request']
+                                                }
+                                               )
+                            return self.result
+
+                except Exception as error:
+                    self.result.update({'errorId': 1,
+                                        'errorBody': error,
+                                        }
+                                       )
+                    return self.result
