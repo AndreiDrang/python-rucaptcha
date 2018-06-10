@@ -92,7 +92,7 @@ class ReCaptchaV2:
         self.post_payload.update({'googlekey': site_key,
                                   'pageurl': page_url})
         # получаем ID капчи
-        captcha_id = requests.post(self.url_request, data=self.post_payload).json()
+        captcha_id = self.session.post(self.url_request, data=self.post_payload).json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id['status'] is 0:

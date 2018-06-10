@@ -17,7 +17,7 @@ class RotateCaptcha:
         :param sleep_time: Вермя ожидания решения капчи
         '''
 
-        if sleep_time<5:
+        if sleep_time < 5:
             raise ValueError(f'Параметр `sleep_time` должен быть не менее 10. Вы передали - {sleep_time}')
         self.sleep_time = sleep_time
 

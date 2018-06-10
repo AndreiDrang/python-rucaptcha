@@ -1,4 +1,4 @@
-# v.1.6.2
+# v.1.6.6
 import requests
 import asyncio
 
@@ -15,7 +15,6 @@ UPDATE 1.6.1
 Добавлена возможность подключения к сайту, для получения изображения - через прокси.
 Для этого нужно передать параметры, как и для бибилиотеки requests `.captcha_handler(......, 
                                                                                      proxies = {})`
-
 !!!ТОЛЬКО ДЛЯ СИНХРОННОГО МЕТОДА!!!
 Добавлена возможность скачивания изображений с незащищённых сайтов.
 Для этого нужно передать параметры, как и для бибилиотеки requests `.captcha_handler(......, 
@@ -43,8 +42,6 @@ image_link = requests.get("http://85.255.8.26/api/",
 """
 Тут нужно воспользоваться бибилотекой, отослать на решение ссылку на капчу и получить ответ
 далее его записать в user_answer
-
-
 Первый пример демонстрирует сохранеие файла изображения как обычного файла в папу
 """
 user_answer_const = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
@@ -68,7 +65,6 @@ user_answer_base64 = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).capt
 
 '''
 user_answer_... - это JSON строка с соответствующими полями
-
 captchaSolve - решение капчи,
 taskId - находится Id задачи на решение капчи,
 errorId - 0 - если всё хорошо, 1 - если есть ошибка,
@@ -117,7 +113,6 @@ language = 0,
 textinstructions = '', 
 pingback = ''
 и прочие.
-
 Полный пример выглядит так:
 '''
 user_answer_full = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
@@ -167,7 +162,6 @@ except errors.ReadError as err:
 """
 Асинхронный пример
 Асинхронный способ поддерживает все параметры обычного метода
-
 UPDATE 1.6.2
 Добавлена поддержка прокси для асинхронного метода
 !!!Поддерживаются только HTTP прокси!!!
