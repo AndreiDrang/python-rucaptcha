@@ -4,7 +4,7 @@
 
 Библиотека предназначена для разрабаотчиков ПО и служит для облегчения работы с API сервиса RuCaptcha.
 
-**Добавлен асинхронный способ работы, все примеры показаны в [папке с примерами](https://github.com/AndreiDrang/python-rucaptcha/tree/master/CaptchaTester)**.
+Присутствуют [примеры работы с библиотекой](https://github.com/AndreiDrang/python-rucaptcha/tree/master/CaptchaTester).
 
 Если вы работаете на OS Windows с ImageCaptcha - используйте *captcha_handler(save_format = 'const')*.
 
@@ -46,11 +46,11 @@ python setup.py install
 Добавление `base64` в качестве варианта передачи изображения в base64 формате в `captcha_handler`.
 Удаление нерабочего вида капчи - `ReCaptcha v1`. Переезд синтаксиса форматирования строк на `Python 3.6` - `f''`.
 Обновление примеров, `__doc__` для методов классов(с учётом новых параметров.) 
+
+**v.1.8** - Добавление FunCaptcha. Добавление асинхронного метода для KeyCaptcha. Удаление `raise` из кода и замена этого на корректное возвращение ошибки через JSON. 
 ***
 ### Будущие обновления
-v.1.6.* - Добавление асинхронного метода для KeyCaptcha.
-
-v.1.7.* - Добавление FunCaptcha.
+v.1.9.* - Добавление уникального ID для каждой ошибки(системной и сервисной).
 ***
 ### На данный момент реализованы следующие методы:
 
@@ -147,8 +147,32 @@ elif user_answer['errorId'] == 1:
 	# Тело ошибки, если есть
 	print(user_answer['errorBody'])
 ```
-7.[Модуль для получения инофрмации о балансе аккаунта и отправке жалоб.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/RuCaptchaControl.py)
+
+7.[Решение FunCaptcha.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/TextCaptcha.py)
+Краткий пример:
+```python
+from python_rucaptcha import FunCaptcha
+# Введите ключ от рукапчи из своего аккаунта
+RUCAPTCHA_KEY = ''
+
+'''
+Страница на которой находится FunCaptch: 
+https://www.funcaptcha.com/demo
+Данные взятые из этой страницы о данной капче:
+'''
+public_key = 'DE0B0BB7-1EE4-4D70-1853-31B835D4506B'
+pageurl = 'https://www.funcaptcha.com/demo'
+
+answer = FunCaptcha.FunCaptcha(rucaptcha_key = RUCAPTCHA_KEY).captcha_handler(public_key=public_key, page_url=pageurl)
+
+if answer['errorId'] == 0:
+    # решение капчи
+    print(answer['captchaSolve'])
+    print(answer['taskId'])
+elif answer['errorId'] == 1:
+    # Тело ошибки, если есть
+    print(answer['errorBody'])
+```
+8.[Модуль для получения инофрмации о балансе аккаунта и отправке жалоб.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/RuCaptchaControl.py)
 ***
 Кроме того, для тестирования различных типов капчи предоставляется [специальный сайт](http://85.255.8.26/), на котором собраны все имеющиеся типы капчи, с удобной системой тестирования ваших скриптов.
-
-Присутствуют [примеры работы с библиотекой](https://github.com/AndreiDrang/python-rucaptcha/tree/master/CaptchaTester), которые демонстрируются на примере данного сайта
