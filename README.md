@@ -6,7 +6,7 @@
 
 Присутствуют [примеры работы с библиотекой](https://github.com/AndreiDrang/python-rucaptcha/tree/master/CaptchaTester).
 
-Если вы работаете на OS Windows с ImageCaptcha - используйте *captcha_handler(save_format = 'const')*.
+Если вы работаете на OS Windows с ImageCaptcha - используйте *ImageCaptcha.ImageCaptcha(save_format='const')*.
 
 **Используется Python версии 3.6+.**
 

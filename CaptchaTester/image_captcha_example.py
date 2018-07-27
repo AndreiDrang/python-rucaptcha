@@ -1,6 +1,7 @@
 # v.1.6.6
 import requests
 import asyncio
+import base64
 
 from python_rucaptcha import ImageCaptcha
 from python_rucaptcha import errors
@@ -62,6 +63,13 @@ user_answer_temp = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
 base_64_file = open('base64image.txt', 'rb')
 
 user_answer_base64 = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_base64=base_64_file)
+
+"""
+Пример работы с декодированием в base64 файла-капчи "налету"
+"""
+base_64_link = base64.b64encode(requests.get("http://85.255.8.26/static/image/common_image_example/862963.png").content).decode('utf-8')
+
+user_answer_base64 = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_base64=base_64_link)
 
 '''
 user_answer_... - это JSON строка с соответствующими полями
