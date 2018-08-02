@@ -8,3 +8,26 @@ url_request_rucaptcha = "http://rucaptcha.com/in.php"
 url_response_rucaptcha = "http://rucaptcha.com/res.php"
 # ключ приложения
 app_key = "1899"
+
+
+"""
+JSON возвращаемы пользователю после решения капчи
+
+captchaSolve - решение капчи,
+taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+error - False - если всё хорошо, True - если есть ошибка,
+errorBody - полная информация об ошибке: 
+    {
+        text - Развернётое пояснение ошибки
+        id - уникальный номер ошибка в ЭТОЙ бибилотеке
+    }
+"""
+JSON_RESPONSE = {
+    "captchaSolve": None,
+    "taskId": None,
+    "error": False,
+    "errorBody": {
+        'text': None,
+        'id': 0
+    }
+}
