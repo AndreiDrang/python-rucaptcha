@@ -176,3 +176,40 @@ elif answer['errorId'] == 1:
 8.[Модуль для получения инофрмации о балансе аккаунта и отправке жалоб.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/RuCaptchaControl.py)
 ***
 Кроме того, для тестирования различных типов капчи предоставляется [специальный сайт](http://85.255.8.26/), на котором собраны все имеющиеся типы капчи, с удобной системой тестирования ваших скриптов.
+***
+### Список кодов ошибок
+| Error ID       | in.php Rucaptcha код ошибки
+| ------------- |:-------------:|
+| 10      | ERROR_WRONG_USER_KEY 
+| 11      | ERROR_KEY_DOES_NOT_EXIST 
+| 12      | ERROR_ZERO_BALANCE      
+| 13      | ERROR_PAGEURL 
+| 14      | ERROR_NO_SLOT_AVAILABLE   
+| 15      | ERROR_ZERO_CAPTCHA_FILESIZE         
+| 16      | ERROR_TOO_BIG_CAPTCHA_FILESIZE 
+| 17      | ERROR_WRONG_FILE_EXTENSION   
+| 18      | ERROR_IMAGE_TYPE_NOT_SUPPORTED       
+| 19      | ERROR_UPLOAD 
+| 20      | ERROR_IP_NOT_ALLOWED  
+| 21      | IP_BANNED        
+| 22      | ERROR_BAD_TOKEN_OR_PAGEURL
+| 23      | ERROR_GOOGLEKEY   
+| 24      | ERROR_CAPTCHAIMAGE_BLOCKED     
+| 25      | MAX_USER_TURN 
+
+| Error ID      | res.php Rucaptcha код ошибки
+| ------------- |:-------------:| 
+| 30      | CAPCHA_NOT_READY 
+| 31      | ERROR_CAPTCHA_UNSOLVABLE  
+| 32      | ERROR_WRONG_ID_FORMAT       
+| 33      | ERROR_WRONG_CAPTCHA_ID 
+| 34      | ERROR_BAD_DUPLICATES   
+| 34      | REPORT_NOT_RECORDED   
+
+| Error ID      | NNNN Rucaptcha код ошибки
+| ------------- |:-------------:|
+| 40      | ERROR: 1001 
+| 41      | ERROR: 1002  
+| 42      | ERROR: 1003        
+| 43      | ERROR: 1004 
+| 44      | ERROR: 1005  

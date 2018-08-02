@@ -1,55 +1,66 @@
 class RuCaptchaError(Exception):
     """Базовый класс для всех исключений в этом модуле."""
     def errors(self, description):
-        if description=='ERROR_KEY_DOES_NOT_EXIST':
-            return NonExistentKeyError.__doc__
-        elif description=='ERROR_WRONG_CAPTCHA_ID':
-            return WrongCaptchaIDError.__doc__
-        elif description=='CAPCHA_NOT_READY':
-            return CaptchaNotReadyError.__doc__
-        elif description=='ERROR_WRONG_USER_KEY':
+        """
+        Ошибки in.php
+        """
+        if description == 'ERROR_WRONG_USER_KEY':
             return WrongUserKeyError.__doc__
-        elif description=='ERROR_ZERO_BALANCE':
+        elif description == 'ERROR_KEY_DOES_NOT_EXIST':
+            return NonExistentKeyError.answer()
+        elif description == 'ERROR_ZERO_BALANCE':
             return ZeroBalanceError.__doc__
-        elif description=='ERROR_PAGEURL':
+        elif description == 'ERROR_PAGEURL':
             return PageUrlError.__doc__
-        elif description=='ERROR_NO_SLOT_AVAILABLE':
+        elif description == 'ERROR_NO_SLOT_AVAILABLE':
             return NoSlotsError.__doc__
-        elif description=='ERROR_ZERO_CAPTCHA_FILESIZE':
+        elif description == 'ERROR_ZERO_CAPTCHA_FILESIZE':
             return ZerroCaptchaSizeError.__doc__
-        elif description=='ERROR_TOO_BIG_CAPTCHA_FILESIZE':
+        elif description == 'ERROR_TOO_BIG_CAPTCHA_FILESIZE':
             return ToBigCaptchaSizeError.__doc__
-        elif description=='ERROR_WRONG_FILE_EXTENSION':
+        elif description == 'ERROR_WRONG_FILE_EXTENSION':
             return WrongCaptchaFormatError.__doc__
-        elif description=='ERROR_IMAGE_TYPE_NOT_SUPPORTED':
+        elif description == 'ERROR_IMAGE_TYPE_NOT_SUPPORTED':
             return NotSupportedCaptchaTypeError.__doc__
-        elif description=='ERROR_IP_NOT_ALLOWED':
+        elif description == 'ERROR_UPLOAD':
+            return ErrorUploadCaptchaError.__doc__
+        elif description == 'ERROR_IP_NOT_ALLOWED':
             return IPNotAllowedError.__doc__
-        elif description=='IP_BANNED':
+        elif description == 'IP_BANNED':
             return BannedIPError.__doc__
-        elif description=='ERROR_CAPTCHAIMAGE_BLOCKED':
+        elif description == 'ERROR_BAD_TOKEN_OR_PAGEURL':
+            return BadTokenOrPageurlCaptchaError.__doc__
+        elif description == 'ERROR_GOOGLEKEY':
+            return ErrorGoogleKeyCaptchaError.__doc__
+        elif description == 'ERROR_CAPTCHAIMAGE_BLOCKED':
             return BlockedimageCaptchaError.__doc__
-        elif description=='ERROR_YOUR_IP_IS_BANNED_BY_GOOGLE':
-            return IPBannedByGoogleError.__doc__
-        elif description=='ERROR_CAPTCHA_UNSOLVABLE':
+        elif description == 'MAX_USER_TURN':
+            return MaxUserTurnCaptchaError.__doc__
+
+        # Ошибки res.php
+        elif description == 'CAPCHA_NOT_READY':
+            return CaptchaNotReadyError.__doc__
+        elif description == 'ERROR_CAPTCHA_UNSOLVABLE':
             return UnsolvableCaptchaError.__doc__
-        elif description=='ERROR_WRONG_ID_FORMAT':
+        elif description == 'ERROR_WRONG_ID_FORMAT':
             return WrongCaptchaIDFormatError.__doc__
-        elif description=='ERROR_WRONG_CAPTCHA_ID ':
+        elif description == 'ERROR_WRONG_CAPTCHA_ID ':
             return WrongCaptchaIDError.__doc__
-        elif description=='ERROR_BAD_DUPLICATES':
+        elif description == 'ERROR_BAD_DUPLICATES':
             return BadDuplicatesError.__doc__
-        elif description=='REPORT_NOT_RECORDED':
+        elif description == 'REPORT_NOT_RECORDED':
             return ReportNotRecordedError
-        elif description=='ERROR: 1001':
+
+        # Error: NNNN
+        elif description == 'ERROR: 1001':
             return Number1001Error.__doc__
-        elif description=='ERROR: 1002':
+        elif description == 'ERROR: 1002':
             return Number1002Error.__doc__
-        elif description=='ERROR: 1003':
+        elif description == 'ERROR: 1003':
             return Number1003Error.__doc__
-        elif description=='ERROR: 1004':
+        elif description == 'ERROR: 1004':
             return Number1004Error.__doc__
-        elif description=='ERROR: 1005':
+        elif description == 'ERROR: 1005':
             return Number1005Error.__doc__
 
 
@@ -59,20 +70,29 @@ class ReadError(Exception):
 
 
 class WrongUserKeyError(RuCaptchaError):
-    """Исключение порождается при неправильном RuCaptcha KEY.
-    Вы указали значение параметра key в неверном формате, ключ должен содержать 32 символа.
-    Прекратите отправку запросов и проверьте ваш ключ API.
+    @staticmethod
+    def answer():
+        return {'text': """Исключение порождается при неправильном RuCaptcha KEY.
+                            Вы указали значение параметра key в неверном формате, ключ должен содержать 32 символа.
+                            Прекратите отправку запросов и проверьте ваш ключ API.
+                        
+                            ERROR_WRONG_USER_KEY - исключение из таблицы.
+                            """,
+                'id': 1
+                }
 
-    ERROR_WRONG_USER_KEY - исключение из таблицы.
-    """
 
 class NonExistentKeyError(RuCaptchaError):
-    """Исключение порождается при несуществующем RuCaptcha KEY.
-    Ключ, который вы указали не существует.
-    Прекратите отправку запросов и проверьте ваш ключ API.
+    @staticmethod
+    def answer():
+        return {'text': """Исключение порождается при несуществующем RuCaptcha KEY.
+                            Ключ, который вы указали не существует.
+                            Прекратите отправку запросов и проверьте ваш ключ API.
+                
+                            ERROR_KEY_DOES_NOT_EXIST - исключение из таблицы.""",
+                'id': 2
+                }
 
-    EERROR_KEY_DOES_NOT_EXIST - исключение из таблицы.
-    """
 
 class ZeroBalanceError(RuCaptchaError):
     """Исключение порождается при отсутствии средств на балансе.
@@ -129,6 +149,7 @@ class WrongCaptchaFormatError(RuCaptchaError):
     ERROR_WRONG_FILE_EXTENSION - исключение из таблицы.
     """
 
+
 class NotSupportedCaptchaTypeError(RuCaptchaError):
     """Исключение порождается при загрузке некорректного изображения.
     Сервер не может опознать тип вашего файла.
@@ -136,6 +157,16 @@ class NotSupportedCaptchaTypeError(RuCaptchaError):
 
     ERROR_IMAGE_TYPE_NOT_SUPPORTED - искючение из таблицы.
     """
+
+
+class ErrorUploadCaptchaError(RuCaptchaError):
+    """Исключение порождается при загрузке некорректного изображения.
+    Сервер не может прочитать файл из вашего POST-запроса.
+    Это происходит, если POST-запрос некорректно сформирован в части отправки файла, либо содержит невалидный base64.
+
+    ERROR_UPLOAD - искючение из таблицы.
+    """
+
 
 class IPNotAllowedError(RuCaptchaError):
     """Исключение порождается при запросе к серверу от неразрешённого IP адреса.
@@ -153,6 +184,25 @@ class BannedIPError(RuCaptchaError):
     IP_BANNED - искючение из таблицы.
     """
 
+
+class BadTokenOrPageurlCaptchaError(RuCaptchaError):
+    """Исключение порождается при некорректной паре googlekey и pageurl.
+    Вы можете получить эту ошибку, если отправляете нам ReCaptcha V2. Ошибка возвращается если вы прислали невалидную
+    пару значений googlekey и pageurl. Обычно так бывает, если ReCaptcha подгружается в iframe с другого домена или поддомена.
+
+    ERROR_BAD_TOKEN_OR_PAGEURL - искючение из таблицы.
+    """
+
+
+class ErrorGoogleKeyCaptchaError(RuCaptchaError):
+    """Исключение порождается при некорректном recaptcha-sitekey.
+    Вы можете получить эту ошибку, если отправляете нам ReCaptcha V2. Ошибка возвращается если sitekey в вашем запросе
+    пустой или имеет некорректный формат.
+
+    ERROR_GOOGLEKEY - искючение из таблицы.
+    """
+
+
 class BlockedimageCaptchaError(RuCaptchaError):
     """Исключение порождается при загрузке некоректного изображения с сайта.
     Вы отправили изображение, которые помечено в нашей базе данных как нераспознаваемое.
@@ -162,6 +212,16 @@ class BlockedimageCaptchaError(RuCaptchaError):
 
     ERROR_CAPTCHAIMAGE_BLOCKED - искючение из таблицы.
     """
+
+
+class MaxUserTurnCaptchaError(RuCaptchaError):
+    """Исключение порождается при большом кол-ве запросов к IN.php.
+    Вы делаете больше 60 обращений к in.php в течение 3 секунд.
+    Ваш ключ API заблокирован на 10 секунд. Блокировка будет снята автоматически
+
+    MAX_USER_TURN - искючение из таблицы.
+    """
+
 
 class IPBannedByGoogleError(RuCaptchaError):
     """Исключение порождается при блокировке вашего IP в гугле.
