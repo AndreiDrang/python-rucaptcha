@@ -204,7 +204,7 @@ elif answer['errorId'] == 1:
 | 32      | ERROR_WRONG_ID_FORMAT       
 | 33      | ERROR_WRONG_CAPTCHA_ID 
 | 34      | ERROR_BAD_DUPLICATES   
-| 34      | REPORT_NOT_RECORDED   
+| 35      | REPORT_NOT_RECORDED   
 
 | Error ID      | NNNN Rucaptcha код ошибки
 | ------------- |:-------------:|
