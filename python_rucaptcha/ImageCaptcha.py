@@ -114,11 +114,19 @@ class ImageCaptcha:
 
         except (IOError, FileNotFoundError) as error:
             self.result.update({'error': True,
-                                'errorBody': error, })
+                                'errorBody': {
+                                    'text': error
+                                    }
+                                }
+                               )
 
         except Exception as error:
             self.result.update({'error': True,
-                                'errorBody': error, })
+                                'errorBody': {
+                                    'text': error
+                                }
+                                }
+                               )
 
         finally:
             return captcha_id
@@ -155,11 +163,19 @@ class ImageCaptcha:
 
         except (IOError, FileNotFoundError) as error:
             self.result.update({'error': True,
-                                'errorBody': error, })
+                                'errorBody': {
+                                    'text': error
+                                    }
+                                }
+                               )
 
         except Exception as error:
             self.result.update({'error': True,
-                                'errorBody': error, })
+                                'errorBody': {
+                                    'text': error
+                                    }
+                                }
+                               )
 
         finally:
 
@@ -197,11 +213,19 @@ class ImageCaptcha:
 
         except (IOError, FileNotFoundError) as error:
             self.result.update({'error': True,
-                                'errorBody': error, })
+                                'errorBody': {
+                                    'text': error
+                                    }
+                                }
+                               )
 
         except Exception as error:
             self.result.update({'error': True,
-                                'errorBody': error, })
+                                'errorBody': {
+                                    'text': error
+                                    }
+                                }
+                               )
 
         finally:
             return captcha_id
@@ -238,7 +262,9 @@ class ImageCaptcha:
                 content = self.session.get(url = captcha_link, **kwargs).content
             except Exception as error:
                 self.result.update({'error': True,
-                                    'errorBody': error,
+                                    'errorBody': {
+                                        'text': error
+                                        }
                                     }
                                    )
                 return self.result
@@ -304,14 +330,18 @@ class ImageCaptcha:
 
             except (TimeoutError, ConnectionError, MaxRetryError) as error:
                 self.result.update({'error': True,
-                                    'errorBody': error
+                                    'errorBody': {
+                                        'text': error
+                                        }
                                     }
                                    )
                 return self.result
 
             except Exception as error:
                 self.result.update({'error': True,
-                                    'errorBody': error
+                                    'errorBody': {
+                                        'text': error
+                                        }
                                     }
                                    )
                 return self.result
@@ -414,11 +444,19 @@ class aioImageCaptcha:
 
         except (IOError, FileNotFoundError) as error:
             self.result.update({'error': True,
-                                'errorBody': error, })
+                                'errorBody': {
+                                    'text': error
+                                    }
+                                }
+                               )
 
         except Exception as error:
             self.result.update({'error': True,
-                                'errorBody': error, })
+                                'errorBody': {
+                                    'text': error
+                                    }
+                                }
+                               )
 
         finally:
             return captcha_id
@@ -455,11 +493,19 @@ class aioImageCaptcha:
 
         except (IOError, FileNotFoundError) as error:
             self.result.update({'error': True,
-                                'errorBody': error, })
+                                'errorBody': {
+                                    'text': error
+                                    }
+                                }
+                               )
 
         except Exception as error:
             self.result.update({'error': True,
-                                'errorBody': error, })
+                                'errorBody': {
+                                    'text': error
+                                    }
+                                }
+                               )
         finally:
             return captcha_id
 
@@ -492,11 +538,19 @@ class aioImageCaptcha:
 
         except (IOError, FileNotFoundError) as error:
             self.result.update({'error': True,
-                                'errorBody': error, })
+                                'errorBody': {
+                                    'text': error
+                                    }
+                                }
+                               )
 
         except Exception as error:
             self.result.update({'error': True,
-                                'errorBody': error, })
+                                'errorBody': {
+                                    'text': error
+                                    }
+                                }
+                               )
         finally:
             return captcha_id
 
@@ -535,7 +589,9 @@ class aioImageCaptcha:
                         content = await resp.content.read()
             except Exception as error:
                 self.result.update({'error': True,
-                                    'errorBody': error,
+                                    'errorBody': {
+                                        'text': error
+                                        }
                                     }
                                    )
                 return self.result
@@ -603,7 +659,9 @@ class aioImageCaptcha:
 
                 except Exception as error:
                     self.result.update({'error': True,
-                                        'errorBody': error,
+                                        'errorBody': {
+                                            'text': error
+                                            }
                                         }
                                        )
                     return self.result
