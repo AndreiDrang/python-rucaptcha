@@ -5,7 +5,8 @@ import aiohttp
 from requests.adapters import HTTPAdapter
 from urllib3.exceptions import MaxRetryError
 
-from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key
+from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key, \
+    JSON_RESPONSE
 from .errors import RuCaptchaError
 
 
@@ -16,7 +17,8 @@ class ReCaptchaV2:
 	И так же ссылку на сайт.
 	"""
 
-    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=10, invisible=0, proxy='', proxytype=''):
+    def __init__(self, rucaptcha_key, service_type: str = '2captcha', sleep_time: int = 10, invisible: int = 0,
+                 proxy: str = '', proxytype: str = ''):
         """
 		Инициализация нужных переменных.
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
@@ -65,24 +67,16 @@ class ReCaptchaV2:
                             'json': 1,
                             }
         # результат возвращаемый методом *captcha_handler*
-        # в captchaSolve - решение капчи,
-        # в taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
-        # в errorId - 0 - если всё хорошо, 1 - если есть ошибка,
-        # в errorBody - тело ошибки, если есть.
-        self.result = {"captchaSolve": None,
-                       "taskId": None,
-                       "errorId": None,
-                       "errorBody": None
-                       }
+        self.result = JSON_RESPONSE
 
         # создаём сессию
         self.session = requests.Session()
         # выставляем кол-во попыток подключения к серверу при ошибке
-        self.session.mount('http://', HTTPAdapter(max_retries=5))
+        self.session.mount('http://', HTTPAdapter(max_retries = 5))
 
     # Работа с капчей
     # тестовый ключ сайта
-    def captcha_handler(self, site_key, page_url):
+    def captcha_handler(self, site_key: str, page_url: str):
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param site_key: Гугл-ключ сайта
@@ -92,11 +86,11 @@ class ReCaptchaV2:
         self.post_payload.update({'googlekey': site_key,
                                   'pageurl': page_url})
         # получаем ID капчи
-        captcha_id = self.session.post(self.url_request, data=self.post_payload).json()
+        captcha_id = self.session.post(self.url_request, data = self.post_payload).json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id['status'] is 0:
-            self.result.update({'errorId': 1,
+            self.result.update({'error': True,
                                 'errorBody': RuCaptchaError().errors(captcha_id['request'])
                                 }
                                )
@@ -115,7 +109,7 @@ class ReCaptchaV2:
         while True:
             try:
                 # отправляем запрос на результат решения капчи, если не решена ожидаем
-                captcha_response = self.session.post(self.url_response, data=self.get_payload)
+                captcha_response = self.session.post(self.url_response, data = self.get_payload)
 
                 # если капча ещё не решена - ожидаем
                 if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
@@ -123,7 +117,7 @@ class ReCaptchaV2:
 
                 # при ошибке во время решения
                 elif captcha_response.json()["status"] == 0:
-                    self.result.update({'errorId': 1,
+                    self.result.update({'error': True,
                                         'errorBody': RuCaptchaError().errors(captcha_response.json()["request"])
                                         }
                                        )
@@ -131,25 +125,29 @@ class ReCaptchaV2:
 
                 # при решении капчи
                 elif captcha_response.json()["status"] == 1:
-                    self.result.update({'errorId': 0,
+                    self.result.update({
                                         'captchaSolve': captcha_response.json()['request']
                                         }
                                        )
                     return self.result
 
             except (TimeoutError, ConnectionError, MaxRetryError) as error:
-                    self.result.update({'errorId': 1,
-                                        'errorBody': error
+                self.result.update({'error': True,
+                                    'errorBody': {
+                                        'text': error
                                         }
-                                       )
-                    return self.result
+                                    }
+                                   )
+                return self.result
 
             except Exception as error:
-                    self.result.update({'errorId': 1,
-                                        'errorBody': error
+                self.result.update({'error': True,
+                                    'errorBody': {
+                                        'text': error
                                         }
-                                       )
-                    return self.result
+                                    }
+                                   )
+                return self.result
 
 
 # асинхронный метод для решения РеКапчи 2
@@ -160,7 +158,8 @@ class aioReCaptchaV2:
 	И так же ссылку на сайт.
 	"""
 
-    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=10, invisible=0, proxy='', proxytype=''):
+    def __init__(self, rucaptcha_key: str, service_type: str = '2captcha', sleep_time: int = 10, invisible: int = 0, proxy: str = '',
+                 proxytype: str = ''):
         """
 		Инициализация нужных переменных.
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
@@ -208,18 +207,10 @@ class aioReCaptchaV2:
                             'json': 1,
                             }
         # результат возвращаемый методом *captcha_handler*
-        # в captchaSolve - решение капчи,
-        # в taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
-        # в errorId - 0 - если всё хорошо, 1 - если есть ошибка,
-        # в errorBody - тело ошибки, если есть.
-        self.result = {"captchaSolve": None,
-                       "taskId": None,
-                       "errorId": None,
-                       "errorBody": None
-                       }
+        self.result = JSON_RESPONSE
 
     # Работа с капчей
-    async def captcha_handler(self, site_key, page_url):
+    async def captcha_handler(self, site_key: str, page_url: str):
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param site_key: Гугл-ключ сайта
@@ -229,12 +220,12 @@ class aioReCaptchaV2:
         self.post_payload.update({'googlekey': site_key, 'pageurl': page_url})
         # получаем ID капчи
         async with aiohttp.ClientSession() as session:
-            async with session.post(self.url_request, data=self.post_payload) as resp:
+            async with session.post(self.url_request, data = self.post_payload) as resp:
                 captcha_id = await resp.json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id['status'] is 0:
-            self.result.update({'errorId': 1,
+            self.result.update({'error': True,
                                 'errorBody': RuCaptchaError().errors(captcha_id['request'])
                                 }
                                )
@@ -253,7 +244,7 @@ class aioReCaptchaV2:
         async with aiohttp.ClientSession() as session:
             while True:
                 try:
-                    async with session.post(self.url_response, data=self.get_payload) as resp:
+                    async with session.post(self.url_response, data = self.get_payload) as resp:
                         captcha_response = await resp.json()
 
                         # если капча ещё не решена - ожидаем
@@ -262,7 +253,7 @@ class aioReCaptchaV2:
 
                         # при ошибке во время решения
                         elif captcha_response["status"] == 0:
-                            self.result.update({'errorId': 1,
+                            self.result.update({'error': True,
                                                 'errorBody': RuCaptchaError().errors(captcha_response["request"])
                                                 }
                                                )
@@ -270,15 +261,17 @@ class aioReCaptchaV2:
 
                         # при решении капчи
                         elif captcha_response["status"] == 1:
-                            self.result.update({'errorId': 0,
+                            self.result.update({
                                                 'captchaSolve': captcha_response['request']
                                                 }
                                                )
                             return self.result
 
                 except Exception as error:
-                    self.result.update({'errorId': 1,
-                                        'errorBody': error,
+                    self.result.update({'error': True,
+                                        'errorBody': {
+                                            'text': error
+                                            }
                                         }
                                        )
                     return self.result
