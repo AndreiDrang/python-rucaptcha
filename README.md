@@ -70,13 +70,14 @@ image_link = ""
 # Возвращается строка-расшифровка капчи
 user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_link=image_link)
 
-if user_answer['errorId'] == 0:
+if not user_answer['errorId']:
 	# решение капчи
 	print(user_answer['captchaSolve'])
 	print(user_answer['taskId'])
-elif user_answer['errorId'] == 1:
+elif user_answer['errorId']:
 	# Тело ошибки, если есть
-	print(user_answer['errorBody'])
+	print(user_answer['errorBody']['text'])
+	print(user_answer['errorBody']['id'])
 ```
 
 2.[Решение KeyCaptcha(пазл-капча).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/KeyCaptcha.py)
@@ -121,13 +122,14 @@ PAGE_URL = ""
 # Возвращается строка-расшифровка капчи
 user_answer = ReCaptchaV2.ReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(site_key=SITE_KEY, page_url=PAGE_URL)
 
-if user_answer['errorId'] == 0:
+if not user_answer['errorId']:
 	# решение капчи
 	print(user_answer['captchaSolve'])
 	print(user_answer['taskId'])
-elif user_answer['errorId'] == 1:
+elif user_answer['errorId']:
 	# Тело ошибки, если есть
-	print(user_answer['errorBody'])
+	print(user_answer['errorBody']['text'])
+	print(user_answer['errorBody']['id'])
 ```
 
 5.[Решение RotateCaptcha(повернуть изображение).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/RotateCaptcha.py)
