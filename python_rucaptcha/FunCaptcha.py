@@ -67,7 +67,7 @@ class FunCaptcha:
         self.session.mount('http://', HTTPAdapter(max_retries=5))
 
     # Работа с капчей
-    def captcha_handler(self, public_key, page_url):
+    def captcha_handler(self, public_key: str, page_url: str):
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param site_key: Ключ сайта
@@ -150,7 +150,7 @@ class aioFunCaptcha:
     И так же ссылку на сайт.
     """
 
-    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=15, **kwargs):
+    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', sleep_time: int=15, **kwargs):
         """
         Инициализация нужных переменных.
         :param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
@@ -195,7 +195,7 @@ class aioFunCaptcha:
         self.result = JSON_RESPONSE
 
     # Работа с капчей
-    async def captcha_handler(self, public_key, page_url):
+    async def captcha_handler(self, public_key: str, page_url: str):
         '''
     	Метод отвечает за передачу данных на сервер для решения капчи
 		:param site_key: Ключ сайта

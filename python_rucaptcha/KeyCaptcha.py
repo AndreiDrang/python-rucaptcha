@@ -15,7 +15,7 @@ class KeyCaptcha:
     Класс служит для решения KeyCaptcha
     '''
 
-    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=15):
+    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', sleep_time: int=15):
         '''
 
         :param rucaptcha_key: АПИ ключ капчи из кабинета пользователя
@@ -150,7 +150,7 @@ class aioKeyCaptcha:
     Класс служит для решения KeyCaptcha
     '''
 
-    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=15, **kwargs):
+    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', sleep_time: int=15, **kwargs):
         '''
 
         :param rucaptcha_key: АПИ ключ капчи из кабинета пользователя
