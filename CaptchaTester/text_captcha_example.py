@@ -1,4 +1,3 @@
-# v.1.0.a
 from python_rucaptcha import TextCaptcha
 
 
@@ -16,27 +15,27 @@ text_question = 'Если завтра суббота, то какой сего�
 user_answer = TextCaptcha.TextCaptcha(rucaptcha_key = RUCAPTCHA_KEY).captcha_handler(captcha_text = text_question)
 
 '''
+UPDATE 2.0
 user_answer_... - это JSON строка с соответствующими полями
 
 captchaSolve - решение капчи,
-taskId - находится Id задачи на решение капчи,
-errorId - 0 - если всё хорошо, 1 - если есть ошибка,
-errorBody - тело ошибки, если есть.
-{
-    "captchaSolve": string,
-    "taskId": int,
-    "errorId": int, 1 or 0,
-    "errorBody": string,
-}
+taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+error - False - если всё хорошо, True - если есть ошибка,
+errorBody - полная информация об ошибке: 
+    {
+        text - Развернётое пояснение ошибки
+        id - уникальный номер ошибка в ЭТОЙ бибилотеке
+    }
 '''
 
-if user_answer['errorId'] == 0:
+if user_answer['error'] == 0:
 	# решение капчи
 	print(user_answer['captchaSolve'])
 	print(user_answer['taskId'])
-elif user_answer['errorId'] == 1:
+elif user_answer['error'] == 1:
 	# Тело ошибки, если есть
-	print(user_answer['errorBody'])
+	print(user_answer['errorBody']['text'])
+	print(user_answer['errorBody']['id'])
 
 '''
 Так же класс в качестве параметра может принимать список необязательных переменных, таких как:
@@ -51,10 +50,11 @@ https://rucaptcha.com/api-rucaptcha#solving_text_captcha
 user_answer_full = TextCaptcha.TextCaptcha(rucaptcha_key = RUCAPTCHA_KEY,
                                            language = 1).captcha_handler(captcha_text = text_question)
 
-if user_answer_full['errorId'] == 0:
+if user_answer_full['error'] == 0:
 	# решение капчи
 	print(user_answer_full['captchaSolve'])
 	print(user_answer_full['taskId'])
-elif user_answer_full['errorId'] == 1:
+elif user_answer_full['error'] == 1:
 	# Тело ошибки, если есть
-	print(user_answer_full['errorBody'])
+	print(user_answer_full['errorBody']['text'])
+	print(user_answer_full['errorBody']['id'])

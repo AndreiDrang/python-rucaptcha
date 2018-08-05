@@ -3,13 +3,14 @@ import time
 from urllib3.exceptions import MaxRetryError
 from requests.adapters import HTTPAdapter
 
-from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key
+from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key, \
+    JSON_RESPONSE
 from .errors import RuCaptchaError
 
 
 class TextCaptcha:
-    def __init__(self, rucaptcha_key, sleep_time=5, service_type='2captcha', **kwargs):
-        if sleep_time<5:
+    def __init__(self, rucaptcha_key: str, sleep_time: int=5, service_type: str='2captcha', **kwargs):
+        if sleep_time < 5:
             raise ValueError(f'Параметр `sleep_time` должен быть не менее 10. Вы передали - {sleep_time}')
         self.sleep_time = sleep_time
         # пайлоад POST запроса на отправку капчи на сервер
@@ -40,22 +41,14 @@ class TextCaptcha:
                             'json': 1,
                             }
         # результат возвращаемый методом *captcha_handler*
-        # в captchaSolve - решение капчи,
-        # в taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
-        # в errorId - 0 - если всё хорошо, 1 - если есть ошибка,
-        # в errorBody - тело ошибки, если есть.
-        self.result = {"captchaSolve": None,
-                       "taskId": None,
-                       "errorId": None,
-                       "errorBody": None
-                       }
+        self.result = JSON_RESPONSE
 
         # создаём сессию
         self.session = requests.Session()
         # выставляем кол-во попыток подключения к серверу при ошибке
         self.session.mount('http://', HTTPAdapter(max_retries=5))
 
-    def captcha_handler(self, captcha_text):
+    def captcha_handler(self, captcha_text: str):
         # Создаём пайлоад, вводим ключ от сайта, выбираем метод ПОСТ и ждём ответа. в JSON-формате
         self.post_payload.update({"textcaptcha": captcha_text})
         # Отправляем на рукапча текст капчи и ждём ответа
@@ -65,7 +58,7 @@ class TextCaptcha:
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id['status'] is 0:
-            self.result.update({'errorId': 1,
+            self.result.update({'error': True,
                                 'errorBody': RuCaptchaError().errors(captcha_id['request'])
                                 }
                                )
@@ -91,7 +84,7 @@ class TextCaptcha:
 
                 # при ошибке во время решения
                 elif captcha_response.json()["status"] == 0:
-                    self.result.update({'errorId': 1,
+                    self.result.update({'error': True,
                                         'errorBody': RuCaptchaError().errors(captcha_response.json()["request"])
                                         }
                                        )
@@ -99,22 +92,26 @@ class TextCaptcha:
 
                 # при решении капчи
                 elif captcha_response.json()["status"] == 1:
-                    self.result.update({'errorId': 0,
+                    self.result.update({
                                         'captchaSolve': captcha_response.json()['request']
                                         }
                                        )
                     return self.result
 
             except (TimeoutError, ConnectionError, MaxRetryError) as error:
-                    self.result.update({'errorId': 1,
-                                        'errorBody': error
+                    self.result.update({'error': True,
+                                        'errorBody': {
+                                            'text': error
+                                            }
                                         }
                                        )
                     return self.result
 
             except Exception as error:
-                    self.result.update({'errorId': 1,
-                                        'errorBody': error
+                    self.result.update({'error': True,
+                                        'errorBody': {
+                                            'text': error
+                                            }
                                         }
                                        )
                     return self.result
