@@ -5,7 +5,8 @@ import aiohttp
 from requests.adapters import HTTPAdapter
 from urllib3.exceptions import MaxRetryError
 
-from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key
+from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key, \
+    JSON_RESPONSE
 from .errors import RuCaptchaError
 
 
@@ -16,7 +17,7 @@ class FunCaptcha:
 	И так же ссылку на сайт.
 	"""
 
-    def __init__(self, rucaptcha_key, service_type='2captcha', sleep_time=15, **kwargs):
+    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', sleep_time: int=15, **kwargs):
         """
 		Инициализация нужных переменных.
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
@@ -58,15 +59,7 @@ class FunCaptcha:
                             'json': 1,
                             }
         # результат возвращаемый методом *captcha_handler*
-        # в captchaSolve - решение капчи,
-        # в taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
-        # в errorId - 0 - если всё хорошо, 1 - если есть ошибка,
-        # в errorBody - тело ошибки, если есть.
-        self.result = {"captchaSolve": None,
-                       "taskId": None,
-                       "errorId": None,
-                       "errorBody": None
-                       }
+        self.result = JSON_RESPONSE
 
         # создаём сессию
         self.session = requests.Session()
@@ -89,7 +82,7 @@ class FunCaptcha:
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id['status'] is 0:
-            self.result.update({'errorId': 1,
+            self.result.update({'error': True,
                                 'errorBody': RuCaptchaError().errors(captcha_id['request'])
                                 }
                                )
@@ -116,7 +109,7 @@ class FunCaptcha:
 
                 # при ошибке во время решения
                 elif captcha_response.json()["status"] == 0:
-                    self.result.update({'errorId': 1,
+                    self.result.update({'error': True,
                                         'errorBody': RuCaptchaError().errors(captcha_response.json()["request"])
                                         }
                                        )
@@ -124,22 +117,26 @@ class FunCaptcha:
 
                 # при решении капчи
                 elif captcha_response.json()["status"] == 1:
-                    self.result.update({'errorId': 0,
+                    self.result.update({
                                         'captchaSolve': captcha_response.json()['request']
                                         }
                                        )
                     return self.result
 
             except (TimeoutError, ConnectionError, MaxRetryError) as error:
-                    self.result.update({'errorId': 1,
-                                        'errorBody': error
+                    self.result.update({'error': True,
+                                        'errorBody': {
+                                            'text': error
+                                            }
                                         }
                                        )
                     return self.result
 
             except Exception as error:
-                    self.result.update({'errorId': 1,
-                                        'errorBody': error
+                    self.result.update({'error': True,
+                                        'errorBody': {
+                                            'text': error
+                                            }
                                         }
                                        )
                     return self.result
@@ -195,15 +192,7 @@ class aioFunCaptcha:
                             'json': 1,
                             }
         # результат возвращаемый методом *captcha_handler*
-        # в captchaSolve - решение капчи,
-        # в taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
-        # в errorId - 0 - если всё хорошо, 1 - если есть ошибка,
-        # в errorBody - тело ошибки, если есть.
-        self.result = {"captchaSolve": None,
-                       "taskId": None,
-                       "errorId": None,
-                       "errorBody": None
-                       }
+        self.result = JSON_RESPONSE
 
     # Работа с капчей
     async def captcha_handler(self, public_key, page_url):
@@ -222,7 +211,7 @@ class aioFunCaptcha:
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id['status'] is 0:
-            self.result.update({'errorId': 1,
+            self.result.update({'error': True,
                                 'errorBody': RuCaptchaError().errors(captcha_id['request'])
                                 }
                                )
@@ -250,7 +239,7 @@ class aioFunCaptcha:
 
                         # при ошибке во время решения
                         elif captcha_response["status"] == 0:
-                            self.result.update({'errorId': 1,
+                            self.result.update({'error': True,
                                                 'errorBody': RuCaptchaError().errors(captcha_response["request"])
                                                 }
                                                )
@@ -258,15 +247,17 @@ class aioFunCaptcha:
 
                         # при успешном решении капчи
                         elif captcha_response["status"] == 1:
-                            self.result.update({'errorId': 0,
+                            self.result.update({
                                                 'captchaSolve': captcha_response['request']
                                                 }
                                                )
                             return self.result
 
                 except Exception as error:
-                    self.result.update({'errorId': 1,
-                                        'errorBody': error,
+                    self.result.update({'error': True,
+                                        'errorBody': {
+                                            'text': error
+                                            }
                                         }
                                        )
                     return self.result

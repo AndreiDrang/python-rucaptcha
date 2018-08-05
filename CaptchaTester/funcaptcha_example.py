@@ -7,6 +7,20 @@ from python_rucaptcha import FunCaptcha
 Данный пример показывает работу модуля с FunCaptcha
 """
 
+"""
+UPDATE 2.0
+Переработка JSON-ответа пользователю(раздела с ошибками), новый ответ:
+    {
+        captchaSolve - решение капчи,
+        taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+        error - False - если ошибок нет, True - если есть ошибка,
+        errorBody - полная информация об ошибке: 
+            {
+                text - Развернётое пояснение ошибки
+                id - уникальный номер ошибка в ЭТОЙ бибилотеке
+            }
+    }
+"""
 # Введите ключ от рукапчи из своего аккаунта
 RUCAPTCHA_KEY = 'aafb515dff0075f94b1f3328615bc0fd'
 
@@ -27,24 +41,23 @@ answer = FunCaptcha.FunCaptcha(rucaptcha_key = RUCAPTCHA_KEY).captcha_handler(pu
 '''
 answer - это JSON строка с соответствующими полями
 captchaSolve - решение капчи,
-taskId - находится Id задачи на решение капчи,
-errorId - 0 - если всё хорошо, 1 - если есть ошибка,
-errorBody - тело ошибки, если есть.
-{
-    "captchaSolve": string,
-    "taskId": int,
-    "errorId": int, 1 or 0,
-    "errorBody": string,
-}
+taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+error - False - если всё хорошо, True - если есть ошибка,
+errorBody - полная информация об ошибке: 
+    {
+        text - Развернётое пояснение ошибки
+        id - уникальный номер ошибка в ЭТОЙ бибилотеке
+    }
 '''
 
-if answer['errorId'] == 0:
+if not answer['error']:
     # решение капчи
     print(answer['captchaSolve'])
     print(answer['taskId'])
-elif answer['errorId'] == 1:
+elif answer['error']:
     # Тело ошибки, если есть
-    print(answer['errorBody'])
+    print(answer['errorBody']['text'])
+    print(answer['errorBody']['id'])
 
 
 """
@@ -55,13 +68,14 @@ elif answer['errorId'] == 1:
 async def run():
     try:
         answer = await FunCaptcha.aioFunCaptcha(rucaptcha_key = '32275f9291ee237d74237cbe2ca2385f').captcha_handler(public_key=public_key, page_url=pageurl)
-        if answer['errorId'] == 0:
+        if not answer['error']:
             # решение капчи
             print(answer['captchaSolve'])
             print(answer['taskId'])
-        elif answer['errorId'] == 1:
+        elif answer['error']:
             # Тело ошибки, если есть
-            print(answer['errorBody'])
+            print(answer['errorBody']['text'])
+            print(answer['errorBody']['id'])
     except Exception as err:
         print(err)
 
