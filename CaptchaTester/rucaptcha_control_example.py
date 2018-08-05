@@ -12,20 +12,21 @@ answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key = RUCAPTCHA_KEY).additi
 
 """
 answer - это JSON строка с соответствующими полями:
-serverAnswer - ответ сервера,
-errorId - 0 - если всё хорошо, 1 - если есть ошибка,
-errorBody - тело ошибки, если есть.
-{
-    "serverAnswer": string,
-    "errorId": int, 1 or 0,
-    "errorBody": string
-}
+
+serverAnswer - ответ сервера при использовании RuCaptchaControl(баланс/жалобы и т.д.)
+taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+error - False - если всё хорошо, True - если есть ошибка,
+errorBody - полная информация об ошибке: 
+    {
+        text - Развернётое пояснение ошибки
+        id - уникальный номер ошибка в ЭТОЙ бибилотеке
+    }
 """
 
-if answer['errorId'] == 0:
+if not answer['error']:
     print("Your balance is: ", answer['serverAnswer'], " rub.")
 
-elif answer['errorId'] == 1:
+elif answer['error']:
     # Тело ошибки, если есть
     print(answer['errorBody'])
 
@@ -37,11 +38,11 @@ answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key = RUCAPTCHA_KEY).additi
                                                                                              id = wrong_captcha_id)
 
 # Если заявка принята
-if answer['errorId'] == 0:
+if not answer['error']:
     print("Заявка принята.")
 
 # Если возникла ошибка
-elif answer['errorId'] == 1:
+elif answer['error']:
     print(answer['errorBody'])
 
 """

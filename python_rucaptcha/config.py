@@ -13,6 +13,7 @@ app_key = "1899"
 """
 JSON возвращаемы пользователю после решения капчи
 
+serverAnswer - ответ сервера при использовании RuCaptchaControl(баланс/жалобы и т.д.)
 captchaSolve - решение капчи,
 taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
 error - False - если всё хорошо, True - если есть ошибка,
@@ -23,6 +24,7 @@ errorBody - полная информация об ошибке:
     }
 """
 JSON_RESPONSE = {
+    "serverAnswer": None,
     "captchaSolve": None,
     "taskId": None,
     "error": False,
