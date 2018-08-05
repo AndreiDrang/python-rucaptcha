@@ -1,4 +1,3 @@
-# v.1.6.6
 import requests
 import asyncio
 import base64

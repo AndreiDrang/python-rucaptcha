@@ -124,7 +124,7 @@ class ImageCaptcha:
             self.result.update({'error': True,
                                 'errorBody': {
                                     'text': error
-                                }
+                                    }
                                 }
                                )
 
