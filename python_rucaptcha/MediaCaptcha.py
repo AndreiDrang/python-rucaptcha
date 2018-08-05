@@ -5,7 +5,8 @@ import hashlib
 from urllib3.exceptions import MaxRetryError
 from requests.adapters import HTTPAdapter
 
-from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key
+from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key,\
+    JSON_RESPONSE
 from .errors import RuCaptchaError
 
 
@@ -13,7 +14,8 @@ class MediaCaptcha:
     """
     Класс MediaCaptcha используется для решения аудиокапчи из ReCaptcha v2 и SolveMediaCaptcha
     """
-    def __init__(self, rucaptcha_key, service_type='2captcha', recaptchavoice=False, solveaudio=False, sleep_time=5, **kwargs):
+    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', recaptchavoice: bool=False,
+                 solveaudio: bool=False, sleep_time: int=5, **kwargs):
         """
         Метод создаёт папки, принимает параметры для работы c различными типами капчи.
         :param rucaptcha_key: Ключ от сайта RuCaptcha
@@ -34,7 +36,7 @@ class MediaCaptcha:
             raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
                              'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
 
-        if sleep_time<5:
+        if sleep_time < 5:
             raise ValueError(f'Параметр `sleep_time` должен быть не менее 10. Вы передали - {sleep_time}')
         self.sleep_time = sleep_time
 
@@ -68,14 +70,7 @@ class MediaCaptcha:
                             'json': 1,
                             }
         # результат возвращаемый методом *captcha_handler*
-        # в captchaSolve - решение капчи,
-        # в taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
-        # в errorId - 0 - если всё хорошо, 1 - если есть ошибка,
-        # в errorBody - тело ошибки, если есть.
-        self.result = {"captchaSolve": None,
-                       "taskId": None,
-                       "errorId": None,
-                       "errorBody": None}
+        self.result = JSON_RESPONSE
 
         # создаём сессию
         self.session = requests.Session()
@@ -83,7 +78,7 @@ class MediaCaptcha:
         self.session.mount('http://', HTTPAdapter(max_retries=5))
 
     # Работа с капчёй
-    def captcha_handler(self, audio_name=None, audio_download_link=None):
+    def captcha_handler(self, audio_name: str=None, audio_download_link: str=None):
         """
         Метод полчает параметры и аозвращает решение капчи.
         Передаётся лишь один из параметров, либо audio_name либо audio_download_link.
@@ -91,22 +86,26 @@ class MediaCaptcha:
                             скриптом.
         :param audio_download_link: Передаётся ссылка для скачивания аудио файла. Не ссылка на капчу или ещё что-либо.
                                     А именно ссылка по которой можно скачать аудио файл. Для последующей отправке RuCaptcha.
-        :return: ВОзвращает решение капчи.
+        :return: Возвращает решение капчи.
         """
-        # Если передано имя файла - ищем его в папке, перименовываем
-        if audio_name:
-            audio_hash = hashlib.sha224(audio_name.encode('utf-8')).hexdigest()
-            with open(os.path.join(self.audio_path, audio_name), 'rb') as audio_src:
-                with open(os.path.join(self.audio_path, f'aud-{audio_hash}.mp3'), 'wb') as audio_hash_src:
-                    audio_hash_src.write(audio_src.read())
+        if audio_name or audio_download_link:
+            # Если передано имя файла - ищем его в папке, перименовываем
+            if audio_name:
+                audio_hash = hashlib.sha224(audio_name.encode('utf-8')).hexdigest()
+                with open(os.path.join(self.audio_path, audio_name), 'rb') as audio_src:
+                    with open(os.path.join(self.audio_path, f'aud-{audio_hash}.mp3'), 'wb') as audio_hash_src:
+                        audio_hash_src.write(audio_src.read())
 
-        # Если передана ссылка - скачиваем файл в папку, переименовываем и сохраняем
-        elif audio_download_link:
-            audio_hash = hashlib.sha224(audio_download_link.encode('utf-8')).hexdigest()
-            content = requests.get(audio_download_link).content
+            # Если передана ссылка - скачиваем файл в папку, переименовываем и сохраняем
+            elif audio_download_link:
+                audio_hash = hashlib.sha224(audio_download_link.encode('utf-8')).hexdigest()
+                content = requests.get(audio_download_link).content
 
-            with open(os.path.join(self.audio_path,f'aud-{audio_hash}.mp3'), 'wb') as out:
-                out.write(content)
+                with open(os.path.join(self.audio_path,f'aud-{audio_hash}.mp3'), 'wb') as out:
+                    out.write(content)
+        else:
+            raise ValueError('Не передан ни один из параметров для открытия аудио(audio_name) или скачивания(audio_download_link)'
+                             'One parameter is required: audio_name or audio_download_link')
 
         with open(os.path.join(self.audio_path, f'aud-{audio_hash}.mp3'), 'rb') as captcha_audio:
             # Отправляем аудио файлом
@@ -120,7 +119,7 @@ class MediaCaptcha:
                                            files=files).json()
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id['status'] is 0:
-            self.result.update({'errorId': 1,
+            self.result.update({'error': True,
                                 'errorBody': RuCaptchaError().errors(captcha_id['request'])
                                 }
                                )
@@ -148,7 +147,7 @@ class MediaCaptcha:
 
                 # при ошибке во время решения
                 elif captcha_response.json()["status"] == 0:
-                    self.result.update({'errorId': 1,
+                    self.result.update({'error': True,
                                         'errorBody': RuCaptchaError().errors(captcha_response.json()["request"])
                                         }
                                        )
@@ -156,22 +155,26 @@ class MediaCaptcha:
 
                 # при решении капчи
                 elif captcha_response.json()["status"] == 1:
-                    self.result.update({'errorId': 0,
+                    self.result.update({
                                         'captchaSolve': captcha_response.json()['request']
                                         }
                                        )
                     return self.result
 
             except (TimeoutError, ConnectionError, MaxRetryError) as error:
-                    self.result.update({'errorId': 1,
-                                        'errorBody': error
+                    self.result.update({'error': True,
+                                        'errorBody': {
+                                            'text': error
+                                            }
                                         }
                                        )
                     return self.result
 
             except Exception as error:
-                    self.result.update({'errorId': 1,
-                                        'errorBody': error
+                    self.result.update({'error': True,
+                                        'errorBody': {
+                                            'text': error
+                                            }
                                         }
                                        )
                     return self.result
