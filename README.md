@@ -72,11 +72,11 @@ image_link = ""
 # Возвращается строка-расшифровка капчи
 user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_link=image_link)
 
-if not user_answer['errorId']:
+if not user_answer['error']:
 	# решение капчи
 	print(user_answer['captchaSolve'])
 	print(user_answer['taskId'])
-elif user_answer['errorId']:
+elif user_answer['error']:
 	# Тело ошибки, если есть
 	print(user_answer['errorBody']['text'])
 	print(user_answer['errorBody']['id'])
@@ -98,12 +98,12 @@ answer = KeyCaptcha.KeyCaptcha(rucaptcha_key=RUCAPTCHA_KEY) \
                      page_url='https://www.keycaptcha.com/signup/')
 
 # капча решена верно, ошибка = 0
-if answer['errorId'] == 0:
+if not answer['error']:
 	# решение капчи
 	print(answer['captchaSolve'])
 	print(answer['taskId'])
 # во время решения капчи возникли ошибки, ошибка = 1
-elif answer['errorId'] == 1:
+elif answer['error']:
 	# Тело ошибки, если есть
 	print(answer['errorBody'])
 ``` 
@@ -124,11 +124,11 @@ PAGE_URL = ""
 # Возвращается строка-расшифровка капчи
 user_answer = ReCaptchaV2.ReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(site_key=SITE_KEY, page_url=PAGE_URL)
 
-if not user_answer['errorId']:
+if not user_answer['error']:
 	# решение капчи
 	print(user_answer['captchaSolve'])
 	print(user_answer['taskId'])
-elif user_answer['errorId']:
+elif user_answer['error']:
 	# Тело ошибки, если есть
 	print(user_answer['errorBody']['text'])
 	print(user_answer['errorBody']['id'])
@@ -147,13 +147,14 @@ text_question = 'Если завтра суббота, то какой сего�
 
 user_answer = TextCaptcha.TextCaptcha(rucaptcha_key = RUCAPTCHA_KEY).captcha_handler(captcha_text = text_question)
 
-if user_answer['errorId'] == 0:
+if not user_answer['error']:
 	# решение капчи
 	print(user_answer['captchaSolve'])
 	print(user_answer['taskId'])
-elif user_answer['errorId'] == 1:
+elif user_answer['error']:
 	# Тело ошибки, если есть
-	print(user_answer['errorBody'])
+	print(user_answer['errorBody']['text'])
+	print(user_answer['errorBody']['id'])
 ```
 
 7.[Решение FunCaptcha.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/TextCaptcha.py)
@@ -173,13 +174,15 @@ pageurl = 'https://www.funcaptcha.com/demo'
 
 answer = FunCaptcha.FunCaptcha(rucaptcha_key = RUCAPTCHA_KEY).captcha_handler(public_key=public_key, page_url=pageurl)
 
-if answer['errorId'] == 0:
+if not answer['error']:
     # решение капчи
     print(answer['captchaSolve'])
     print(answer['taskId'])
-elif answer['errorId'] == 1:
+elif answer['error']:
     # Тело ошибки, если есть
-    print(answer['errorBody'])
+    print(answer['errorBody']['text'])
+    print(answer['errorBody']['id'])
+    
 ```
 8.[Модуль для получения инофрмации о балансе аккаунта и отправке жалоб.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/RuCaptchaControl.py)
 ***
