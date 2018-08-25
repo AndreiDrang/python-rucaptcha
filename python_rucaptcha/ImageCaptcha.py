@@ -41,7 +41,7 @@ class ImageCaptcha:
         Подробней с примерами можно ознакомиться в 'CaptchaTester/image_captcha_example.py'
         """
         if sleep_time < 5:
-            raise ValueError(f'Параметр `sleep_time` должен быть не менее 10. Вы передали - {sleep_time}')
+            raise ValueError('Параметр `sleep_time` должен быть не менее 10. Вы передали - {sleep_time}')
         self.sleep_time = sleep_time
         # проверяем переданный параметр способа сохранения капчи
         if save_format in ['const', 'temp']:
@@ -54,10 +54,10 @@ class ImageCaptcha:
                 self.img_path = img_path
 
         else:
-            raise ValueError('\nПередан неверный формат сохранения файла изображения. '
-                             f'\n\tВозможные варинты: `temp` и `const`. Вы передали - `{save_format}`'
-                             '\nWrong `save_format` parameter. Valid params: `const` or `temp`.'
-                             f'\n\tYour param - `{save_format}`')
+            raise ValueError('\nПередан неверный формат сохранения файла изображения. ',
+                             '\n\tВозможные варинты: `temp` и `const`. Вы передали - `{save_format}`',
+                             '\nWrong `save_format` parameter. Valid params: `const` or `temp`.',
+                             '\n\tYour param - `{save_format}`')
 
         # пайлоад POST запроса на отправку капчи на сервер
         self.post_payload = {"key": rucaptcha_key,
@@ -79,10 +79,10 @@ class ImageCaptcha:
             self.url_response = url_response_rucaptcha
         else:
             raise ValueError(
-                '\nПередан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
-                f'\n\tВы передали - `{service_type}`'
-                '\nWrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.'
-                f'\n\tYour param - `{service_type}`')
+                '\nПередан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.',
+                '\n\tВы передали - `{service_type}`',
+                '\nWrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.',
+                '\n\tYour param - `{service_type}`')
 
         # пайлоад GET запроса на получение результата решения капчи
         self.get_payload = {'key': rucaptcha_key,
@@ -374,7 +374,7 @@ class aioImageCaptcha:
         Подробней с примерами можно ознакомиться в 'CaptchaTester/image_captcha_example.py'
         """
         if sleep_time < 5:
-            raise ValueError(f'Параметр `sleep_time` должен быть не менее 5. Вы передали - {sleep_time}')
+            raise ValueError('Параметр `sleep_time` должен быть не менее 5. Вы передали - {sleep_time}')
         self.sleep_time = sleep_time
 
         # проверяем переданный параметр способа сохранения капчи
@@ -387,10 +387,10 @@ class aioImageCaptcha:
                 # название папки для сохранения файлов капчи
                 self.img_path = img_path
         else:
-            raise ValueError('\nПередан неверный формат сохранения файла изображения. '
-                             f'\n\tВозможные варинты: `temp` и `const`. Вы передали - `{save_format}`'
-                             '\nWrong `save_format` parameter. Valid params: `const` or `temp`.'
-                             f'\n\tYour param - `{save_format}`')
+            raise ValueError('\nПередан неверный формат сохранения файла изображения. ',
+                             '\n\tВозможные варинты: `temp` и `const`. Вы передали - `{save_format}`',
+                             '\nWrong `save_format` parameter. Valid params: `const` or `temp`.',
+                             '\n\tYour param - `{save_format}`')
 
         # пайлоад POST запроса на отправку капчи на сервер
         self.post_payload = {"key": rucaptcha_key,
@@ -412,10 +412,10 @@ class aioImageCaptcha:
             self.url_response = url_response_rucaptcha
         else:
             raise ValueError(
-                '\nПередан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
-                f'\n\tВы передали - `{service_type}`'
-                '\nWrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.'
-                f'\n\tYour param - `{service_type}`')
+                '\nПередан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.',
+                '\n\tВы передали - `{service_type}`',
+                '\nWrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.',
+                '\n\tYour param - `{service_type}`')
 
         # пайлоад GET запроса на получение результата решения капчи
         self.get_payload = {'key': rucaptcha_key,
