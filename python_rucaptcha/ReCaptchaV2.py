@@ -109,7 +109,7 @@ class ReCaptchaV2:
         while True:
             try:
                 # отправляем запрос на результат решения капчи, если не решена ожидаем
-                captcha_response = self.session.post(self.url_response, data = self.get_payload)
+                captcha_response = requests.post(self.url_response, data = self.get_payload)
 
                 # если капча ещё не решена - ожидаем
                 if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
