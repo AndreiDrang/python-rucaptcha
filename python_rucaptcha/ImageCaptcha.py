@@ -89,8 +89,6 @@ class ImageCaptcha:
                             'action': 'get',
                             'json': 1,
                             }
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE
 
         # создаём сессию
         self.session = requests.Session()
@@ -115,7 +113,8 @@ class ImageCaptcha:
         except (IOError, FileNotFoundError) as error:
             self.result.update({'error': True,
                                 'errorBody': {
-                                    'text': error
+                                    'text': error,
+                                    'id': -1
                                     }
                                 }
                                )
@@ -123,7 +122,8 @@ class ImageCaptcha:
         except Exception as error:
             self.result.update({'error': True,
                                 'errorBody': {
-                                    'text': error
+                                    'text': error,
+                                    'id': -1
                                     }
                                 }
                                )
@@ -164,7 +164,8 @@ class ImageCaptcha:
         except (IOError, FileNotFoundError) as error:
             self.result.update({'error': True,
                                 'errorBody': {
-                                    'text': error
+                                    'text': error,
+                                    'id': -1
                                     }
                                 }
                                )
@@ -172,7 +173,8 @@ class ImageCaptcha:
         except Exception as error:
             self.result.update({'error': True,
                                 'errorBody': {
-                                    'text': error
+                                    'text': error,
+                                    'id': -1
                                     }
                                 }
                                )
@@ -214,7 +216,8 @@ class ImageCaptcha:
         except (IOError, FileNotFoundError) as error:
             self.result.update({'error': True,
                                 'errorBody': {
-                                    'text': error
+                                    'text': error,
+                                    'id': -1
                                     }
                                 }
                                )
@@ -222,7 +225,8 @@ class ImageCaptcha:
         except Exception as error:
             self.result.update({'error': True,
                                 'errorBody': {
-                                    'text': error
+                                    'text': error,
+                                    'id': -1
                                     }
                                 }
                                )
@@ -249,7 +253,8 @@ class ImageCaptcha:
                             id - уникальный номер ошибка в ЭТОЙ бибилотеке
                         }
         """
-
+        # результат возвращаемый методом *captcha_handler*
+        self.result = JSON_RESPONSE.copy()
         # если передана локальная ссылка на файл
         if captcha_file:
             captcha_id = self.local_image_captcha(captcha_file)
@@ -263,7 +268,8 @@ class ImageCaptcha:
             except Exception as error:
                 self.result.update({'error': True,
                                     'errorBody': {
-                                        'text': error
+                                        'text': error,
+                                        'id': -1
                                         }
                                     }
                                    )
@@ -331,7 +337,8 @@ class ImageCaptcha:
             except (TimeoutError, ConnectionError, MaxRetryError) as error:
                 self.result.update({'error': True,
                                     'errorBody': {
-                                        'text': error
+                                        'text': error,
+                                        'id': -1
                                         }
                                     }
                                    )
@@ -340,7 +347,8 @@ class ImageCaptcha:
             except Exception as error:
                 self.result.update({'error': True,
                                     'errorBody': {
-                                        'text': error
+                                        'text': error,
+                                        'id': -1
                                         }
                                     }
                                    )
@@ -422,8 +430,6 @@ class aioImageCaptcha:
                             'action': 'get',
                             'json': 1,
                             }
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE
 
     async def image_temp_saver(self, content: bytes):
         """
@@ -445,7 +451,8 @@ class aioImageCaptcha:
         except (IOError, FileNotFoundError) as error:
             self.result.update({'error': True,
                                 'errorBody': {
-                                    'text': error
+                                    'text': error,
+                                    'id': -1
                                     }
                                 }
                                )
@@ -453,7 +460,8 @@ class aioImageCaptcha:
         except Exception as error:
             self.result.update({'error': True,
                                 'errorBody': {
-                                    'text': error
+                                    'text': error,
+                                    'id': -1
                                     }
                                 }
                                )
@@ -494,7 +502,8 @@ class aioImageCaptcha:
         except (IOError, FileNotFoundError) as error:
             self.result.update({'error': True,
                                 'errorBody': {
-                                    'text': error
+                                    'text': error,
+                                    'id': -1
                                     }
                                 }
                                )
@@ -502,7 +511,8 @@ class aioImageCaptcha:
         except Exception as error:
             self.result.update({'error': True,
                                 'errorBody': {
-                                    'text': error
+                                    'text': error,
+                                    'id': -1
                                     }
                                 }
                                )
@@ -539,7 +549,8 @@ class aioImageCaptcha:
         except (IOError, FileNotFoundError) as error:
             self.result.update({'error': True,
                                 'errorBody': {
-                                    'text': error
+                                    'text': error,
+                                    'id': -1
                                     }
                                 }
                                )
@@ -547,7 +558,8 @@ class aioImageCaptcha:
         except Exception as error:
             self.result.update({'error': True,
                                 'errorBody': {
-                                    'text': error
+                                    'text': error,
+                                    'id': -1
                                     }
                                 }
                                )
@@ -590,7 +602,8 @@ class aioImageCaptcha:
             except Exception as error:
                 self.result.update({'error': True,
                                     'errorBody': {
-                                        'text': error
+                                        'text': error,
+                                        'id': -1
                                         }
                                     }
                                    )
@@ -660,7 +673,8 @@ class aioImageCaptcha:
                 except Exception as error:
                     self.result.update({'error': True,
                                         'errorBody': {
-                                            'text': error
+                                            'text': error,
+                                            'id': -1
                                             }
                                         }
                                        )

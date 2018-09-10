@@ -45,9 +45,6 @@ class RotateCaptcha:
             raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
                              'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
 
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE
-
         # создаём сессию
         self.session = requests.Session()
         # выставляем кол-во попыток подключения к серверу при ошибке
@@ -61,6 +58,8 @@ class RotateCaptcha:
         :param captcha_link: Ссылка на изображение
         :return: Ответ на капчу
         '''
+        # результат возвращаемый методом *captcha_handler*
+        self.result = JSON_RESPONSE.copy()
         # Скачиваем изображение
         content = self.session.get(captcha_link).content
         with tempfile.NamedTemporaryFile(suffix='.jpg') as out:
@@ -118,7 +117,8 @@ class RotateCaptcha:
             except (TimeoutError, ConnectionError, MaxRetryError) as error:
                     self.result.update({'error': True,
                                         'errorBody': {
-                                            'text': error
+                                            'text': error,
+                                            'id': -1
                                             }
                                         }
                                        )
@@ -127,7 +127,8 @@ class RotateCaptcha:
             except Exception as error:
                     self.result.update({'error': True,
                                         'errorBody': {
-                                            'text': error
+                                            'text': error,
+                                            'id': -1
                                             }
                                         }
                                        )

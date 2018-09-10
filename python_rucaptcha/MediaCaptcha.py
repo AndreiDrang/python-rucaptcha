@@ -69,8 +69,6 @@ class MediaCaptcha:
                             'action': 'get',
                             'json': 1,
                             }
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE
 
         # создаём сессию
         self.session = requests.Session()
@@ -88,6 +86,8 @@ class MediaCaptcha:
                                     А именно ссылка по которой можно скачать аудио файл. Для последующей отправке RuCaptcha.
         :return: Возвращает решение капчи.
         """
+        # результат возвращаемый методом *captcha_handler*
+        self.result = JSON_RESPONSE.copy()
         if audio_name or audio_download_link:
             # Если передано имя файла - ищем его в папке, перименовываем
             if audio_name:
@@ -164,7 +164,8 @@ class MediaCaptcha:
             except (TimeoutError, ConnectionError, MaxRetryError) as error:
                     self.result.update({'error': True,
                                         'errorBody': {
-                                            'text': error
+                                            'text': error,
+                                            'id': -1
                                             }
                                         }
                                        )
@@ -173,7 +174,8 @@ class MediaCaptcha:
             except Exception as error:
                     self.result.update({'error': True,
                                         'errorBody': {
-                                            'text': error
+                                            'text': error,
+                                            'id': -1
                                             }
                                         }
                                        )

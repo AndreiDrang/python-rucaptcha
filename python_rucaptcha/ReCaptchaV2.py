@@ -66,13 +66,12 @@ class ReCaptchaV2:
                             'action': 'get',
                             'json': 1,
                             }
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE
 
         # создаём сессию
         self.session = requests.Session()
         # выставляем кол-во попыток подключения к серверу при ошибке
         self.session.mount('http://', HTTPAdapter(max_retries = 5))
+        self.session.mount('https://', HTTPAdapter(max_retries = 5))
 
     # Работа с капчей
     # тестовый ключ сайта
@@ -83,6 +82,9 @@ class ReCaptchaV2:
 		:param page_url: Ссылка на страницу на которой находится капча
 		:return: В качестве ответа переждаётся строка которую нужно вставить для отправки гуглу на проверку
 		'''
+        # результат возвращаемый методом *captcha_handler*
+        self.result = JSON_RESPONSE.copy()
+
         self.post_payload.update({'googlekey': site_key,
                                   'pageurl': page_url})
         # получаем ID капчи
@@ -109,7 +111,7 @@ class ReCaptchaV2:
         while True:
             try:
                 # отправляем запрос на результат решения капчи, если не решена ожидаем
-                captcha_response = requests.post(self.url_response, data = self.get_payload)
+                captcha_response = self.session.post(self.url_response, data = self.get_payload)
 
                 # если капча ещё не решена - ожидаем
                 if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
@@ -134,19 +136,23 @@ class ReCaptchaV2:
             except (TimeoutError, ConnectionError, MaxRetryError) as error:
                 self.result.update({'error': True,
                                     'errorBody': {
-                                        'text': error
+                                        'text': error,
+                                        'id': -1
                                         }
                                     }
                                    )
                 return self.result
 
             except Exception as error:
+                print(self.result)
                 self.result.update({'error': True,
                                     'errorBody': {
-                                        'text': error
+                                        'text': error,
+                                        'id': -1
                                         }
                                     }
                                    )
+                print(self.result['errorBody'])
                 return self.result
 
 
@@ -206,8 +212,6 @@ class aioReCaptchaV2:
                             'action': 'get',
                             'json': 1,
                             }
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE
 
     # Работа с капчей
     async def captcha_handler(self, site_key: str, page_url: str):
@@ -217,6 +221,9 @@ class aioReCaptchaV2:
 		:param page_url: Ссылка на страницу на которой находится капча
 		:return: В качестве ответа переждаётся строка которую нужно вставить для отправки гуглу на проверку
 		'''
+        # результат возвращаемый методом *captcha_handler*
+        self.result = JSON_RESPONSE.copy()
+
         self.post_payload.update({'googlekey': site_key, 'pageurl': page_url})
         # получаем ID капчи
         async with aiohttp.ClientSession() as session:
@@ -270,7 +277,8 @@ class aioReCaptchaV2:
                 except Exception as error:
                     self.result.update({'error': True,
                                         'errorBody': {
-                                            'text': error
+                                            'text': error,
+                                            'id': -1
                                             }
                                         }
                                        )

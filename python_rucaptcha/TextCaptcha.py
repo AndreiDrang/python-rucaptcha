@@ -40,8 +40,6 @@ class TextCaptcha:
                             'action': 'get',
                             'json': 1,
                             }
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE
 
         # создаём сессию
         self.session = requests.Session()
@@ -49,6 +47,8 @@ class TextCaptcha:
         self.session.mount('http://', HTTPAdapter(max_retries=5))
 
     def captcha_handler(self, captcha_text: str):
+        # результат возвращаемый методом *captcha_handler*
+        self.result = JSON_RESPONSE
         # Создаём пайлоад, вводим ключ от сайта, выбираем метод ПОСТ и ждём ответа. в JSON-формате
         self.post_payload.update({"textcaptcha": captcha_text})
         # Отправляем на рукапча текст капчи и ждём ответа
@@ -101,7 +101,8 @@ class TextCaptcha:
             except (TimeoutError, ConnectionError, MaxRetryError) as error:
                     self.result.update({'error': True,
                                         'errorBody': {
-                                            'text': error
+                                            'text': error,
+                                            'id': -1
                                             }
                                         }
                                        )
@@ -110,7 +111,8 @@ class TextCaptcha:
             except Exception as error:
                     self.result.update({'error': True,
                                         'errorBody': {
-                                            'text': error
+                                            'text': error,
+                                            'id': -1
                                             }
                                         }
                                        )

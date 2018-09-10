@@ -43,15 +43,14 @@ class KeyCaptcha:
             raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
                              'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
 
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE
-
         # создаём сессию
         self.session = requests.Session()
         # выставляем кол-во попыток подключения к серверу при ошибке
         self.session.mount('http://', HTTPAdapter(max_retries=5))
 
     def captcha_handler(self, **kwargs):
+        # результат возвращаемый методом *captcha_handler*
+        self.result = JSON_RESPONSE.copy()
         # считываем все переданные параметры KeyCaptcha
         try:
             self.s_s_c_user_id = kwargs['s_s_c_user_id']
@@ -62,7 +61,8 @@ class KeyCaptcha:
         except KeyError as error:
             self.result.update({'error': True,
                                 'errorBody': {
-                                    'text': error
+                                    'text': error,
+                                    'id': -1
                                     }
                                 }
                                )
@@ -128,7 +128,8 @@ class KeyCaptcha:
                 except (TimeoutError, ConnectionError, MaxRetryError) as error:
                         self.result.update({'error': True,
                                             'errorBody': {
-                                                'text': error
+                                                'text': error,
+                                                'id': -1
                                                 }
                                             }
                                            )
@@ -137,7 +138,8 @@ class KeyCaptcha:
                 except Exception as error:
                         self.result.update({'error': True,
                                             'errorBody': {
-                                                'text': error
+                                                'text': error,
+                                                'id': -1
                                                 }
                                             }
                                            )
@@ -193,11 +195,11 @@ class aioKeyCaptcha:
                             'action': 'get',
                             'json': 1,
                             }
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE
 
     # Работа с капчей
     async def captcha_handler(self, **kwargs):
+        # результат возвращаемый методом *captcha_handler*
+        self.result = JSON_RESPONSE.copy()
         # считываем все переданные параметры KeyCaptcha
         try:
             self.s_s_c_user_id = kwargs['s_s_c_user_id']
@@ -208,7 +210,8 @@ class aioKeyCaptcha:
         except KeyError as error:
             self.result.update({'error': True,
                                 'errorBody': {
-                                    'text': error
+                                    'text': error,
+                                    'id': -1
                                     }
                                 }
                                )
@@ -231,7 +234,8 @@ class aioKeyCaptcha:
         except Exception as error:
             self.result.update({'error': True,
                                 'errorBody': {
-                                    'text': error
+                                    'text': error,
+                                    'id': -1
                                     }
                                 }
                                )
@@ -285,7 +289,8 @@ class aioKeyCaptcha:
                 except Exception as error:
                     self.result.update({'error': True,
                                         'errorBody': {
-                                            'text': error
+                                            'text': error,
+                                            'id': -1
                                             }
                                         }
                                        )

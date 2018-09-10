@@ -58,8 +58,6 @@ class FunCaptcha:
                             'action': 'get',
                             'json': 1,
                             }
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE
 
         # создаём сессию
         self.session = requests.Session()
@@ -74,6 +72,8 @@ class FunCaptcha:
 		:param page_url: Ссылка на страницу на которой находится капча
     	:return: В качестве ответа передаётся JSON с данными для решения капчи
 		'''
+        # результат возвращаемый методом *captcha_handler*
+        self.result = JSON_RESPONSE.copy()
         # добавляем в пайлоад параметры капчи переданные пользователем
         self.post_payload.update({'publickey': public_key,
                                   'pageurl': page_url})
@@ -126,7 +126,8 @@ class FunCaptcha:
             except (TimeoutError, ConnectionError, MaxRetryError) as error:
                     self.result.update({'error': True,
                                         'errorBody': {
-                                            'text': error
+                                            'text': error,
+                                            'id': -1
                                             }
                                         }
                                        )
@@ -135,7 +136,8 @@ class FunCaptcha:
             except Exception as error:
                     self.result.update({'error': True,
                                         'errorBody': {
-                                            'text': error
+                                            'text': error,
+                                            'id': -1
                                             }
                                         }
                                        )
@@ -191,8 +193,6 @@ class aioFunCaptcha:
                             'action': 'get',
                             'json': 1,
                             }
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE
 
     # Работа с капчей
     async def captcha_handler(self, public_key: str, page_url: str):
@@ -202,6 +202,9 @@ class aioFunCaptcha:
     	:param page_url: Ссылка на страницу на которой находится капча
     	:return: В качестве ответа передаётся JSON с данными для решения капчи
 		'''
+        # результат возвращаемый методом *captcha_handler*
+        self.result = JSON_RESPONSE.copy()
+
         self.post_payload.update({'publickey': public_key,
                                   'pageurl': page_url})
         # получаем ID капчи
@@ -256,7 +259,8 @@ class aioFunCaptcha:
                 except Exception as error:
                     self.result.update({'error': True,
                                         'errorBody': {
-                                            'text': error
+                                            'text': error,
+                                            'id': -1
                                             }
                                         }
                                        )

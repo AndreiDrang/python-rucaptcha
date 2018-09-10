@@ -16,8 +16,6 @@ class RuCaptchaControl:
         self.payload = {'key': rucaptcha_key,
                         'json': 1,
                         }
-        # результат возвращаемый методом *additional_methods*
-        self.result = JSON_RESPONSE
 
         # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
         if service_type == '2captcha':
@@ -47,6 +45,8 @@ class RuCaptchaControl:
                         }
         Больше подробностей и примеров можно прочитать в 'CaptchaTester/rucaptcha_control_example.py'
         """
+        # результат возвращаемый методом *additional_methods*
+        self.result = JSON_RESPONSE.copy()
 
         # Если переданы ещё параметры - вносим их в payload
         if kwargs:
