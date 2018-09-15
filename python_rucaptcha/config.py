@@ -33,3 +33,9 @@ JSON_RESPONSE = {
         'id': 0
     }
 }
+
+
+# генератор в котором задаётся кол-во поптыок на повторное подключение
+def connect_generator():
+    for i in range(5):
+        yield i

@@ -3,10 +3,9 @@ import time
 import asyncio
 import aiohttp
 from requests.adapters import HTTPAdapter
-from urllib3.exceptions import MaxRetryError
 
 from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key, \
-    JSON_RESPONSE
+    JSON_RESPONSE, connect_generator
 from .errors import RuCaptchaError
 
 
@@ -84,6 +83,8 @@ class ReCaptchaV2:
 		'''
         # результат возвращаемый методом *captcha_handler*
         self.result = JSON_RESPONSE.copy()
+        # генератор для повторных попыток подключения к серверу получения решения капчи
+        self.connect_gen = connect_generator()
 
         self.post_payload.update({'googlekey': site_key,
                                   'pageurl': page_url})
@@ -105,14 +106,12 @@ class ReCaptchaV2:
             # обновляем пайлоад, вносим в него ключ отправленной на решение капчи
             self.get_payload.update({'id': captcha_id})
 
-        # Ожидаем решения капчи 20 секунд
-        # Ожидаем решения капчи
+        # Ожидаем решения капчи 10 секунд
         time.sleep(self.sleep_time)
         while True:
             try:
                 # отправляем запрос на результат решения капчи, если не решена ожидаем
-                captcha_response = self.session.post(self.url_response, data = self.get_payload)
-
+                captcha_response = requests.post(self.url_response, data = self.get_payload)
                 # если капча ещё не решена - ожидаем
                 if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
                     time.sleep(self.sleep_time)
@@ -133,27 +132,18 @@ class ReCaptchaV2:
                                        )
                     return self.result
 
-            except (TimeoutError, ConnectionError, MaxRetryError) as error:
-                self.result.update({'error': True,
-                                    'errorBody': {
-                                        'text': error,
-                                        'id': -1
-                                        }
-                                    }
-                                   )
-                return self.result
-
             except Exception as error:
-                print(self.result)
-                self.result.update({'error': True,
-                                    'errorBody': {
-                                        'text': error,
-                                        'id': -1
+                if next(self.connect_gen) < 4:
+                    time.sleep(2)
+                else:
+                    self.result.update({'error': True,
+                                        'errorBody': {
+                                            'text': error,
+                                            'id': -1
                                         }
-                                    }
-                                   )
-                print(self.result['errorBody'])
-                return self.result
+                                        }
+                                       )
+                    return self.result
 
 
 # асинхронный метод для решения РеКапчи 2
@@ -223,6 +213,8 @@ class aioReCaptchaV2:
 		'''
         # результат возвращаемый методом *captcha_handler*
         self.result = JSON_RESPONSE.copy()
+        # генератор для повторных попыток подключения к серверу получения решения капчи
+        self.connect_gen = connect_generator()
 
         self.post_payload.update({'googlekey': site_key, 'pageurl': page_url})
         # получаем ID капчи
@@ -275,11 +267,14 @@ class aioReCaptchaV2:
                             return self.result
 
                 except Exception as error:
-                    self.result.update({'error': True,
-                                        'errorBody': {
-                                            'text': error,
-                                            'id': -1
+                    if next(self.connect_gen) < 4:
+                        time.sleep(2)
+                    else:
+                        self.result.update({'error': True,
+                                            'errorBody': {
+                                                'text': error,
+                                                'id': -1
                                             }
-                                        }
-                                       )
-                    return self.result
+                                            }
+                                           )
+                        return self.result
