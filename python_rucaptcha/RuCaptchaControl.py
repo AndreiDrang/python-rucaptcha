@@ -13,9 +13,9 @@ class RuCaptchaControl:
 		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
                              и "rucaptcha"
         """
-        self.payload = {'key': rucaptcha_key,
+        self.post_payload = {'key': rucaptcha_key,
                         'json': 1,
-                        }
+                             }
 
         # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
         if service_type == '2captcha':
@@ -48,19 +48,22 @@ class RuCaptchaControl:
         # результат возвращаемый методом *additional_methods*
         self.result = JSON_RESPONSE.copy()
 
-        # Если переданы ещё параметры - вносим их в payload
+        # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:
             for key in kwargs:
-                self.payload.update({key: kwargs[key]})
+                self.post_payload.update({key: kwargs[key]})
 
-        self.payload.update({'action': action})
+        self.post_payload.update({'action': action})
 
         try:
             # отправляем на сервер данные с вашим запросом
-            answer = requests.post(self.url_response, data = self.payload)
+            answer = requests.post(self.url_response, data = self.post_payload)
         except Exception as error:
             self.result.update({'error': True,
-                                'errorBody': error,
+                                'errorBody': {
+                                    'text': error,
+                                    'id': -1
+                                }
                                 }
                                )
             return self.result
