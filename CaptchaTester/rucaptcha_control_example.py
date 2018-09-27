@@ -1,3 +1,5 @@
+import asyncio
+
 from python_rucaptcha import RuCaptchaControl
 
 """
@@ -60,3 +62,29 @@ id	Строка	-	ID вашей капчи.
 Подробней обо всех возможных параметрах и их применении:
 https://rucaptcha.com/api-rucaptcha#complain
 """
+
+"""
+Пример асинхронной работы 
+"""
+
+
+async def run():
+    try:
+        # пример с отправкой репорта на неверно решённую капчу
+        answer_aio_report = await RuCaptchaControl.aioRuCaptchaControl(rucaptcha_key = RUCAPTCHA_KEY).additional_methods(action = 'reportbad',
+                                                                                                                         id = wrong_captcha_id)
+
+        print(answer_aio_report)
+
+        # прмиер с получением актуального баланса аккаунта
+        answer_aio_balance = await RuCaptchaControl.aioRuCaptchaControl(rucaptcha_key = RUCAPTCHA_KEY).additional_methods(action = 'getbalance')
+
+        print("Your balance is: ", answer_aio_balance['serverAnswer'], " rub.")
+    except Exception as err:
+        print(err)
+
+
+if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(run())
+    loop.close()
