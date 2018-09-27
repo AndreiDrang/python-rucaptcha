@@ -44,7 +44,7 @@ class RuCaptchaError(Exception):
             return UnsolvableCaptchaError.answer()
         elif description == 'ERROR_WRONG_ID_FORMAT':
             return WrongCaptchaIDFormatError.answer()
-        elif description == 'ERROR_WRONG_CAPTCHA_ID ':
+        elif description == 'ERROR_WRONG_CAPTCHA_ID':
             return WrongCaptchaIDError.answer()
         elif description == 'ERROR_BAD_DUPLICATES':
             return BadDuplicatesError.answer()
