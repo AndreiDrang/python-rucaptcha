@@ -5,8 +5,9 @@ import aiohttp
 from requests.adapters import HTTPAdapter
 
 from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key, \
-    JSON_RESPONSE, connect_generator
+    JSON_RESPONSE
 from .errors import RuCaptchaError
+from .result_handler import get_sync_result, get_async_result
 
 
 class ReCaptchaV2:
@@ -83,8 +84,6 @@ class ReCaptchaV2:
 		'''
         # результат возвращаемый методом *captcha_handler*
         self.result = JSON_RESPONSE.copy()
-        # генератор для повторных попыток подключения к серверу получения решения капчи
-        self.connect_gen = connect_generator()
 
         self.post_payload.update({'googlekey': site_key,
                                   'pageurl': page_url})
@@ -108,42 +107,10 @@ class ReCaptchaV2:
 
         # Ожидаем решения капчи 10 секунд
         time.sleep(self.sleep_time)
-        while True:
-            try:
-                # отправляем запрос на результат решения капчи, если не решена ожидаем
-                captcha_response = requests.post(self.url_response, data = self.get_payload)
-                # если капча ещё не решена - ожидаем
-                if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
-                    time.sleep(self.sleep_time)
-
-                # при ошибке во время решения
-                elif captcha_response.json()["status"] == 0:
-                    self.result.update({'error': True,
-                                        'errorBody': RuCaptchaError().errors(captcha_response.json()["request"])
-                                        }
-                                       )
-                    return self.result
-
-                # при решении капчи
-                elif captcha_response.json()["status"] == 1:
-                    self.result.update({
-                                        'captchaSolve': captcha_response.json()['request']
-                                        }
-                                       )
-                    return self.result
-
-            except Exception as error:
-                if next(self.connect_gen) < 4:
-                    time.sleep(2)
-                else:
-                    self.result.update({'error': True,
-                                        'errorBody': {
-                                            'text': error,
-                                            'id': -1
-                                        }
-                                        }
-                                       )
-                    return self.result
+        return get_sync_result(get_payload = self.get_payload,
+                               sleep_time = self.sleep_time,
+                               url_response = self.url_response,
+                               result = self.result)
 
 
 # асинхронный метод для решения РеКапчи 2
@@ -213,8 +180,6 @@ class aioReCaptchaV2:
 		'''
         # результат возвращаемый методом *captcha_handler*
         self.result = JSON_RESPONSE.copy()
-        # генератор для повторных попыток подключения к серверу получения решения капчи
-        self.connect_gen = connect_generator()
 
         self.post_payload.update({'googlekey': site_key, 'pageurl': page_url})
         # получаем ID капчи
@@ -239,42 +204,7 @@ class aioReCaptchaV2:
 
         # Ожидаем решения капчи
         await asyncio.sleep(self.sleep_time)
-        # отправляем запрос на результат решения капчи, если не решена ожидаем
-        async with aiohttp.ClientSession() as session:
-            while True:
-                try:
-                    async with session.post(self.url_response, data = self.get_payload) as resp:
-                        captcha_response = await resp.json()
-
-                        # если капча ещё не решена - ожидаем
-                        if captcha_response['request'] == 'CAPCHA_NOT_READY':
-                            await asyncio.sleep(self.sleep_time)
-
-                        # при ошибке во время решения
-                        elif captcha_response["status"] == 0:
-                            self.result.update({'error': True,
-                                                'errorBody': RuCaptchaError().errors(captcha_response["request"])
-                                                }
-                                               )
-                            return self.result
-
-                        # при решении капчи
-                        elif captcha_response["status"] == 1:
-                            self.result.update({
-                                                'captchaSolve': captcha_response['request']
-                                                }
-                                               )
-                            return self.result
-
-                except Exception as error:
-                    if next(self.connect_gen) < 4:
-                        time.sleep(2)
-                    else:
-                        self.result.update({'error': True,
-                                            'errorBody': {
-                                                'text': error,
-                                                'id': -1
-                                            }
-                                            }
-                                           )
-                        return self.result
+        return await get_async_result(get_payload = self.get_payload,
+                                      sleep_time = self.sleep_time,
+                                      url_response = self.url_response,
+                                      result = self.result)

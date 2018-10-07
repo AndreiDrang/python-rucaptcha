@@ -69,7 +69,7 @@ image_link = requests.get("http://85.255.8.26/api/",
 """
 user_answer_const = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, img_path = 'test_filels', img_clearing = False,
                                               save_format='const').captcha_handler(captcha_link=image_link)
-
+print(user_answer_const)
 """
 Второй пример демонстрирует сохранения файла как временного (temporary) - это стандартный вариант сохранения. 
 Было выяснено, что он не работает с некоторыми видами капч - если возникают проблемы, то стоит использовать первый 
@@ -77,7 +77,7 @@ user_answer_const = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, img_p
 """
 user_answer_temp = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
                                              save_format='temp').captcha_handler(captcha_link=image_link)
-
+print(user_answer_temp)
 """
 Пример работы с передачей файла капчи уже закодированного в base64
 An example of working with captcha file already encoded in base64
@@ -87,6 +87,7 @@ base_64_file = open('base64image.txt', 'rb')
 
 user_answer_base64 = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_base64=base_64_file)
 
+print(user_answer_base64)
 """
 Пример работы с декодированием в base64 файла-капчи "налету"
 An example of working with decoding in base64 a captcha file after downloading. 
@@ -94,7 +95,7 @@ An example of working with decoding in base64 a captcha file after downloading.
 base_64_link = base64.b64encode(requests.get("http://85.255.8.26/static/image/common_image_example/862963.png").content).decode('utf-8')
 
 user_answer_base64 = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_base64=base_64_link)
-
+print(user_answer_base64)
 '''
 user_answer_... - это JSON строка с соответствующими полями
 captchaSolve - решение капчи,
@@ -209,6 +210,7 @@ async def run():
     try:
         answer_aio_image = await ImageCaptcha.aioImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY) \
             .captcha_handler(captcha_link=image_link)
+        print(answer_aio_image)
         if not answer_aio_image['error']:
             # решение капчи
             print(answer_aio_image['captchaSolve'])
@@ -220,29 +222,18 @@ async def run():
     except Exception as err:
         print(err)
 
+    """
+    Пример для работы с локальными файлами
+    """
+    # папка в которой находится изображение, один из вариантов написания
+    # captcha_file = r'D:\Python\933588.png'
+    # так же есть возможность передать так:
+    # captcha_file = 'D:\/Python\/933588.png'
 
-if __name__ == '__main__':
-    loop = asyncio.new_event_loop()
-    loop.run_until_complete(run())
-    loop.close()
-
-
-
-"""
-Пример для работы с локальными файлами
-"""
-# папка в которой находится изображение, один из вариантов написания
-# captcha_file = r'D:\Python\933588.png'
-# так же есть возможность передать так:
-# captcha_file = 'D:\/Python\/933588.png'
-
-
-# Асинхронный
-
-async def run():
     try:
         answer_aio_local_image = await ImageCaptcha.aioImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY)\
             .captcha_handler(captcha_file=captcha_file)
+        print(answer_aio_local_image)
         if not answer_aio_local_image['error']:
             # решение капчи
             print(answer_aio_local_image['captchaSolve'])
@@ -253,20 +244,10 @@ async def run():
             print(answer_aio_local_image['errorBody']['id'])
     except Exception as err:
         print(err)
-
-
-if __name__ == '__main__':
-    loop = asyncio.new_event_loop()
-    loop.run_until_complete(run)
-    loop.close()
-
-"""
-UPDATE 1.6.2 с прокси
-!!!Поддерживаются только HTTP прокси!!!
-"""
-
-
-async def run():
+    """
+    UPDATE 1.6.2 с прокси
+    !!!Поддерживаются только HTTP прокси!!!
+    """
     try:
         answer_aio_image = await ImageCaptcha.aioImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY)\
             .captcha_handler(captcha_link=image_link, proxy='http://85.21.83.186:8080')
