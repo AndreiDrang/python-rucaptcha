@@ -5,11 +5,14 @@ import asyncio
 
 from urllib3.exceptions import MaxRetryError
 
+from .config import connect_generator
 from .errors import RuCaptchaError
 
 
 # синхронный метод
 def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, result: dict):
+    # генератор для повторных попыток подключения к серверу получения решения капчи
+    connect_gen = connect_generator()
     while True:
         try:
             # отправляем запрос на результат решения капчи, если не решена ожидаем
@@ -32,29 +35,24 @@ def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, resul
                 result.update({'captchaSolve': captcha_response.json()['request']})
                 return result
 
-        except (TimeoutError, ConnectionError, MaxRetryError) as error:
-            result.update({'error': True,
-                           'errorBody': {
-                               'text': error,
-                               'id': -1
-                           }
-                           }
-                          )
-            return result
-
         except Exception as error:
-            result.update({'error': True,
-                           'errorBody': {
-                               'text': error,
-                               'id': -1
-                           }
-                           }
-                          )
-            return result
+                if next(connect_gen) < 4:
+                    time.sleep(2)
+                else:
+                    result.update({'error': True,
+                                   'errorBody': {
+                                       'text': error,
+                                       'id': -1
+                                   }
+                                   }
+                                  )
+                    return result
 
 
 # асинхронный метод
 async def get_async_result(get_payload: dict, sleep_time: int, url_response: str, result: dict):
+    # генератор для повторных попыток подключения к серверу получения решения капчи
+    connect_gen = connect_generator()
     # отправляем запрос на результат решения капчи, если не решена ожидаем
     async with aiohttp.ClientSession() as session:
         while True:
@@ -83,11 +81,14 @@ async def get_async_result(get_payload: dict, sleep_time: int, url_response: str
                         return result
 
             except Exception as error:
-                result.update({'error': True,
-                               'errorBody': {
-                                   'text': error,
-                                   'id': -1
-                               }
-                               }
-                              )
-                return result
+                if next(connect_gen) < 4:
+                    time.sleep(2)
+                else:
+                    result.update({'error': True,
+                                   'errorBody': {
+                                       'text': error,
+                                       'id': -1
+                                   }
+                                   }
+                                  )
+                    return result
