@@ -19,7 +19,7 @@ class TextCaptcha:
                              "json": 1,
                              "soft_id": app_key,
                              }
-        # Если переданы ещё параметры - вносим их в payload
+        # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:
             for key in kwargs:
                 self.post_payload.update({key: kwargs[key]})

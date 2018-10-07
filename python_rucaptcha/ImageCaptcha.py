@@ -65,7 +65,7 @@ class ImageCaptcha:
                              "json": 1,
                              "soft_id": app_key,
                              }
-        # Если переданы ещё параметры - вносим их в payload
+        # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:
             for key in kwargs:
                 self.post_payload.update({key: kwargs[key]})
@@ -195,13 +195,13 @@ class ImageCaptcha:
         captcha_id = None
 
         try:
-            # пробуем открыть файл, закодировать в base64, затем вносим закодированный файл в payload для отправки на
+            # пробуем открыть файл, закодировать в base64, затем вносим закодированный файл в post_payload для отправки на
             # рукапчу для решения
             if content_type == 'file':
                 with open(content, 'rb') as captcha_image:
                     self.post_payload.update({"body": base64.b64encode(captcha_image.read()).decode('utf-8')})
 
-            # вносим закодированный файл в payload для отправки на рукапчу для решения
+            # вносим закодированный файл в post_payload для отправки на рукапчу для решения
             elif content_type == "base64":
                 self.post_payload.update({"body": content})
 
@@ -366,7 +366,7 @@ class aioImageCaptcha:
                              "json": 1,
                              "soft_id": app_key,
                              }
-        # Если переданы ещё параметры - вносим их в payload
+        # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:
             for key in kwargs:
                 self.post_payload.update({key: kwargs[key]})
