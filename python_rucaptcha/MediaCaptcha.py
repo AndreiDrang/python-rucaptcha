@@ -1,13 +1,13 @@
 import requests
-import os, shutil
+import os
 import time
 import hashlib
-from urllib3.exceptions import MaxRetryError
 from requests.adapters import HTTPAdapter
 
 from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key,\
     JSON_RESPONSE
 from .errors import RuCaptchaError
+from .result_handler import get_sync_result, get_async_result
 
 
 class MediaCaptcha:
@@ -136,47 +136,7 @@ class MediaCaptcha:
         os.remove(os.path.join(self.audio_path, f'aud-{audio_hash}.mp3'))
         # Ожидаем решения капчи
         time.sleep(self.sleep_time)
-        while True:
-            try:
-                # отправляем запрос на результат решения капчи, если не решена ожидаем
-                captcha_response = self.session.post(self.url_response, data=self.get_payload)
-
-                # если капча ещё не решена - ожидаем
-                if captcha_response.json()['request'] == 'CAPCHA_NOT_READY':
-                    time.sleep(self.sleep_time)
-
-                # при ошибке во время решения
-                elif captcha_response.json()["status"] == 0:
-                    self.result.update({'error': True,
-                                        'errorBody': RuCaptchaError().errors(captcha_response.json()["request"])
-                                        }
-                                       )
-                    return self.result
-
-                # при решении капчи
-                elif captcha_response.json()["status"] == 1:
-                    self.result.update({
-                                        'captchaSolve': captcha_response.json()['request']
-                                        }
-                                       )
-                    return self.result
-
-            except (TimeoutError, ConnectionError, MaxRetryError) as error:
-                    self.result.update({'error': True,
-                                        'errorBody': {
-                                            'text': error,
-                                            'id': -1
-                                            }
-                                        }
-                                       )
-                    return self.result
-
-            except Exception as error:
-                    self.result.update({'error': True,
-                                        'errorBody': {
-                                            'text': error,
-                                            'id': -1
-                                            }
-                                        }
-                                       )
-                    return self.result
+        return get_sync_result(get_payload=self.get_payload,
+                               sleep_time = self.sleep_time,
+                               url_response = self.url_response,
+                               result = self.result)
