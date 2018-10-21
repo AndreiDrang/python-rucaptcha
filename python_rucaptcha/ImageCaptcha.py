@@ -1,6 +1,5 @@
 import requests
 import time
-import tempfile
 import hashlib
 import os
 import asyncio
@@ -102,22 +101,10 @@ class ImageCaptcha:
         """
         captcha_id = None
         try:
-            with tempfile.NamedTemporaryFile(suffix = '.png') as out:
-                out.write(content)
-                captcha_image = open(out.name, 'rb')
-                # Отправляем на рукапча изображение капчи и другие парметры,
-                # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
-                self.post_payload.update({"body": base64.b64encode(captcha_image.read()).decode('utf-8')})
-                captcha_id = self.session.post(self.url_request, data = self.post_payload).json()
-
-        except (IOError, FileNotFoundError) as error:
-            self.result.update({'error': True,
-                                'errorBody': {
-                                    'text': error,
-                                    'id': -1
-                                    }
-                                }
-                               )
+            # Отправляем на рукапча изображение капчи и другие парметры,
+            # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
+            self.post_payload.update({"body": base64.b64encode(content).decode('utf-8')})
+            captcha_id = self.session.post(self.url_request, data = self.post_payload).json()
 
         except Exception as error:
             self.result.update({'error': True,
@@ -399,23 +386,10 @@ class aioImageCaptcha:
         captcha_id = None
 
         try:
-            with tempfile.NamedTemporaryFile(suffix = '.png') as out:
-                out.write(content)
-                captcha_image = open(out.name, 'rb')
-                # Отправляем изображение файлом
-                self.post_payload.update({"body": base64.b64encode(captcha_image.read()).decode('utf-8')})
-                async with aiohttp.ClientSession() as session:
-                    async with session.post(self.url_request, data = self.post_payload) as resp:
-                        captcha_id = await resp.json()
-
-        except (IOError, FileNotFoundError) as error:
-            self.result.update({'error': True,
-                                'errorBody': {
-                                    'text': error,
-                                    'id': -1
-                                    }
-                                }
-                               )
+            self.post_payload.update({"body": base64.b64encode(content).decode('utf-8')})
+            async with aiohttp.ClientSession() as session:
+                async with session.post(self.url_request, data = self.post_payload) as resp:
+                    captcha_id = await resp.json()
 
         except Exception as error:
             self.result.update({'error': True,
