@@ -78,16 +78,7 @@ print(user_answer_const)
 user_answer_temp = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
                                              save_format='temp').captcha_handler(captcha_link=image_link)
 print(user_answer_temp)
-"""
-Пример работы с передачей файла капчи уже закодированного в base64
-An example of working with captcha file already encoded in base64
-"""
-# закодировано: 976979
-base_64_file = open('base64image.txt', 'rb')
 
-user_answer_base64 = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_base64=base_64_file)
-
-print(user_answer_base64)
 """
 Пример работы с декодированием в base64 файла-капчи "налету"
 An example of working with decoding in base64 a captcha file after downloading. 
