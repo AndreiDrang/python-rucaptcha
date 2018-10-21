@@ -8,8 +8,6 @@
 
 Присутствуют [примеры работы с библиотекой](https://github.com/AndreiDrang/python-rucaptcha/tree/master/CaptchaTester).
 
-Если вы работаете на OS Windows с ImageCaptcha - используйте *ImageCaptcha.ImageCaptcha(save_format='const')*.
-
 **Используется Python версии 3.6+.**
 
 ## How to install? Как установить?
@@ -56,6 +54,8 @@ python setup.py install
 Замена `errorId` и его значений 1/0 на `error` и логические `True`(есть ошибка)/`False`(нет ошибки).
 
 **v.2.2.1** - Вынесение методов для получению решений капчи (как синхронного так и асинхронного) в отдельный файл.
+
+**v.2.3** - Удаление использования временных файлов и замена их на переменную.
 ***
 ### Будущие обновления
 v.3.0 -  ...
