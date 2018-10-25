@@ -18,7 +18,7 @@ class ReCaptchaV2:
 	"""
 
     def __init__(self, rucaptcha_key, service_type: str = '2captcha', sleep_time: int = 10, invisible: int = 0,
-                 proxy: str = '', proxytype: str = ''):
+                 proxy: str = '', proxytype: str = '', pingback: str = ''):
         """
 		Инициализация нужных переменных.
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
@@ -44,6 +44,10 @@ class ReCaptchaV2:
                              "json": 1,
                              'invisible': invisible,
                              "soft_id": app_key}
+
+        # если был передан параметр для callback`a - добавляем его
+        if pingback:
+            self.post_payload.update({'pingback': pingback})
 
         # добавление прокси для решения капчи с того же IP
         if proxy and proxytype:
