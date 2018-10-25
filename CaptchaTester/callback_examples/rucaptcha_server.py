@@ -4,9 +4,16 @@ import random
 
 import aiohttp
 
+"""
+Задаётся IP/URL на котором запущен сервер и порт
+YOUR_HOST_OR_IP:PORT
+"""
+host = 'localhost'
+port = 8080
+
 async def run(route: str):
     async with aiohttp.ClientSession() as session:
-        async with session.post(f'http://85.255.8.26:80/{route}', data={'id':'60657442674', 'code':'088636'}) as resp:
+        async with session.post(f'http://{host}:{port}/{route}', data={'id':'60657442674', 'code':'088636'}) as resp:
             await resp.text()
             await asyncio.sleep(random.randint(1,3))
 

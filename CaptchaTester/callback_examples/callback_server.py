@@ -4,7 +4,7 @@ routes = web.RouteTableDef()
 
 """
 Run server:
-gunicorn callback_server:main --bind YOUR_HOST_OR_IP:80 --worker-class aiohttp.GunicornWebWorker --workers 5
+gunicorn callback_server:main --bind YOUR_HOST_OR_IP:PORT --worker-class aiohttp.GunicornWebWorker --workers 5
 """
 # Ответ капчи на сервер приходит ввиде данных с 2 параметрами:
 # 'id' - ID задания на рещение капчи 
