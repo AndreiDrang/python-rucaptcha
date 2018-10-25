@@ -9,28 +9,6 @@ from python_rucaptcha import RuCaptchaControl, ImageCaptcha
 # Введите ключ от рукапчи из своего аккаунта
 RUCAPTCHA_KEY = ""
 
-# регистрация нового домена для callback/pingback
-answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='add_pingback', addr='http://85.255.8.26/')
-print(answer)
-# получение списка активных IP адресов
-answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='get_pingback')
-print(answer)
-# удаление конкретного IP адреса
-# answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='del_pingback', addr='http://85.255.8.26/')
-# print(answer)
-# удаление всех IP адресов
-# answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='del_pingback', addr='all')
-# print(answer)
-
-# Пример работы с модулем ReCaptchaV2
-answer_usual_re2 = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, 
-                                             pingback='85.255.8.26', 
-                                            ).captcha_handler(captcha_link="https://raw.githubusercontent.com/AndreiDrang/python-rucaptcha/master/CaptchaTester/088636.png")
-
-print(f'{answer_usual_re2}')
-"""
-Ответ на сервер приходит ввиде JSON`a с полями - [('id', '60657442674'), ('code', '088636')]
-"""
 # пример получения информации о балансе
 answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key = RUCAPTCHA_KEY).additional_methods(action = 'getbalance')
 
@@ -110,3 +88,29 @@ if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     loop.run_until_complete(run())
     loop.close()
+
+
+"""
+Callback примеры
+"""
+# регистрация нового домена для callback/pingback
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='add_pingback', addr='http://85.255.8.26/', json=1)
+print(answer)
+# получение списка активных IP адресов
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='get_pingback', json=1)
+print(answer)
+# удаление конкретного IP адреса
+# answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='del_pingback', addr='http://85.255.8.26/')
+# print(answer)
+
+# удаление всех IP адресов
+# answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='del_pingback', addr='all')
+# print(answer)
+
+# создаём задание на сервере, ответ на которое придёт на заданный pingback URL в виде POST запроса
+# пример сервера принимающего POST запросы от RuCaptcha находится в - `CaptchaTester/callback_examples/callback_server.py`
+answer_usual_re2 = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, 
+                                             pingback='85.255.8.26/image_captcha', 
+                                            ).captcha_handler(captcha_link="https://raw.githubusercontent.com/AndreiDrang/python-rucaptcha/master/CaptchaTester/088636.png")
+
+print(f'{answer_usual_re2}')
