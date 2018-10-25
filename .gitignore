@@ -6,3 +6,5 @@ Web-Interface/
 CaptchaTester/__pycache__/
 python_rucaptcha/__pycache__/
 build/
+
+CaptchaTester/callback_examples/__pycache__/
