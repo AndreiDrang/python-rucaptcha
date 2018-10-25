@@ -55,7 +55,9 @@ python setup.py install
 
 **v.2.2.1** - Вынесение методов для получению решений капчи (как синхронного так и асинхронного) в отдельный файл.
 
-**v.2.3** - Удаление использования временных файлов и замена их на переменную.
+**v.2.3** - Удаление использования временных файлов(для хранения изображений) и замена их на переменную.
+
+**v.2.4** - Добавление `callback`(pingback) параметра для работы со всеми видами капч. В примеры добавлен [асинхронный сервер(на aiohttp)](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/CaptchaTester/callback_examples/callback_server.py) для обработки POST-запросов от RuCaptcha, а так же [`эмулятор RuCaptcha`](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/CaptchaTester/callback_examples/rucaptcha_server.py), который высылает те же параметры что и настоящий сервер(подойдёт для тестирования обработки решений капчи). 
 ***
 ### Будущие обновления
 v.3.0 -  ...
