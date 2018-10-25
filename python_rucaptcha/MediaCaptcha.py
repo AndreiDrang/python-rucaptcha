@@ -131,12 +131,17 @@ class MediaCaptcha:
             self.result.update({"taskId": captcha_id})
             # обновляем пайлоад, вносим в него ключ отправленной на решение капчи
             self.get_payload.update({'id': captcha_id})
-
-        # удаляем файл капчи
-        os.remove(os.path.join(self.audio_path, f'aud-{audio_hash}.mp3'))
-        # Ожидаем решения капчи
-        time.sleep(self.sleep_time)
-        return get_sync_result(get_payload=self.get_payload,
-                               sleep_time = self.sleep_time,
-                               url_response = self.url_response,
-                               result = self.result)
+            
+            # если передан параметр `pingback` - не ждём решения капчи а возвращаем незаполненный ответ
+            if self.post_payload.get('pingback'):
+                return self.get_payload
+            
+            else:
+                # удаляем файл капчи
+                os.remove(os.path.join(self.audio_path, f'aud-{audio_hash}.mp3'))
+                # Ожидаем решения капчи
+                time.sleep(self.sleep_time)
+                return get_sync_result(get_payload=self.get_payload,
+                                    sleep_time = self.sleep_time,
+                                    url_response = self.url_response,
+                                    result = self.result)

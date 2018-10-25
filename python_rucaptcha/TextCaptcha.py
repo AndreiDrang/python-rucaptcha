@@ -71,9 +71,14 @@ class TextCaptcha:
             # обновляем пайлоад, вносим в него ключ отправленной на решение капчи
             self.get_payload.update({'id': captcha_id})
 
-        # Ожидаем решения капчи
-        time.sleep(self.sleep_time)
-        return get_sync_result(get_payload = self.get_payload,
-                               sleep_time = self.sleep_time,
-                               url_response = self.url_response,
-                               result = self.result)
+            # если передан параметр `pingback` - не ждём решения капчи а возвращаем незаполненный ответ
+            if self.post_payload.get('pingback'):
+                return self.get_payload
+            
+            else:
+                # Ожидаем решения капчи
+                time.sleep(self.sleep_time)
+                return get_sync_result(get_payload = self.get_payload,
+                                    sleep_time = self.sleep_time,
+                                    url_response = self.url_response,
+                                    result = self.result)
