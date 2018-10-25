@@ -64,6 +64,25 @@ v.3.0 -  ...
 ***
 ### На данный момент реализованы следующие методы:
 
+0.Работа через callback(pingback).
+Краткий пример:
+
+```python
+# для начала работы нужно зарегистрировать IP/URL(делается с того же IP, который регистрируете):
+RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='add_pingback', addr='http://85.255.8.26/')
+# проверка зарегистрированных адресов
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='get_pingback', json=1)
+print(answer)
+```
+
+Затем установить и запустить веб-приложение, которое будет принимать POST-запросы, парсить их, и совершать прочую, нужную вам, магию
+[Пример такого сервера, написанный на Aiohttp](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/CaptchaTester/callback_examples/callback_server.py).
+Все тесты можно проводить на локальном сервере, эмулируя POST-запросы от RuCaptcha при помощи [локального клиента](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/CaptchaTester/callback_examples/rucaptcha_server.py).
+Примеры создания реальных заданий для callback(pingback) способа вы можете посмотреть в [папке с примерами](https://github.com/AndreiDrang/python-rucaptcha/tree/master/CaptchaTester), для конкретного метода капчи.
+
+
+#### Работа обычным методом - ожидание решения капчи периодическим опросом сервера.
+
 1.[Решение капчи-изображения(большие и маленькие).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ImageCaptcha.py)
 
 Краткий пример:
