@@ -6,6 +6,12 @@ from python_rucaptcha import ImageCaptcha
 from python_rucaptcha import errors
 
 """
+UPDATE 2.4
+Добавление возможности применять callback при получении ответа капчи
+Для этого в класс нужно передать параметр `pingback` со значением URL'a для ожидания ответа, к примеру - 85.255.8.26/image_captcha
+Полный пример работы приведён в самом низу документа
+Пример сервера принимающего POST запросы от RuCaptcha находится в - `CaptchaTester/callback_examples/callback_server.py`
+
 UPDATE 2.0
 !!! Учитывается только при сохранении изображения капчи как обычного файла !!!
 Добавление возможности передачи названия папки для сохранения изображений-капчи.
@@ -258,3 +264,14 @@ if __name__ == '__main__':
     loop = asyncio.new_event_loop()
     loop.run_until_complete(run())
     loop.close()
+
+"""
+Callback пример
+"""
+# IP адрес должен быть ЗАРАНЕЕ зарегистрирован в системе (подробонсти смотри в `CaptchaTester/rucaptcha_control_example.py`)
+# создаём задание на сервере, ответ на которое придёт на заданный pingback URL в виде POST запроса
+callback_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, 
+                                            pingback='85.255.8.26/image_captcha', 
+                                            ).captcha_handler(captcha_link=image_link)
+
+print(callback_answer)

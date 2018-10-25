@@ -4,17 +4,14 @@ from python_rucaptcha import TextCaptcha
 """
 Этот пример показывает то как нужно работать с модулем для решения текстовых капч
 """
-# Введите ключ от рукапчи из своего аккаунта
-RUCAPTCHA_KEY = ''
-# Пример вопроса для решения
-text_question = 'Если завтра суббота, то какой сегодня день?'
-"""
-Тут нужно воспользоваться бибилотекой, отослать на решение ссылку на капчу и получить ответ
-далее его записать в user_answer
-"""
-user_answer = TextCaptcha.TextCaptcha(rucaptcha_key = RUCAPTCHA_KEY).captcha_handler(captcha_text = text_question)
 
 '''
+UPDATE 2.4
+Добавление возможности применять callback при получении ответа капчи
+Для этого в класс нужно передать параметр `pingback` со значением URL'a для ожидания ответа, к примеру - 85.255.8.26/text_captcha
+Полный пример работы приведён в самом низу документа
+Пример сервера принимающего POST запросы от RuCaptcha находится в - `CaptchaTester/callback_examples/callback_server.py`
+
 UPDATE 2.0
 user_answer_... - это JSON строка с соответствующими полями
 
@@ -27,6 +24,15 @@ errorBody - полная информация об ошибке:
         id - уникальный номер ошибка в ЭТОЙ бибилотеке
     }
 '''
+# Введите ключ от рукапчи из своего аккаунта
+RUCAPTCHA_KEY = 'ba86e77f9007a106c2eb2d7436e74440'
+# Пример вопроса для решения
+text_question = 'Если завтра суббота, то какой сегодня день?'
+"""
+Тут нужно воспользоваться бибилотекой, отослать на решение ссылку на капчу и получить ответ
+далее его записать в user_answer
+"""
+user_answer = TextCaptcha.TextCaptcha(rucaptcha_key = RUCAPTCHA_KEY).captcha_handler(captcha_text = text_question)
 
 if user_answer['error'] == 0:
 	# решение капчи
@@ -58,3 +64,15 @@ elif user_answer_full['error'] == 1:
 	# Тело ошибки, если есть
 	print(user_answer_full['errorBody']['text'])
 	print(user_answer_full['errorBody']['id'])
+
+"""
+Callback пример
+"""
+# IP адрес должен быть ЗАРАНЕЕ зарегистрирован в системе (подробонсти смотри в `CaptchaTester/rucaptcha_control_example.py`)
+# создаём задание на сервере, ответ на которое придёт на заданный pingback URL в виде POST запроса
+callback_answer = TextCaptcha.TextCaptcha(rucaptcha_key=RUCAPTCHA_KEY, 
+										  pingback='85.255.8.26/text_captcha',
+                                          language = 1 
+                                         ).captcha_handler(captcha_text = text_question)
+
+print(callback_answer)

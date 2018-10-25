@@ -7,7 +7,7 @@ from python_rucaptcha import RuCaptchaControl, ImageCaptcha
 Присутствует возможность получить информацию о балансе средств и отправить жалобу на неверно решённую капчу.
 """
 # Введите ключ от рукапчи из своего аккаунта
-RUCAPTCHA_KEY = ""
+RUCAPTCHA_KEY = "ba86e77f9007a106c2eb2d7436e74440"
 
 # пример получения информации о балансе
 answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key = RUCAPTCHA_KEY).additional_methods(action = 'getbalance')
@@ -109,8 +109,8 @@ print(answer)
 
 # создаём задание на сервере, ответ на которое придёт на заданный pingback URL в виде POST запроса
 # пример сервера принимающего POST запросы от RuCaptcha находится в - `CaptchaTester/callback_examples/callback_server.py`
-answer_usual_re2 = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, 
-                                             pingback='85.255.8.26/image_captcha', 
+callback_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, 
+                                            pingback='85.255.8.26/image_captcha', 
                                             ).captcha_handler(captcha_link="https://raw.githubusercontent.com/AndreiDrang/python-rucaptcha/master/CaptchaTester/088636.png")
 
-print(f'{answer_usual_re2}')
+print(callback_answer)
