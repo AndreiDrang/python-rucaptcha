@@ -14,11 +14,10 @@ RUCAPTCHA_KEY = 'ba86e77f9007a106c2eb2d7436e7444060657442674'
 
 async def send_solvings(route: str):
     async with aiohttp.ClientSession() as session:
-        async with session.post(f'http://{host}:{port}/{route}/qeue_key={RUCAPTCHA_KEY}', data={'id':'60657442674', 'code':'088636'}) as resp:
+        async with session.post(f'http://{host}:{port}/rucaptcha/{route}/{RUCAPTCHA_KEY}', data={'id':'60657442674', 'code':'088636'}) as resp:
             await resp.text()
-            await asyncio.sleep(random.randint(1,3))
 
-if __name__ == '__main__':
+def main():
     routes = ('fun_captcha', 
               'image_captcha', 
               'key_captcha', 
@@ -29,7 +28,7 @@ if __name__ == '__main__':
     while True:
         loop = asyncio.new_event_loop()
 
-        tasks = [send_solvings(random.choice(routes)) for i in range(40)]
+        tasks = [send_solvings(random.choice(routes)) for i in range(50)]
     
         print('GOOOO!!!...')
         start_time = time.time()
@@ -48,5 +47,6 @@ if __name__ == '__main__':
              )
         
         print('STOOOOP!!!...\n')
+        time.sleep(2)
 
-        time.sleep(5)
+main()
