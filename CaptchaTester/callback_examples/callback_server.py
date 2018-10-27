@@ -1,4 +1,4 @@
-import pika
+import aio_pika
 from aiohttp import web
 
 routes = web.RouteTableDef()
@@ -11,23 +11,23 @@ gunicorn callback_server:main --bind YOUR_HOST_OR_IP:PORT --worker-class aiohttp
 # 'id' - ID задания на рещение капчи 
 # 'code' - код решения капчи
 
-def send_data_in_qeue(qeue_key: str, message: dict):
-    credentials = pika.PlainCredentials('visitor', 'password')
-    parameters = pika.ConnectionParameters('localhost',
-                                           5672,
-                                           'rucaptcha_vhost',
-                                           credentials)
-    connection = pika.BlockingConnection(parameters)
-    channel = connection.channel()
+async def send_data_in_qeue(qeue_key: str, message: dict):
+
+    connection = await aio_pika.connect_robust("amqp://visitor:password@85.255.8.26:5672/rucaptcha_vhost")
+        
+    channel = await connection.channel()
 
     json_message = {'id': message.get('id'), 'code': message.get('code')}
 
-    channel.basic_publish(exchange='',
-                          routing_key=qeue_key,
-                          body=str(json_message))
-    print(f" [x] Sent {message}")
+    await channel.default_exchange.publish(
+            aio_pika.Message(
+                body=str(json_message).encode()
+            ),
+            routing_key=qeue_key
+        )                          
+    print(f" [x] Sent {json_message}")
     
-    connection.close()
+    await connection.close()
 
 @routes.post('/register_key')
 async def registr_key(request):
@@ -35,70 +35,62 @@ async def registr_key(request):
     Регистрация новой очереди в RabbitMQ для получения решний капчи туда
     """
     data = await request.json()
-    print(f'New queue created, name - {data};')
     try:
-        credentials = pika.PlainCredentials('visitor', 'password')
-        parameters = pika.ConnectionParameters('localhost',
-                                            5672,
-                                            'rucaptcha_vhost',
-                                            credentials)
-        connection = pika.BlockingConnection(parameters)
-        channel = connection.channel()
+        connection = await aio_pika.connect_robust("amqp://visitor:password@85.255.8.26:5672/rucaptcha_vhost")
+        
+        channel = await connection.channel()
 
-        channel.queue_declare(queue=data.get("key"))
+        await channel.declare_queue(data.get("key"))
 
-        connection.close()
+        await connection.close()
+
+        print(f'New queue created, name - {data};')
         return web.Response(text="OK")
 
     except Exception as err:
+        print(err)
         return web.Response(text="FAIL")
 
-@routes.post('/fun_captcha/{qeue_key}')
+@routes.post('/rucaptcha/fun_captcha/{qeue_key}')
 async def fun_captcha_handle(request):
     data = await request.post()
-    qeue_key = request.match_info['qeue_key']
-    send_data_in_qeue(qeue_key=qeue_key, message=data)
-    print(f'Fun captcha solution - {data.get("code")}; Captcha ID - {data.get("id")}; Qeue key - {qeue_key};')
+    qeue_key_data = request.match_info['qeue_key']
+    await send_data_in_qeue(qeue_key=qeue_key_data, message=data)
     return web.Response(text="fun_captcha")
 
-@routes.post('/image_captcha/{qeue_key}')
+@routes.post('/rucaptcha/image_captcha/{qeue_key}')
 async def image_captcha_handle(request):
     data = await request.post()
-    qeue_key = request.match_info['qeue_key']
-    send_data_in_qeue(qeue_key=qeue_key, message=data)
-    print(f'Image captcha solution - {data.get("code")}; Captcha ID - {data.get("id")}; Qeue key - {qeue_key};')
+    qeue_key_data = request.match_info['qeue_key']
+    await send_data_in_qeue(qeue_key=qeue_key_data, message=data)
     return web.Response(text="image_captcha")
 
-@routes.post('/key_captcha/{qeue_key}')
+@routes.get('/rucaptcha/key_captcha/{qeue_key}')
 async def key_captcha_handle(request):
     data = await request.post()
-    qeue_key = request.match_info['qeue_key']
-    send_data_in_qeue(qeue_key=qeue_key, message=data)
-    print(f'Key captcha solution - {data.get("code")}; Captcha ID - {data.get("id")}; Qeue key - {qeue_key};')
+    qeue_key_data = request.match_info['qeue_key']
+    await send_data_in_qeue(qeue_key=qeue_key_data, message=data)
     return web.Response(text="key_captcha")
 
-@routes.post('/media_captcha/{qeue_key}')
+@routes.post('/rucaptcha/media_captcha/{qeue_key}')
 async def media_captcha_handle(request):
     data = await request.post()
-    qeue_key = request.match_info['qeue_key']
-    send_data_in_qeue(qeue_key=qeue_key, message=data)
-    print(f'Media captcha solution - {data.get("code")}; Captcha ID - {data.get("id")}; Qeue key - {qeue_key};')
+    qeue_key_data = request.match_info['qeue_key']
+    await send_data_in_qeue(qeue_key=qeue_key_data, message=data)
     return web.Response(text="media_captcha")
 
-@routes.post('/recaptcha_captcha/{qeue_key}')
+@routes.post('/rucaptcha/recaptcha_captcha/{qeue_key}')
 async def recaptcha_captcha_handle(request):
     data = await request.post()
-    qeue_key = request.match_info['qeue_key']
-    send_data_in_qeue(qeue_key=qeue_key, message=data)
-    print(f'ReCaptcha_v2 solution - {data.get("code")}; Captcha ID - {data.get("id")}; Qeue key - {qeue_key};')
+    qeue_key_data = request.match_info['qeue_key']
+    await send_data_in_qeue(qeue_key=qeue_key_data, message=data)
     return web.Response(text="recaptcha_captcha")
 
-@routes.post('/rotate_captcha/{qeue_key}')
+@routes.post('/rucaptcha/rotate_captcha/{qeue_key}')
 async def rotate_captcha_handle(request):
     data = await request.post()
-    qeue_key = request.match_info['qeue_key']
-    send_data_in_qeue(qeue_key=qeue_key, message=data)
-    print(f'Rotate captcha solution - {data.get("code")}; Captcha ID - {data.get("id")}; Qeue key - {qeue_key};')
+    qeue_key_data = request.match_info['qeue_key']
+    await send_data_in_qeue(qeue_key=qeue_key_data, message=data)
     return web.Response(text="rotate_captcha")
 
 async def main():
