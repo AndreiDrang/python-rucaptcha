@@ -21,7 +21,8 @@ async def send_data_in_qeue(qeue_key: str, message: dict):
 
     await channel.default_exchange.publish(
             aio_pika.Message(
-                body=str(json_message).encode()
+                body=str(json_message).encode(),
+                delivery_mode = 2,
             ),
             routing_key=qeue_key
         )                          
@@ -37,11 +38,11 @@ async def registr_key(request):
     data = await request.json()
     try:
         connection = await aio_pika.connect_robust("amqp://visitor:password@85.255.8.26:5672/rucaptcha_vhost")
-        
+ 
         channel = await connection.channel()
 
-        await channel.declare_queue(data.get("key"))
-
+        await channel.declare_queue(data.get("key"), durable=True)
+        
         await connection.close()
 
         print(f'New queue created, name - {data};')
