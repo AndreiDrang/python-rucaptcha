@@ -13,7 +13,7 @@ gunicorn callback_server:main --bind YOUR_HOST_OR_IP:PORT --worker-class aiohttp
 
 async def send_data_in_qeue(qeue_key: str, message: dict):
 
-    connection = await aio_pika.connect_robust("amqp://visitor:password@85.255.8.26:5672/rucaptcha_vhost")
+    connection = await aio_pika.connect_robust("amqp://visitor:password@localhost/rucaptcha_vhost")
         
     channel = await connection.channel()
 
@@ -37,7 +37,7 @@ async def registr_key(request):
     """
     data = await request.json()
     try:
-        connection = await aio_pika.connect_robust("amqp://visitor:password@85.255.8.26:5672/rucaptcha_vhost")
+        connection = await aio_pika.connect_robust("amqp://visitor:password@localhost/rucaptcha_vhost")
  
         channel = await connection.channel()
 
@@ -66,7 +66,7 @@ async def image_captcha_handle(request):
     await send_data_in_qeue(qeue_key=qeue_key_data, message=data)
     return web.Response(text="image_captcha")
 
-@routes.get('/rucaptcha/key_captcha/{qeue_key}')
+@routes.post('/rucaptcha/key_captcha/{qeue_key}')
 async def key_captcha_handle(request):
     data = await request.post()
     qeue_key_data = request.match_info['qeue_key']
