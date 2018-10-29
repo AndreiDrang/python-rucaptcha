@@ -16,6 +16,8 @@ RUCAPTCHA_KEY = 'ba86e77f9007a106c2eb2d7436e7444060657442674'
 def callback(ch, method, properties, body):
     print(" [x] Received %r" % body)
 
+    channel.basic_ack(delivery_tag = method.delivery_tag)
+    channel.stop_consuming()
 def wait_queue_elements(queue_name: str):
 
     credentials = pika.PlainCredentials('visitor', 'password')
@@ -26,7 +28,7 @@ def wait_queue_elements(queue_name: str):
     connection = pika.BlockingConnection(parameters)
     channel = connection.channel()
 
-    channel.basic_consume(callback, queue=queue_name, no_ack=True)
+    channel.basic_consume(callback, queue=queue_name, arguments={'captcha_id': 6666})
 
     print(' [*] Waiting for messages. To exit press CTRL+C')
     channel.start_consuming()
