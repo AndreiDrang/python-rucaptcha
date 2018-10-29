@@ -1,3 +1,5 @@
+import json
+
 import aio_pika
 from aiohttp import web
 
@@ -11,17 +13,18 @@ gunicorn callback_server:main --bind YOUR_HOST_OR_IP:PORT --worker-class aiohttp
 # 'id' - ID задания на рещение капчи 
 # 'code' - код решения капчи
 
-async def send_data_in_qeue(qeue_key: str, message: dict):
+USERNAME = 'hard_queue_creator'
+PASSWORD = 'password'
 
-    connection = await aio_pika.connect_robust("amqp://visitor:password@localhost/rucaptcha_vhost")
-        
+async def send_data_in_qeue(qeue_key: str, message: dict):
+    connection = await aio_pika.connect_robust(f"amqp://{USERNAME}:{PASSWORD}@localhost/rucaptcha_vhost")        
     channel = await connection.channel()
 
-    json_message = {'id': message.get('id'), 'code': message.get('code')}
+    json_message = json.dumps({'id': message.get('id'), 'code': message.get('code')})
 
     await channel.default_exchange.publish(
             aio_pika.Message(
-                body=str(json_message).encode(),
+                body=json_message.encode(),
                 delivery_mode = 2,
             ),
             routing_key=qeue_key
@@ -37,7 +40,7 @@ async def registr_key(request):
     """
     data = await request.json()
     try:
-        connection = await aio_pika.connect_robust("amqp://visitor:password@localhost/rucaptcha_vhost")
+        connection = await aio_pika.connect_robust(f"amqp://{USERNAME}:{PASSWORD}@localhost/rucaptcha_vhost")
  
         channel = await connection.channel()
 
