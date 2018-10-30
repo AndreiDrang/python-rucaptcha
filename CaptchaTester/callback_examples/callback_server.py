@@ -36,6 +36,7 @@ async def send_data_in_qeue(qeue_key: str, message: dict):
             aio_pika.Message(
                 body=json_message.encode(),
                 delivery_mode = 2,
+                expiration = 3600
             ),
             routing_key=qeue_key
         )
