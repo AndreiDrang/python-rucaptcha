@@ -19,11 +19,11 @@ PASSWORD = 'password'
 
 def save_result_cache(message: dict):
     # init client
-    client = base.Client(('localhost', 11211),
-                         timeout = 1,
-                         connect_timeout = 10)
+    client = base.Client(('localhost', 11211))
     # set data key-value data to cache
-    client.set(message.get('id'), message.get('code'))
+    client.set(message.get('id'), message.get('code'), expire=3600)
+
+    client.close()
 
 
 async def send_data_in_qeue(qeue_key: str, message: dict):
@@ -86,6 +86,8 @@ async def cache_get_handle(request):
                          connect_timeout = 10)
     # get data from key-value cache
     cache_data = client.get(task_id)
+
+    client.close()
 
     if cache_data:
         # response dict
