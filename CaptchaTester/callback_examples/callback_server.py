@@ -2,6 +2,7 @@ import json
 
 import aio_pika
 from aiohttp import web
+from pymemcache.client import base
 
 routes = web.RouteTableDef()
 
@@ -16,6 +17,15 @@ gunicorn callback_server:main --bind YOUR_HOST_OR_IP:PORT --worker-class aiohttp
 USERNAME = 'hard_queue_creator'
 PASSWORD = 'password'
 
+def save_result_cache(message: dict):
+    # init client
+    client = base.Client(('localhost', 11211),
+                         timeout = 1,
+                         connect_timeout = 10)
+    # set data key-value data to cache
+    client.set(message.get('id'), message.get('code'))
+
+
 async def send_data_in_qeue(qeue_key: str, message: dict):
     connection = await aio_pika.connect_robust(f"amqp://{USERNAME}:{PASSWORD}@localhost/rucaptcha_vhost")        
     channel = await connection.channel()
@@ -28,7 +38,10 @@ async def send_data_in_qeue(qeue_key: str, message: dict):
                 delivery_mode = 2,
             ),
             routing_key=qeue_key
-        )                          
+        )
+
+    save_result_cache(message)  
+
     print(f" [x] Sent {json_message}")
     
     await connection.close()
@@ -54,6 +67,34 @@ async def registr_key(request):
     except Exception as err:
         print(err)
         return web.Response(text="FAIL")
+
+@routes.get('/rucaptcha/cache/{task_id}')
+async def cache_get_handle(request):
+    """
+    GET
+    task_id - task id from RuCaptcha
+
+    Response
+    json - {'id': <task_id>, 'code': <solve_code>} 
+           or 
+           {'id': <task_id>, 'code': "CAPCHA_NOT_READY"}
+    """
+    # get task id from request
+    task_id = request.match_info['task_id']
+    # init client
+    client = base.Client(('localhost', 11211),
+                         connect_timeout = 10)
+    # get data from key-value cache
+    cache_data = client.get(task_id)
+
+    if cache_data:
+        # response dict
+        data = {'id': task_id, 'code': cache_data.decode()}
+    else:
+        # response dict
+        data = {'id': task_id, 'code': "CAPCHA_NOT_READY"}
+
+    return web.json_response(data)
 
 @routes.post('/rucaptcha/fun_captcha/{qeue_key}')
 async def fun_captcha_handle(request):
