@@ -24,6 +24,8 @@ class KeyCaptcha:
                              и "rucaptcha"
         :param sleep_time: Время ожидания решения капчи
         '''
+        # TODO добавить POST_PAYLOAD
+
         self.RUCAPTCHA_KEY = rucaptcha_key
         if sleep_time < 15:
             raise ValueError(f'Параметр `sleep_time` должен быть не менее 5. Вы передали - {sleep_time}')
@@ -50,6 +52,19 @@ class KeyCaptcha:
         self.session.mount('http://', HTTPAdapter(max_retries=5))
 
     def captcha_handler(self, **kwargs):
+        '''
+		Метод отвечает за передачу данных на сервер для решения капчи
+		:param kwargs: Параметры/ключи key-captcha(подробнее в примерах бибилотеки или на сайте RuCaptcha)
+		:return: Ответ на капчу в виде JSON строки с полями:
+                    captchaSolve - решение капчи,
+                    taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+                    error - False - если всё хорошо, True - если есть ошибка,
+                    errorBody - полная информация об ошибке:
+                        {
+                            text - Развернётое пояснение ошибки
+                            id - уникальный номер ошибка в ЭТОЙ бибилотеке
+                        }
+		'''
         # результат возвращаемый методом *captcha_handler*
         self.result = JSON_RESPONSE.copy()
         # считываем все переданные параметры KeyCaptcha
@@ -157,6 +172,19 @@ class aioKeyCaptcha:
 
     # Работа с капчей
     async def captcha_handler(self, **kwargs):
+        '''
+		Метод отвечает за передачу данных на сервер для решения капчи
+		:param kwargs: Параметры/ключи key-captcha(подробнее в примерах бибилотеки или на сайте RuCaptcha)
+		:return: Ответ на капчу в виде JSON строки с полями:
+                    captchaSolve - решение капчи,
+                    taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+                    error - False - если всё хорошо, True - если есть ошибка,
+                    errorBody - полная информация об ошибке:
+                        {
+                            text - Развернётое пояснение ошибки
+                            id - уникальный номер ошибка в ЭТОЙ бибилотеке
+                        }
+		'''
         # результат возвращаемый методом *captcha_handler*
         self.result = JSON_RESPONSE.copy()
         # считываем все переданные параметры KeyCaptcha
