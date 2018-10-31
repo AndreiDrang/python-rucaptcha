@@ -12,7 +12,7 @@ class CallbackClient:
     Класс отвечает за получение информации о решении капчи с call-back сервера
     """
 
-    def __init__(self, task_id: str, queue_name: str = None, call_type: str = 'cache'):
+    def __init__(self, task_id: int, queue_name: str = None, call_type: str = 'cache'):
         """
         :param task_id: ID полученное при создании задания в сервисе RuCaptcha
         :param queue_name: Название очереди выбранное и переданное последним параметров в URL для `pingback`. 
@@ -24,7 +24,7 @@ class CallbackClient:
         self.port = PORT
 
         # ID задания
-        self.task_id = task_id
+        self.task_id = int(task_id)
         # тип запросов к серверу
         self.call_type = call_type
         if self.call_type in ('cache', 'queue'):
@@ -69,9 +69,10 @@ class CallbackClient:
             if body:
                 # декодируем сообщение из bytes в JSON
                 json_body = json.loads(body.decode())
+
                 # если ID задания сообщения из очереди совпадает с ID требуемого задания - возвращаем его. 
                 # если ID не совпадают - ожидаем дальше
-                if json_body.get('id')==self.task_id:
+                if int(json_body.get('id')) == self.task_id:
                     channel.basic_ack(method_frame.delivery_tag)
                     connection.close()
                     return json_body
