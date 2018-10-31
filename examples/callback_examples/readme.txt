@@ -1,4 +1,4 @@
-1. Установка на сервере: aiohttp, aio_pika, rebbitmq-server.
+1. Установка на сервере: aiohttp, aio_pika, pymemcache, rebbitmq-server, memcached.
    Установка на клиенте: aiohttp, pika.
 2. Открытие портов на сервере:
     - порт для работы callback-server'a;
