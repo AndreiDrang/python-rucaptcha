@@ -102,7 +102,6 @@ print(answer)
 # удаление конкретного IP адреса
 answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='del_pingback', addr='http://85.255.8.26/')
 print(answer)
-
 # удаление всех IP адресов
 answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='del_pingback', addr='all')
 print(answer)

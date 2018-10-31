@@ -1,0 +1,3 @@
+aiohttp
+pika
+aio-pika
