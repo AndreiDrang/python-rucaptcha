@@ -8,15 +8,20 @@ import aiohttp
 Задаётся IP/URL на котором запущен сервер и порт
 YOUR_HOST_OR_IP:PORT
 """
-host = 'localhost'
-port = 8001
-RUCAPTCHA_KEY = 'ba86e77f9007a106c2eb2d7436e7444060657442674'
+# IP для работы callback`a
+HOST = '85.255.8.26'
+# PORT для работы callback`a
+PORT = 8001
+
+QUEUE_KEY = 'ba86e77f9007a106c2eb2d7436e7444060657442674'
+TASK_ID = '60657442675'
 
 async def send_solvings(route: str):
     async with aiohttp.ClientSession() as session:
-        async with session.post(f'http://{host}:{port}/rucaptcha/{route}/{RUCAPTCHA_KEY}', data={'id':'60657442674', 'code':'088636'}) as resp:
-            await resp.text()
-
+        async with session.post(f'http://{HOST}:{PORT}/rucaptcha/{route}/{QUEUE_KEY}', 
+                                data={'id':TASK_ID, 'code':'088636'}) as resp:
+            await resp.read()
+               
 def main():
     routes = ('fun_captcha', 
               'image_captcha', 
@@ -28,7 +33,7 @@ def main():
     while True:
         loop = asyncio.new_event_loop()
 
-        tasks = [send_solvings(random.choice(routes)) for i in range(50)]
+        tasks = [send_solvings(random.choice(routes)) for i in range(2)]
     
         print('GOOOO!!!...')
         start_time = time.time()
