@@ -21,7 +21,7 @@ RTMQ_USERNAME = 'hardworker_1'
 RTMQ_PASSWORD = 'password'
 RTMQ_HOST = '85.255.8.26'
 RTMQ_PORT = 5672
-RTMQ_VHOST = 'rucatpcha_vhost'
+RTMQ_VHOST = 'rucaptcha_vhost'
 
 """
 JSON возвращаемы пользователю после решения капчи
