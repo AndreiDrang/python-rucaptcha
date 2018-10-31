@@ -57,7 +57,7 @@ python setup.py install
 
 **v.2.3** - Удаление использования временных файлов(для хранения изображений) и замена их на переменную.
 
-**v.2.4** - Добавление `callback`(pingback) параметра для работы со всеми видами капч. В примеры добавлен [асинхронный сервер(на aiohttp)](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/CaptchaTester/callback_examples/callback_server.py) для обработки POST-запросов от RuCaptcha, а так же [`эмулятор RuCaptcha`](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/CaptchaTester/callback_examples/rucaptcha_server.py), который высылает те же параметры что и настоящий сервер(подойдёт для тестирования обработки решений капчи). 
+**v.2.4** - Добавление `callback`(pingback) параметра для работы со всеми видами капч. Добавление нового модуля для получения результатов решения капчи с сервера - [CallbackClient](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/python_rucaptcha/CallbackClient.py). В примеры добавлен [асинхронный сервер(на aiohttp)](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/CaptchaTester/callback_examples/callback_server.py) для обработки POST-запросов от RuCaptcha, а так же [`эмулятор RuCaptcha`](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/CaptchaTester/callback_examples/rucaptcha_server.py), который высылает те же параметры что и настоящий сервер(подойдёт для тестирования обработки решений капчи). 
 ***
 ### Будущие обновления
 v.3.0 -  ...
@@ -69,14 +69,45 @@ v.3.0 -  ...
 Краткий пример:
 
 ```python
+from python_rucaptcha import ImageCaptcha, RuCaptchaControl, CallbackClient
+# Введите ключ от сервиса RuCaptcha, из своего аккаунта
+RUCAPTCHA_KEY = ""
+# Ссылка на изображения для расшифровки
+image_link = ""
+
 # для начала работы нужно зарегистрировать IP/URL(делается с того же IP, который регистрируете):
 RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='add_pingback', addr='http://85.255.8.26/')
 # проверка зарегистрированных адресов
 answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='get_pingback', json=1)
 print(answer)
+
+# нужно придумать сложное название очереди(15+ знаков подойдёт) для получения результатов решения капчи
+queue_name = 'ba86e77f9007_andrei_drang_7436e744_cute_queue'
+# регистрируем очередь на callback сервере
+answer = requests.post(f'http://{server_ip}:{server_port}/register_key', json={'key':queue_name})
+print(answer.text)
+
+# создаём задание в сервисе RuCaptcha и указываем `pingback` параметр
+task_creation_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, 
+                                                     pingback=f'85.255.8.26:8001/rucaptcha/image_captcha/{queue_name}', 
+                                                    ).captcha_handler(captcha_link=image_link)
+
+print(task_creation_answer)
+# подключаемся к серверу и ждём решения капчи из кеша
+callback_server_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get('id')).captcha_handler()
+
+print(callback_server_response)
+# подключаемся к серверу и ждём решения капчи из RabbitMQ queue
+callback_server_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get('id'), queue_name=queue_name, call_type='queue').captcha_handler()
+
+print(callback_server_response)
 ```
 
-Затем установить и запустить веб-приложение, которое будет принимать POST-запросы, парсить их, и совершать прочую, нужную вам, магию
+Структура и принцип работы системы подробней расписаны в [данной схеме](https://esk.one/p/i7oKYboABXJ/)
+
+#### Если вы хотите запустить данный callback сервер у себя:
+
+Установить и запустить веб-приложение, которое будет принимать POST-запросы, парсить их, и совершать прочую, нужную вам, магию
 [Пример такого сервера, написанный на Aiohttp](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/CaptchaTester/callback_examples/callback_server.py).
 
 Все тесты можно проводить на локальном сервере, эмулируя POST-запросы от RuCaptcha при помощи [локального клиента](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/CaptchaTester/callback_examples/rucaptcha_server.py).
