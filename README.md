@@ -69,6 +69,7 @@ v.3.0 -  ...
 Краткий пример:
 
 ```python
+import requests
 from python_rucaptcha import ImageCaptcha, RuCaptchaControl, CallbackClient
 # Введите ключ от сервиса RuCaptcha, из своего аккаунта
 RUCAPTCHA_KEY = ""
@@ -84,7 +85,7 @@ print(answer)
 # нужно придумать сложное название очереди(15+ знаков подойдёт) для получения результатов решения капчи
 queue_name = 'ba86e77f9007_andrei_drang_7436e744_cute_queue'
 # регистрируем очередь на callback сервере
-answer = requests.post(f'http://{server_ip}:{server_port}/register_key', json={'key':queue_name})
+answer = requests.post(f'http://85.255.8.26:8001/register_key', json={'key':queue_name})
 print(answer.text)
 
 # создаём задание в сервисе RuCaptcha и указываем `pingback` параметр
@@ -93,14 +94,14 @@ task_creation_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
                                                     ).captcha_handler(captcha_link=image_link)
 
 print(task_creation_answer)
+# Два варианта получения решения: кеш(результат хранится 1 час) и  rabbitmq очередь(результат удаляется после первого чтения)
 # подключаемся к серверу и ждём решения капчи из кеша
-callback_server_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get('id')).captcha_handler()
-
-print(callback_server_response)
+callback_cache_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get('id')).captcha_handler()
 # подключаемся к серверу и ждём решения капчи из RabbitMQ queue
-callback_server_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get('id'), queue_name=queue_name, call_type='queue').captcha_handler()
+callback_queue_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get('id'), queue_name=queue_name, call_type='queue').captcha_handler()
 
-print(callback_server_response)
+print(callback_cache_response)
+print(callback_queue_response)
 ```
 
 Структура и принцип работы системы подробней расписаны в [данной схеме](https://esk.one/p/i7oKYboABXJ/)
