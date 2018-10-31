@@ -108,6 +108,8 @@ print(callback_queue_response)
 
 #### Если вы хотите запустить данный callback сервер у себя:
 
+Небольшая [инструкция-памятка](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/examples/callback_examples/readme.txt) по шагам.
+
 Установить и запустить веб-приложение, которое будет принимать POST-запросы, парсить их, и совершать прочую, нужную вам, магию
 [Пример такого сервера, написанный на Aiohttp](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/examples/callback_examples/callback_server.py).
 
