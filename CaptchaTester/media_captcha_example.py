@@ -1,4 +1,6 @@
-from python_rucaptcha import MediaCaptcha
+import requests
+
+from python_rucaptcha import MediaCaptcha, CallbackClient, RuCaptchaControl
 
 """
 !!!ВАЖНО!!!
@@ -101,14 +103,40 @@ elif recaptcha_audio_file_answer['error']:
     print(recaptcha_audio_file_answer['errorBody']['text'])
     print(recaptcha_audio_file_answer['errorBody']['id'])
 
+
 """
 Callback пример
 """
-# IP адрес должен быть ЗАРАНЕЕ зарегистрирован в системе (подробонсти смотри в `CaptchaTester/rucaptcha_control_example.py`)
-# создаём задание на сервере, ответ на которое придёт на заданный pingback URL в виде POST запроса
-callback_answer = MediaCaptcha.MediaCaptcha(rucaptcha_key=RUCAPTCHA_KEY, 
-                                            solveaudio=True,
-                                            pingback='85.255.8.26/media_captcha', 
-                                            ).captcha_handler(audio_name=solve_media_file)
+# нужно передать IP/URL ранее зарегистрированного сервера
+server_ip = '85.255.8.26'
+# и по желанию - порт на сервере который слушает ваше веб-приложение
+server_port = 8001
+# регистрация нового домена для callback/pingback
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='add_pingback', addr=f'http://{server_ip}:{server_port}/', json=1)
+print(answer)
 
-print(callback_answer)
+# нужно придумать ЛЮБОЕ сложное название очереди(15+ знаков подойдёт)
+queue_name = 'ba86e77f9007_andrei_drang_7436e7444060657442674_cute_media_queue'
+# регистрируем очередь на callback сервере
+answer = requests.post(f'http://{server_ip}:{server_port}/register_key', json={'key':queue_name})
+
+# если очередь зарегистрирована
+if answer.text == 'OK':
+    # IP адрес должен быть ЗАРАНЕЕ зарегистрирован в системе (подробонсти смотри в `CaptchaTester/rucaptcha_control_example.py`)
+    # создаём задание на сервере, ответ на которое придёт на заданный pingback URL в виде POST запроса
+    task_creation_answer = MediaCaptcha.MediaCaptcha(rucaptcha_key=RUCAPTCHA_KEY, 
+                                                     solveaudio=True,
+                                                     pingback=f'85.255.8.26:8001/rucaptcha/media_captcha/{queue_name}', 
+                                                    ).captcha_handler(audio_name=solve_media_file)
+
+    print(task_creation_answer)
+
+    # подключаемся к серверу и ждём решения капчи из кеша
+    callback_server_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get('id')).captcha_handler()
+
+    print(callback_server_response)
+
+    # подключаемся к серверу и ждём решения капчи из RabbitMQ queue
+    callback_server_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get('id'), queue_name=queue_name, call_type='queue').captcha_handler()
+
+    print(callback_server_response)

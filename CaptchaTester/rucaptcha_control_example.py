@@ -100,32 +100,9 @@ print(answer)
 answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='get_pingback', json=1)
 print(answer)
 # удаление конкретного IP адреса
-# answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='del_pingback', addr='http://85.255.8.26/')
-# print(answer)
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='del_pingback', addr='http://85.255.8.26/')
+print(answer)
 
 # удаление всех IP адресов
-# answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='del_pingback', addr='all')
-# print(answer)
-
-# создаём задание на сервере, ответ на которое придёт на заданный pingback URL в виде POST запроса
-# пример сервера принимающего POST запросы от RuCaptcha находится в - `CaptchaTester/callback_examples/callback_server.py`
-
-# нужно передать IP/URL ранее зарегистрированного сервера
-server_ip = '85.255.8.26'
-# и по желанию - порт на сервере который слушает ваше веб-приложение
-server_port = 8001
-
-# для передачи сообщения в конкретную RabbitMQ очередь нужно передать несколько дополнительных параметров
-# название сервиса
-service_name = 'rucaptcha'
-# тип капчи
-captcha_type = 'image_captcha'
-# название очереди
-qeue_name = 'ba86e77f9007a106c2eb2d7436e7444060657442674_cute_qeue_1'
-
-
-callback_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, 
-                                            pingback=f'{server_ip}:{server_port}/{service_name}/{captcha_type}/{qeue_name}', 
-                                            ).captcha_handler(captcha_link="https://raw.githubusercontent.com/AndreiDrang/python-rucaptcha/master/CaptchaTester/088636.png")
-
-print(callback_answer)
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='del_pingback', addr='all')
+print(answer)

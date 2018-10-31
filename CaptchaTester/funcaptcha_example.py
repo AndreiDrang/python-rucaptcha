@@ -1,7 +1,9 @@
-# v.1.8
+# v.2.4
 import asyncio
 
-from python_rucaptcha import FunCaptcha
+import requests
+
+from python_rucaptcha import FunCaptcha, RuCaptchaControl, CallbackClient
 
 """
 Данный пример показывает работу модуля с FunCaptcha
@@ -94,10 +96,35 @@ if __name__ == '__main__':
 """
 Callback пример
 """
-# IP адрес должен быть ЗАРАНЕЕ зарегистрирован в системе (подробонсти смотри в `CaptchaTester/rucaptcha_control_example.py`)
-# создаём задание на сервере, ответ на которое придёт на заданный pingback URL в виде POST запроса
-callback_answer = FunCaptcha.FunCaptcha(rucaptcha_key=RUCAPTCHA_KEY, 
-                                        pingback='85.255.8.26/fun_captcha', 
-                                        ).captcha_handler(public_key=public_key, page_url=pageurl)
+# нужно передать IP/URL ранее зарегистрированного сервера
+server_ip = '85.255.8.26'
+# и по желанию - порт на сервере который слушает ваше веб-приложение
+server_port = 8001
+# регистрация нового домена для callback/pingback
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='add_pingback', addr=f'http://{server_ip}:{server_port}/', json=1)
+print(answer)
 
-print(callback_answer)
+# нужно придумать ЛЮБОЕ сложное название очереди(15+ знаков подойдёт)
+queue_name = 'ba86e77f9007_andrei_drang_7436e7444060657442674_cute_queue'
+# регистрируем очередь на callback сервере
+answer = requests.post(f'http://{server_ip}:{server_port}/register_key', json={'key':queue_name})
+
+# если очередь зарегистрирована
+if answer.text == 'OK':
+    # IP адрес должен быть ЗАРАНЕЕ зарегистрирован в системе (подробонсти смотри в `CaptchaTester/rucaptcha_control_example.py`)
+    # создаём задание на сервере, ответ на которое придёт на заданный pingback URL в виде POST запроса
+    task_creation_answer = FunCaptcha.FunCaptcha(rucaptcha_key=RUCAPTCHA_KEY, 
+                                                 pingback=f'85.255.8.26:8001/rucaptcha/fun_captcha/{queue_name}', 
+                                                ).captcha_handler(public_key=public_key, page_url=pageurl)
+
+    print(task_creation_answer)
+
+    # подключаемся к серверу и ждём решения капчи из кеша
+    callback_server_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get('id')).captcha_handler()
+
+    print(callback_server_response)
+
+    # подключаемся к серверу и ждём решения капчи из RabbitMQ queue
+    callback_server_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get('id'), queue_name=queue_name, call_type='queue').captcha_handler()
+
+    print(callback_server_response)
