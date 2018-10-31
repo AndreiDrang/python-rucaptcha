@@ -7,7 +7,7 @@ import pika
 import aiohttp
 import requests
 
-RUCAPTCHA_KEY = 'ba86e77f9007a106c2eb2d7436e7444060657442674'
+QUEUE_KEY = 'ba86e77f9007a106c2eb2d7436e7444060657442674'
 TASK_ID = '60657442675'
 
 # IP для работы callback`a
@@ -19,11 +19,11 @@ RTMQ_USERNAME = 'hardworker_1'
 RTMQ_PASSWORD = 'password'
 RTMQ_HOST = '85.255.8.26'
 RTMQ_PORT = 5672
-RTMQ_VHOST = 'rucatpcha_vhost'
+RTMQ_VHOST = 'rucaptcha_vhost'
 
 async def register_new_queue(route: str):
     async with aiohttp.ClientSession() as session:
-        async with session.post(f'http://{HOST}:{PORT}/{route}', json={'key':RUCAPTCHA_KEY}) as resp:
+        async with session.post(f'http://{HOST}:{PORT}/{route}', json={'key':QUEUE_KEY}) as resp:
             answer = await resp.text()
             print(f'\tNew queue creation status - {answer};')     
 
@@ -181,8 +181,8 @@ class CallbackClient:
 
 print(CallbackClient(task_id=TASK_ID).captcha_handler())
 
-print(CallbackClient(task_id=TASK_ID, queue_name=RUCAPTCHA_KEY, call_type='queue').captcha_handler(requests_timeout=0.5,
-                                                                                                   auth_params = {
+print(CallbackClient(task_id=TASK_ID, queue_name=QUEUE_KEY, call_type='queue').captcha_handler(requests_timeout=0.5,
+                                                                                               auth_params = {
                                                                                                     'host': '85.255.8.26',
                                                                                                     'port': '8001',
                                                                                                     'rtmq_username': 'hardworker_1',
@@ -191,5 +191,4 @@ print(CallbackClient(task_id=TASK_ID, queue_name=RUCAPTCHA_KEY, call_type='queue
                                                                                                     'rtmq_port': '5672',
                                                                                                     'rtmq_vhost': 'rucaptcha_vhost'
                                                                                                     }
-                                                                                                   )
-        )
+                                                                                               ))
