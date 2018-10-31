@@ -71,7 +71,15 @@ class FunCaptcha:
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param site_key: Ключ сайта
 		:param page_url: Ссылка на страницу на которой находится капча
-    	:return: В качестве ответа передаётся JSON с данными для решения капчи
+		:return: Ответ на капчу в виде JSON строки с полями:
+                    captchaSolve - решение капчи,
+                    taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+                    error - False - если всё хорошо, True - если есть ошибка,
+                    errorBody - полная информация об ошибке:
+                        {
+                            text - Развернётое пояснение ошибки
+                            id - уникальный номер ошибка в ЭТОЙ бибилотеке
+                        }
 		'''
         # результат возвращаемый методом *captcha_handler*
         self.result = JSON_RESPONSE.copy()
@@ -96,12 +104,17 @@ class FunCaptcha:
             # обновляем пайлоад, вносим в него ключ отправленной на решение капчи
             self.get_payload.update({'id': captcha_id})
 
-        # Ожидаем решения капчи
-        time.sleep(self.sleep_time)
-        return get_sync_result(get_payload=self.get_payload,
-                               sleep_time = self.sleep_time,
-                               url_response = self.url_response,
-                               result = self.result)
+            # если передан параметр `pingback` - не ждём решения капчи а возвращаем незаполненный ответ
+            if self.post_payload.get('pingback'):
+                return self.get_payload
+            
+            else:
+                # Ожидаем решения капчи
+                time.sleep(self.sleep_time)
+                return get_sync_result(get_payload=self.get_payload,
+                                    sleep_time = self.sleep_time,
+                                    url_response = self.url_response,
+                                    result = self.result)
 
 
 # асинхронный метод для решения FunCaptcha
@@ -160,7 +173,15 @@ class aioFunCaptcha:
     	Метод отвечает за передачу данных на сервер для решения капчи
 		:param site_key: Ключ сайта
     	:param page_url: Ссылка на страницу на которой находится капча
-    	:return: В качестве ответа передаётся JSON с данными для решения капчи
+		:return: Ответ на капчу в виде JSON строки с полями:
+                    captchaSolve - решение капчи,
+                    taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+                    error - False - если всё хорошо, True - если есть ошибка,
+                    errorBody - полная информация об ошибке:
+                        {
+                            text - Развернётое пояснение ошибки
+                            id - уникальный номер ошибка в ЭТОЙ бибилотеке
+                        }
 		'''
         # результат возвращаемый методом *captcha_handler*
         self.result = JSON_RESPONSE.copy()
@@ -186,10 +207,15 @@ class aioFunCaptcha:
             self.result.update({"taskId": captcha_id})
             # обновляем пайлоад, вносим в него ключ отправленной на решение капчи
             self.get_payload.update({'id': captcha_id})
-
-        # Ожидаем решения капчи
-        await asyncio.sleep(self.sleep_time)
-        return await get_async_result(get_payload = self.get_payload,
-                                      sleep_time = self.sleep_time,
-                                      url_response = self.url_response,
-                                      result = self.result)
+            
+            # если передан параметр `pingback` - не ждём решения капчи а возвращаем незаполненный ответ
+            if self.post_payload.get('pingback'):
+                return self.get_payload
+            
+            else:
+                # Ожидаем решения капчи
+                await asyncio.sleep(self.sleep_time)
+                return await get_async_result(get_payload = self.get_payload,
+                                            sleep_time = self.sleep_time,
+                                            url_response = self.url_response,
+                                            result = self.result)

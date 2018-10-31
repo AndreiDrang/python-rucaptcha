@@ -1,6 +1,14 @@
-from python_rucaptcha import ReCaptchaV2
+import requests
+
+from python_rucaptcha import ReCaptchaV2, RuCaptchaControl, CallbackClient
 
 """
+UPDATE 2.4
+Добавление возможности применять callback при получении ответа капчи
+Для этого в класс нужно передать параметр `pingback` со значением URL'a для ожидания ответа, к примеру - 85.255.8.26/recaptcha_captcha
+Полный пример работы приведён в самом низу документа
+Пример сервера принимающего POST запросы от RuCaptcha находится в - `CaptchaTester/callback_examples/callback_server.py`
+
 UPDATE 2.0
 Переработка JSON-ответа пользователю(раздела с ошибками), новый ответ:
     {
@@ -28,7 +36,7 @@ PAGE_URL = 'http://85.255.8.26/'
 # Пример работы с модулем ReCaptchaV2
 answer_usual_re2 = ReCaptchaV2.ReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(site_key=SITE_KEY,
                                                                                         page_url=PAGE_URL)
-
+print(answer_usual_re2)
 """
 Этот пример показывает работу модуля решения Invisible ReCaptcha
 """
@@ -39,6 +47,7 @@ PAGE_URL = 'http://85.255.8.26/invisible_recaptcha/'
 # Пример работы с модулем ReCaptchaV2
 answer_invisible = ReCaptchaV2.ReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY, invisible=1).captcha_handler(site_key=SITE_KEY,
 																									 page_url=PAGE_URL)
+print(answer_invisible)
 '''
 answer_... - это JSON строка с соответствующими полями
 
@@ -98,3 +107,40 @@ if __name__ == '__main__':
 	loop = asyncio.get_event_loop()
 	loop.run_until_complete(run())
 	loop.close()
+
+"""
+Callback пример
+"""
+# нужно передать IP/URL ранее зарегистрированного сервера
+server_ip = '85.255.8.26'
+# и по желанию - порт на сервере который слушает ваше веб-приложение
+server_port = 8001
+# регистрация нового домена для callback/pingback
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='add_pingback', addr=f'http://{server_ip}:{server_port}/', json=1)
+print(answer)
+
+# нужно придумать ЛЮБОЕ сложное название очереди(15+ знаков подойдёт)
+queue_name = 'ba86e77f9007_andrei_drang_7436e7444060657442674_new_cute_queue'
+# регистрируем очередь на callback сервере
+answer = requests.post(f'http://{server_ip}:{server_port}/register_key', json={'key':queue_name})
+
+# если очередь зарегистрирована
+if answer.text == 'OK':
+    # IP адрес должен быть ЗАРАНЕЕ зарегистрирован в системе (подробонсти смотри в `CaptchaTester/rucaptcha_control_example.py`)
+    # создаём задание на сервере, ответ на которое придёт на заданный pingback URL в виде POST запроса
+    task_creation_answer = ReCaptchaV2.ReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY, 
+                                          pingback=f'85.255.8.26:8001/rucaptcha/recaptcha_captcha/{queue_name}', 
+                                         ).captcha_handler(site_key=SITE_KEY,
+											 			   page_url=PAGE_URL)
+
+    print(task_creation_answer)
+
+    # подключаемся к серверу и ждём решения капчи из кеша
+    callback_server_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get('id')).captcha_handler()
+
+    print(callback_server_response)
+
+    # подключаемся к серверу и ждём решения капчи из RabbitMQ queue
+    callback_server_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get('id'), queue_name=queue_name, call_type='queue').captcha_handler()
+
+    print(callback_server_response)

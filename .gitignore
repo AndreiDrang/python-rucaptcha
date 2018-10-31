@@ -3,8 +3,9 @@ python_rucaptcha.egg-info/
 \.idea/
 Web-Interface/
 /ico.png
-CaptchaTester/__pycache__/
 python_rucaptcha/__pycache__/
 build/
 
 \.vscode/
+
+examples/callback_examples/__pycache__/

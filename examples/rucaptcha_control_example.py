@@ -1,13 +1,13 @@
 import asyncio
 
-from python_rucaptcha import RuCaptchaControl
+from python_rucaptcha import RuCaptchaControl, ImageCaptcha
 
 """
 Этот пример показывает работу модуля управления аккаунтом RuCaptcha.
 Присутствует возможность получить информацию о балансе средств и отправить жалобу на неверно решённую капчу.
 """
 # Введите ключ от рукапчи из своего аккаунта
-RUCAPTCHA_KEY = ""
+RUCAPTCHA_KEY = "ba86e77f9007a106c2eb2d7436e74440"
 
 # пример получения информации о балансе
 answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key = RUCAPTCHA_KEY).additional_methods(action = 'getbalance')
@@ -88,3 +88,20 @@ if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     loop.run_until_complete(run())
     loop.close()
+
+
+"""
+Callback примеры
+"""
+# регистрация нового домена для callback/pingback
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='add_pingback', addr='http://85.255.8.26/', json=1)
+print(answer)
+# получение списка активных IP адресов
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='get_pingback', json=1)
+print(answer)
+# удаление конкретного IP адреса
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='del_pingback', addr='http://85.255.8.26/')
+print(answer)
+# удаление всех IP адресов
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='del_pingback', addr='all')
+print(answer)

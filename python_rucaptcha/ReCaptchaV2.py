@@ -18,7 +18,7 @@ class ReCaptchaV2:
 	"""
 
     def __init__(self, rucaptcha_key, service_type: str = '2captcha', sleep_time: int = 10, invisible: int = 0,
-                 proxy: str = '', proxytype: str = ''):
+                 proxy: str = '', proxytype: str = '', pingback: str = ''):
         """
 		Инициализация нужных переменных.
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
@@ -44,6 +44,10 @@ class ReCaptchaV2:
                              "json": 1,
                              'invisible': invisible,
                              "soft_id": app_key}
+
+        # если был передан параметр для callback`a - добавляем его
+        if pingback:
+            self.post_payload.update({'pingback': pingback})
 
         # добавление прокси для решения капчи с того же IP
         if proxy and proxytype:
@@ -80,7 +84,15 @@ class ReCaptchaV2:
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param site_key: Гугл-ключ сайта
 		:param page_url: Ссылка на страницу на которой находится капча
-		:return: В качестве ответа переждаётся строка которую нужно вставить для отправки гуглу на проверку
+		:return: Ответ на капчу в виде JSON строки с полями:
+                    captchaSolve - решение капчи,
+                    taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+                    error - False - если всё хорошо, True - если есть ошибка,
+                    errorBody - полная информация об ошибке:
+                        {
+                            text - Развернётое пояснение ошибки
+                            id - уникальный номер ошибка в ЭТОЙ бибилотеке
+                        }		
 		'''
         # результат возвращаемый методом *captcha_handler*
         self.result = JSON_RESPONSE.copy()
@@ -105,12 +117,17 @@ class ReCaptchaV2:
             # обновляем пайлоад, вносим в него ключ отправленной на решение капчи
             self.get_payload.update({'id': captcha_id})
 
-        # Ожидаем решения капчи 10 секунд
-        time.sleep(self.sleep_time)
-        return get_sync_result(get_payload = self.get_payload,
-                               sleep_time = self.sleep_time,
-                               url_response = self.url_response,
-                               result = self.result)
+            # если передан параметр `pingback` - не ждём решения капчи а возвращаем незаполненный ответ
+            if self.post_payload.get('pingback'):
+                return self.get_payload
+            
+            else:
+                # Ожидаем решения капчи 10 секунд
+                time.sleep(self.sleep_time)
+                return get_sync_result(get_payload = self.get_payload,
+                                    sleep_time = self.sleep_time,
+                                    url_response = self.url_response,
+                                    result = self.result)
 
 
 # асинхронный метод для решения РеКапчи 2
@@ -122,7 +139,7 @@ class aioReCaptchaV2:
 	"""
 
     def __init__(self, rucaptcha_key: str, service_type: str = '2captcha', sleep_time: int = 10, invisible: int = 0, proxy: str = '',
-                 proxytype: str = ''):
+                 proxytype: str = '', pingback: str = ''):
         """
 		Инициализация нужных переменных.
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
@@ -153,6 +170,10 @@ class aioReCaptchaV2:
             self.post_payload.update({'proxy': proxy,
                                       'proxytype': proxytype})
 
+        # если был передан параметр для callback`a - добавляем его
+        if pingback:
+            self.post_payload.update({'pingback': pingback})
+            
         # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
         if service_type == '2captcha':
             self.url_request = url_request_2captcha
@@ -176,7 +197,15 @@ class aioReCaptchaV2:
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param site_key: Гугл-ключ сайта
 		:param page_url: Ссылка на страницу на которой находится капча
-		:return: В качестве ответа переждаётся строка которую нужно вставить для отправки гуглу на проверку
+		:return: Ответ на капчу в виде JSON строки с полями:
+                    captchaSolve - решение капчи,
+                    taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+                    error - False - если всё хорошо, True - если есть ошибка,
+                    errorBody - полная информация об ошибке:
+                        {
+                            text - Развернётое пояснение ошибки
+                            id - уникальный номер ошибка в ЭТОЙ бибилотеке
+                        }
 		'''
         # результат возвращаемый методом *captcha_handler*
         self.result = JSON_RESPONSE.copy()
@@ -201,10 +230,15 @@ class aioReCaptchaV2:
             self.result.update({"taskId": captcha_id})
             # обновляем пайлоад, вносим в него ключ отправленной на решение капчи
             self.get_payload.update({'id': captcha_id})
-
-        # Ожидаем решения капчи
-        await asyncio.sleep(self.sleep_time)
-        return await get_async_result(get_payload = self.get_payload,
-                                      sleep_time = self.sleep_time,
-                                      url_response = self.url_response,
-                                      result = self.result)
+                
+            # если передан параметр `pingback` - не ждём решения капчи а возвращаем незаполненный ответ
+            if self.post_payload.get('pingback'):
+                return self.get_payload
+                
+            else:
+                # Ожидаем решения капчи
+                await asyncio.sleep(self.sleep_time)
+                return await get_async_result(get_payload = self.get_payload,
+                                            sleep_time = self.sleep_time,
+                                            url_response = self.url_response,
+                                            result = self.result)

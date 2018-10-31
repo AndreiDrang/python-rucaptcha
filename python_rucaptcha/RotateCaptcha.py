@@ -1,6 +1,7 @@
-import requests
 import time
 import tempfile
+
+import requests
 from requests.adapters import HTTPAdapter
 
 from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key, \
@@ -10,7 +11,7 @@ from .result_handler import get_sync_result
 
 
 class RotateCaptcha:
-    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', sleep_time: int=5):
+    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', sleep_time: int=5, pingback: str = ''):
         '''
         Инициализация нужных переменных, создание папки для изображений и кэша
         После завершения работы - удалются временные фалйы и папки
@@ -28,6 +29,10 @@ class RotateCaptcha:
                              'method': 'rotatecaptcha',
                              "json": 1,
                              "soft_id": app_key}
+
+        # если был передан параметр для callback`a - добавляем его
+        if pingback:
+            self.post_payload.update({'pingback': pingback})
 
         # пайлоад GET запроса на получение результата решения капчи
         self.get_payload = {'key': rucaptcha_key,
@@ -56,7 +61,15 @@ class RotateCaptcha:
         Метод получает от вас ссылку на изображение, скачивает его, отправляет изображение на сервер
         RuCaptcha, дожидается решения капчи и вовзращает вам результат
         :param captcha_link: Ссылка на изображение
-        :return: Ответ на капчу
+		:return: Ответ на капчу в виде JSON строки с полями:
+                    captchaSolve - решение капчи,
+                    taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+                    error - False - если всё хорошо, True - если есть ошибка,
+                    errorBody - полная информация об ошибке:
+                        {
+                            text - Развернётое пояснение ошибки
+                            id - уникальный номер ошибка в ЭТОЙ бибилотеке
+                        }
         '''
         # результат возвращаемый методом *captcha_handler*
         self.result = JSON_RESPONSE.copy()
@@ -86,10 +99,15 @@ class RotateCaptcha:
             # обновляем пайлоад, вносим в него ключ отправленной на решение капчи
             self.get_payload.update({'id': captcha_id})
 
-        # Ожидаем решения капчи 20 секунд
-        time.sleep(self.sleep_time)
-        return get_sync_result(get_payload=self.get_payload,
-                               sleep_time = self.sleep_time,
-                               url_response = self.url_response,
-                               result = self.result)
+            # если передан параметр `pingback` - не ждём решения капчи а возвращаем незаполненный ответ
+            if self.post_payload.get('pingback'):
+                return self.get_payload
+            
+            else:
+                # Ожидаем решения капчи 20 секунд
+                time.sleep(self.sleep_time)
+                return get_sync_result(get_payload=self.get_payload,
+                                    sleep_time = self.sleep_time,
+                                    url_response = self.url_response,
+                                    result = self.result)
 

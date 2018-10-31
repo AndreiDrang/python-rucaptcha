@@ -2,14 +2,15 @@ from setuptools import setup
 
 setup(
     name = 'python-rucaptcha',
-    version = '2.3',
+    version = '2.4',
 
     author = 'AndreiDrang, redV0ID',
 
     packages = ['python_rucaptcha'],
     install_requires = [
-        'requests>=2.18',
-        'aiohttp>=3'
+        'requests==2.20.0',
+        'aiohttp==3.4.4',
+        'pika==0.12.0'
         ],
     description = 'Python 3 RuCaptcha library with AIO module.',
     author_email = 'drang.andray@gmail.com',
