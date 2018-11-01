@@ -85,7 +85,7 @@ print(answer)
 # нужно придумать сложное название очереди(15+ знаков подойдёт) для получения результатов решения капчи
 queue_name = 'ba86e77f9007_andrei_drang_7436e744_cute_queue'
 # регистрируем очередь на callback сервере
-answer = requests.post(f'http://85.255.8.26:8001/register_key', json={'key':queue_name})
+answer = requests.post(f'http://85.255.8.26:8001/register_key', json={'key':queue_name, 'vhost': 'rucaptcha_vhost'})
 print(answer.text)
 
 # создаём задание в сервисе RuCaptcha и указываем `pingback` параметр
