@@ -118,7 +118,7 @@ print(answer)
 # нужно придумать ЛЮБОЕ сложное название очереди(15+ знаков подойдёт)
 queue_name = 'ba86e77f9007_andrei_drang_7436e7444060657442674_cute_media_queue'
 # регистрируем очередь на callback сервере
-answer = requests.post(f'http://{server_ip}:{server_port}/register_key', json={'key':queue_name})
+answer = requests.post(f'http://{server_ip}:{server_port}/register_key', json={'key':queue_name, 'vhost': 'rucaptcha_vhost'})
 
 # если очередь зарегистрирована
 if answer.text == 'OK':
