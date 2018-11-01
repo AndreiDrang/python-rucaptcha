@@ -66,6 +66,8 @@ v.3.0 -  ...
 
 0.[Работа через callback(pingback)](https://github.com/AndreiDrang/python-rucaptcha/tree/callback_module/examples/callback_examples).
 
+Структура и принцип работы системы подробно [расписан в данной схеме](https://esk.one/p/i7oKYboABXJ/)
+
 Краткий пример:
 
 ```python
@@ -104,14 +106,13 @@ print(callback_cache_response)
 print(callback_queue_response)
 ```
 
-Структура и принцип работы системы подробней расписаны в [данной схеме](https://esk.one/p/i7oKYboABXJ/)
-
 #### Если вы хотите запустить данный callback сервер у себя:
 
 Небольшая [инструкция-памятка](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/examples/callback_examples/readme.txt) по шагам.
 
-Установить и запустить веб-приложение, которое будет принимать POST-запросы, парсить их, и совершать прочую, нужную вам, магию
-[Пример такого сервера, написанный на Aiohttp](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/examples/callback_examples/callback_server.py).
+Установить и запустить веб-приложение, которое будет принимать POST-запросы, парсить их, и совершать прочую, нужную вам, магию.
+
+[Пример такого сервера, написанный на aiohttp](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/examples/callback_examples/callback_server.py).
 
 Все тесты можно проводить на локальном сервере, эмулируя POST-запросы от RuCaptcha при помощи [локального клиента](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/examples/callback_examples/rucaptcha_server.py).
 
