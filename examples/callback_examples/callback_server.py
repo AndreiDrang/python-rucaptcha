@@ -99,6 +99,10 @@ async def cache_get_handle(request):
 
     return web.json_response(data)
 
+"""
+RuCaptcha service
+"""
+
 @routes.post('/rucaptcha/fun_captcha/{qeue_key}')
 async def fun_captcha_handle(request):
     data = await request.post()
@@ -140,6 +144,21 @@ async def rotate_captcha_handle(request):
     qeue_key_data = request.match_info['qeue_key']
     await send_data_in_qeue(qeue_key=qeue_key_data, message=data)
     return web.Response(text="rotate_captcha")
+
+"""
+AntiCaptcha service
+"""
+
+@routes.post('/anticaptcha/image_to_text/{qeue_key}')
+async def image_to_text_captcha_handle(request):
+    data = await request.json()
+
+    print(data)
+    qeue_key_data = request.match_info['qeue_key']
+
+    print(qeue_key_data)
+    
+    return web.Response(text="image_to_text")
 
 async def main():
     app = web.Application()
