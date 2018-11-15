@@ -29,26 +29,6 @@ python setup.py install
 По всем вопросам можете писать в [Telegram](https://t.me/joinchat/CD2EtQ5Pm0dmoSQQMTkVlw) чат.
 ***
 ### Последние обновления
-**v.1.6.2** - Добавлена поддержка прокси для Капчи-Изображения(асинхронный и синхронные методы). Добавлена KeyCaptcha и примеры для неё.
-
-**v.1.6.3** - Добавлена возможности выбора между двумя сервисами: `2captcha`(стандартный метод) и `rucaptcha`, для этого в каждый класс капчи 
-добавлен новый параметр - `service_type`. Соответственно он принимает один из двух параметров-названий сервиса:
- 
- _ImageCaptcha.ImageCaptcha(... ,_ **service_type = '2captcha'**_).captcha_handler(...)_ или _ImageCaptcha.ImageCaptcha(... ,_ **service_type = 'rucaptcha'**_).captcha_handler(...)_
-
-Аналогично для всех остальных видов капчи.
-
-**v.1.6.4** - Добавлена поддержка прокси для ReCaptchaV2 & Invisible ReCaptcha.
-
-**v.1.6.6** - Много правок в обработке ошибок от сервера(правка `ERROR: NNNN`) и системных(при чтении капчи-изображения).
-Добавление `max_retries=5` попыток подключения к серверу(для синхронного метода) всех типов капчи. 
-Добавление обязательного параметра для решения `Invisible ReCaptcha` - `invisible`.
-Добавление `base64` в качестве варианта передачи изображения в base64 формате в `captcha_handler`.
-Удаление нерабочего вида капчи - `ReCaptcha v1`. Переезд синтаксиса форматирования строк на `Python 3.6` - `f''`.
-Обновление примеров, `__doc__` для методов классов(с учётом новых параметров.) 
-
-**v.1.8** - Добавление FunCaptcha. Добавление асинхронного метода для KeyCaptcha. Удаление `raise` из кода и замена этого на корректное возвращение ошибки через JSON. 
-
 **v.2.0** - Обновление JSON ответа, ключа с информацией об ошибке(создание собственного списка ошибок с уникальными `id`). 
 Добавление в `errorBody` двух ключей: `text`(текст ошибки) и `id`(уникальный номер ошибки). [Таблица с ошибками и их номерами](#errors-table).
 Замена `errorId` и его значений 1/0 на `error` и логические `True`(есть ошибка)/`False`(нет ошибки).
@@ -199,6 +179,7 @@ elif user_answer['error']:
 5.[Решение RotateCaptcha(повернуть изображение).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/RotateCaptcha.py)
 
 6.[Решение текстовой капчи.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/TextCaptcha.py)
+
 Краткий пример:
 ```python
 from python_rucaptcha import TextCaptcha
@@ -220,6 +201,7 @@ elif user_answer['error']:
 ```
 
 7.[Решение FunCaptcha.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/TextCaptcha.py)
+
 Краткий пример:
 ```python
 from python_rucaptcha import FunCaptcha
