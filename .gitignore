@@ -9,3 +9,5 @@ build/
 \.vscode/
 
 examples/callback_examples/__pycache__/
+
+CaptchaTester/callback_examples/__pycache__/
