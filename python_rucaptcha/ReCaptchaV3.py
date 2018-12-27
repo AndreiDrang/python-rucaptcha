@@ -10,11 +10,12 @@ from .errors import RuCaptchaError
 from .result_handler import get_sync_result, get_async_result
 
 
-class ReCaptchaV2:
+class ReCaptchaV3:
     """
 	Класс служит для работы с новой ReCaptcha v3 от Гугла.
-	Для работы потребуется передать ключ от РуКапчи, затем ключ сайта(подробности его получения в описании на сайте)
-	И так же ссылку на сайт.
+	Для работы потребуется передать ключ от RuCaptcha, затем ключ сайта, тип действия на сайте, ссылка на капчу на сайте.
+    
+    Подробней: https://rucaptcha.com/api-rucaptcha#solving_recaptchav3
 	"""
 
     def __init__(self, rucaptcha_key, service_type: str = '2captcha', sleep_time: int = 10, action: str = 'verify', min_score: float = 0.4 ,
@@ -73,6 +74,7 @@ class ReCaptchaV2:
         self.get_payload = {'key': rucaptcha_key,
                             'action': 'get',
                             'json': 1,
+                            'taskinfo': 1
                             }
 
         # создаём сессию
@@ -88,9 +90,12 @@ class ReCaptchaV2:
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param site_key: Гугл-ключ сайта
 		:param page_url: Ссылка на страницу на которой находится капча
+
 		:return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
-                    taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+                    user_check - ID работника, который решил капчу
+                    user_score -  score решившего капчу работника
+                    taskId - находится ID задачи на решение капчи, можно использовать при жалобах и прочем,
                     error - False - если всё хорошо, True - если есть ошибка,
                     errorBody - полная информация об ошибке:
                         {
@@ -120,8 +125,7 @@ class ReCaptchaV2:
             self.result.update({"taskId": captcha_id})
             # обновляем пайлоад, вносим в него ключ отправленной на решение капчи 
             # и параметр `taskinfo=1` для получения подробной информации об исполнителе
-            self.get_payload.update({'id': captcha_id,
-                                     'taskinfo': 1})
+            self.get_payload.update({'id': captcha_id})
 
             # если передан параметр `pingback` - не ждём решения капчи а возвращаем незаполненный ответ
             if self.post_payload.get('pingback'):
@@ -131,55 +135,60 @@ class ReCaptchaV2:
                 # Ожидаем решения капчи 10 секунд
                 time.sleep(self.sleep_time)
                 return get_sync_result(get_payload = self.get_payload,
-                                    sleep_time = self.sleep_time,
-                                    url_response = self.url_response,
-                                    result = self.result)
+                                       sleep_time = self.sleep_time,
+                                       url_response = self.url_response,
+                                       result = self.result)
 
 
-# асинхронный метод для решения РеКапчи 2
-class aioReCaptchaV2:
+class aioReCaptchaV3:
     """
-	Класс служит для асинхронной работы с новой ReCaptcha от Гугла и Invisible ReCaptcha.
-	Для работы потребуется передать ключ от РуКапчи, затем ключ сайта(подробности его получения в описании на сайте)
-	И так же ссылку на сайт.
+	Класс служит для работы с новой ReCaptcha v3 от Гугла.
+	Для работы потребуется передать ключ от RuCaptcha, затем ключ сайта, тип действия на сайте, ссылка на капчу на сайте.
+    
+    Подробней: https://rucaptcha.com/api-rucaptcha#solving_recaptchav3
 	"""
 
-    def __init__(self, rucaptcha_key: str, service_type: str = '2captcha', sleep_time: int = 10, invisible: int = 0, proxy: str = '',
-                 proxytype: str = '', pingback: str = ''):
+    def __init__(self, rucaptcha_key, service_type: str = '2captcha', sleep_time: int = 10, action: str = 'verify', min_score: float = 0.4 ,
+                 proxy: str = '', proxytype: str = '', pingback: str = ''):
         """
 		Инициализация нужных переменных.
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
 		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
                              и "rucaptcha"
-		:param sleep_time: Время ожидания решения капчи
+		:param sleep_time: Вермя ожидания решения капчи
+		:param action: Значение параметра action, которые вы нашли в коде сайта
+		:param min_score: Требуемое значение рейтинга (score)
 		:param proxy: Для решения рекапчи через прокси - передаётся прокси и данные для аутентификации.
 		                ` логин:пароль@IP_адрес:ПОРТ` / `login:password@IP:port`.
 		:param proxytype: Тип используемого прокси. Доступные: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
-		:param invisible: Для решения невидимой ReCaptcha нужно выставить параметр 1
+        :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha с решением ReCaptchaV3
 		"""
+        # проверка введённого времени и изменение если минимальный порог нарушен
         if sleep_time < 10:
-            raise ValueError(f'Параметр `sleep_time` должен быть не менее 10. Вы передали - {sleep_time}')
+            raise ValueError(f'\nПараметр `sleep_time` должен быть не менее 10(рекомендуемое - 20 секунд). '
+                             f'\n\tВы передали - {sleep_time}')
         self.sleep_time = sleep_time
-        # проверка допустимости переданного параметра для невидимой/обыкновенной капчи
-        if invisible not in (0, 1):
-            raise ValueError(f'\nПараметр `invisible` может быть равен 1 или 0. \n\tВы передали - {invisible}')
+        # проверка допустимости переданного параметра для рейтинга
+        if not 0.1 < min_score < 0.9:
+            raise ValueError(f'\nПараметр `min_score` должен быть от `0.1` до `0.9`. \n\tВы передали - {min_score}')
         # пайлоад POST запроса на отправку капчи на сервер
         self.post_payload = {"key": rucaptcha_key,
                              'method': 'userrecaptcha',
+                             'version': 'v3',
                              "json": 1,
-                             'invisible': invisible,
-                             "soft_id": app_key
-                             }
+                             'action': action,
+                             'min_score': min_score,
+                             "soft_id": app_key}
+
+        # если был передан параметр для callback`a - добавляем его
+        if pingback:
+            self.post_payload.update({'pingback': pingback})
 
         # добавление прокси для решения капчи с того же IP
         if proxy and proxytype:
             self.post_payload.update({'proxy': proxy,
                                       'proxytype': proxytype})
 
-        # если был передан параметр для callback`a - добавляем его
-        if pingback:
-            self.post_payload.update({'pingback': pingback})
-            
         # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
         if service_type == '2captcha':
             self.url_request = url_request_2captcha
@@ -195,6 +204,7 @@ class aioReCaptchaV2:
         self.get_payload = {'key': rucaptcha_key,
                             'action': 'get',
                             'json': 1,
+                            'taskinfo': 1
                             }
 
     # Работа с капчей
@@ -203,15 +213,18 @@ class aioReCaptchaV2:
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param site_key: Гугл-ключ сайта
 		:param page_url: Ссылка на страницу на которой находится капча
+
 		:return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
-                    taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+                    user_check - ID работника, который решил капчу
+                    user_score -  score решившего капчу работника
+                    taskId - находится ID задачи на решение капчи, можно использовать при жалобах и прочем,
                     error - False - если всё хорошо, True - если есть ошибка,
                     errorBody - полная информация об ошибке:
                         {
                             text - Развернётое пояснение ошибки
                             id - уникальный номер ошибка в ЭТОЙ бибилотеке
-                        }
+                        }		
 		'''
         # результат возвращаемый методом *captcha_handler*
         self.result = JSON_RESPONSE.copy()
@@ -245,6 +258,6 @@ class aioReCaptchaV2:
                 # Ожидаем решения капчи
                 await asyncio.sleep(self.sleep_time)
                 return await get_async_result(get_payload = self.get_payload,
-                                            sleep_time = self.sleep_time,
-                                            url_response = self.url_response,
-                                            result = self.result)
+                                              sleep_time = self.sleep_time,
+                                              url_response = self.url_response,
+                                              result = self.result)
