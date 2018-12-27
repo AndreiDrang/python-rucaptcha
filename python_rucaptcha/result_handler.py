@@ -33,6 +33,14 @@ def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, resul
             # при решении капчи
             elif captcha_response.json()["status"] == 1:
                 result.update({'captchaSolve': captcha_response.json()['request']})
+                
+                # если это ReCaptcha v3 то получаем от сервера дополнительные поля, с ID юзера и его счётом
+                if captcha_response.json().get('user_check') and captcha_response.json().get('user_score'):
+                    result.update({'user_check':captcha_response.json().get('user_check'),
+                                   'user_score':captcha_response.json().get('user_score')
+                                  }
+                                )
+
                 return result
 
         except Exception as error:
@@ -68,16 +76,20 @@ async def get_async_result(get_payload: dict, sleep_time: int, url_response: str
                     elif captcha_response["status"] == 0:
                         result.update({'error': True,
                                        'errorBody': RuCaptchaError().errors(captcha_response["request"])
-                                       }
-                                      )
+                                      }
+                                     )
                         return result
 
                     # при решении капчи
                     elif captcha_response["status"] == 1:
-                        result.update({
-                            'captchaSolve': captcha_response['request']
-                        }
-                        )
+                        result.update({'captchaSolve': captcha_response['request']})
+
+                        # если это ReCaptcha v3 то получаем от сервера дополнительные поля, с ID юзера и его счётом
+                        if captcha_response.json().get('user_check') and captcha_response.json().get('user_score'):
+                            result.update({'user_check':captcha_response.json().get('user_check'),
+                                           'user_score':captcha_response.json().get('user_score')
+                                          }
+                                         )
                         return result
 
             except Exception as error:
