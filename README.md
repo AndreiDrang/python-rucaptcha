@@ -38,14 +38,16 @@ python setup.py install
 
 **v.2.3** - Удаление использования временных файлов(для хранения изображений) и замена их на переменную.
 
-**v.2.4** - Добавление `callback`(pingback) параметра для работы со всеми видами капч. Добавление нового модуля для получения результатов решения капчи с сервера - [CallbackClient](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/python_rucaptcha/CallbackClient.py). В примеры добавлен [асинхронный сервер(на aiohttp)](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/examples/callback_examples/callback_server.py) для обработки POST-запросов от RuCaptcha, а так же [`эмулятор RuCaptcha`](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/examples/callback_examples/rucaptcha_server.py), который высылает те же параметры что и настоящий сервер(подойдёт для тестирования обработки решений капчи). 
+**v.2.4** - Добавление `callback`(pingback) параметра для работы со всеми видами капч. Добавление нового модуля для получения результатов решения капчи с сервера - [CallbackClient](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/CallbackClient.py). В примеры добавлен [асинхронный сервер(на aiohttp)](https://github.com/AndreiDrang/python-rucaptcha/blob/master/examples/callback_examples/callback_server.py) для обработки POST-запросов от RuCaptcha, а так же [`эмулятор RuCaptcha`](https://github.com/AndreiDrang/python-rucaptcha/blob/master/examples/callback_examples/rucaptcha_server.py), который высылает те же параметры что и настоящий сервер(подойдёт для тестирования обработки решений капчи). 
+
+**v.2.5** - Добавление метода для решения ReCaptcha v3.
 ***
 ### Будущие обновления
 v.3.0 -  ...
 ***
 ### На данный момент реализованы следующие методы:
 
-0.[Работа через callback(pingback)](https://github.com/AndreiDrang/python-rucaptcha/tree/callback_module/examples/callback_examples).
+0.[Работа через callback(pingback)](https://github.com/AndreiDrang/python-rucaptcha/tree/master/examples/callback_examples).
 
 Структура и принцип работы системы подробно [расписан в данной схеме](https://esk.one/p/i7oKYboABXJ/)
 
@@ -89,13 +91,13 @@ print(callback_queue_response)
 
 #### Если вы хотите запустить данный callback сервер у себя:
 
-Небольшая [инструкция-памятка](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/examples/callback_examples/readme.txt) по шагам.
+Небольшая [инструкция-памятка](https://github.com/AndreiDrang/python-rucaptcha/blob/master/examples/callback_examples/readme.txt) по шагам.
 
 Установить и запустить веб-приложение, которое будет принимать POST-запросы, парсить их, и совершать прочую, нужную вам, магию.
 
-[Пример такого сервера, написанный на aiohttp](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/examples/callback_examples/callback_server.py).
+[Пример такого сервера, написанный на aiohttp](https://github.com/AndreiDrang/python-rucaptcha/blob/master/examples/callback_examples/callback_server.py).
 
-Все тесты можно проводить на локальном сервере, эмулируя POST-запросы от RuCaptcha при помощи [локального клиента](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/examples/callback_examples/rucaptcha_server.py).
+Все тесты можно проводить на локальном сервере, эмулируя POST-запросы от RuCaptcha при помощи [локального клиента](https://github.com/AndreiDrang/python-rucaptcha/blob/master/examples/callback_examples/rucaptcha_server.py).
 
 Примеры создания реальных заданий для callback(pingback) способа вы можете посмотреть в [папке с примерами](https://github.com/AndreiDrang/python-rucaptcha/tree/master/examples), для конкретного метода капчи.
 
@@ -201,7 +203,7 @@ elif user_answer['error']:
 	print(user_answer['errorBody']['id'])
 ```
 
-7.[Решение FunCaptcha.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/TextCaptcha.py)
+7.[Решение FunCaptcha.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/FunCaptcha.py)
 
 Краткий пример:
 ```python
