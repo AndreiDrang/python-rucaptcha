@@ -63,10 +63,26 @@ class RuCaptchaError(Exception):
         elif description == 'ERROR: 1005':
             return Number1005Error.answer()
 
+        # Error: New/Unknown
+        else:
+            return UnknownError.answer(description=description)
+
 
 class ReadError(Exception):
     def __init__(self, error):
         Exception.__init__(self, f"\n\tОшибка порождается при невозможности открыть переднный файл!\n\t\t{error}")
+
+
+class UnknownError(RuCaptchaError):
+    @staticmethod
+    def answer(description: str):
+        return {'text': f"""Исключение порождается при неправильном неизвестной ошибке.
+                            Сообщите о данной ошибке разработчикам библиотеки - мы её обязательно добавим в список с описанием.
+                        
+                            {description} - исключение.
+                            """,
+                'id': -1
+                }
 
 
 class WrongUserKeyError(RuCaptchaError):
