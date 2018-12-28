@@ -114,7 +114,7 @@ from python_rucaptcha import ImageCaptcha
 RUCAPTCHA_KEY = ""
 # Ссылка на изображения для расшифровки
 image_link = ""
-# Возвращается строка-расшифровка капчи
+# Возвращается JSON содержащий информацию для решения капчи
 user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_link=image_link)
 
 if not user_answer['error']:
@@ -153,9 +153,7 @@ elif answer['error']:
 	print(answer['errorBody'])
 ``` 
 
-3.[Решение аудиокапчи. Используется для SolveMedia капчи.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/MediaCaptcha.py) ***НЕ ПОДДЕРЖИВАЕТСЯ СЕРВИСОМ RuCaptcha***
-
-4.[Решение новой ReCaptcha v2.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV2.py)
+3.[Решение ReCaptcha v2.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV2.py)
 
 Краткий пример:
 ```python
@@ -166,13 +164,47 @@ RUCAPTCHA_KEY = ""
 SITE_KEY = ""
 # Ссылка на страницу с капчёй
 PAGE_URL = ""
-# Возвращается строка-расшифровка капчи
-user_answer = ReCaptchaV2.ReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(site_key=SITE_KEY, page_url=PAGE_URL)
+# Возвращается JSON содержащий информацию для решения капчи
+user_answer = ReCaptchaV2.ReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(site_key=SITE_KEY,
+                                                                                   page_url=PAGE_URL)
 
 if not user_answer['error']:
 	# решение капчи
 	print(user_answer['captchaSolve'])
 	print(user_answer['taskId'])
+elif user_answer['error']:
+	# Тело ошибки, если есть
+	print(user_answer['errorBody']['text'])
+	print(user_answer['errorBody']['id'])
+```
+
+4.[Решение новой ReCaptcha v3.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV3.py)
+
+Краткий пример:
+```python
+from python_rucaptcha import ReCaptchaV3
+# Введите ключ от сервиса RuCaptcha, из своего аккаунта
+RUCAPTCHA_KEY = ""
+# G-ReCaptcha ключ сайта
+SITE_KEY = ""
+# Ссылка на страницу с капчёй
+PAGE_URL = ""
+# Значение параметра action, которые вы нашли в коде сайта
+ACTION = 'verify'
+# Требуемое значение рейтинга (score) работника, от 0.1(робот) до 0.9(человечный человек)
+MIN_SCORE = 0.4
+# Возвращается JSON содержащий информацию для решения капчи
+user_answer = ReCaptchaV3.ReCaptchaV3(rucaptcha_key=RUCAPTCHA_KEY, 
+				      action = ACTION, 
+				      min_score = MIN_SCORE).captcha_handler(site_key=SITE_KEY,
+					  				     page_url=PAGE_URL)
+
+if not user_answer['error']:
+	# решение капчи
+	print(user_answer['captchaSolve'])
+	print(user_answer['taskId'])
+	print(user_answer['user_check'])
+	print(user_answer['user_score'])
 elif user_answer['error']:
 	# Тело ошибки, если есть
 	print(user_answer['errorBody']['text'])
