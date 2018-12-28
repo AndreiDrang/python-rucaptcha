@@ -40,7 +40,7 @@ python setup.py install
 
 **v.2.4** - Добавление `callback`(pingback) параметра для работы со всеми видами капч. Добавление нового модуля для получения результатов решения капчи с сервера - [CallbackClient](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/CallbackClient.py). В примеры добавлен [асинхронный сервер(на aiohttp)](https://github.com/AndreiDrang/python-rucaptcha/blob/master/examples/callback_examples/callback_server.py) для обработки POST-запросов от RuCaptcha, а так же [`эмулятор RuCaptcha`](https://github.com/AndreiDrang/python-rucaptcha/blob/master/examples/callback_examples/rucaptcha_server.py), который высылает те же параметры что и настоящий сервер(подойдёт для тестирования обработки решений капчи). 
 
-**v.2.5** - Добавление метода для решения ReCaptcha v3.
+**v.2.5** - Добавление метода для решения `ReCaptcha v3`. Удаление модуля `MediaCaptcha` из библиотеки.
 ***
 ### Будущие обновления
 v.3.0 -  ...
