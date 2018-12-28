@@ -38,14 +38,16 @@ python setup.py install
 
 **v.2.3** - Удаление использования временных файлов(для хранения изображений) и замена их на переменную.
 
-**v.2.4** - Добавление `callback`(pingback) параметра для работы со всеми видами капч. Добавление нового модуля для получения результатов решения капчи с сервера - [CallbackClient](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/python_rucaptcha/CallbackClient.py). В примеры добавлен [асинхронный сервер(на aiohttp)](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/examples/callback_examples/callback_server.py) для обработки POST-запросов от RuCaptcha, а так же [`эмулятор RuCaptcha`](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/examples/callback_examples/rucaptcha_server.py), который высылает те же параметры что и настоящий сервер(подойдёт для тестирования обработки решений капчи). 
+**v.2.4** - Добавление `callback`(pingback) параметра для работы со всеми видами капч. Добавление нового модуля для получения результатов решения капчи с сервера - [CallbackClient](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/CallbackClient.py). В примеры добавлен [асинхронный сервер(на aiohttp)](https://github.com/AndreiDrang/python-rucaptcha/blob/master/examples/callback_examples/callback_server.py) для обработки POST-запросов от RuCaptcha, а так же [`эмулятор RuCaptcha`](https://github.com/AndreiDrang/python-rucaptcha/blob/master/examples/callback_examples/rucaptcha_server.py), который высылает те же параметры что и настоящий сервер(подойдёт для тестирования обработки решений капчи). 
+
+**v.2.5** - Добавление метода для решения `ReCaptcha v3`. Удаление модуля `MediaCaptcha` из библиотеки.
 ***
 ### Будущие обновления
 v.3.0 -  ...
 ***
 ### На данный момент реализованы следующие методы:
 
-0.[Работа через callback(pingback)](https://github.com/AndreiDrang/python-rucaptcha/tree/callback_module/examples/callback_examples).
+0.[Работа через callback(pingback)](https://github.com/AndreiDrang/python-rucaptcha/tree/master/examples/callback_examples).
 
 Структура и принцип работы системы подробно [расписан в данной схеме](https://esk.one/p/i7oKYboABXJ/)
 
@@ -89,13 +91,13 @@ print(callback_queue_response)
 
 #### Если вы хотите запустить данный callback сервер у себя:
 
-Небольшая [инструкция-памятка](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/examples/callback_examples/readme.txt) по шагам.
+Небольшая [инструкция-памятка](https://github.com/AndreiDrang/python-rucaptcha/blob/master/examples/callback_examples/readme.txt) по шагам.
 
 Установить и запустить веб-приложение, которое будет принимать POST-запросы, парсить их, и совершать прочую, нужную вам, магию.
 
-[Пример такого сервера, написанный на aiohttp](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/examples/callback_examples/callback_server.py).
+[Пример такого сервера, написанный на aiohttp](https://github.com/AndreiDrang/python-rucaptcha/blob/master/examples/callback_examples/callback_server.py).
 
-Все тесты можно проводить на локальном сервере, эмулируя POST-запросы от RuCaptcha при помощи [локального клиента](https://github.com/AndreiDrang/python-rucaptcha/blob/callback_module/examples/callback_examples/rucaptcha_server.py).
+Все тесты можно проводить на локальном сервере, эмулируя POST-запросы от RuCaptcha при помощи [локального клиента](https://github.com/AndreiDrang/python-rucaptcha/blob/master/examples/callback_examples/rucaptcha_server.py).
 
 Примеры создания реальных заданий для callback(pingback) способа вы можете посмотреть в [папке с примерами](https://github.com/AndreiDrang/python-rucaptcha/tree/master/examples), для конкретного метода капчи.
 
@@ -112,7 +114,7 @@ from python_rucaptcha import ImageCaptcha
 RUCAPTCHA_KEY = ""
 # Ссылка на изображения для расшифровки
 image_link = ""
-# Возвращается строка-расшифровка капчи
+# Возвращается JSON содержащий информацию для решения капчи
 user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_link=image_link)
 
 if not user_answer['error']:
@@ -151,9 +153,7 @@ elif answer['error']:
 	print(answer['errorBody'])
 ``` 
 
-3.[Решение аудиокапчи. Используется для SolveMedia капчи.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/MediaCaptcha.py) ***НЕ ПОДДЕРЖИВАЕТСЯ СЕРВИСОМ RuCaptcha***
-
-4.[Решение новой ReCaptcha v2.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV2.py)
+3.[Решение ReCaptcha v2.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV2.py)
 
 Краткий пример:
 ```python
@@ -164,13 +164,47 @@ RUCAPTCHA_KEY = ""
 SITE_KEY = ""
 # Ссылка на страницу с капчёй
 PAGE_URL = ""
-# Возвращается строка-расшифровка капчи
-user_answer = ReCaptchaV2.ReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(site_key=SITE_KEY, page_url=PAGE_URL)
+# Возвращается JSON содержащий информацию для решения капчи
+user_answer = ReCaptchaV2.ReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(site_key=SITE_KEY,
+                                                                                   page_url=PAGE_URL)
 
 if not user_answer['error']:
 	# решение капчи
 	print(user_answer['captchaSolve'])
 	print(user_answer['taskId'])
+elif user_answer['error']:
+	# Тело ошибки, если есть
+	print(user_answer['errorBody']['text'])
+	print(user_answer['errorBody']['id'])
+```
+
+4.[Решение новой ReCaptcha v3.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV3.py)
+
+Краткий пример:
+```python
+from python_rucaptcha import ReCaptchaV3
+# Введите ключ от сервиса RuCaptcha, из своего аккаунта
+RUCAPTCHA_KEY = ""
+# G-ReCaptcha ключ сайта
+SITE_KEY = ""
+# Ссылка на страницу с капчёй
+PAGE_URL = ""
+# Значение параметра action, которые вы нашли в коде сайта
+ACTION = 'verify'
+# Требуемое значение рейтинга (score) работника, от 0.1(робот) до 0.9(человечный человек)
+MIN_SCORE = 0.4
+# Возвращается JSON содержащий информацию для решения капчи
+user_answer = ReCaptchaV3.ReCaptchaV3(rucaptcha_key=RUCAPTCHA_KEY, 
+				      action = ACTION, 
+				      min_score = MIN_SCORE).captcha_handler(site_key=SITE_KEY,
+					  				     page_url=PAGE_URL)
+
+if not user_answer['error']:
+	# решение капчи
+	print(user_answer['captchaSolve'])
+	print(user_answer['taskId'])
+	print(user_answer['user_check'])
+	print(user_answer['user_score'])
 elif user_answer['error']:
 	# Тело ошибки, если есть
 	print(user_answer['errorBody']['text'])
@@ -201,7 +235,7 @@ elif user_answer['error']:
 	print(user_answer['errorBody']['id'])
 ```
 
-7.[Решение FunCaptcha.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/TextCaptcha.py)
+7.[Решение FunCaptcha.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/FunCaptcha.py)
 
 Краткий пример:
 ```python
