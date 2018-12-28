@@ -85,9 +85,9 @@ async def get_async_result(get_payload: dict, sleep_time: int, url_response: str
                         result.update({'captchaSolve': captcha_response['request']})
 
                         # если это ReCaptcha v3 то получаем от сервера дополнительные поля, с ID юзера и его счётом
-                        if captcha_response.json().get('user_check') and captcha_response.json().get('user_score'):
-                            result.update({'user_check':captcha_response.json().get('user_check'),
-                                           'user_score':captcha_response.json().get('user_score')
+                        if captcha_response.get('user_check') and captcha_response.get('user_score'):
+                            result.update({'user_check':captcha_response.get('user_check'),
+                                           'user_score':captcha_response.get('user_score')
                                           }
                                          )
                         return result
