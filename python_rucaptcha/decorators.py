@@ -7,6 +7,7 @@ def api_key_check(func):
     Декоратор проверяет переданный параметр `rucaptcha_key` на корректность
     """
     def wrapper(self, *args, **kwargs):
+        # результат возвращаемый методом *captcha_handler*
         self.result = JSON_RESPONSE.copy()
         # проверяет длинну ключа API
         if len(self.post_payload.get('key'))==32:

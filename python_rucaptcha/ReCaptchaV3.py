@@ -4,10 +4,11 @@ import asyncio
 import aiohttp
 from requests.adapters import HTTPAdapter
 
-from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key, \
-    JSON_RESPONSE
-from .errors import RuCaptchaError
-from .result_handler import get_sync_result, get_async_result
+from python_rucaptcha.config import app_key, JSON_RESPONSE
+from python_rucaptcha.errors import RuCaptchaError
+from python_rucaptcha.result_handler import get_sync_result, get_async_result
+from python_rucaptcha.decorators import api_key_check, service_check
+
 
 
 class ReCaptchaV3:
@@ -33,11 +34,10 @@ class ReCaptchaV3:
 		:param proxytype: Тип используемого прокси. Доступные: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
         :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha с решением ReCaptchaV3
 		"""
-        # проверка введённого времени и изменение если минимальный порог нарушен
-        if sleep_time < 10:
-            raise ValueError(f'\nПараметр `sleep_time` должен быть не менее 10(рекомендуемое - 20 секунд). '
-                             f'\n\tВы передали - {sleep_time}')
+        # время ожидания решения капчи
         self.sleep_time = sleep_time
+        # тип URL на с которым будет работать библиотека
+        self.service_type = service_type
         # проверка допустимости переданного параметра для рейтинга
         if not 0.1 < min_score < 0.9:
             raise ValueError(f'\nПараметр `min_score` должен быть от `0.1` до `0.9`. \n\tВы передали - {min_score}')
@@ -59,17 +59,6 @@ class ReCaptchaV3:
             self.post_payload.update({'proxy': proxy,
                                       'proxytype': proxytype})
 
-        # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
-        if service_type == '2captcha':
-            self.url_request = url_request_2captcha
-            self.url_response = url_response_2captcha
-        elif service_type == 'rucaptcha':
-            self.url_request = url_request_rucaptcha
-            self.url_response = url_response_rucaptcha
-        else:
-            raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
-                             'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
-
         # пайлоад GET запроса на получение результата решения капчи
         self.get_payload = {'key': rucaptcha_key,
                             'action': 'get',
@@ -83,8 +72,8 @@ class ReCaptchaV3:
         self.session.mount('http://', HTTPAdapter(max_retries = 5))
         self.session.mount('https://', HTTPAdapter(max_retries = 5))
 
-    # Работа с капчей
-    # тестовый ключ сайта
+    @api_key_check
+    @service_check
     def captcha_handler(self, site_key: str, page_url: str):
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
@@ -103,9 +92,8 @@ class ReCaptchaV3:
                             id - уникальный номер ошибка в ЭТОЙ бибилотеке
                         }		
 		'''
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE.copy()
-
+        # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
+        
         self.post_payload.update({'googlekey': site_key,
                                   'pageurl': page_url})
         # получаем ID капчи
