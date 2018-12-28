@@ -30,7 +30,7 @@ class RuCaptchaError(Exception):
             return BannedIPError.answer()
         elif description == 'ERROR_BAD_TOKEN_OR_PAGEURL':
             return BadTokenOrPageurlCaptchaError.answer()
-        elif description == 'ERROR_GOOGLEKEY':
+        elif description in ('ERROR_GOOGLEKEY', 'ERROR_WRONG_GOOGLEKEY'):
             return ErrorGoogleKeyCaptchaError.answer()
         elif description == 'ERROR_CAPTCHAIMAGE_BLOCKED':
             return BlockedimageCaptchaError.answer()
@@ -236,19 +236,15 @@ class BadTokenOrPageurlCaptchaError(RuCaptchaError):
 class ErrorGoogleKeyCaptchaError(RuCaptchaError):
     @staticmethod
     def answer():
-        return {'text': """Исключение порождается при несуществующем RuCaptcha KEY.
-                            Ключ, который вы указали не существует.
-                            Прекратите отправку запросов и проверьте ваш ключ API.
-                
-                            ERROR_KEY_DOES_NOT_EXIST - исключение из таблицы.""",
+        return {'text':     """Исключение порождается при некорректном recaptcha-sitekey.
+                                Вы можете получить эту ошибку, если отправляете нам ReCaptcha V2. Ошибка возвращается если sitekey в вашем запросе
+                                пустой или имеет некорректный формат.
+
+                                ERROR_GOOGLEKEY - искючение из таблицы.
+                                """,
                 'id': 23
                 }
-    """Исключение порождается при некорректном recaptcha-sitekey.
-    Вы можете получить эту ошибку, если отправляете нам ReCaptcha V2. Ошибка возвращается если sitekey в вашем запросе
-    пустой или имеет некорректный формат.
 
-    ERROR_GOOGLEKEY - искючение из таблицы.
-    """
 
 
 class BlockedimageCaptchaError(RuCaptchaError):
