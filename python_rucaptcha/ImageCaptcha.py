@@ -7,10 +7,10 @@ import aiohttp
 import base64
 from requests.adapters import HTTPAdapter
 
-from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key, \
-    JSON_RESPONSE
-from .errors import RuCaptchaError
-from .result_handler import get_sync_result, get_async_result
+from python_rucaptcha.config import app_key
+from python_rucaptcha.errors import RuCaptchaError
+from python_rucaptcha.result_handler import get_sync_result, get_async_result
+from python_rucaptcha.decorators import api_key_check, service_check
 
 
 class ImageCaptcha:
@@ -39,9 +39,11 @@ class ImageCaptcha:
 
         Подробней с примерами можно ознакомиться в 'CaptchaTester/image_captcha_example.py'
         """
-        if sleep_time < 5:
-            raise ValueError(f'Параметр `sleep_time` должен быть не менее 10. Вы передали - {sleep_time}')
+        # время ожидания решения капчи
         self.sleep_time = sleep_time
+        # тип URL на с которым будет работать библиотека
+        self.service_type = service_type
+
         # проверяем переданный параметр способа сохранения капчи
         if save_format in ['const', 'temp']:
             self.save_format = save_format
@@ -69,20 +71,6 @@ class ImageCaptcha:
             for key in kwargs:
                 self.post_payload.update({key: kwargs[key]})
 
-        # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
-        if service_type == '2captcha':
-            self.url_request = url_request_2captcha
-            self.url_response = url_response_2captcha
-        elif service_type == 'rucaptcha':
-            self.url_request = url_request_rucaptcha
-            self.url_response = url_response_rucaptcha
-        else:
-            raise ValueError(
-                '\nПередан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
-                f'\n\tВы передали - `{service_type}`'
-                '\nWrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.'
-                f'\n\tYour param - `{service_type}`')
-
         # пайлоад GET запроса на получение результата решения капчи
         self.get_payload = {'key': rucaptcha_key,
                             'action': 'get',
@@ -93,8 +81,9 @@ class ImageCaptcha:
         self.session = requests.Session()
         # выставляем кол-во попыток подключения к серверу при ошибке
         self.session.mount('http://', HTTPAdapter(max_retries = 5))
+        self.session.mount('https://', HTTPAdapter(max_retries = 5))
 
-    def image_temp_saver(self, content: bytes):
+    def __image_temp_saver(self, content: bytes):
         """
         Метод сохраняет файл изображения как временный и отправляет его сразу на сервер для расшифровки.
         :return: Возвращает ID капчи из сервиса
@@ -118,7 +107,7 @@ class ImageCaptcha:
         finally:
             return captcha_id
 
-    def image_const_saver(self, content: bytes):
+    def __image_const_saver(self, content: bytes):
         """
         Метод создаёт папку и сохраняет в неё изображение, затем передаёт его на расшифровку и удалет файл.
         :param content: Файл для сохранения;
@@ -170,7 +159,7 @@ class ImageCaptcha:
 
             return captcha_id
 
-    def local_image_captcha(self, content: str, content_type: str = "file"):
+    def __local_image_captcha(self, content: str, content_type: str = "file"):
         """
         Метод получает в качестве параметра ссылку на локальный файл(или файл в кодировке base64), считывает изображение и отправляет его на РуКапчу
         для проверки и получения её ID
@@ -221,7 +210,8 @@ class ImageCaptcha:
         finally:
             return captcha_id
 
-    # Работа с капчёй
+    @api_key_check
+    @service_check
     def captcha_handler(self, captcha_link: str = None, captcha_file: str = None, captcha_base64: str = None, **kwargs):
         """
         Метод получает от вас ссылку на изображение, скачивает его, отправляет изображение на сервер
@@ -240,14 +230,14 @@ class ImageCaptcha:
                             id - уникальный номер ошибка в ЭТОЙ бибилотеке
                         }
         """
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE.copy()
+        # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
+        
         # если передана локальная ссылка на файл
         if captcha_file:
-            captcha_id = self.local_image_captcha(captcha_file)
+            captcha_id = self.__local_image_captcha(captcha_file)
         # если передан файл в кодировке base64
         elif captcha_base64:
-            captcha_id = self.local_image_captcha(captcha_base64, content_type = "base64")
+            captcha_id = self.__local_image_captcha(captcha_base64, content_type = "base64")
         # если передан URL
         elif captcha_link:
             try:
@@ -264,9 +254,9 @@ class ImageCaptcha:
 
             # согласно значения переданного параметра выбираем функцию для сохранения изображения
             if self.save_format == 'const':
-                captcha_id = self.image_const_saver(content)
+                captcha_id = self.__image_const_saver(content)
             elif self.save_format == 'temp':
-                captcha_id = self.image_temp_saver(content)
+                captcha_id = self.__image_temp_saver(content)
 
         else:
             # если не передан ни один из параметров
@@ -302,9 +292,9 @@ class ImageCaptcha:
                 # Ожидаем решения капчи
                 time.sleep(self.sleep_time)
                 return get_sync_result(get_payload=self.get_payload,
-                                    sleep_time = self.sleep_time,
-                                    url_response = self.url_response,
-                                    result = self.result)
+                                       sleep_time = self.sleep_time,
+                                       url_response = self.url_response,
+                                       result = self.result)
 
 
 class aioImageCaptcha:
@@ -333,9 +323,10 @@ class aioImageCaptcha:
 
         Подробней с примерами можно ознакомиться в 'CaptchaTester/image_captcha_example.py'
         """
-        if sleep_time < 5:
-            raise ValueError(f'Параметр `sleep_time` должен быть не менее 5. Вы передали - {sleep_time}')
+        # время ожидания решения капчи
         self.sleep_time = sleep_time
+        # тип URL на с которым будет работать библиотека
+        self.service_type = service_type
 
         # проверяем переданный параметр способа сохранения капчи
         if save_format in ['const', 'temp']:
@@ -363,27 +354,13 @@ class aioImageCaptcha:
             for key in kwargs:
                 self.post_payload.update({key: kwargs[key]})
 
-        # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
-        if service_type == '2captcha':
-            self.url_request = url_request_2captcha
-            self.url_response = url_response_2captcha
-        elif service_type == 'rucaptcha':
-            self.url_request = url_request_rucaptcha
-            self.url_response = url_response_rucaptcha
-        else:
-            raise ValueError(
-                '\nПередан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
-                f'\n\tВы передали - `{service_type}`'
-                '\nWrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.'
-                f'\n\tYour param - `{service_type}`')
-
         # пайлоад GET запроса на получение результата решения капчи
         self.get_payload = {'key': rucaptcha_key,
                             'action': 'get',
                             'json': 1,
                             }
 
-    async def image_temp_saver(self, content: bytes):
+    async def __image_temp_saver(self, content: bytes):
         """
         Метод сохраняет файл изображения как временный и отправляет его сразу на сервер для расшифровки.
         :return: Возвращает ID капчи из сервиса
@@ -408,7 +385,7 @@ class aioImageCaptcha:
         finally:
             return captcha_id
 
-    async def image_const_saver(self, content: bytes):
+    async def __image_const_saver(self, content: bytes):
         """
         Метод создаёт папку и сохраняет в неё изображение, затем передаёт его на расшифровку и удалет файл.
         :return: Возвращает ID капчи из сервиса
@@ -458,7 +435,7 @@ class aioImageCaptcha:
         finally:
             return captcha_id
 
-    async def local_image_captcha(self, content: str, content_type: str = 'file'):
+    async def __local_image_captcha(self, content: str, content_type: str = 'file'):
         """
         Метод получает в качестве параметра ссылку на локальный файл(или файл в кодировке base64), считывает изображение и отправляет его на РуКапчу
         для проверки и получения её ID
@@ -505,7 +482,8 @@ class aioImageCaptcha:
         finally:
             return captcha_id
 
-    # Работа с капчёй
+    @api_key_check
+    @service_check
     async def captcha_handler(self, captcha_link: str = None, captcha_file: str = None, captcha_base64: str = None,
                               proxy: str = None):
         """
@@ -525,14 +503,14 @@ class aioImageCaptcha:
                             id - уникальный номер ошибка в ЭТОЙ бибилотеке
                         }
         """
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE.copy()
+        # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
+
         # если передана локальная ссылка н файл - работаем с ним
         if captcha_file:
-            captcha_id = await self.local_image_captcha(captcha_file)
+            captcha_id = await self.__local_image_captcha(captcha_file)
         # если передан файл в кодировке base64
         elif captcha_base64:
-            captcha_id = self.local_image_captcha(captcha_base64, content_type = "base64")
+            captcha_id = self.__local_image_captcha(captcha_base64, content_type = "base64")
 
         elif captcha_link:
             try:
@@ -551,9 +529,9 @@ class aioImageCaptcha:
 
             # согласно значения переданного параметра выбираем функцию для сохранения изображения
             if self.save_format == 'const':
-                captcha_id = await self.image_const_saver(content)
+                captcha_id = await self.__image_const_saver(content)
             elif self.save_format == 'temp':
-                captcha_id = await self.image_temp_saver(content)
+                captcha_id = await self.__image_temp_saver(content)
 
         else:
             self.result.update({'error': True,
@@ -589,6 +567,6 @@ class aioImageCaptcha:
                 # Ожидаем решения капчи
                 await asyncio.sleep(self.sleep_time)
                 return await get_async_result(get_payload = self.get_payload,
-                                            sleep_time = self.sleep_time,
-                                            url_response = self.url_response,
-                                            result = self.result)
+                                              sleep_time = self.sleep_time,
+                                              url_response = self.url_response,
+                                              result = self.result)

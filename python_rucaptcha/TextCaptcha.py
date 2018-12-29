@@ -1,17 +1,15 @@
+import requests
 import time
 import asyncio
-
 import aiohttp
-import requests
 from requests.adapters import HTTPAdapter
 
-from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key, \
-    JSON_RESPONSE
-from .errors import RuCaptchaError
-from .result_handler import get_sync_result, get_async_result
+from python_rucaptcha.config import app_key
+from python_rucaptcha.errors import RuCaptchaError
+from python_rucaptcha.result_handler import get_sync_result, get_async_result
+from python_rucaptcha.decorators import api_key_check, service_check
 
 
-# синхронный метод для решения текстовой капчи
 class TextCaptcha:
     """
 	Класс служит для синхронной работы с TextCaptcha.
@@ -26,9 +24,10 @@ class TextCaptcha:
 		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
                              и "rucaptcha"
 		"""
-        if sleep_time < 5:
-            raise ValueError(f'Параметр `sleep_time` должен быть не менее 10. Вы передали - {sleep_time}')
+        # время ожидания решения капчи
         self.sleep_time = sleep_time
+        # тип URL на с которым будет работать библиотека
+        self.service_type = service_type
         # пайлоад POST запроса на отправку капчи на сервер
         self.post_payload = {"key": rucaptcha_key,
                              "method": "post",
@@ -40,17 +39,6 @@ class TextCaptcha:
             for key in kwargs:
                 self.post_payload.update({key: kwargs[key]})
 
-        # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
-        if service_type == '2captcha':
-            self.url_request = url_request_2captcha
-            self.url_response = url_response_2captcha
-        elif service_type == 'rucaptcha':
-            self.url_request = url_request_rucaptcha
-            self.url_response = url_response_rucaptcha
-        else:
-            raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
-                             'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
-
         # пайлоад GET запроса на получение результата решения капчи
         self.get_payload = {'key': rucaptcha_key,
                             'action': 'get',
@@ -60,8 +48,11 @@ class TextCaptcha:
         # создаём сессию
         self.session = requests.Session()
         # выставляем кол-во попыток подключения к серверу при ошибке
-        self.session.mount('http://', HTTPAdapter(max_retries=5))
+        self.session.mount('http://', HTTPAdapter(max_retries = 5))
+        self.session.mount('https://', HTTPAdapter(max_retries = 5))
 
+    @api_key_check
+    @service_check
     def captcha_handler(self, captcha_text: str):
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
@@ -76,9 +67,9 @@ class TextCaptcha:
                             id - уникальный номер ошибка в ЭТОЙ бибилотеке
                         }
 		'''
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE.copy()
-        # Создаём пайлоад, вводим ключ от сайта, выбираем метод ПОСТ и ждём ответа. в JSON-формате
+        # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
+        
+        # вводим текст капчи, выбираем метод ПОСТ и ждём ответа. в JSON-формате
         self.post_payload.update({"textcaptcha": captcha_text})
         # Отправляем на рукапча текст капчи и ждём ответа
         #  в результате получаем JSON ответ с номером решаемой капчи
@@ -108,9 +99,9 @@ class TextCaptcha:
                 # Ожидаем решения капчи
                 time.sleep(self.sleep_time)
                 return get_sync_result(get_payload = self.get_payload,
-                                    sleep_time = self.sleep_time,
-                                    url_response = self.url_response,
-                                    result = self.result)
+                                       sleep_time = self.sleep_time,
+                                       url_response = self.url_response,
+                                       result = self.result)
 
 
 # асинхронный метод для решения текстовой капчи
@@ -129,9 +120,10 @@ class aioTextCaptcha:
 		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
                              и "rucaptcha"
 		"""
-        if sleep_time < 5:
-            raise ValueError(f'Параметр `sleep_time` должен быть не менее 10. Вы передали - {sleep_time}')
+        # время ожидания решения капчи
         self.sleep_time = sleep_time
+        # тип URL на с которым будет работать библиотека
+        self.service_type = service_type
         # пайлоад POST запроса на отправку капчи на сервер
         self.post_payload = {"key": rucaptcha_key,
                              "method": "post",
@@ -143,24 +135,14 @@ class aioTextCaptcha:
             for key in kwargs:
                 self.post_payload.update({key: kwargs[key]})
 
-        # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
-        if service_type == '2captcha':
-            self.url_request = url_request_2captcha
-            self.url_response = url_response_2captcha
-        elif service_type == 'rucaptcha':
-            self.url_request = url_request_rucaptcha
-            self.url_response = url_response_rucaptcha
-        else:
-            raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
-                             'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
-
         # пайлоад GET запроса на получение результата решения капчи
         self.get_payload = {'key': rucaptcha_key,
                             'action': 'get',
                             'json': 1,
                             }
 
-    # Работа с капчей
+    @api_key_check
+    @service_check
     async def captcha_handler(self, captcha_text: str):
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
@@ -175,9 +157,9 @@ class aioTextCaptcha:
                             id - уникальный номер ошибка в ЭТОЙ бибилотеке
                         }
 		'''
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE.copy()
-        # Создаём пайлоад, вводим ключ от сайта, выбираем метод ПОСТ и ждём ответа. в JSON-формате
+        # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
+
+        # вводим текст капчи, выбираем метод ПОСТ и ждём ответа. в JSON-формате
         self.post_payload.update({"textcaptcha": captcha_text})
         # получаем ID капчи
         async with aiohttp.ClientSession() as session:

@@ -3,12 +3,11 @@ import time
 import asyncio
 import aiohttp
 from requests.adapters import HTTPAdapter
-from urllib3.exceptions import MaxRetryError
 
-from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, app_key, \
-    JSON_RESPONSE
-from .errors import RuCaptchaError
-from .result_handler import get_async_result, get_sync_result
+from python_rucaptcha.config import app_key
+from python_rucaptcha.errors import RuCaptchaError
+from python_rucaptcha.result_handler import get_sync_result, get_async_result
+from python_rucaptcha.decorators import api_key_check, service_check
 
 
 class FunCaptcha:
@@ -27,22 +26,10 @@ class FunCaptcha:
 		:param sleep_time: Вермя ожидания решения капчи
 		:param kwargs: Для передачи дополнительных параметров
 		"""
-        # проверка введённого времени и изменение если минимальный порог нарушен
-        if sleep_time < 15:
-            raise ValueError(f'\nПараметр `sleep_time` должен быть не менее 10(рекомендуемое - 20 секунд). '
-                             f'\n\tВы передали - {sleep_time}')
+        # время ожидания решения капчи
         self.sleep_time = sleep_time
-
-        # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
-        if service_type == '2captcha':
-            self.url_request = url_request_2captcha
-            self.url_response = url_response_2captcha
-        elif service_type == 'rucaptcha':
-            self.url_request = url_request_rucaptcha
-            self.url_response = url_response_rucaptcha
-        else:
-            raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
-                             'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
+        # тип URL на с которым будет работать библиотека
+        self.service_type = service_type
 
         # пайлоад POST запроса на отправку капчи на сервер
         self.post_payload = {"key": rucaptcha_key,
@@ -63,9 +50,11 @@ class FunCaptcha:
         # создаём сессию
         self.session = requests.Session()
         # выставляем кол-во попыток подключения к серверу при ошибке
-        self.session.mount('http://', HTTPAdapter(max_retries=5))
+        self.session.mount('http://', HTTPAdapter(max_retries = 5))
+        self.session.mount('https://', HTTPAdapter(max_retries = 5))
 
-    # Работа с капчей
+    @api_key_check
+    @service_check
     def captcha_handler(self, public_key: str, page_url: str):
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
@@ -81,8 +70,8 @@ class FunCaptcha:
                             id - уникальный номер ошибка в ЭТОЙ бибилотеке
                         }
 		'''
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE.copy()
+        # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
+        
         # добавляем в пайлоад параметры капчи переданные пользователем
         self.post_payload.update({'publickey': public_key,
                                   'pageurl': page_url})
@@ -112,9 +101,9 @@ class FunCaptcha:
                 # Ожидаем решения капчи
                 time.sleep(self.sleep_time)
                 return get_sync_result(get_payload=self.get_payload,
-                                    sleep_time = self.sleep_time,
-                                    url_response = self.url_response,
-                                    result = self.result)
+                                       sleep_time = self.sleep_time,
+                                       url_response = self.url_response,
+                                       result = self.result)
 
 
 # асинхронный метод для решения FunCaptcha
@@ -134,23 +123,10 @@ class aioFunCaptcha:
         :param sleep_time: Вермя ожидания решения капчи
         :param kwargs: Для передачи дополнительных параметров
         """
-        # проверка введённого времени и изменение если минимальный порог нарушен
-        if sleep_time < 15:
-            raise ValueError(f'\nПараметр `sleep_time` должен быть не менее 10(рекомендуемое - 20 секунд). '
-                             f'\n\tВы передали - {sleep_time}')
+        # время ожидания решения капчи
         self.sleep_time = sleep_time
-
-        # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
-        if service_type == '2captcha':
-            self.url_request = url_request_2captcha
-            self.url_response = url_response_2captcha
-        elif service_type == 'rucaptcha':
-            self.url_request = url_request_rucaptcha
-            self.url_response = url_response_rucaptcha
-        else:
-            raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
-                             'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
-
+        # тип URL на с которым будет работать библиотека
+        self.service_type = service_type
         # пайлоад POST запроса на отправку капчи на сервер
         self.post_payload = {"key": rucaptcha_key,
                              'method': 'funcaptcha',
@@ -167,7 +143,8 @@ class aioFunCaptcha:
                             'json': 1,
                             }
 
-    # Работа с капчей
+    @api_key_check
+    @service_check
     async def captcha_handler(self, public_key: str, page_url: str):
         '''
     	Метод отвечает за передачу данных на сервер для решения капчи
@@ -183,8 +160,7 @@ class aioFunCaptcha:
                             id - уникальный номер ошибка в ЭТОЙ бибилотеке
                         }
 		'''
-        # результат возвращаемый методом *captcha_handler*
-        self.result = JSON_RESPONSE.copy()
+        # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
         self.post_payload.update({'publickey': public_key,
                                   'pageurl': page_url})
@@ -216,6 +192,6 @@ class aioFunCaptcha:
                 # Ожидаем решения капчи
                 await asyncio.sleep(self.sleep_time)
                 return await get_async_result(get_payload = self.get_payload,
-                                            sleep_time = self.sleep_time,
-                                            url_response = self.url_response,
-                                            result = self.result)
+                                              sleep_time = self.sleep_time,
+                                              url_response = self.url_response,
+                                              result = self.result)

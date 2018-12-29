@@ -10,7 +10,6 @@ from python_rucaptcha.result_handler import get_sync_result, get_async_result
 from python_rucaptcha.decorators import api_key_check, service_check
 
 
-
 class ReCaptchaV3:
     """
 	Класс служит для работы с новой ReCaptcha v3 от Гугла.
