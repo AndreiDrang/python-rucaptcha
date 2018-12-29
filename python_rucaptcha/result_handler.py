@@ -3,8 +3,6 @@ import time
 import aiohttp
 import asyncio
 
-from urllib3.exceptions import MaxRetryError
-
 from .config import connect_generator
 from .errors import RuCaptchaError
 
