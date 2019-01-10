@@ -14,6 +14,8 @@ setup(
         ],
     description = 'Python 3 RuCaptcha library with AIO module.',
     author_email = 'drang.andray@gmail.com',
+    package_dir={'python-rucaptcha': 'python_rucaptcha'},
+    include_package_data=True,
     url = 'https://github.com/AndreiDrang/python-rucaptcha',
     license = 'MIT',
     keywords = '''captcha 
@@ -28,4 +30,5 @@ setup(
 				python-rucaptcha
 				rucaptcha-client''',
     python_requires = '>=3.6',
+    zip_safe=False
     )
