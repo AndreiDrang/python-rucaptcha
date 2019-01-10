@@ -77,6 +77,20 @@ async def send_data_in_rucaptcha_qeue(qeue_key: str, message: dict):
     
     await connection.close()
 
+@routes.get('/ping')
+async def status_check(request):
+    """
+    GET
+
+    Response
+    json - {'status': 'OK'}
+    """
+
+    # response dict
+    data = {'status': 'OK'}
+
+    return web.json_response(data)
+
 @routes.get('/rucaptcha/cache/{task_id}')
 async def rucaptcha_cache_get_handle(request):
     """
