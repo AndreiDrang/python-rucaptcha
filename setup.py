@@ -9,7 +9,7 @@ setup(
     packages = ['python_rucaptcha'],
     install_requires = [
         'requests==2.21.0',
-        'aiohttp==3.5.1',
+        'aiohttp==3.5.4',
         'pika==0.12.0'
         ],
     description = 'Python 3 RuCaptcha library with AIO module.',
