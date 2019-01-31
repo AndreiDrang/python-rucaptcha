@@ -17,7 +17,7 @@ setup(
     package_dir={'python-rucaptcha': 'python_rucaptcha'},
     include_package_data=True,
     url = 'https://github.com/AndreiDrang/python-rucaptcha',
-    license = 'MIT',
+    license = 'AGPL-3.0',
     keywords = '''captcha 
 				rucaptcha 
 				python3
