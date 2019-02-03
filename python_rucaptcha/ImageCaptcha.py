@@ -505,13 +505,12 @@ class aioImageCaptcha:
         """
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
-        # если передана локальная ссылка н файл - работаем с ним
+        # если передана локальная ссылка на файл - работаем с ним
         if captcha_file:
             captcha_id = await self.__local_image_captcha(captcha_file)
         # если передан файл в кодировке base64
         elif captcha_base64:
-            captcha_id = self.__local_image_captcha(captcha_base64, content_type = "base64")
-
+            captcha_id = await self.__local_image_captcha(captcha_base64, content_type="base64")
         elif captcha_link:
             try:
                 async with aiohttp.ClientSession() as session:
