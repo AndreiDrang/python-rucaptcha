@@ -73,7 +73,7 @@ image_link = requests.get("http://85.255.8.26/api/",
 далее его записать в user_answer
 Первый пример демонстрирует сохранеие файла изображения как обычного файла в папу
 """
-user_answer_const = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, img_path = 'test_filels', img_clearing = False,
+user_answer_const = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, img_path = 'test_files', img_clearing = False,
                                               save_format='const').captcha_handler(captcha_link=image_link)
 print(user_answer_const)
 """
@@ -84,6 +84,18 @@ print(user_answer_const)
 user_answer_temp = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
                                              save_format='temp').captcha_handler(captcha_link=image_link)
 print(user_answer_temp)
+
+
+"""
+contextmanager пример
+"""
+with ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
+                               img_path = 'test_files',
+                               img_clearing = True,
+                               save_format='const',
+                               debug_dump=1) as img_captcha:
+    res = img_captcha.captcha_handler(captcha_link=image_link)
+    print(res)
 
 """
 Пример работы с декодированием в base64 файла-капчи "налету"
