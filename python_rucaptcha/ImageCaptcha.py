@@ -130,7 +130,7 @@ class ImageCaptcha:
 
         try:
             # Высчитываем хэш изображения, для того что бы сохранить его под уникальным именем
-            image_hash = hashlib.sha224(content).hexdigest()
+            image_hash = hash(content)
 
             # сохраняем в папку изображение
             with open(os.path.join(self.img_path, f'im-{image_hash}.png'), 'wb') as out_image:
@@ -402,7 +402,7 @@ class aioImageCaptcha:
             os.makedirs(self.img_path, exist_ok=True)
 
             # Высчитываем хэш изображения, для того что бы сохранить его под уникальным именем
-            image_hash = hashlib.sha224(content).hexdigest()
+            image_hash = hash(content)
 
             with open(os.path.join(self.img_path, f'im-{image_hash}.png'), 'wb') as out_image:
                 out_image.write(content)
