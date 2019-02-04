@@ -1,6 +1,6 @@
 import requests
 import time
-import hashlib
+import shutil
 import os
 import asyncio
 import aiohttp
@@ -83,6 +83,19 @@ class ImageCaptcha:
         self.session.mount('http://', HTTPAdapter(max_retries = 5))
         self.session.mount('https://', HTTPAdapter(max_retries = 5))
 
+    def __enter__(self):
+        if self.save_format is 'const':
+            # создаём папку для сохранения капч
+            os.makedirs(self.img_path, exist_ok=True)
+        return self
+
+    def __exit__(self, *args):
+        if self.save_format is 'const':
+            if self.img_clearing:
+                shutil.rmtree(self.img_path)
+
+        return True
+
     def __image_temp_saver(self, content: bytes):
         """
         Метод сохраняет файл изображения как временный и отправляет его сразу на сервер для расшифровки.
@@ -118,9 +131,6 @@ class ImageCaptcha:
         try:
             # Высчитываем хэш изображения, для того что бы сохранить его под уникальным именем
             image_hash = hashlib.sha224(content).hexdigest()
-            # создаём папку для сохранения капч
-            if not os.path.exists(self.img_path):
-                os.mkdir(self.img_path)
 
             # сохраняем в папку изображение
             with open(os.path.join(self.img_path, f'im-{image_hash}.png'), 'wb') as out_image:
@@ -131,11 +141,6 @@ class ImageCaptcha:
                 # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
                 self.post_payload.update({"body": base64.b64encode(captcha_image.read()).decode('utf-8')})
                 captcha_id = self.session.post(self.url_request, data = self.post_payload).json()
-
-            # если передано True для удаления файла капчи после решения
-            if self.img_clearing:
-                # удаляем файл капчи
-                os.remove(os.path.join(self.img_path, f"im-{image_hash}.png"))
 
         except (IOError, FileNotFoundError) as error:
             self.result.update({'error': True,
@@ -393,8 +398,8 @@ class aioImageCaptcha:
         captcha_id = None
         try:
 
-            if not os.path.exists(self.img_path):
-                os.mkdir(self.img_path)
+            # создаём папку для сохранения капч
+            os.makedirs(self.img_path, exist_ok=True)
 
             # Высчитываем хэш изображения, для того что бы сохранить его под уникальным именем
             image_hash = hashlib.sha224(content).hexdigest()
@@ -413,7 +418,7 @@ class aioImageCaptcha:
             # если передано True для удаления файла капчи после решения
             if self.img_clearing:
                 # удаляем файл капчи
-                os.remove(os.path.join(self.img_path, f"im-{image_hash}.png"))
+                shutil.rmtree(self.img_path)
 
         except (IOError, FileNotFoundError) as error:
             self.result.update({'error': True,
