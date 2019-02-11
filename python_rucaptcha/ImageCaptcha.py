@@ -53,6 +53,8 @@ class ImageCaptcha:
                 self.img_clearing = img_clearing
                 # название папки для сохранения файлов капчи
                 self.img_path = img_path
+                # создаём папку для сохранения капч
+                os.makedirs(self.img_path, exist_ok=True)
 
         else:
             raise ValueError('\nПередан неверный формат сохранения файла изображения. '
@@ -84,17 +86,13 @@ class ImageCaptcha:
         self.session.mount('https://', HTTPAdapter(max_retries = 5))
 
     def __enter__(self):
-        if self.save_format is 'const':
-            # создаём папку для сохранения капч
-            os.makedirs(self.img_path, exist_ok=True)
         return self
 
-    def __exit__(self, *args):
-        if self.save_format is 'const':
-            if self.img_clearing:
-                shutil.rmtree(self.img_path)
-
-        return True
+    def __exit__(self, exc_type, exc_value, traceback):
+        if exc_type:
+            return False
+        else:
+            return True
 
     def __image_temp_saver(self, content: bytes):
         """
@@ -301,6 +299,11 @@ class ImageCaptcha:
                                        url_response = self.url_response,
                                        result = self.result)
 
+    def __del__(self):
+        if self.save_format is 'const':
+            if self.img_clearing:
+                shutil.rmtree(self.img_path)
+
 
 class aioImageCaptcha:
     """
@@ -342,6 +345,8 @@ class aioImageCaptcha:
                 self.img_clearing = img_clearing
                 # название папки для сохранения файлов капчи
                 self.img_path = img_path
+                # создаём папку для сохранения капч
+                os.makedirs(self.img_path, exist_ok=True)
         else:
             raise ValueError('\nПередан неверный формат сохранения файла изображения. '
                              f'\n\tВозможные варинты: `temp` и `const`. Вы передали - `{save_format}`'
@@ -364,6 +369,15 @@ class aioImageCaptcha:
                             'action': 'get',
                             'json': 1,
                             }
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if exc_type:
+            return False
+        else:
+            return True
 
     async def __image_temp_saver(self, content: bytes):
         """
@@ -574,3 +588,8 @@ class aioImageCaptcha:
                                               sleep_time = self.sleep_time,
                                               url_response = self.url_response,
                                               result = self.result)
+
+    def __del__(self):
+        if self.save_format is 'const':
+            if self.img_clearing:
+                shutil.rmtree(self.img_path)
