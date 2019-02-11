@@ -1,7 +1,7 @@
 # python-rucaptcha
 
 [![PyPI version](https://badge.fury.io/py/python-rucaptcha.svg)](https://badge.fury.io/py/python-rucaptcha)
-[![Build Status](https://semaphoreci.com/api/v1/andreidrang/python-rucaptcha/branches/dev/shields_badge.svg)](https://semaphoreci.com/andreidrang/python-rucaptcha)
+[![Build Status](https://semaphoreci.com/api/v1/andreidrang/python-rucaptcha-2/branches/master/shields_badge.svg)](https://semaphoreci.com/andreidrang/python-rucaptcha-2)
 [![Maintainability](https://api.codeclimate.com/v1/badges/aec93bb04a277cf0dde9/maintainability)](https://codeclimate.com/github/AndreiDrang/python-rucaptcha/maintainability)
 ![Callback_Server_Status Run](https://img.shields.io/badge/Callback_Server_Status-Run-blue.svg)
 
