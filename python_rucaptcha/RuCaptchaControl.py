@@ -29,6 +29,15 @@ class RuCaptchaControl:
             raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
                              'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if exc_type:
+            return False
+        else:
+            return True
+            
     def additional_methods(self, action: str, **kwargs):
         """
         Метод который выполняет дополнительные действия, такие как жалобы/получение баланса и прочее.
@@ -110,6 +119,15 @@ class aioRuCaptchaControl:
             raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
                              'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if exc_type:
+            return False
+        else:
+            return True
+            
     async def additional_methods(self, action: str, **kwargs):
         """
         Асинхронный метод который выполняет дополнительные действия, такие как жалобы/получение баланса и прочее.

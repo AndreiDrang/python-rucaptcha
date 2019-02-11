@@ -71,6 +71,15 @@ class ReCaptchaV3:
         self.session.mount('http://', HTTPAdapter(max_retries = 5))
         self.session.mount('https://', HTTPAdapter(max_retries = 5))
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if exc_type:
+            return False
+        else:
+            return True
+            
     @api_key_check
     @service_check
     def captcha_handler(self, site_key: str, page_url: str):
@@ -182,6 +191,15 @@ class aioReCaptchaV3:
                             'taskinfo': 1
                             }
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if exc_type:
+            return False
+        else:
+            return True
+            
     @api_key_check
     @service_check
     async def captcha_handler(self, site_key: str, page_url: str):
