@@ -40,6 +40,25 @@ https://www.funcaptcha.com/demo
 public_key = 'DE0B0BB7-1EE4-4D70-1853-31B835D4506B'
 pageurl = 'https://www.funcaptcha.com/demo'
 
+"""
+contextmanager пример
+"""
+
+# синхронный пример contextmanager
+with FunCaptcha.FunCaptcha(rucaptcha_key = RUCAPTCHA_KEY) as fun_captcha:
+    result = fun_captcha.captcha_handler(public_key=public_key, page_url=pageurl)
+    print(result)
+
+# асинхронный пример contextmanager
+async def aiocontext():
+    with FunCaptcha.aioFunCaptcha(rucaptcha_key=RUCAPTCHA_KEY) as fun_captcha:
+        result = await fun_captcha.captcha_handler(public_key=public_key, page_url=pageurl)
+        print(result)
+
+if __name__ == '__main__':
+    loop = asyncio.new_event_loop()
+    loop.run_until_complete(aiocontext())
+    loop.close()
 
 """
 Обычный пример для решения FunCaptcha
