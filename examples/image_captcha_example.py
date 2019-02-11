@@ -65,6 +65,35 @@ image_link = requests.get("http://85.255.8.26/api/",
                           params={"captcha_type": "get_common_captcha"}).json()["captcha_src"]
 
 """
+contextmanager пример
+"""
+
+# синхронный пример contextmanager
+with ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
+                               img_path = 'test_files',
+                               img_clearing = True,
+                               save_format='const',
+                               debug_dump=1) as img_captcha:
+    result = img_captcha.captcha_handler(captcha_link=image_link)
+    print(result)
+
+# асинхронный пример contextmanager
+async def aiocontext():
+    with ImageCaptcha.aioImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
+                                      img_path = 'test_files',
+                                      img_clearing = True,
+                                      save_format='const',
+                                      debug_dump=1) as img_captcha:
+        result = await img_captcha.captcha_handler(captcha_link=image_link)
+        print(result)
+
+if __name__ == '__main__':
+    loop = asyncio.new_event_loop()
+    loop.run_until_complete(aiocontext())
+    loop.close()
+
+raise ValueError
+"""
 Синхронный метод
 """
 
@@ -84,18 +113,6 @@ print(user_answer_const)
 user_answer_temp = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
                                              save_format='temp').captcha_handler(captcha_link=image_link)
 print(user_answer_temp)
-
-
-"""
-contextmanager пример
-"""
-with ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
-                               img_path = 'test_files',
-                               img_clearing = True,
-                               save_format='const',
-                               debug_dump=1) as img_captcha:
-    res = img_captcha.captcha_handler(captcha_link=image_link)
-    print(res)
 
 """
 Пример работы с декодированием в base64 файла-капчи "налету"
