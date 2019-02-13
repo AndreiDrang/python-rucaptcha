@@ -59,13 +59,13 @@ setup(
     classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
-        'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)'
+        'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3.6',
-        'Development Status :: 5',
+        'Development Status :: 5 - Production/Stable',
         'Framework :: AsyncIO',
         'Operating System :: Unix',
         'Operating System :: Microsoft :: Windows',
-        'Operating System :: MacOS'
+        'Operating System :: MacOS',
     ],
     )
