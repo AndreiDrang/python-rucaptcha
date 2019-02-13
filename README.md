@@ -1,5 +1,6 @@
 # python-rucaptcha
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/698b08b078e94e03ab9ba8b098a2b41d)](https://app.codacy.com/app/drang.andray/python-rucaptcha?utm_source=github.com&utm_medium=referral&utm_content=AndreiDrang/python-rucaptcha&utm_campaign=Badge_Grade_Settings)
 [![PyPI version](https://badge.fury.io/py/python-rucaptcha.svg)](https://badge.fury.io/py/python-rucaptcha)
 [![Build Status](https://semaphoreci.com/api/v1/andreidrang/python-rucaptcha-2/branches/master/shields_badge.svg)](https://semaphoreci.com/andreidrang/python-rucaptcha-2)
 [![Maintainability](https://api.codeclimate.com/v1/badges/aec93bb04a277cf0dde9/maintainability)](https://codeclimate.com/github/AndreiDrang/python-rucaptcha/maintainability)
