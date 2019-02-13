@@ -101,6 +101,7 @@ raise ValueError
 далее его записать в user_answer
 Первый пример демонстрирует сохранеие файла изображения как обычного файла в папу
 """
+
 user_answer_const = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, img_path = 'test_files', img_clearing = False,
                                               save_format='const').captcha_handler(captcha_link=image_link)
 print(user_answer_const)

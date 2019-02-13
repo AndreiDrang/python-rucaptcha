@@ -1,11 +1,7 @@
 import asyncio
-import time
-import random
 import json
 
-import pika
 import aiohttp
-import requests
 
 from python_rucaptcha import CallbackClient
 

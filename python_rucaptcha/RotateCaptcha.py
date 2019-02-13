@@ -1,12 +1,10 @@
 import requests
 import time
-import asyncio
-import aiohttp
 from requests.adapters import HTTPAdapter
 
 from python_rucaptcha.config import app_key
 from python_rucaptcha.errors import RuCaptchaError
-from python_rucaptcha.result_handler import get_sync_result, get_async_result
+from python_rucaptcha.result_handler import get_sync_result
 from python_rucaptcha.decorators import api_key_check, service_check
 
 
