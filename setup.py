@@ -1,7 +1,9 @@
-import os
 import io
+import os
+import sys
+from shutil import rmtree
 
-from setuptools import setup
+from setuptools import setup, Command
 
 # Package meta-data.
 NAME = 'python-rucaptcha'
@@ -27,6 +29,38 @@ try:
 except FileNotFoundError:
     long_description = DESCRIPTION
 
+class UploadCommand(Command):
+    """Support setup.py upload."""
+
+    description = 'Build and publish the package.'
+    user_options = []
+
+    @staticmethod
+    def status(s):
+        """Prints things in bold."""
+        print('\033[1m{0}\033[0m'.format(s))
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        try:
+            self.status('Removing previous builds…')
+            rmtree(os.path.join(here, 'dist'))
+        except OSError:
+            pass
+
+        self.status('Building Source and Wheel distribution…')
+        os.system('{0} setup.py sdist bdist_wheel'.format(sys.executable))
+
+        self.status('Uploading the package to PyPI via Twine…')
+        os.system('twine upload dist/*')
+       
+        sys.exit()
+
 setup(
     name = NAME,
     version = VERSION,
@@ -39,6 +73,7 @@ setup(
     author_email = EMAIL,
     package_dir={'python-rucaptcha': 'python_rucaptcha'},
     include_package_data=True,
+    py_modules=['python_rucaptcha'],
     url = URL,
     license = 'AGPL-3.0',
     keywords = '''
@@ -68,4 +103,8 @@ setup(
         'Operating System :: Microsoft :: Windows',
         'Operating System :: MacOS',
     ],
-    )
+    # Build and upload package: python3 setup.py upload
+    cmdclass={
+        'upload': UploadCommand,
+    },
+)
