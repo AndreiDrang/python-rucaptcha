@@ -23,7 +23,36 @@ page_url ='https://www.keycaptcha.com/signup/'
 В общем случаи запрос на решение капчи-пазла выглядит следующим способом
 !!!Все параметры являются обязательными!!!
 """
-RUCAPTCHA_KEY = ''
+RUCAPTCHA_KEY = '2597d7cb1f9435a3b531ac283ce987d5'
+
+
+"""
+contextmanager пример
+"""
+
+# синхронный пример contextmanager
+with KeyCaptcha.KeyCaptcha(rucaptcha_key = RUCAPTCHA_KEY) as key_captcha:
+    result = key_captcha.captcha_handler(s_s_c_user_id=15,
+										 s_s_c_session_id='8f460599bebe02cb0dd096b1fe70b089',
+										 s_s_c_web_server_sign='edd2c221c05aece19f6db93a36b42272',
+										 s_s_c_web_server_sign2='15989edaad1b4dc056ec8fa05abc7c9a',
+										 pageurl='https://www.keycaptcha.com/signup/')
+    print(result)
+
+# асинхронный пример contextmanager
+async def aiocontext():
+    with KeyCaptcha.aioKeyCaptcha(rucaptcha_key=RUCAPTCHA_KEY) as key_captcha:
+        result = await key_captcha.captcha_handler(s_s_c_user_id=15,
+												   s_s_c_session_id='8f460599bebe02cb0dd096b1fe70b089',
+												   s_s_c_web_server_sign='edd2c221c05aece19f6db93a36b42272',
+												   s_s_c_web_server_sign2='15989edaad1b4dc056ec8fa05abc7c9a',
+												   pageurl='https://www.keycaptcha.com/signup/')
+        print(result)
+
+if __name__ == '__main__':
+    loop = asyncio.new_event_loop()
+    loop.run_until_complete(aiocontext())
+    loop.close()
 
 answer = KeyCaptcha.KeyCaptcha(rucaptcha_key=RUCAPTCHA_KEY) \
 	.captcha_handler(s_s_c_user_id=15,
@@ -35,28 +64,27 @@ answer = KeyCaptcha.KeyCaptcha(rucaptcha_key=RUCAPTCHA_KEY) \
 '''
 answer - это JSON строка с соответствующими полями
 
+user_answer_... - это JSON строка с соответствующими полями
 captchaSolve - решение капчи,
-taskId - находится Id задачи на решение капчи,
-errorId - 0 - если всё хорошо, 1 - если есть ошибка,
-errorBody - тело ошибки, если есть.
-{
-	"captchaSolve": string,
-	"taskId": int,
-	"errorId": int, 1 or 0,
-	"errorBody": string,
-}
+taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+error - False - если всё хорошо, True - если есть ошибка,
+errorBody - полная информация об ошибке: 
+    {
+        text - Развернётое пояснение ошибки
+        id - уникальный номер ошибка в ЭТОЙ бибилотеке
+    }
 '''
 
 # капча решена верно, ошибка = 0
-if answer['errorId'] == 0:
+if answer['error'] == 0:
 	# решение капчи
 	print(answer['captchaSolve'])
 	print(answer['taskId'])
 # во время решения капчи возникли ошибки, ошибка = 1
-elif answer['errorId'] == 1:
-	# Тело ошибки, если есть
-	print(answer['errorBody'])
-
+elif answer['error'] == 1:
+    # Тело ошибки, если есть
+    print(answer['errorBody']['text'])
+    print(answer['errorBody']['id'])
 
 """
 Пример асинхронного кода

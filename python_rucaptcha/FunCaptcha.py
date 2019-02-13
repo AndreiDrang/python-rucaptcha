@@ -53,6 +53,14 @@ class FunCaptcha:
         self.session.mount('http://', HTTPAdapter(max_retries = 5))
         self.session.mount('https://', HTTPAdapter(max_retries = 5))
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if exc_type:
+            return False
+        return True
+
     @api_key_check
     @service_check
     def captcha_handler(self, public_key: str, page_url: str):
@@ -79,7 +87,7 @@ class FunCaptcha:
         captcha_id = self.session.post(self.url_request, data=self.post_payload).json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
-        if captcha_id['status'] is 0:
+        if captcha_id['status'] == 0:
             self.result.update({'error': True,
                                 'errorBody': RuCaptchaError().errors(captcha_id['request'])
                                 }
@@ -143,6 +151,14 @@ class aioFunCaptcha:
                             'json': 1,
                             }
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if exc_type:
+            return False
+        return True
+            
     @api_key_check
     @service_check
     async def captcha_handler(self, public_key: str, page_url: str):
@@ -170,7 +186,7 @@ class aioFunCaptcha:
                 captcha_id = await resp.json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
-        if captcha_id['status'] is 0:
+        if captcha_id['status'] == 0:
             self.result.update({'error': True,
                                 'errorBody': RuCaptchaError().errors(captcha_id['request'])
                                 }

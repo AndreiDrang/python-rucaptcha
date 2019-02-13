@@ -1,6 +1,6 @@
 import requests
 import time
-import hashlib
+import shutil
 import os
 import asyncio
 import aiohttp
@@ -48,11 +48,13 @@ class ImageCaptcha:
         if save_format in ['const', 'temp']:
             self.save_format = save_format
             # если файл сохраняется в папку, берём параметр названия папки и очистк/не очистки папки от капч
-            if self.save_format is 'const':
+            if self.save_format == 'const':
                 # очищаем папку после решения капчи - True, сохраняем все файлы - False
                 self.img_clearing = img_clearing
                 # название папки для сохранения файлов капчи
                 self.img_path = img_path
+                # создаём папку для сохранения капч
+                os.makedirs(self.img_path, exist_ok=True)
 
         else:
             raise ValueError('\nПередан неверный формат сохранения файла изображения. '
@@ -82,6 +84,14 @@ class ImageCaptcha:
         # выставляем кол-во попыток подключения к серверу при ошибке
         self.session.mount('http://', HTTPAdapter(max_retries = 5))
         self.session.mount('https://', HTTPAdapter(max_retries = 5))
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if exc_type:
+            return False
+        return True
 
     def __image_temp_saver(self, content: bytes):
         """
@@ -117,10 +127,7 @@ class ImageCaptcha:
 
         try:
             # Высчитываем хэш изображения, для того что бы сохранить его под уникальным именем
-            image_hash = hashlib.sha224(content).hexdigest()
-            # создаём папку для сохранения капч
-            if not os.path.exists(self.img_path):
-                os.mkdir(self.img_path)
+            image_hash = hash(content)
 
             # сохраняем в папку изображение
             with open(os.path.join(self.img_path, f'im-{image_hash}.png'), 'wb') as out_image:
@@ -131,11 +138,6 @@ class ImageCaptcha:
                 # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
                 self.post_payload.update({"body": base64.b64encode(captcha_image.read()).decode('utf-8')})
                 captcha_id = self.session.post(self.url_request, data = self.post_payload).json()
-
-            # если передано True для удаления файла капчи после решения
-            if self.img_clearing:
-                # удаляем файл капчи
-                os.remove(os.path.join(self.img_path, f"im-{image_hash}.png"))
 
         except (IOError, FileNotFoundError) as error:
             self.result.update({'error': True,
@@ -270,7 +272,7 @@ class ImageCaptcha:
             return self.result
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
-        elif captcha_id['status'] is 0:
+        elif captcha_id['status'] == 0:
             self.result.update({'error': True,
                                 'errorBody': RuCaptchaError().errors(captcha_id['request'])
                                 }
@@ -295,6 +297,11 @@ class ImageCaptcha:
                                        sleep_time = self.sleep_time,
                                        url_response = self.url_response,
                                        result = self.result)
+
+    def __del__(self):
+        if self.save_format == 'const':
+            if self.img_clearing:
+                shutil.rmtree(self.img_path)
 
 
 class aioImageCaptcha:
@@ -332,11 +339,13 @@ class aioImageCaptcha:
         if save_format in ['const', 'temp']:
             self.save_format = save_format
             # если файл сохраняется в папку, берём параметр названия папки и очистк/не очистки папки от капч
-            if self.save_format is 'const':
+            if self.save_format == 'const':
                 # очищаем папку после решения капчи - True, сохраняем все файлы - False
                 self.img_clearing = img_clearing
                 # название папки для сохранения файлов капчи
                 self.img_path = img_path
+                # создаём папку для сохранения капч
+                os.makedirs(self.img_path, exist_ok=True)
         else:
             raise ValueError('\nПередан неверный формат сохранения файла изображения. '
                              f'\n\tВозможные варинты: `temp` и `const`. Вы передали - `{save_format}`'
@@ -359,6 +368,14 @@ class aioImageCaptcha:
                             'action': 'get',
                             'json': 1,
                             }
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if exc_type:
+            return False
+        return True
 
     async def __image_temp_saver(self, content: bytes):
         """
@@ -393,11 +410,11 @@ class aioImageCaptcha:
         captcha_id = None
         try:
 
-            if not os.path.exists(self.img_path):
-                os.mkdir(self.img_path)
+            # создаём папку для сохранения капч
+            os.makedirs(self.img_path, exist_ok=True)
 
             # Высчитываем хэш изображения, для того что бы сохранить его под уникальным именем
-            image_hash = hashlib.sha224(content).hexdigest()
+            image_hash = hash(content)
 
             with open(os.path.join(self.img_path, f'im-{image_hash}.png'), 'wb') as out_image:
                 out_image.write(content)
@@ -413,7 +430,7 @@ class aioImageCaptcha:
             # если передано True для удаления файла капчи после решения
             if self.img_clearing:
                 # удаляем файл капчи
-                os.remove(os.path.join(self.img_path, f"im-{image_hash}.png"))
+                shutil.rmtree(self.img_path)
 
         except (IOError, FileNotFoundError) as error:
             self.result.update({'error': True,
@@ -544,7 +561,7 @@ class aioImageCaptcha:
             return self.result
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
-        elif captcha_id['status'] is 0:
+        elif captcha_id['status'] == 0:
             self.result.update({'error': True,
                                 'errorBody': RuCaptchaError().errors(captcha_id['request'])
                                 }
@@ -569,3 +586,8 @@ class aioImageCaptcha:
                                               sleep_time = self.sleep_time,
                                               url_response = self.url_response,
                                               result = self.result)
+
+    def __del__(self):
+        if self.save_format == 'const':
+            if self.img_clearing:
+                shutil.rmtree(self.img_path)

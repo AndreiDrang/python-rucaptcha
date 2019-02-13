@@ -1,12 +1,10 @@
 import requests
 import time
-import asyncio
-import aiohttp
 from requests.adapters import HTTPAdapter
 
 from python_rucaptcha.config import app_key
 from python_rucaptcha.errors import RuCaptchaError
-from python_rucaptcha.result_handler import get_sync_result, get_async_result
+from python_rucaptcha.result_handler import get_sync_result
 from python_rucaptcha.decorators import api_key_check, service_check
 
 
@@ -45,6 +43,14 @@ class RotateCaptcha:
         self.session.mount('http://', HTTPAdapter(max_retries = 5))
         self.session.mount('https://', HTTPAdapter(max_retries = 5))
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if exc_type:
+            return False
+        return True
+            
     @api_key_check
     @service_check
     def captcha_handler(self, captcha_link: str):
@@ -74,7 +80,7 @@ class RotateCaptcha:
         captcha_id = self.session.post(self.url_request, data=self.post_payload, files=files).json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
-        if captcha_id['status'] is 0:
+        if captcha_id['status'] == 0:
             self.result.update({'error': True,
                                 'errorBody': RuCaptchaError().errors(captcha_id['request'])
                                 }
