@@ -35,8 +35,7 @@ class RuCaptchaControl:
     def __exit__(self, exc_type, exc_value, traceback):
         if exc_type:
             return False
-        else:
-            return True
+        return True
             
     def additional_methods(self, action: str, **kwargs):
         """
@@ -125,9 +124,9 @@ class aioRuCaptchaControl:
     def __exit__(self, exc_type, exc_value, traceback):
         if exc_type:
             return False
-        else:
-            return True
-            
+        return True
+
+
     async def additional_methods(self, action: str, **kwargs):
         """
         Асинхронный метод который выполняет дополнительные действия, такие как жалобы/получение баланса и прочее.

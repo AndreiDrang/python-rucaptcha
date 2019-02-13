@@ -1,6 +1,7 @@
 class RuCaptchaError(Exception):
     """Базовый класс для всех исключений в этом модуле."""
-    def errors(self, description):
+    @staticmethod
+    def errors(description):
         """
         Ошибки in.php
         """

@@ -18,7 +18,8 @@ setup(
     include_package_data=True,
     url = 'https://github.com/AndreiDrang/python-rucaptcha',
     license = 'AGPL-3.0',
-    keywords = '''captcha 
+    keywords = '''
+                captcha 
 				rucaptcha 
 				python3
 				flask
@@ -28,7 +29,8 @@ setup(
 				api
 				python-library
 				python-rucaptcha
-				rucaptcha-client''',
+				rucaptcha-client
+               ''',
     python_requires = '>=3.6',
     zip_safe=False
     )

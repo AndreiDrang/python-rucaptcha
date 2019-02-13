@@ -48,7 +48,7 @@ class ImageCaptcha:
         if save_format in ['const', 'temp']:
             self.save_format = save_format
             # если файл сохраняется в папку, берём параметр названия папки и очистк/не очистки папки от капч
-            if self.save_format is 'const':
+            if self.save_format == 'const':
                 # очищаем папку после решения капчи - True, сохраняем все файлы - False
                 self.img_clearing = img_clearing
                 # название папки для сохранения файлов капчи
@@ -91,8 +91,7 @@ class ImageCaptcha:
     def __exit__(self, exc_type, exc_value, traceback):
         if exc_type:
             return False
-        else:
-            return True
+        return True
 
     def __image_temp_saver(self, content: bytes):
         """
@@ -273,7 +272,7 @@ class ImageCaptcha:
             return self.result
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
-        elif captcha_id['status'] is 0:
+        elif captcha_id['status'] == 0:
             self.result.update({'error': True,
                                 'errorBody': RuCaptchaError().errors(captcha_id['request'])
                                 }
@@ -300,7 +299,7 @@ class ImageCaptcha:
                                        result = self.result)
 
     def __del__(self):
-        if self.save_format is 'const':
+        if self.save_format == 'const':
             if self.img_clearing:
                 shutil.rmtree(self.img_path)
 
@@ -340,7 +339,7 @@ class aioImageCaptcha:
         if save_format in ['const', 'temp']:
             self.save_format = save_format
             # если файл сохраняется в папку, берём параметр названия папки и очистк/не очистки папки от капч
-            if self.save_format is 'const':
+            if self.save_format == 'const':
                 # очищаем папку после решения капчи - True, сохраняем все файлы - False
                 self.img_clearing = img_clearing
                 # название папки для сохранения файлов капчи
@@ -376,8 +375,7 @@ class aioImageCaptcha:
     def __exit__(self, exc_type, exc_value, traceback):
         if exc_type:
             return False
-        else:
-            return True
+        return True
 
     async def __image_temp_saver(self, content: bytes):
         """
@@ -563,7 +561,7 @@ class aioImageCaptcha:
             return self.result
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
-        elif captcha_id['status'] is 0:
+        elif captcha_id['status'] == 0:
             self.result.update({'error': True,
                                 'errorBody': RuCaptchaError().errors(captcha_id['request'])
                                 }
@@ -590,6 +588,6 @@ class aioImageCaptcha:
                                               result = self.result)
 
     def __del__(self):
-        if self.save_format is 'const':
+        if self.save_format == 'const':
             if self.img_clearing:
                 shutil.rmtree(self.img_path)

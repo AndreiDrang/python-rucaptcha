@@ -51,8 +51,7 @@ class RotateCaptcha:
     def __exit__(self, exc_type, exc_value, traceback):
         if exc_type:
             return False
-        else:
-            return True
+        return True
             
     @api_key_check
     @service_check
@@ -83,7 +82,7 @@ class RotateCaptcha:
         captcha_id = self.session.post(self.url_request, data=self.post_payload, files=files).json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
-        if captcha_id['status'] is 0:
+        if captcha_id['status'] == 0:
             self.result.update({'error': True,
                                 'errorBody': RuCaptchaError().errors(captcha_id['request'])
                                 }
