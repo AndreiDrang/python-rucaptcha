@@ -11,8 +11,8 @@ from python_rucaptcha.decorators import api_key_check, service_check
 
 
 class GeeTest:
-	def __init__(self, rucaptcha_key: str, service_type: str='2captcha', gt: str, pageurl: str, api_server: str = None, sleep_time: int = 15, callbackUrl: str = None, **kwargs):
-		"""
+    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', gt: str, pageurl: str, api_server: str = None, sleep_time: int = 15, pingback: str = None, **kwargs):
+        """
 		Модуль отвечает за решение GeeTest
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
         :param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
@@ -39,6 +39,9 @@ class GeeTest:
         # добавляем api_server ксли передан
         if api_server:
             self.post_payload.update({'api_server': api_server})
+        # если был передан параметр для callback`a - добавляем его
+        if pingback:
+            self.post_payload.update({'pingback': pingback})
         # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:
             for key in kwargs:
@@ -55,14 +58,14 @@ class GeeTest:
         # выставляем кол-во попыток подключения к серверу при ошибке
         self.session.mount('http://', HTTPAdapter(max_retries = 5))
         self.session.mount('https://', HTTPAdapter(max_retries = 5))
-		
-	def __enter__(self):
-		return self
+    
+    def __enter__(self):
+        return self
 
-	def __exit__(self, exc_type, exc_value, traceback):
-		if exc_type:
-			return False
-		return True		
+    def __exit__(self, exc_type, exc_value, traceback):
+        if exc_type:
+            return False
+        return True		
 
     @api_key_check
     @service_check
@@ -84,8 +87,7 @@ class GeeTest:
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
         
         # добавляем в пайлоад параметры капчи переданные пользователем
-        self.post_payload.update({'publickey': public_key,
-                                  'pageurl': page_url})
+        self.post_payload.update({'challenge': challenge})
         # получаем ID капчи
         captcha_id = self.session.post(self.url_request, data=self.post_payload).json()
 
