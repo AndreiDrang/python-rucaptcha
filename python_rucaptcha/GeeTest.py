@@ -69,7 +69,7 @@ class GeeTest:
 
     @api_key_check
     @service_check
-    def captcha_handler(self, challenge: str):
+    def captcha_handler(self, challenge: str, **kwargs):
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param challenge: Днамический ключ задания
@@ -86,6 +86,10 @@ class GeeTest:
 		'''
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
         
+        # Если переданы ещё параметры - вносим их в get_payload
+        if kwargs:
+            for key in kwargs:
+                self.get_payload.update({key: kwargs[key]})
         # добавляем в пайлоад параметры капчи переданные пользователем
         self.post_payload.update({'challenge': challenge})
         # получаем ID капчи
