@@ -409,10 +409,6 @@ class aioImageCaptcha:
         """
         captcha_id = None
         try:
-
-            # создаём папку для сохранения капч
-            os.makedirs(self.img_path, exist_ok=True)
-
             # Высчитываем хэш изображения, для того что бы сохранить его под уникальным именем
             image_hash = hash(content)
 
@@ -426,11 +422,6 @@ class aioImageCaptcha:
                 async with aiohttp.ClientSession() as session:
                     async with session.post(self.url_request, data = self.post_payload) as resp:
                         captcha_id = await resp.json()
-
-            # если передано True для удаления файла капчи после решения
-            if self.img_clearing:
-                # удаляем файл капчи
-                shutil.rmtree(self.img_path)
 
         except (IOError, FileNotFoundError) as error:
             self.result.update({'error': True,
