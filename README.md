@@ -44,11 +44,13 @@ python setup.py install
 **v.2.5** - Добавление метода для решения `ReCaptcha v3`. Удаление модуля `MediaCaptcha` из библиотеки.
 
 **v.2.5.3** - Добавление `contextmanager` ко всем методам решения капчи.
+
+**v.2.5.4** - Добавление `GeeTest` метода. С синхронным и асинхронным исполнением.
 ***
 ### Будущие обновления
 v.3.0 -  ...
 ***
-### На данный момент реализованы следующие методы:
+### Реализованы следующие методы:
 
 0.[Работа через callback(pingback)](https://github.com/AndreiDrang/python-rucaptcha/tree/master/examples/callback_examples).
 
