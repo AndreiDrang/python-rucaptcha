@@ -9,13 +9,15 @@ from python_rucaptcha.decorators import api_key_check, service_check
 
 
 class RotateCaptcha:
-    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', sleep_time: int=5, pingback: str = ''):
+    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', sleep_time: int=5, pingback: str=None, **kwargs):
         '''
         Инициализация нужных переменных, создание папки для изображений и кэша
         После завершения работы - удалются временные фалйы и папки
         :param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
         :param service_type: Тип сервиса через который будет работать билиотека. Доступны `rucaptcha` или `2captcha`
         :param sleep_time: Вермя ожидания решения капчи
+        :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha
+		:param kwargs: Для передачи дополнительных параметров
         '''
         # время ожидания решения капчи
         self.sleep_time = sleep_time
@@ -31,6 +33,11 @@ class RotateCaptcha:
         if pingback:
             self.post_payload.update({'pingback': pingback})
 
+        # Если переданы ещё параметры - вносим их в post_payload
+        if kwargs:
+            for key in kwargs:
+                self.post_payload.update({key: kwargs[key]})
+                
         # пайлоад GET запроса на получение результата решения капчи
         self.get_payload = {'key': rucaptcha_key,
                             'action': 'get',
@@ -53,11 +60,12 @@ class RotateCaptcha:
             
     @api_key_check
     @service_check
-    def captcha_handler(self, captcha_link: str):
+    def captcha_handler(self, captcha_link: str, **kwargs):
         '''
         Метод получает от вас ссылку на изображение, скачивает его, отправляет изображение на сервер
         RuCaptcha, дожидается решения капчи и вовзращает вам результат
         :param captcha_link: Ссылка на изображение
+		:param kwargs: Для передачи дополнительных параметров
 		:return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
@@ -70,6 +78,11 @@ class RotateCaptcha:
         '''
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
        
+        # Если переданы ещё параметры - вносим их в get_payload
+        if kwargs:
+            for key in kwargs:
+                self.get_payload.update({key: kwargs[key]})
+
         # Скачиваем изображение
         content = self.session.get(captcha_link).content
 

@@ -2,7 +2,6 @@ import requests
 import time
 import asyncio
 import aiohttp
-from requests.adapters import HTTPAdapter
 
 from python_rucaptcha.config import app_key
 from python_rucaptcha.errors import RuCaptchaError
@@ -47,12 +46,6 @@ class FunCaptcha:
                             'json': 1,
                             }
 
-        # создаём сессию
-        self.session = requests.Session()
-        # выставляем кол-во попыток подключения к серверу при ошибке
-        self.session.mount('http://', HTTPAdapter(max_retries = 5))
-        self.session.mount('https://', HTTPAdapter(max_retries = 5))
-
     def __enter__(self):
         return self
 
@@ -63,11 +56,13 @@ class FunCaptcha:
 
     @api_key_check
     @service_check
-    def captcha_handler(self, public_key: str, page_url: str):
+    def captcha_handler(self, public_key: str, page_url: str, **kwargs):
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
-		:param site_key: Ключ сайта
+		:param public_key: Ключ сайта
 		:param page_url: Ссылка на страницу на которой находится капча
+		:param kwargs: Для передачи дополнительных параметров
+
 		:return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
@@ -80,11 +75,16 @@ class FunCaptcha:
 		'''
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
         
+        # Если переданы ещё параметры - вносим их в get_payload
+        if kwargs:
+            for key in kwargs:
+                self.get_payload.update({key: kwargs[key]})
+                
         # добавляем в пайлоад параметры капчи переданные пользователем
         self.post_payload.update({'publickey': public_key,
                                   'pageurl': page_url})
         # получаем ID капчи
-        captcha_id = self.session.post(self.url_request, data=self.post_payload).json()
+        captcha_id = requests.post(self.url_request, data=self.post_payload).json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id['status'] == 0:
@@ -161,11 +161,13 @@ class aioFunCaptcha:
             
     @api_key_check
     @service_check
-    async def captcha_handler(self, public_key: str, page_url: str):
+    async def captcha_handler(self, public_key: str, page_url: str, **kwargs):
         '''
     	Метод отвечает за передачу данных на сервер для решения капчи
-		:param site_key: Ключ сайта
+		:param public_key: Ключ сайта
     	:param page_url: Ссылка на страницу на которой находится капча
+        :param kwargs: Для передачи дополнительных параметров
+
 		:return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
@@ -178,6 +180,11 @@ class aioFunCaptcha:
 		'''
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
+        # Если переданы ещё параметры - вносим их в get_payload
+        if kwargs:
+            for key in kwargs:
+                self.get_payload.update({key: kwargs[key]})
+                
         self.post_payload.update({'publickey': public_key,
                                   'pageurl': page_url})
         # получаем ID капчи

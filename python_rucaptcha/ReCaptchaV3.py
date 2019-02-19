@@ -2,7 +2,6 @@ import requests
 import time
 import asyncio
 import aiohttp
-from requests.adapters import HTTPAdapter
 
 from python_rucaptcha.config import app_key
 from python_rucaptcha.errors import RuCaptchaError
@@ -11,15 +10,9 @@ from python_rucaptcha.decorators import api_key_check, service_check
 
 
 class ReCaptchaV3:
-    """
-	Класс служит для работы с новой ReCaptcha v3 от Гугла.
-	Для работы потребуется передать ключ от RuCaptcha, затем ключ сайта, тип действия на сайте, ссылка на капчу на сайте.
-    
-    Подробней: https://rucaptcha.com/api-rucaptcha#solving_recaptchav3
-	"""
 
     def __init__(self, rucaptcha_key, service_type: str = '2captcha', sleep_time: int = 10, action: str = 'verify', min_score: float = 0.4 ,
-                 proxy: str = '', proxytype: str = '', pingback: str = ''):
+                 proxy: str = None, proxytype: str = None, pingback: str = None, **kwargs):
         """
 		Инициализация нужных переменных.
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
@@ -31,7 +24,8 @@ class ReCaptchaV3:
 		:param proxy: Для решения рекапчи через прокси - передаётся прокси и данные для аутентификации.
 		                ` логин:пароль@IP_адрес:ПОРТ` / `login:password@IP:port`.
 		:param proxytype: Тип используемого прокси. Доступные: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
-        :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha с решением ReCaptchaV3
+        :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha
+		:param kwargs: Для передачи дополнительных параметров
 		"""
         # время ожидания решения капчи
         self.sleep_time = sleep_time
@@ -48,10 +42,14 @@ class ReCaptchaV3:
                              'action': action,
                              'min_score': min_score,
                              "soft_id": app_key}
-
+                             
         # если был передан параметр для callback`a - добавляем его
         if pingback:
             self.post_payload.update({'pingback': pingback})
+        # Если переданы ещё параметры - вносим их в post_payload
+        if kwargs:
+            for key in kwargs:
+                self.post_payload.update({key: kwargs[key]})
 
         # добавление прокси для решения капчи с того же IP
         if proxy and proxytype:
@@ -65,12 +63,6 @@ class ReCaptchaV3:
                             'taskinfo': 1
                             }
 
-        # создаём сессию
-        self.session = requests.Session()
-        # выставляем кол-во попыток подключения к серверу при ошибке
-        self.session.mount('http://', HTTPAdapter(max_retries = 5))
-        self.session.mount('https://', HTTPAdapter(max_retries = 5))
-
     def __enter__(self):
         return self
 
@@ -81,11 +73,12 @@ class ReCaptchaV3:
             
     @api_key_check
     @service_check
-    def captcha_handler(self, site_key: str, page_url: str):
+    def captcha_handler(self, site_key: str, page_url: str, **kwargs):
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param site_key: Гугл-ключ сайта
 		:param page_url: Ссылка на страницу на которой находится капча
+		:param kwargs: Для передачи дополнительных параметров
 
 		:return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
@@ -101,10 +94,15 @@ class ReCaptchaV3:
 		'''
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
         
+        # Если переданы ещё параметры - вносим их в get_payload
+        if kwargs:
+            for key in kwargs:
+                self.get_payload.update({key: kwargs[key]})
+
         self.post_payload.update({'googlekey': site_key,
                                   'pageurl': page_url})
         # получаем ID капчи
-        captcha_id = self.session.post(self.url_request, data = self.post_payload).json()
+        captcha_id = requests.post(self.url_request, data = self.post_payload).json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id['status'] == 0:
@@ -136,15 +134,9 @@ class ReCaptchaV3:
 
 
 class aioReCaptchaV3:
-    """
-	Класс служит для работы с новой ReCaptcha v3 от Гугла.
-	Для работы потребуется передать ключ от RuCaptcha, затем ключ сайта, тип действия на сайте, ссылка на капчу на сайте.
-    
-    Подробней: https://rucaptcha.com/api-rucaptcha#solving_recaptchav3
-	"""
 
     def __init__(self, rucaptcha_key, service_type: str = '2captcha', sleep_time: int = 10, action: str = 'verify', min_score: float = 0.4 ,
-                 proxy: str = '', proxytype: str = '', pingback: str = ''):
+                 proxy: str = None, proxytype: str = None, pingback: str = None, **kwargs):
         """
 		Инициализация нужных переменных.
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
@@ -156,7 +148,8 @@ class aioReCaptchaV3:
 		:param proxy: Для решения рекапчи через прокси - передаётся прокси и данные для аутентификации.
 		                ` логин:пароль@IP_адрес:ПОРТ` / `login:password@IP:port`.
 		:param proxytype: Тип используемого прокси. Доступные: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
-        :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha с решением ReCaptchaV3
+        :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha
+		:param kwargs: Для передачи дополнительных параметров
 		"""
         # время ожидания решения капчи
         self.sleep_time = sleep_time
@@ -177,6 +170,10 @@ class aioReCaptchaV3:
         # если был передан параметр для callback`a - добавляем его
         if pingback:
             self.post_payload.update({'pingback': pingback})
+        # Если переданы ещё параметры - вносим их в post_payload
+        if kwargs:
+            for key in kwargs:
+                self.post_payload.update({key: kwargs[key]})
 
         # добавление прокси для решения капчи с того же IP
         if proxy and proxytype:
@@ -200,11 +197,12 @@ class aioReCaptchaV3:
             
     @api_key_check
     @service_check
-    async def captcha_handler(self, site_key: str, page_url: str):
+    async def captcha_handler(self, site_key: str, page_url: str, **kwargs):
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param site_key: Гугл-ключ сайта
 		:param page_url: Ссылка на страницу на которой находится капча
+		:param kwargs: Для передачи дополнительных параметров
 
 		:return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
@@ -219,6 +217,11 @@ class aioReCaptchaV3:
                         }		
 		'''
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
+
+        # Если переданы ещё параметры - вносим их в get_payload
+        if kwargs:
+            for key in kwargs:
+                self.get_payload.update({key: kwargs[key]})
 
         self.post_payload.update({'googlekey': site_key, 'pageurl': page_url})
         # получаем ID капчи

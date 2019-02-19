@@ -2,7 +2,6 @@ import requests
 import time
 import asyncio
 import aiohttp
-from requests.adapters import HTTPAdapter
 
 from python_rucaptcha.config import app_key
 from python_rucaptcha.errors import RuCaptchaError
@@ -11,18 +10,16 @@ from python_rucaptcha.decorators import api_key_check, service_check
 
 
 class TextCaptcha:
-    """
-	Класс служит для синхронной работы с TextCaptcha.
-	Для работы потребуется передать ключ от RuCaptcha и текстовы вопрос.
-	При желании можно указать любые дополнительные параметры из документации на RuCaptcha
-	"""
-    def __init__(self, rucaptcha_key: str, sleep_time: int=5, service_type: str='2captcha', **kwargs):        
+
+    def __init__(self, rucaptcha_key: str, sleep_time: int=5, service_type: str='2captcha', pingback: str=None, **kwargs):        
         """
 		Инициализация нужных переменных.
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
 		:param sleep_time: Время ожидания решения капчи
 		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
                              и "rucaptcha"
+        :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha
+		:param kwargs: Для передачи дополнительных параметров
 		"""
         # время ожидания решения капчи
         self.sleep_time = sleep_time
@@ -34,6 +31,9 @@ class TextCaptcha:
                              "json": 1,
                              "soft_id": app_key,
                              }
+        # если был передан параметр для callback`a - добавляем его
+        if pingback:
+            self.post_payload.update({'pingback': pingback})
         # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:
             for key in kwargs:
@@ -45,12 +45,6 @@ class TextCaptcha:
                             'json': 1,
                             }
 
-        # создаём сессию
-        self.session = requests.Session()
-        # выставляем кол-во попыток подключения к серверу при ошибке
-        self.session.mount('http://', HTTPAdapter(max_retries = 5))
-        self.session.mount('https://', HTTPAdapter(max_retries = 5))
-
     def __enter__(self):
         return self
 
@@ -61,10 +55,11 @@ class TextCaptcha:
             
     @api_key_check
     @service_check
-    def captcha_handler(self, captcha_text: str):
+    def captcha_handler(self, captcha_text: str, **kwargs):
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param captcha_text: Текстовый вопрос
+		:param kwargs: Для передачи дополнительных параметров
         :return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
@@ -76,12 +71,17 @@ class TextCaptcha:
                         }
 		'''
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
-        
+                
+        # Если переданы ещё параметры - вносим их в get_payload
+        if kwargs:
+            for key in kwargs:
+                self.get_payload.update({key: kwargs[key]})
+
         # вводим текст капчи, выбираем метод ПОСТ и ждём ответа. в JSON-формате
         self.post_payload.update({"textcaptcha": captcha_text})
         # Отправляем на рукапча текст капчи и ждём ответа
         #  в результате получаем JSON ответ с номером решаемой капчи
-        captcha_id = self.session.post(self.url_request,
+        captcha_id = requests.post(self.url_request,
                                        data=self.post_payload).json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
@@ -114,19 +114,16 @@ class TextCaptcha:
 
 # асинхронный метод для решения текстовой капчи
 class aioTextCaptcha:
-    """
-	Класс служит для асинхронной работы с TextCaptcha.
-	Для работы потребуется передать ключ от RuCaptcha и текстовы вопрос.
-	При желании можно указать любые дополнительные параметры из документации на RuCaptcha
-	"""
 
-    def __init__(self, rucaptcha_key: str, sleep_time: int=5, service_type: str='2captcha', **kwargs):
+    def __init__(self, rucaptcha_key: str, sleep_time: int=5, service_type: str='2captcha', pingback: str=None, **kwargs):
         """
 		Инициализация нужных переменных.
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
 		:param sleep_time: Время ожидания решения капчи
 		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
                              и "rucaptcha"
+        :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha
+		:param kwargs: Для передачи дополнительных параметров
 		"""
         # время ожидания решения капчи
         self.sleep_time = sleep_time
@@ -138,6 +135,9 @@ class aioTextCaptcha:
                              "json": 1,
                              "soft_id": app_key,
                              }
+        # если был передан параметр для callback`a - добавляем его
+        if pingback:
+            self.post_payload.update({'pingback': pingback})
         # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:
             for key in kwargs:
@@ -159,10 +159,11 @@ class aioTextCaptcha:
             
     @api_key_check
     @service_check
-    async def captcha_handler(self, captcha_text: str):
+    async def captcha_handler(self, captcha_text: str, **kwargs):
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param captcha_text: Текстовый вопрос
+		:param kwargs: Для передачи дополнительных параметров
         :return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
@@ -174,7 +175,12 @@ class aioTextCaptcha:
                         }
 		'''
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
-
+        
+        # Если переданы ещё параметры - вносим их в get_payload
+        if kwargs:
+            for key in kwargs:
+                self.get_payload.update({key: kwargs[key]})
+                
         # вводим текст капчи, выбираем метод ПОСТ и ждём ответа. в JSON-формате
         self.post_payload.update({"textcaptcha": captcha_text})
         # получаем ID капчи

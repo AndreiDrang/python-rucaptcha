@@ -22,7 +22,7 @@ class GeeTest:
         :param pageurl: Полный URL страницы с капчей GeeTest
 		:param sleep_time: Время ожидания решения
         :param pingback: URL для решения капчи с ответом через callback
-        :param kwargs: Параметры для подключения к прокси. Подробнее в официальной документации или примерe  - anticaptcha_examples/anticaptcha_gee_test_task.py
+        :param kwargs: Параметры для подключения к прокси.         
 		"""
         # время ожидания решения капчи
         self.sleep_time = sleep_time
@@ -67,6 +67,7 @@ class GeeTest:
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param challenge: Днамический ключ задания
+		:param kwargs: Для передачи дополнительных параметров
 
 		:return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
@@ -84,6 +85,7 @@ class GeeTest:
         if kwargs:
             for key in kwargs:
                 self.get_payload.update({key: kwargs[key]})
+
         # добавляем в пайлоад параметры капчи переданные пользователем
         self.post_payload.update({'challenge': challenge})
         # получаем ID капчи
@@ -128,7 +130,7 @@ class aioGeeTest:
         :param pageurl: Полный URL страницы с капчей GeeTest
 		:param sleep_time: Время ожидания решения
         :param pingback: URL для решения капчи с ответом через callback
-        :param kwargs: Параметры для подключения к прокси. Подробнее в официальной документации или примерe  - anticaptcha_examples/anticaptcha_gee_test_task.py
+		:param kwargs: Для передачи дополнительных параметров
 		"""
         # время ожидания решения капчи
         self.sleep_time = sleep_time
@@ -173,6 +175,7 @@ class aioGeeTest:
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param challenge: Днамический ключ задания
+		:param kwargs: Для передачи дополнительных параметров
 
 		:return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
@@ -197,7 +200,7 @@ class aioGeeTest:
                 captcha_id = await resp.json()
 
         # получаем ID капчи
-        captcha_id = self.session.post(self.url_request, data=self.post_payload).json()
+        captcha_id = requests.post(self.url_request, data=self.post_payload).json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id['status'] == 0:

@@ -1,13 +1,12 @@
 import aiohttp
 import requests
 
-from .errors import RuCaptchaError
-from .config import url_request_2captcha, url_response_2captcha, url_request_rucaptcha, url_response_rucaptcha, \
-    JSON_RESPONSE
+from python_rucaptcha.errors import RuCaptchaError
+from python_rucaptcha.decorators import api_key_check, service_check
 
 
 class RuCaptchaControl:
-    def __init__(self, rucaptcha_key: str, service_type: str='2captcha'):
+    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', **kwargs):
         """
         Модуль отвечает за дополнительные действия с аккаунтом и капчей.
         :param rucaptcha_key: Ключ от RuCaptcha
@@ -15,19 +14,12 @@ class RuCaptchaControl:
                              и "rucaptcha"
         """
         self.post_payload = {'key': rucaptcha_key,
-                        'json': 1,
-                             }
-
-        # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
-        if service_type == '2captcha':
-            self.url_request = url_request_2captcha
-            self.url_response = url_response_2captcha
-        elif service_type == 'rucaptcha':
-            self.url_request = url_request_rucaptcha
-            self.url_response = url_response_rucaptcha
-        else:
-            raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
-                             'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
+                             'json': 1,
+                            }
+        # Если переданы ещё параметры - вносим их в post_payload
+        if kwargs:
+            for key in kwargs:
+                self.post_payload.update({key: kwargs[key]})
 
     def __enter__(self):
         return self
@@ -36,15 +28,15 @@ class RuCaptchaControl:
         if exc_type:
             return False
         return True
-            
-    def additional_methods(self, action: str, **kwargs):
+                      
+    @api_key_check
+    @service_check  
+    def additional_methods(self, action: str):
         """
         Метод который выполняет дополнительные действия, такие как жалобы/получение баланса и прочее.
         :param action: Тип действия, самые типичные: getbalance(получение баланса),
                                                      reportbad(жалоба на неверное решение).
                                                      reportgood(оповещение при верном решении капчи, для сбора статистики по ReCaptcha V3)
-
-        :param kwargs: В качестве параметра можно передавать всё, что предусмотрено документацией.
         :return: Возвращает JSON строку с соответствующими полями:
                     serverAnswer - ответ сервера при использовании RuCaptchaControl(баланс/жалобы и т.д.),
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
@@ -56,13 +48,7 @@ class RuCaptchaControl:
                         }
         Больше подробностей и примеров можно прочитать в 'CaptchaTester/rucaptcha_control_example.py'
         """
-        # результат возвращаемый методом *additional_methods*
-        self.result = JSON_RESPONSE.copy()
-
-        # Если переданы ещё параметры - вносим их в post_payload
-        if kwargs:
-            for key in kwargs:
-                self.post_payload.update({key: kwargs[key]})
+        # result, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
         self.post_payload.update({'action': action})
 
@@ -96,7 +82,7 @@ class RuCaptchaControl:
 
 # асинхронный метод
 class aioRuCaptchaControl:
-    def __init__(self, rucaptcha_key: str, service_type: str='2captcha'):
+    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', **kwargs):
         """
         Асинхронный модуль отвечает за дополнительные действия с аккаунтом и капчей.
         :param rucaptcha_key: Ключ от RuCaptcha
@@ -107,16 +93,10 @@ class aioRuCaptchaControl:
                              'json': 1,
                              }
 
-        # выбираем URL на который будут отпраляться запросы и с которого будут приходить ответы
-        if service_type == '2captcha':
-            self.url_request = url_request_2captcha
-            self.url_response = url_response_2captcha
-        elif service_type == 'rucaptcha':
-            self.url_request = url_request_rucaptcha
-            self.url_response = url_response_rucaptcha
-        else:
-            raise ValueError('Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`.'
-                             'Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.')
+        # Если переданы ещё параметры - вносим их в post_payload
+        if kwargs:
+            for key in kwargs:
+                self.post_payload.update({key: kwargs[key]})
 
     def __enter__(self):
         return self
@@ -126,13 +106,13 @@ class aioRuCaptchaControl:
             return False
         return True
 
-
-    async def additional_methods(self, action: str, **kwargs):
+    @api_key_check
+    @service_check
+    async def additional_methods(self, action: str):
         """
         Асинхронный метод который выполняет дополнительные действия, такие как жалобы/получение баланса и прочее.
         :param action: Тип действия, самые типичные: getbalance(получение баланса),
                                                      reportbad(жалоба на неверное решение).
-        :param kwargs: В качестве параметра можно передавать всё, что предусмотрено документацией.
         :return: Возвращает JSON строку с соответствующими полями:
                     serverAnswer - ответ сервера при использовании RuCaptchaControl(баланс/жалобы и т.д.),
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
@@ -144,8 +124,7 @@ class aioRuCaptchaControl:
                         }
         Больше подробностей и примеров можно прочитать в 'CaptchaTester/rucaptcha_control_example.py'
         """
-        # результат возвращаемый методом *additional_methods*
-        self.result = JSON_RESPONSE.copy()
+        # result, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
         # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:

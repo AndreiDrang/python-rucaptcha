@@ -2,7 +2,6 @@ import requests
 import time
 import asyncio
 import aiohttp
-from requests.adapters import HTTPAdapter
 
 from python_rucaptcha.config import app_key
 from python_rucaptcha.errors import RuCaptchaError
@@ -11,17 +10,16 @@ from python_rucaptcha.decorators import api_key_check, service_check
 
 
 class KeyCaptcha:
-    '''
-    Класс служит для решения KeyCaptcha
-    '''
 
-    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', sleep_time: int=15, pingback: str = ''):
+    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', sleep_time: int=15, pingback: str = None, **kwargs):
         '''
 
         :param rucaptcha_key: АПИ ключ капчи из кабинета пользователя
         :param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
                              и "rucaptcha"
         :param sleep_time: Время ожидания решения капчи
+        :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha
+		:param kwargs: Для передачи дополнительных параметров
         '''
         # время ожидания решения капчи
         self.sleep_time = sleep_time
@@ -38,18 +36,16 @@ class KeyCaptcha:
         # если был передан параметр для callback`a - добавляем его
         if pingback:
             self.post_payload.update({'pingback': pingback})
-            
+        # Если переданы ещё параметры - вносим их в post_payload
+        if kwargs:
+            for key in kwargs:
+                self.post_payload.update({key: kwargs[key]})
+
         # пайлоад GET запроса на получение результата решения капчи
         self.get_payload = {'key': rucaptcha_key,
                             'action': 'get',
                             'json': 1,
                             }
-
-        # создаём сессию
-        self.session = requests.Session()
-        # выставляем кол-во попыток подключения к серверу при ошибке
-        self.session.mount('http://', HTTPAdapter(max_retries = 5))
-        self.session.mount('https://', HTTPAdapter(max_retries = 5))
 
     def __enter__(self):
         return self
@@ -64,7 +60,8 @@ class KeyCaptcha:
     def captcha_handler(self, **kwargs):
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
-		:param kwargs: Параметры/ключи key-captcha(подробнее в примерах бибилотеки или на сайте RuCaptcha)
+		:param key_params: Параметры/ключи key-captcha(подробнее в примерах бибилотеки или на сайте RuCaptcha)
+		:param kwargs: Для передачи дополнительных параметров
 		:return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
@@ -77,6 +74,11 @@ class KeyCaptcha:
 		'''
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
         
+        # Если переданы ещё параметры - вносим их в get_payload
+        if kwargs:
+            for key in kwargs:
+                self.get_payload.update({key: kwargs[key]})
+                
         # считываем все переданные параметры KeyCaptcha
         try:
             self.post_payload.update({
@@ -97,7 +99,7 @@ class KeyCaptcha:
             return self.result
 
         # передаём параметры кей капчи для решения
-        captcha_id = self.session.post(url=self.url_request, data=self.post_payload).json()
+        captcha_id = requests.post(url=self.url_request, data=self.post_payload).json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id['status'] == 0:
@@ -132,16 +134,15 @@ class KeyCaptcha:
 
 # асинхронный метод для решения FunCaptcha
 class aioKeyCaptcha:
-    '''
-    Класс служит для решения KeyCaptcha
-    '''
 
-    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', sleep_time: int=15, pingback: str = '', **kwargs):
+    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', sleep_time: int=15, pingback: str = None, **kwargs):
         '''
         :param rucaptcha_key: АПИ ключ капчи из кабинета пользователя
         :param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
                              и "rucaptcha"
         :param sleep_time: Время ожидания решения капчи
+        :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha
+		:param kwargs: Для передачи дополнительных параметров
         '''
         # время ожидания решения капчи
         self.sleep_time = sleep_time
@@ -154,6 +155,11 @@ class aioKeyCaptcha:
                              'json': 1,
                              'soft_id': app_key
                             }
+
+        # Если переданы ещё параметры - вносим их в post_payload
+        if kwargs:
+            for key in kwargs:
+                self.post_payload.update({key: kwargs[key]})
 
         # если был передан параметр для callback`a - добавляем его
         if pingback:
@@ -188,7 +194,8 @@ class aioKeyCaptcha:
     async def captcha_handler(self, **kwargs):
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
-		:param kwargs: Параметры/ключи key-captcha(подробнее в примерах бибилотеки или на сайте RuCaptcha)
+		:param key_params: Параметры/ключи key-captcha(подробнее в примерах бибилотеки или на сайте RuCaptcha)
+		:param kwargs: Для передачи дополнительных параметров
 		:return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
@@ -201,6 +208,11 @@ class aioKeyCaptcha:
 		'''
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
         
+        # Если переданы ещё параметры - вносим их в get_payload
+        if kwargs:
+            for key in kwargs:
+                self.get_payload.update({key: kwargs[key]})
+                
         # считываем все переданные параметры KeyCaptcha
         try:
             self.post_payload.update({
