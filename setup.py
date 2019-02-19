@@ -12,7 +12,7 @@ URL = 'https://github.com/AndreiDrang/python-rucaptcha'
 EMAIL = 'drang.andray@gmail.com'
 AUTHOR = 'AndreiDrang, redV0ID'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '2.5.4'
+VERSION = '2.6'
 REQUIRED = [
         'requests==2.21.0',
         'aiohttp==3.5.4',
@@ -104,7 +104,7 @@ setup(
         'Operating System :: Microsoft :: Windows',
         'Operating System :: MacOS',
     ],
-    # Build and upload package: python3 setup.py upload
+    # Build and upload package: `python3 setup.py upload`
     cmdclass={
         'upload': UploadCommand,
     },
