@@ -13,6 +13,7 @@ class RuCaptchaControl:
 		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
                              и "rucaptcha"
         """
+        self.service_type = service_type
         self.post_payload = {'key': rucaptcha_key,
                              'json': 1,
                             }
@@ -31,12 +32,13 @@ class RuCaptchaControl:
                       
     @api_key_check
     @service_check  
-    def additional_methods(self, action: str):
+    def additional_methods(self, action: str, **kwargs):
         """
         Метод который выполняет дополнительные действия, такие как жалобы/получение баланса и прочее.
         :param action: Тип действия, самые типичные: getbalance(получение баланса),
                                                      reportbad(жалоба на неверное решение).
                                                      reportgood(оповещение при верном решении капчи, для сбора статистики по ReCaptcha V3)
+		:param kwargs: Для передачи дополнительных параметров
         :return: Возвращает JSON строку с соответствующими полями:
                     serverAnswer - ответ сервера при использовании RuCaptchaControl(баланс/жалобы и т.д.),
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
@@ -49,6 +51,11 @@ class RuCaptchaControl:
         Больше подробностей и примеров можно прочитать в 'CaptchaTester/rucaptcha_control_example.py'
         """
         # result, url_response - задаются в декораторе `service_check`, после проверки переданного названия
+
+        # Если переданы ещё параметры - вносим их в post_payload
+        if kwargs:
+            for key in kwargs:
+                self.post_payload.update({key: kwargs[key]})
 
         self.post_payload.update({'action': action})
 
@@ -88,7 +95,9 @@ class aioRuCaptchaControl:
         :param rucaptcha_key: Ключ от RuCaptcha
 		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
                              и "rucaptcha"
+		:param kwargs: Для передачи дополнительных параметров
         """
+        self.service_type = service_type
         self.post_payload = {'key': rucaptcha_key,
                              'json': 1,
                              }
@@ -108,11 +117,12 @@ class aioRuCaptchaControl:
 
     @api_key_check
     @service_check
-    async def additional_methods(self, action: str):
+    async def additional_methods(self, action: str, **kwargs):
         """
         Асинхронный метод который выполняет дополнительные действия, такие как жалобы/получение баланса и прочее.
         :param action: Тип действия, самые типичные: getbalance(получение баланса),
                                                      reportbad(жалоба на неверное решение).
+		:param kwargs: Для передачи дополнительных параметров
         :return: Возвращает JSON строку с соответствующими полями:
                     serverAnswer - ответ сервера при использовании RuCaptchaControl(баланс/жалобы и т.д.),
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
