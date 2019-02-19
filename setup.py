@@ -12,7 +12,7 @@ URL = 'https://github.com/AndreiDrang/python-rucaptcha'
 EMAIL = 'drang.andray@gmail.com'
 AUTHOR = 'AndreiDrang, redV0ID'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '2.6'
+VERSION = '2.6.1'
 REQUIRED = [
         'requests==2.21.0',
         'aiohttp==3.5.4',
