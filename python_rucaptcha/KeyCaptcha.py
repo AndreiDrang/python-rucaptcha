@@ -57,7 +57,7 @@ class KeyCaptcha:
 
     @api_key_check
     @service_check
-    def captcha_handler(self, **kwargs):
+    def captcha_handler(self, key_params: dict, **kwargs):
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param key_params: Параметры/ключи key-captcha(подробнее в примерах бибилотеки или на сайте RuCaptcha)
@@ -82,11 +82,11 @@ class KeyCaptcha:
         # считываем все переданные параметры KeyCaptcha
         try:
             self.post_payload.update({
-                's_s_c_user_id': kwargs['s_s_c_user_id'],
-                's_s_c_session_id': kwargs['s_s_c_session_id'],
-                's_s_c_web_server_sign': kwargs['s_s_c_web_server_sign'],
-                's_s_c_web_server_sign2': kwargs['s_s_c_web_server_sign2'],
-                'pageurl': kwargs['pageurl'],
+                's_s_c_user_id': key_params['s_s_c_user_id'],
+                's_s_c_session_id': key_params['s_s_c_session_id'],
+                's_s_c_web_server_sign': key_params['s_s_c_web_server_sign'],
+                's_s_c_web_server_sign2': key_params['s_s_c_web_server_sign2'],
+                'pageurl': key_params['pageurl'],
             })
         except KeyError as error:
             self.result.update({'error': True,
@@ -191,7 +191,7 @@ class aioKeyCaptcha:
             
     @api_key_check
     @service_check
-    async def captcha_handler(self, **kwargs):
+    async def captcha_handler(self, key_params: dict, **kwargs):
         '''
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param key_params: Параметры/ключи key-captcha(подробнее в примерах бибилотеки или на сайте RuCaptcha)
@@ -216,11 +216,11 @@ class aioKeyCaptcha:
         # считываем все переданные параметры KeyCaptcha
         try:
             self.post_payload.update({
-                's_s_c_user_id': kwargs['s_s_c_user_id'],
-                's_s_c_session_id': kwargs['s_s_c_session_id'],
-                's_s_c_web_server_sign': kwargs['s_s_c_web_server_sign'],
-                's_s_c_web_server_sign2': kwargs['s_s_c_web_server_sign2'],
-                'pageurl': kwargs['pageurl'],
+                's_s_c_user_id': key_params['s_s_c_user_id'],
+                's_s_c_session_id': key_params['s_s_c_session_id'],
+                's_s_c_web_server_sign': key_params['s_s_c_web_server_sign'],
+                's_s_c_web_server_sign2': key_params['s_s_c_web_server_sign2'],
+                'pageurl': key_params['pageurl'],
             })
         except KeyError as error:
             self.result.update({'error': True,
