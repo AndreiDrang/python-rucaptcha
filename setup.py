@@ -59,6 +59,7 @@ class UploadCommand(Command):
         self.status('Uploading the package to PyPI via Twine…')
         os.system('twine upload dist/*')
        
+        print('🤖 Uploaded ...')
         sys.exit()
 
 setup(
@@ -108,3 +109,4 @@ setup(
         'upload': UploadCommand,
     },
 )
+print('🤖 Success install ...')
