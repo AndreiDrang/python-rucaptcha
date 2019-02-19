@@ -32,21 +32,27 @@ contextmanager пример
 
 # синхронный пример contextmanager
 with KeyCaptcha.KeyCaptcha(rucaptcha_key = RUCAPTCHA_KEY) as key_captcha:
-    result = key_captcha.captcha_handler(s_s_c_user_id=15,
-										 s_s_c_session_id='8f460599bebe02cb0dd096b1fe70b089',
-										 s_s_c_web_server_sign='edd2c221c05aece19f6db93a36b42272',
-										 s_s_c_web_server_sign2='15989edaad1b4dc056ec8fa05abc7c9a',
-										 pageurl='https://www.keycaptcha.com/signup/')
+    result = key_captcha.captcha_handler(key_params = {
+													's_s_c_user_id':15,
+													's_s_c_session_id':'8f460599bebe02cb0dd096b1fe70b089',
+													's_s_c_web_server_sign':'edd2c221c05aece19f6db93a36b42272',
+													's_s_c_web_server_sign2':'15989edaad1b4dc056ec8fa05abc7c9a',
+													'pageurl':'https://www.keycaptcha.com/signup/'
+										}
+						)
     print(result)
 
 # асинхронный пример contextmanager
 async def aiocontext():
     with KeyCaptcha.aioKeyCaptcha(rucaptcha_key=RUCAPTCHA_KEY) as key_captcha:
-        result = await key_captcha.captcha_handler(s_s_c_user_id=15,
-												   s_s_c_session_id='8f460599bebe02cb0dd096b1fe70b089',
-												   s_s_c_web_server_sign='edd2c221c05aece19f6db93a36b42272',
-												   s_s_c_web_server_sign2='15989edaad1b4dc056ec8fa05abc7c9a',
-												   pageurl='https://www.keycaptcha.com/signup/')
+        result = await key_captcha.captcha_handler(key_params = {
+														's_s_c_user_id':15,
+														's_s_c_session_id':'8f460599bebe02cb0dd096b1fe70b089',
+														's_s_c_web_server_sign':'edd2c221c05aece19f6db93a36b42272',
+														's_s_c_web_server_sign2':'15989edaad1b4dc056ec8fa05abc7c9a',
+														'pageurl':'https://www.keycaptcha.com/signup/'
+													}
+									)
         print(result)
 
 if __name__ == '__main__':
@@ -55,11 +61,14 @@ if __name__ == '__main__':
     loop.close()
 
 answer = KeyCaptcha.KeyCaptcha(rucaptcha_key=RUCAPTCHA_KEY) \
-	.captcha_handler(s_s_c_user_id=15,
-					 s_s_c_session_id='8f460599bebe02cb0dd096b1fe70b089',
-					 s_s_c_web_server_sign='edd2c221c05aece19f6db93a36b42272',
-					 s_s_c_web_server_sign2='15989edaad1b4dc056ec8fa05abc7c9a',
-					 pageurl='https://www.keycaptcha.com/signup/')
+	.captcha_handler(key_params = {
+						's_s_c_user_id':15,
+                		's_s_c_session_id':'8f460599bebe02cb0dd096b1fe70b089',
+                		's_s_c_web_server_sign':'edd2c221c05aece19f6db93a36b42272',
+                		's_s_c_web_server_sign2':'15989edaad1b4dc056ec8fa05abc7c9a',
+                		'pageurl':'https://www.keycaptcha.com/signup/'
+					}
+	)
 
 '''
 answer - это JSON строка с соответствующими полями
@@ -93,11 +102,14 @@ elif answer['error'] == 1:
 
 async def run():
 	try:
-		answer = await KeyCaptcha.aioKeyCaptcha(rucaptcha_key = RUCAPTCHA_KEY).captcha_handler(s_s_c_user_id=15,
-					 s_s_c_session_id='8f460599bebe02cb0dd096b1fe70b089',
-					 s_s_c_web_server_sign='edd2c221c05aece19f6db93a36b42272',
-					 s_s_c_web_server_sign2='15989edaad1b4dc056ec8fa05abc7c9a',
-					 pageurl='https://www.keycaptcha.com/signup/')
+		answer = await KeyCaptcha.aioKeyCaptcha(rucaptcha_key = RUCAPTCHA_KEY).captcha_handler(key_params = {
+																									's_s_c_user_id':15,
+																									's_s_c_session_id':'8f460599bebe02cb0dd096b1fe70b089',
+																									's_s_c_web_server_sign':'edd2c221c05aece19f6db93a36b42272',
+																									's_s_c_web_server_sign2':'15989edaad1b4dc056ec8fa05abc7c9a',
+																									'pageurl':'https://www.keycaptcha.com/signup/'
+																								}
+																				)
 
 
 		if not answer['error']:
@@ -140,11 +152,13 @@ if answer.text == 'OK':
     # создаём задание на сервере, ответ на которое придёт на заданный pingback URL в виде POST запроса
     task_creation_answer = KeyCaptcha.KeyCaptcha(rucaptcha_key=RUCAPTCHA_KEY,
                                                  pingback=f'85.255.8.26:8001/rucaptcha/key_captcha/{queue_name}', ) \
-                                                .captcha_handler(s_s_c_user_id=15,
-                                                                 s_s_c_session_id='8f460599bebe02cb0dd096b1fe70b089',
-                                                                 s_s_c_web_server_sign='edd2c221c05aece19f6db93a36b42272',
-                                                                 s_s_c_web_server_sign2='15989edaad1b4dc056ec8fa05abc7c9a',
-                                                                 pageurl='https://www.keycaptcha.com/signup/')
+                                                .captcha_handler(key_params = {
+				's_s_c_user_id':15,
+                		's_s_c_session_id':'8f460599bebe02cb0dd096b1fe70b089',
+                		's_s_c_web_server_sign':'edd2c221c05aece19f6db93a36b42272',
+                		's_s_c_web_server_sign2':'15989edaad1b4dc056ec8fa05abc7c9a',
+                		'pageurl':'https://www.keycaptcha.com/signup/'
+			})
     print(task_creation_answer)
 
     # подключаемся к серверу и ждём решения капчи из кеша

@@ -141,11 +141,14 @@ from python_rucaptcha import KeyCaptcha
 RUCAPTCHA_KEY = ''
 
 answer = KeyCaptcha.KeyCaptcha(rucaptcha_key=RUCAPTCHA_KEY) \
-	.captcha_handler(s_s_c_user_id=15,
-                     s_s_c_session_id='8f460599bebe02cb0dd096b1fe70b089',
-                     s_s_c_web_server_sign='edd2c221c05aece19f6db93a36b42272',
-                     s_s_c_web_server_sign2='15989edaad1b4dc056ec8fa05abc7c9a',
-                     pageurl='https://www.keycaptcha.com/signup/')
+	.captcha_handler(key_params = {
+				's_s_c_user_id':15,
+                		's_s_c_session_id':'8f460599bebe02cb0dd096b1fe70b089',
+                		's_s_c_web_server_sign':'edd2c221c05aece19f6db93a36b42272',
+                		's_s_c_web_server_sign2':'15989edaad1b4dc056ec8fa05abc7c9a',
+                		'pageurl':'https://www.keycaptcha.com/signup/'
+			}
+	)
 
 # капча решена верно, ошибка = 0
 if not answer['error']:
