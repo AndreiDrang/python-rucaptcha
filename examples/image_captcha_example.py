@@ -315,7 +315,7 @@ if answer.text == 'OK':
     # IP адрес должен быть ЗАРАНЕЕ зарегистрирован в системе (подробонсти смотри в `CaptchaTester/rucaptcha_control_example.py`)
     # создаём задание на сервере, ответ на которое придёт на заданный pingback URL в виде POST запроса
     task_creation_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, 
-                                                     pingback=f'85.255.8.26:8001/image_captcha/fun_captcha/{queue_name}', 
+                                                     pingback=f'85.255.8.26:8001/image_captcha/image_captcha/{queue_name}', 
                                                     ).captcha_handler(captcha_link=image_link)
 
     print(task_creation_answer)
