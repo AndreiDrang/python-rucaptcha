@@ -16,7 +16,7 @@ VERSION = '2.6.1'
 REQUIRED = [
         'requests==2.21.0',
         'aiohttp==3.5.4',
-        'pika==0.13.0'
+        'pika==0.13.1'
 ]
 
 here = os.path.abspath(os.path.dirname(__file__))
