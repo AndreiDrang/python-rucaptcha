@@ -6,7 +6,7 @@ from python_rucaptcha.decorators import api_key_check, service_check
 
 
 class RuCaptchaControl:
-    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', **kwargs):
+    def __init__(self, rucaptcha_key: str, service_type: str = "2captcha", **kwargs):
         """
         Модуль отвечает за дополнительные действия с аккаунтом и капчей.
         :param rucaptcha_key: Ключ от RuCaptcha
@@ -14,9 +14,7 @@ class RuCaptchaControl:
                              и "rucaptcha"
         """
         self.service_type = service_type
-        self.post_payload = {'key': rucaptcha_key,
-                             'json': 1,
-                            }
+        self.post_payload = {"key": rucaptcha_key, "json": 1}
         # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:
             for key in kwargs:
@@ -29,9 +27,9 @@ class RuCaptchaControl:
         if exc_type:
             return False
         return True
-                      
+
     @api_key_check
-    @service_check  
+    @service_check
     def additional_methods(self, action: str, **kwargs):
         """
         Метод который выполняет дополнительные действия, такие как жалобы/получение баланса и прочее.
@@ -57,39 +55,32 @@ class RuCaptchaControl:
             for key in kwargs:
                 self.post_payload.update({key: kwargs[key]})
 
-        self.post_payload.update({'action': action})
+        self.post_payload.update({"action": action})
 
         try:
             # отправляем на сервер данные с вашим запросом
-            answer = requests.post(self.url_response, data = self.post_payload)
+            answer = requests.post(self.url_response, data=self.post_payload)
         except Exception as error:
-            self.result.update({'error': True,
-                                'errorBody': {
-                                    'text': error,
-                                    'id': -1
-                                }
-                                }
-                               )
+            self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
             return self.result
 
         if answer.json()["status"] == 0:
-            self.result.update({'error': True,
-                                'errorBody': RuCaptchaError().errors(answer.json()["request"])
-                                }
-                               )
+            self.result.update(
+                {
+                    "error": True,
+                    "errorBody": RuCaptchaError().errors(answer.json()["request"]),
+                }
+            )
             return self.result
 
         elif answer.json()["status"] == 1:
-            self.result.update({
-                                'serverAnswer': answer.json()['request']
-                                }
-                               )
+            self.result.update({"serverAnswer": answer.json()["request"]})
             return self.result
 
 
 # асинхронный метод
 class aioRuCaptchaControl:
-    def __init__(self, rucaptcha_key: str, service_type: str='2captcha', **kwargs):
+    def __init__(self, rucaptcha_key: str, service_type: str = "2captcha", **kwargs):
         """
         Асинхронный модуль отвечает за дополнительные действия с аккаунтом и капчей.
         :param rucaptcha_key: Ключ от RuCaptcha
@@ -98,9 +89,7 @@ class aioRuCaptchaControl:
 		:param kwargs: Для передачи дополнительных параметров
         """
         self.service_type = service_type
-        self.post_payload = {'key': rucaptcha_key,
-                             'json': 1,
-                             }
+        self.post_payload = {"key": rucaptcha_key, "json": 1}
 
         # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:
@@ -141,34 +130,26 @@ class aioRuCaptchaControl:
             for key in kwargs:
                 self.post_payload.update({key: kwargs[key]})
 
-        self.post_payload.update({'action': action})
+        self.post_payload.update({"action": action})
 
         try:
             async with aiohttp.ClientSession() as session:
                 # отправляем на сервер данные с вашим запросом
-                async with session.post(self.url_response, data = self.post_payload) as resp:
+                async with session.post(
+                    self.url_response, data=self.post_payload
+                ) as resp:
                     answer = await resp.json()
 
         except Exception as error:
-            self.result.update({'error': True,
-                                'errorBody': {
-                                    'text': error,
-                                    'id': -1
-                                }
-                                }
-                               )
+            self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
             return self.result
 
         if answer["status"] == 0:
-            self.result.update({'error': True,
-                                'errorBody': RuCaptchaError().errors(answer["request"])
-                                }
-                               )
+            self.result.update(
+                {"error": True, "errorBody": RuCaptchaError().errors(answer["request"])}
+            )
             return self.result
 
         elif answer["status"] == 1:
-            self.result.update({
-                                'serverAnswer': answer['request']
-                                }
-                               )
+            self.result.update({"serverAnswer": answer["request"]})
             return self.result

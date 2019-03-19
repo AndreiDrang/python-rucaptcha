@@ -14,26 +14,26 @@ RUCAPTCHA_KEY = ""
 Подробней: https://rucaptcha.com/api-rucaptcha#solving_recaptchav3
 """
 # Google sitekey
-SITE_KEY = '6Lf77CsUAAAAALLFD1wIhbfQRD07VxhvPbyQFaQJ'
+SITE_KEY = "6Lf77CsUAAAAALLFD1wIhbfQRD07VxhvPbyQFaQJ"
 # ссылка на страницу с капчёй
-PAGE_URL = 'http://85.255.8.26/'
+PAGE_URL = "http://85.255.8.26/"
 # Значение параметра action, которые вы нашли в коде сайта
-ACTION = 'verify'
+ACTION = "verify"
 # Требуемое значение рейтинга (score) работника, от 0.1(робот) до 0.9(человечный человек)
 MIN_SCORE = 0.4
 
 # Пример работы с модулем ReCaptchaV3, передача минимального количества параметров
-answer_usual_re3 = ReCaptchaV3.ReCaptchaV3(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(site_key=SITE_KEY,
-                                                                                        page_url=PAGE_URL)
+answer_usual_re3 = ReCaptchaV3.ReCaptchaV3(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
+    site_key=SITE_KEY, page_url=PAGE_URL
+)
 print(answer_usual_re3)
 
 # Пример работы с модулем ReCaptchaV3, передача всех основных параметров параметров
-answer_usual_re3_f = ReCaptchaV3.ReCaptchaV3(rucaptcha_key=RUCAPTCHA_KEY,
-										   action = ACTION, 
-										   min_score = MIN_SCORE).captcha_handler(site_key=SITE_KEY,
-										   										  page_url=PAGE_URL)
+answer_usual_re3_f = ReCaptchaV3.ReCaptchaV3(
+    rucaptcha_key=RUCAPTCHA_KEY, action=ACTION, min_score=MIN_SCORE
+).captcha_handler(site_key=SITE_KEY, page_url=PAGE_URL)
 print(answer_usual_re3_f)
-'''
+"""
 answer_... - это JSON строка с соответствующими полями
 
 captchaSolve - решение капчи,
@@ -46,30 +46,30 @@ errorBody - полная информация об ошибке:
         text - Развернётое пояснение ошибки
         id - уникальный номер ошибка в ЭТОЙ бибилотеке
     }
-'''
+"""
 # обычная recaptcha v3
-if not answer_usual_re3['error']:
-	# решение капчи
-	print(answer_usual_re3['captchaSolve'])
-	print(answer_usual_re3['taskId'])
-	print(answer_usual_re3['user_check'])
-	print(answer_usual_re3['user_score'])
-elif answer_usual_re3['error']:
-	# Тело ошибки, если есть
-	print(answer_usual_re3['errorBody']['text'])
-	print(answer_usual_re3['errorBody']['id'])
+if not answer_usual_re3["error"]:
+    # решение капчи
+    print(answer_usual_re3["captchaSolve"])
+    print(answer_usual_re3["taskId"])
+    print(answer_usual_re3["user_check"])
+    print(answer_usual_re3["user_score"])
+elif answer_usual_re3["error"]:
+    # Тело ошибки, если есть
+    print(answer_usual_re3["errorBody"]["text"])
+    print(answer_usual_re3["errorBody"]["id"])
 
 # обычная recaptcha v3
-if not answer_usual_re3_f['error']:
-	# решение капчи
-	print(answer_usual_re3_f['captchaSolve'])
-	print(answer_usual_re3_f['taskId'])
-	print(answer_usual_re3['user_check'])
-	print(answer_usual_re3['user_score'])
-elif answer_usual_re3_f['error']:
-	# Тело ошибки, если есть
-	print(answer_usual_re3_f['errorBody']['text'])
-	print(answer_usual_re3_f['errorBody']['id'])
+if not answer_usual_re3_f["error"]:
+    # решение капчи
+    print(answer_usual_re3_f["captchaSolve"])
+    print(answer_usual_re3_f["taskId"])
+    print(answer_usual_re3["user_check"])
+    print(answer_usual_re3["user_score"])
+elif answer_usual_re3_f["error"]:
+    # Тело ошибки, если есть
+    print(answer_usual_re3_f["errorBody"]["text"])
+    print(answer_usual_re3_f["errorBody"]["id"])
 
 """
 Пример асинхронной работы 
@@ -80,27 +80,28 @@ import asyncio
 
 
 async def run():
-	try:
-		answer_aio_re3 = await ReCaptchaV3.aioReCaptchaV3(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(site_key=SITE_KEY,
-																									   page_url=PAGE_URL)
-		if not answer_aio_re3['error']:
-			# решение капчи
-			print(answer_aio_re3['captchaSolve'])
-			print(answer_aio_re3['taskId'])
-			print(answer_aio_re3['user_check'])
-			print(answer_aio_re3['user_score'])
-		elif answer_aio_re3['error']:
-			# Тело ошибки, если есть
-			print(answer_aio_re3['errorBody']['text'])
-			print(answer_aio_re3['errorBody']['id'])
-	except Exception as err:
-		print(err)
+    try:
+        answer_aio_re3 = await ReCaptchaV3.aioReCaptchaV3(
+            rucaptcha_key=RUCAPTCHA_KEY
+        ).captcha_handler(site_key=SITE_KEY, page_url=PAGE_URL)
+        if not answer_aio_re3["error"]:
+            # решение капчи
+            print(answer_aio_re3["captchaSolve"])
+            print(answer_aio_re3["taskId"])
+            print(answer_aio_re3["user_check"])
+            print(answer_aio_re3["user_score"])
+        elif answer_aio_re3["error"]:
+            # Тело ошибки, если есть
+            print(answer_aio_re3["errorBody"]["text"])
+            print(answer_aio_re3["errorBody"]["id"])
+    except Exception as err:
+        print(err)
 
 
-if __name__ == '__main__':
-	loop = asyncio.get_event_loop()
-	loop.run_until_complete(run())
-	loop.close()
+if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(run())
+    loop.close()
 
 """
 Callback пример
@@ -109,7 +110,7 @@ Callback пример
 Coming soon
 ***
 """
-'''
+"""
 # нужно передать IP/URL ранее зарегистрированного сервера
 server_ip = '85.255.8.26'
 # и по желанию - порт на сервере который слушает ваше веб-приложение
@@ -143,4 +144,4 @@ if answer.text == 'OK':
     callback_server_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get('id'), queue_name=queue_name, call_type='queue').captcha_handler()
 
     print(callback_server_response)
-'''
+"""
