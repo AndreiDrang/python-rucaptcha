@@ -213,6 +213,8 @@ class aioReCaptchaV2:
         return True
 
     # Работа с капчей
+    @api_key_check
+    @service_check
     async def captcha_handler(self, site_key: str, page_url: str, **kwargs):
         """
 		Метод отвечает за передачу данных на сервер для решения капчи
