@@ -16,8 +16,7 @@ def get_sync_result(
     while True:
         try:
             # отправляем запрос на результат решения капчи, если не решена ожидаем
-            captcha_response = requests.post(url_response, data=get_payload).json()
-
+            captcha_response = requests.get(url_response, params=get_payload).json()
             # если капча ещё не решена - ожидаем
             if captcha_response["request"] == "CAPCHA_NOT_READY":
                 time.sleep(sleep_time)
@@ -69,7 +68,7 @@ async def get_async_result(
     async with aiohttp.ClientSession() as session:
         while True:
             try:
-                async with session.post(url_response, data=get_payload) as resp:
+                async with session.get(url_response, params=get_payload) as resp:
                     captcha_response = await resp.json()
 
                     # если капча ещё не решена - ожидаем
