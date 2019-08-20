@@ -1,0 +1,8 @@
+[flake8]
+exclude = .git, __pycache__, venv
+filename = *.py
+ignore = E402, W503, F405, F403, E800
+max-line-length = 120
+max-doc-length = 80
+select = E,W,F,C
+import-order-style = spoqa
