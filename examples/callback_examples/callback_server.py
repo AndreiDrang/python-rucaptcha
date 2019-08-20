@@ -104,8 +104,8 @@ async def rucaptcha_cache_get_handle(request):
     task_id - task id from RuCaptcha
 
     Response
-    json - {'id': <task_id>, 'code': <solve_code>} 
-           or 
+    json - {'id': <task_id>, 'code': <solve_code>}
+           or
            {'id': <task_id>, 'code': "CAPCHA_NOT_READY"}
     """
     # get task id from request
@@ -216,8 +216,8 @@ async def anticaptcha_cache_get_handle(request):
     task_id - task id from AntiCaptcha
 
     Response
-    json - {'taskId': <task_id>, 'message': {<solve_json>} 
-           or 
+    json - {'taskId': <task_id>, 'message': {<solve_json>}
+           or
            {'taskId': <task_id>, 'message': {"taskId": <task_id>, "status": "processing"}
     """
     # get task id from request
