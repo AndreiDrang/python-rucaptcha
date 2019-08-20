@@ -11,11 +11,11 @@ from .errors import RuCaptchaError
 def get_sync_result(
     get_payload: dict, sleep_time: int, url_response: str, result: dict
 ):
-    # генератор для повторных попыток подключения к серверу получения решения капчи
+    # генератор для повторных попыток подключения к серверу
     connect_gen = connect_generator()
     while True:
         try:
-            # отправляем запрос на результат решения капчи, если не решена ожидаем
+            # отправляем запрос на результат решения капчи
             captcha_response = requests.get(url_response, params=get_payload).json()
             # если капча ещё не решена - ожидаем
             if captcha_response["request"] == "CAPCHA_NOT_READY":
@@ -37,7 +37,8 @@ def get_sync_result(
             elif captcha_response["status"] == 1:
                 result.update({"captchaSolve": captcha_response["request"]})
 
-                # если это ReCaptcha v3 то получаем от сервера дополнительные поля, с ID юзера и его счётом
+                # если это ReCaptcha v3 то получаем от сервера
+                # дополнительные поля, с ID юзера и его счётом
                 if captcha_response.get("user_check") and captcha_response.get(
                     "user_score"
                 ):
@@ -62,7 +63,7 @@ def get_sync_result(
 async def get_async_result(
     get_payload: dict, sleep_time: int, url_response: str, result: dict
 ):
-    # генератор для повторных попыток подключения к серверу получения решения капчи
+    # генератор для повторных попыток подключения к серверу
     connect_gen = connect_generator()
     # отправляем запрос на результат решения капчи, если не решена ожидаем
     async with aiohttp.ClientSession() as session:
@@ -91,7 +92,8 @@ async def get_async_result(
                     elif captcha_response["status"] == 1:
                         result.update({"captchaSolve": captcha_response["request"]})
 
-                        # если это ReCaptcha v3 то получаем от сервера дополнительные поля, с ID юзера и его счётом
+                        # если это ReCaptcha v3 то получаем от сервера
+                        # дополнительные поля, с ID юзера и его счётом
                         if captcha_response.get("user_check") and captcha_response.get(
                             "user_score"
                         ):

@@ -25,7 +25,7 @@ class KeyCaptcha:
                              и "rucaptcha"
         :param sleep_time: Время ожидания решения капчи
         :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha
-		:param kwargs: Для передачи дополнительных параметров
+        :param kwargs: Для передачи дополнительных параметров
         """
         # время ожидания решения капчи
         self.sleep_time = sleep_time
@@ -63,10 +63,10 @@ class KeyCaptcha:
     @service_check
     def captcha_handler(self, key_params: dict, **kwargs):
         """
-		Метод отвечает за передачу данных на сервер для решения капчи
-		:param key_params: Параметры/ключи key-captcha(подробнее в примерах бибилотеки или на сайте RuCaptcha)
-		:param kwargs: Для передачи дополнительных параметров
-		:return: Ответ на капчу в виде JSON строки с полями:
+        Метод отвечает за передачу данных на сервер для решения капчи
+        :param key_params: Параметры/ключи key-captcha(подробнее в примерах бибилотеки или на сайте RuCaptcha)
+        :param kwargs: Для передачи дополнительных параметров
+        :return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
                     error - False - если всё хорошо, True - если есть ошибка,
@@ -75,7 +75,7 @@ class KeyCaptcha:
                             text - Развернётое пояснение ошибки
                             id - уникальный номер ошибка в ЭТОЙ бибилотеке
                         }
-		"""
+        """
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
         # Если переданы ещё параметры - вносим их в get_payload
@@ -150,10 +150,10 @@ class aioKeyCaptcha:
         """
         :param rucaptcha_key: АПИ ключ капчи из кабинета пользователя
         :param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
-                             и "rucaptcha"
+                                и "rucaptcha"
         :param sleep_time: Время ожидания решения капчи
         :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha
-		:param kwargs: Для передачи дополнительных параметров
+        :param kwargs: Для передачи дополнительных параметров
         """
         # время ожидания решения капчи
         self.sleep_time = sleep_time
@@ -204,10 +204,10 @@ class aioKeyCaptcha:
     @service_check
     async def captcha_handler(self, key_params: dict, **kwargs):
         """
-		Метод отвечает за передачу данных на сервер для решения капчи
-		:param key_params: Параметры/ключи key-captcha(подробнее в примерах бибилотеки или на сайте RuCaptcha)
-		:param kwargs: Для передачи дополнительных параметров
-		:return: Ответ на капчу в виде JSON строки с полями:
+        Метод отвечает за передачу данных на сервер для решения капчи
+        :param key_params: Параметры/ключи key-captcha(подробнее в примерах бибилотеки или на сайте RuCaptcha)
+        :param kwargs: Для передачи дополнительных параметров
+        :return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
                     error - False - если всё хорошо, True - если есть ошибка,
@@ -216,7 +216,7 @@ class aioKeyCaptcha:
                             text - Развернётое пояснение ошибки
                             id - уникальный номер ошибка в ЭТОЙ бибилотеке
                         }
-		"""
+        """
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
         # Если переданы ещё параметры - вносим их в get_payload

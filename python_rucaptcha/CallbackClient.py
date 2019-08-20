@@ -23,7 +23,7 @@ class CallbackClient:
     def __init__(self, task_id: int, queue_name: str = None, call_type: str = "cache"):
         """
         :param task_id: ID полученное при создании задания в сервисе RuCaptcha
-        :param queue_name: Название очереди выбранное и переданное последним параметров в URL для `pingback`. 
+        :param queue_name: Название очереди выбранное и переданное последним параметров в URL для `pingback`.
                            Если передан параметр `call_type=queue` то поле это обязательное.
         :param call_type: Ресурс к которому будут отправлятся запросы: `cache` или `queue`
         """
@@ -48,7 +48,8 @@ class CallbackClient:
                     self.rtmq_vhost = RTMQ_VHOST
                 else:
                     raise ValueError(
-                        "\nВыбран тип получения решения `call_type=queue`, но не передан параметр названия очереди - `queue_name`. "
+                        "\nВыбран тип получения решения `call_type=queue`,\
+                            но не передан параметр названия очереди - `queue_name`. "
                         f"\n\tПередайте параметр `queue_name` или измените `call_type=queue` на `call_type=cache`"
                         "\nYou select `call_type=queue` but don`t set `queue_name` param."
                         f"\n\tSet `queue_name` param or change `call_type=queue` to `call_type=cache`"
