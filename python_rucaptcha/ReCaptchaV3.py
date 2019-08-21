@@ -1,6 +1,6 @@
-import requests
 import time
 import asyncio
+import requests
 import aiohttp
 
 from python_rucaptcha.config import app_key

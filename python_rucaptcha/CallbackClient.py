@@ -1,8 +1,8 @@
 import json
 import time
 
-import requests
 import pika
+import requests
 
 from .config import (
     HOST,

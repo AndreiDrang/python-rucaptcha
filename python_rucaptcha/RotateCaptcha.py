@@ -1,5 +1,6 @@
-import requests
 import time
+
+import requests
 from requests.adapters import HTTPAdapter
 
 from python_rucaptcha.config import app_key
