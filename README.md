@@ -46,6 +46,8 @@ python setup.py install
 **v.2.5.3** - Добавление `contextmanager` ко всем методам решения капчи.
 
 **v.2.5.4** - Добавление `GeeTest` метода. С синхронным и асинхронным исполнением.
+
+**v.2.6.3** - Добавление `Distil` метода. С синхронным и асинхронным исполнением.
 ***
 ### Будущие обновления
 v.3.0 -  ...
@@ -112,7 +114,6 @@ print(callback_queue_response)
 
 1.[Решение капчи-изображения(большие и маленькие).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ImageCaptcha.py)
 
-Краткий пример:
 ```python
 from python_rucaptcha import ImageCaptcha
 # Введите ключ от сервиса RuCaptcha, из своего аккаунта
@@ -134,7 +135,6 @@ elif user_answer['error']:
 
 2.[Решение KeyCaptcha(пазл-капча).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/KeyCaptcha.py)
 
-Краткий пример:
 ```python
 from python_rucaptcha import KeyCaptcha
 # Введите ключ от сервиса RuCaptcha, из своего аккаунта
@@ -163,7 +163,6 @@ elif answer['error']:
 
 3.[Решение ReCaptcha v2.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV2.py)
 
-Краткий пример:
 ```python
 from python_rucaptcha import ReCaptchaV2
 # Введите ключ от сервиса RuCaptcha, из своего аккаунта
@@ -188,7 +187,6 @@ elif user_answer['error']:
 
 4.[Решение новой ReCaptcha v3.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV3.py)
 
-Краткий пример:
 ```python
 from python_rucaptcha import ReCaptchaV3
 # Введите ключ от сервиса RuCaptcha, из своего аккаунта
@@ -223,7 +221,6 @@ elif user_answer['error']:
 
 6.[Решение текстовой капчи.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/TextCaptcha.py)
 
-Краткий пример:
 ```python
 from python_rucaptcha import TextCaptcha
 # Введите ключ от рукапчи из своего аккаунта
@@ -245,7 +242,6 @@ elif user_answer['error']:
 
 7.[Решение FunCaptcha.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/FunCaptcha.py)
 
-Краткий пример:
 ```python
 from python_rucaptcha import FunCaptcha
 # Введите ключ от рукапчи из своего аккаунта
@@ -272,6 +268,32 @@ elif answer['error']:
     
 ```
 8.[Модуль для получения инофрмации о балансе аккаунта и отправке жалоб.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/RuCaptchaControl.py)
+
+9.[Решение DistilCaptcha.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/DistilCaptcha.py)
+
+```python
+from python_rucaptcha.DistilCaptcha import DistilCaptcha
+# Введите ключ от рукапчи из своего аккаунта
+RUCAPTCHA_KEY = ''
+
+JsSha1 = "af2d0557c23ff2d8f40ccf4bec57e480704634e9"
+JsUri = "http://www.targetwebsite.com/pvvhnzyazwpzgkhv.js"
+JsData = "IWZ1bmN0fewfwefwefwef9905j0g4905jh9046hj3cpCg=="
+
+result = DistilCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
+    JsSha1=JsSha1, JsUri=JsUri, JsData=JsData
+)
+
+if not answer['error']:
+    # решение капчи
+    print(answer['captchaSolve'])
+    print(answer['taskId'])
+elif answer['error']:
+    # Тело ошибки, если есть
+    print(answer['errorBody']['text'])
+    print(answer['errorBody']['id'])
+    
+```
 ***
 Кроме того, для тестирования различных типов капчи предоставляется [специальный сайт](http://85.255.8.26/), на котором собраны все имеющиеся типы капчи, с удобной системой тестирования ваших скриптов.
 ***
