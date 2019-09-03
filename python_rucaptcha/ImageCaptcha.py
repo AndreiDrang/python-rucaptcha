@@ -3,6 +3,7 @@ import time
 import shutil
 import asyncio
 import base64
+import uuid
 
 import aiohttp
 import requests
@@ -132,17 +133,17 @@ class ImageCaptcha:
         captcha_id = None
 
         try:
-            # Высчитываем хэш изображения, для того что бы сохранить его под уникальным именем
-            image_hash = hash(content)
+            # уникальное имя изображения
+            image_name = uuid.uuid4()
 
             # сохраняем в папку изображение
             with open(
-                os.path.join(self.img_path, f"im-{image_hash}.png"), "wb"
+                os.path.join(self.img_path, f"im-{image_name}.png"), "wb"
             ) as out_image:
                 out_image.write(content)
 
             with open(
-                os.path.join(self.img_path, f"im-{image_hash}.png"), "rb"
+                os.path.join(self.img_path, f"im-{image_name}.png"), "rb"
             ) as captcha_image:
                 # Отправляем на рукапча изображение капчи и другие парметры,
                 # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
@@ -426,15 +427,16 @@ class aioImageCaptcha:
         """
         captcha_id = None
         try:
-            image_hash = hash(content)
+            # уникальное имя изображения
+            image_name = uuid.uuid4()
 
             with open(
-                os.path.join(self.img_path, f"im-{image_hash}.png"), "wb"
+                os.path.join(self.img_path, f"im-{image_name}.png"), "wb"
             ) as out_image:
                 out_image.write(content)
 
             with open(
-                os.path.join(self.img_path, f"im-{image_hash}.png"), "rb"
+                os.path.join(self.img_path, f"im-{image_name}.png"), "rb"
             ) as captcha_image:
                 # Отправляем на рукапча изображение капчи и другие парметры
                 self.post_payload.update(
