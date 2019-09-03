@@ -484,7 +484,11 @@ class aioImageCaptcha:
                     f"Вы передали: `{content_type}`"
                 )
 
-            captcha_id = requests.post(self.url_request, data=self.post_payload).json()
+            async with aiohttp.ClientSession() as session:
+                async with session.post(
+                    self.url_request, data=self.post_payload
+                ) as resp:
+                    captcha_id = await resp.json()
 
         except (IOError, FileNotFoundError) as error:
             self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
