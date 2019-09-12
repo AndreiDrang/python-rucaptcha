@@ -30,7 +30,9 @@ with HCaptcha(rucaptcha_key=RUCAPTCHA_KEY) as h_captcha:
 async def aioexample():
     # with contextmanager
     with aioHCaptcha(rucaptcha_key=RUCAPTCHA_KEY) as h_captcha:
-        result = await h_captcha.captcha_handler(site_key=data_sitekey, page_url=website_link)
+        result = await h_captcha.captcha_handler(
+            site_key=data_sitekey, page_url=website_link
+        )
         print(result)
 
     # without contextmanager
