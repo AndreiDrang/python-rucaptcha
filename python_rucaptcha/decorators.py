@@ -51,7 +51,6 @@ def service_check(func):
         # вызываем ошибку, если сервис неизвестный
         else:
             raise ValueError(
-                "Передан неверный параметр URL-сервиса капчи! Возможные варинты: `rucaptcha` и `2captcha`."
                 "Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`."
             )
 

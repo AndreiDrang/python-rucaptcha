@@ -48,6 +48,8 @@ python setup.py install
 **v.2.5.4** - Добавление `GeeTest` метода. С синхронным и асинхронным исполнением.
 
 **v.2.6.3** - Добавление `Distil` метода. С синхронным и асинхронным исполнением.
+
+**v.2.6.4** - Добавление `HCaptcha` метода. С синхронным и асинхронным исполнением.
 ***
 ### Будущие обновления
 v.3.0 -  ...
@@ -280,8 +282,31 @@ JsSha1 = "af2d0557c23ff2d8f40ccf4bec57e480704634e9"
 JsUri = "http://www.targetwebsite.com/pvvhnzyazwpzgkhv.js"
 JsData = "IWZ1bmN0fewfwefwefwef9905j0g4905jh9046hj3cpCg=="
 
-result = DistilCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
+answer = DistilCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
     JsSha1=JsSha1, JsUri=JsUri, JsData=JsData
+)
+
+if not answer['error']:
+    # решение капчи
+    print(answer['captchaSolve'])
+    print(answer['taskId'])
+elif answer['error']:
+    # Тело ошибки, если есть
+    print(answer['errorBody']['text'])
+    print(answer['errorBody']['id'])
+    
+```
+10.[Решение HCaptcha.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/HCaptcha.py)
+
+```python
+from python_rucaptcha.HCaptcha import HCaptcha
+RUCAPTCHA_KEY = ''
+
+website_link = "https://secure2.e-konsulat.gov.pl/Uslugi/RejestracjaTerminu.aspx?IDUSLUGI=1&IDPlacowki=94"
+data_sitekey = "39fccce0-e3e3-4f9d-a942-ea415c102beb"
+
+answer = HCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
+    site_key=data_sitekey, page_url=website_link
 )
 
 if not answer['error']:

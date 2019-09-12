@@ -33,7 +33,7 @@ with DistilCaptcha(rucaptcha_key=RUCAPTCHA_KEY) as dist_captcha:
 
 # асинхронный пример contextmanager
 async def aiocontext():
-    with DistilCaptcha(rucaptcha_key=RUCAPTCHA_KEY) as ob:
+    with aioDistilCaptcha(rucaptcha_key=RUCAPTCHA_KEY) as ob:
         result = await ob.captcha_handler(JsSha1=JsSha1, JsUri=JsUri, JsData=JsData)
         print(result)
 
