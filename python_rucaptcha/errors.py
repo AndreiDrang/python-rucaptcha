@@ -73,8 +73,7 @@ class RuCaptchaError(Exception):
 class ReadError(Exception):
     def __init__(self, error):
         Exception.__init__(
-            self,
-            f"\n\tОшибка порождается при невозможности открыть переднный файл!\n\t\t{error}",
+            self, f"\n\tОшибка порождается при невозможности открыть переднный файл!\n\t\t{error}"
         )
 
 

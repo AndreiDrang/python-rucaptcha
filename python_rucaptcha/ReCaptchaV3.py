@@ -69,12 +69,7 @@ class ReCaptchaV3:
             self.post_payload.update({"proxy": proxy, "proxytype": proxytype})
 
         # пайлоад GET запроса на получение результата решения капчи
-        self.get_payload = {
-            "key": rucaptcha_key,
-            "action": "get",
-            "json": 1,
-            "taskinfo": 1,
-        }
+        self.get_payload = {"key": rucaptcha_key, "action": "get", "json": 1, "taskinfo": 1}
 
     def __enter__(self):
         return self
@@ -119,10 +114,7 @@ class ReCaptchaV3:
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors(captcha_id["request"]),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
             )
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения
@@ -209,12 +201,7 @@ class aioReCaptchaV3:
             self.post_payload.update({"proxy": proxy, "proxytype": proxytype})
 
         # пайлоад GET запроса на получение результата решения капчи
-        self.get_payload = {
-            "key": rucaptcha_key,
-            "action": "get",
-            "json": 1,
-            "taskinfo": 1,
-        }
+        self.get_payload = {"key": rucaptcha_key, "action": "get", "json": 1, "taskinfo": 1}
 
     def __enter__(self):
         return self
@@ -261,10 +248,7 @@ class aioReCaptchaV3:
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors(captcha_id["request"]),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
             )
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения

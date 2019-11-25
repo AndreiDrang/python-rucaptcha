@@ -10,9 +10,9 @@ from python_rucaptcha import RuCaptchaControl, ImageCaptcha
 RUCAPTCHA_KEY = "ba86e77f9007a106c2eb2d7436e74440"
 
 # пример получения информации о балансе
-answer = RuCaptchaControl.RuCaptchaControl(
-    rucaptcha_key=RUCAPTCHA_KEY
-).additional_methods(action="getbalance")
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
+    action="getbalance"
+)
 
 """
 answer - это JSON строка с соответствующими полями:
@@ -38,9 +38,9 @@ elif answer["error"]:
 # Пример отправки жалобы на неправильно решённую капчу под ID "666"
 wrong_captcha_id = 666
 
-answer = RuCaptchaControl.RuCaptchaControl(
-    rucaptcha_key=RUCAPTCHA_KEY
-).additional_methods(action="reportbad", id=wrong_captcha_id)
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
+    action="reportbad", id=wrong_captcha_id
+)
 
 # Если заявка принята
 if not answer["error"]:
@@ -100,22 +100,22 @@ if __name__ == "__main__":
 Callback примеры
 """
 # регистрация нового домена для callback/pingback
-answer = RuCaptchaControl.RuCaptchaControl(
-    rucaptcha_key=RUCAPTCHA_KEY
-).additional_methods(action="add_pingback", addr="http://85.255.8.26/", json=1)
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
+    action="add_pingback", addr="http://85.255.8.26/", json=1
+)
 print(answer)
 # получение списка активных IP адресов
-answer = RuCaptchaControl.RuCaptchaControl(
-    rucaptcha_key=RUCAPTCHA_KEY
-).additional_methods(action="get_pingback", json=1)
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
+    action="get_pingback", json=1
+)
 print(answer)
 # удаление конкретного IP адреса
-answer = RuCaptchaControl.RuCaptchaControl(
-    rucaptcha_key=RUCAPTCHA_KEY
-).additional_methods(action="del_pingback", addr="http://85.255.8.26/")
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
+    action="del_pingback", addr="http://85.255.8.26/"
+)
 print(answer)
 # удаление всех IP адресов
-answer = RuCaptchaControl.RuCaptchaControl(
-    rucaptcha_key=RUCAPTCHA_KEY
-).additional_methods(action="del_pingback", addr="all")
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
+    action="del_pingback", addr="all"
+)
 print(answer)

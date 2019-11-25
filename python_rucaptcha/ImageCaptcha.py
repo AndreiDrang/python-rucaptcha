@@ -111,12 +111,8 @@ class ImageCaptcha:
         try:
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
-            self.post_payload.update(
-                {"body": base64.b64encode(content).decode("utf-8")}
-            )
-            captcha_id = self.session.post(
-                self.url_request, data=self.post_payload
-            ).json()
+            self.post_payload.update({"body": base64.b64encode(content).decode("utf-8")})
+            captcha_id = self.session.post(self.url_request, data=self.post_payload).json()
 
         except Exception as error:
             self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
@@ -137,22 +133,16 @@ class ImageCaptcha:
             image_name = uuid.uuid4()
 
             # сохраняем в папку изображение
-            with open(
-                os.path.join(self.img_path, f"im-{image_name}.png"), "wb"
-            ) as out_image:
+            with open(os.path.join(self.img_path, f"im-{image_name}.png"), "wb") as out_image:
                 out_image.write(content)
 
-            with open(
-                os.path.join(self.img_path, f"im-{image_name}.png"), "rb"
-            ) as captcha_image:
+            with open(os.path.join(self.img_path, f"im-{image_name}.png"), "rb") as captcha_image:
                 # Отправляем на рукапча изображение капчи и другие парметры,
                 # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
                 self.post_payload.update(
                     {"body": base64.b64encode(captcha_image.read()).decode("utf-8")}
                 )
-                captcha_id = self.session.post(
-                    self.url_request, data=self.post_payload
-                ).json()
+                captcha_id = self.session.post(self.url_request, data=self.post_payload).json()
 
         except (IOError, FileNotFoundError) as error:
             self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
@@ -196,9 +186,7 @@ class ImageCaptcha:
 
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
-            captcha_id = self.session.post(
-                self.url_request, data=self.post_payload
-            ).json()
+            captcha_id = self.session.post(self.url_request, data=self.post_payload).json()
 
         except (IOError, FileNotFoundError) as error:
             self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
@@ -244,17 +232,13 @@ class ImageCaptcha:
             captcha_id = self.__local_image_captcha(captcha_file)
         # если передан файл в кодировке base64
         elif captcha_base64:
-            captcha_id = self.__local_image_captcha(
-                captcha_base64, content_type="base64"
-            )
+            captcha_id = self.__local_image_captcha(captcha_base64, content_type="base64")
         # если передан URL
         elif captcha_link:
             try:
                 content = self.session.get(url=captcha_link, **kwargs).content
             except Exception as error:
-                self.result.update(
-                    {"error": True, "errorBody": {"text": error, "id": -1}}
-                )
+                self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
                 return self.result
 
             # согласно значения переданного параметра выбираем функцию для сохранения изображения
@@ -266,10 +250,7 @@ class ImageCaptcha:
         else:
             # если не передан ни один из параметров
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": "You did not send any file local link or URL.",
-                }
+                {"error": True, "errorBody": "You did not send any file local link or URL."}
             )
             return self.result
         # проверяем наличие ошибок при скачивании/передаче файла на сервер
@@ -279,10 +260,7 @@ class ImageCaptcha:
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         elif captcha_id["status"] == 0:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors(captcha_id["request"]),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
             )
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения
@@ -405,13 +383,9 @@ class aioImageCaptcha:
         captcha_id = None
 
         try:
-            self.post_payload.update(
-                {"body": base64.b64encode(content).decode("utf-8")}
-            )
+            self.post_payload.update({"body": base64.b64encode(content).decode("utf-8")})
             async with aiohttp.ClientSession() as session:
-                async with session.post(
-                    self.url_request, data=self.post_payload
-                ) as resp:
+                async with session.post(self.url_request, data=self.post_payload) as resp:
                     captcha_id = await resp.json()
 
         except Exception as error:
@@ -430,22 +404,16 @@ class aioImageCaptcha:
             # уникальное имя изображения
             image_name = uuid.uuid4()
 
-            with open(
-                os.path.join(self.img_path, f"im-{image_name}.png"), "wb"
-            ) as out_image:
+            with open(os.path.join(self.img_path, f"im-{image_name}.png"), "wb") as out_image:
                 out_image.write(content)
 
-            with open(
-                os.path.join(self.img_path, f"im-{image_name}.png"), "rb"
-            ) as captcha_image:
+            with open(os.path.join(self.img_path, f"im-{image_name}.png"), "rb") as captcha_image:
                 # Отправляем на рукапча изображение капчи и другие парметры
                 self.post_payload.update(
                     {"body": base64.b64encode(captcha_image.read()).decode("utf-8")}
                 )
                 async with aiohttp.ClientSession() as session:
-                    async with session.post(
-                        self.url_request, data=self.post_payload
-                    ) as resp:
+                    async with session.post(self.url_request, data=self.post_payload) as resp:
                         captcha_id = await resp.json()
 
         except (IOError, FileNotFoundError) as error:
@@ -487,9 +455,7 @@ class aioImageCaptcha:
                 )
 
             async with aiohttp.ClientSession() as session:
-                async with session.post(
-                    self.url_request, data=self.post_payload
-                ) as resp:
+                async with session.post(self.url_request, data=self.post_payload) as resp:
                     captcha_id = await resp.json()
 
         except (IOError, FileNotFoundError) as error:
@@ -535,18 +501,14 @@ class aioImageCaptcha:
             captcha_id = await self.__local_image_captcha(captcha_file)
         # если передан файл в кодировке base64
         elif captcha_base64:
-            captcha_id = await self.__local_image_captcha(
-                captcha_base64, content_type="base64"
-            )
+            captcha_id = await self.__local_image_captcha(captcha_base64, content_type="base64")
         elif captcha_link:
             try:
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url=captcha_link, proxy=proxy) as resp:
                         content = await resp.content.read()
             except Exception as error:
-                self.result.update(
-                    {"error": True, "errorBody": {"text": error, "id": -1}}
-                )
+                self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
                 return self.result
 
             # согласно значения переданного параметра обрабатываем файл
@@ -557,10 +519,7 @@ class aioImageCaptcha:
 
         else:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": "You did not send any file local link or URL.",
-                }
+                {"error": True, "errorBody": "You did not send any file local link or URL."}
             )
             return self.result
 
@@ -571,10 +530,7 @@ class aioImageCaptcha:
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         elif captcha_id["status"] == 0:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors(captcha_id["request"]),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
             )
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения

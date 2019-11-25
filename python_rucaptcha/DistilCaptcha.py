@@ -16,11 +16,7 @@ class DistilCaptcha:
 	"""
 
     def __init__(
-        self,
-        rucaptcha_key: str,
-        service_type: str = "2captcha",
-        sleep_time: int = 15,
-        **kwargs
+        self, rucaptcha_key: str, service_type: str = "2captcha", sleep_time: int = 15, **kwargs
     ):
         """
 		Инициализация нужных переменных.
@@ -87,19 +83,14 @@ class DistilCaptcha:
                 self.get_payload["data"].update({key: kwargs[key]})
 
         # добавляем в пайлоад параметры капчи переданные пользователем
-        self.post_payload["data"].update(
-            {"JsSha1": JsSha1, "JsUri": JsUri, "JsData": JsData}
-        )
+        self.post_payload["data"].update({"JsSha1": JsSha1, "JsUri": JsUri, "JsData": JsData})
         # получаем ID капчи
         captcha_id = requests.post(self.url_request, data=self.post_payload).json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors(captcha_id["request"]),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
             )
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения
@@ -132,11 +123,7 @@ class aioDistilCaptcha:
     """
 
     def __init__(
-        self,
-        rucaptcha_key: str,
-        service_type: str = "2captcha",
-        sleep_time: int = 15,
-        **kwargs
+        self, rucaptcha_key: str, service_type: str = "2captcha", sleep_time: int = 15, **kwargs
     ):
         """
         Инициализация нужных переменных.
@@ -176,9 +163,7 @@ class aioDistilCaptcha:
 
     @api_key_check
     @service_check
-    async def captcha_handler(
-        self, JsSha1: str, JsUri: str, JsData: str, **kwargs
-    ) -> dict:
+    async def captcha_handler(self, JsSha1: str, JsUri: str, JsData: str, **kwargs) -> dict:
         """
 		Метод отвечает за передачу данных на сервер для решения капчи
 		:param JsSha1: контрольная сумма SHA1 для javascript библиотеки
@@ -204,9 +189,7 @@ class aioDistilCaptcha:
                 self.get_payload.update({key: kwargs[key]})
 
         # добавляем в пайлоад параметры капчи переданные пользователем
-        self.post_payload["data"].update(
-            {"JsSha1": JsSha1, "JsUri": JsUri, "JsData": JsData}
-        )
+        self.post_payload["data"].update({"JsSha1": JsSha1, "JsUri": JsUri, "JsData": JsData})
         # получаем ID капчи
         async with aiohttp.ClientSession() as session:
             async with session.post(self.url_request, data=self.post_payload) as resp:
@@ -215,10 +198,7 @@ class aioDistilCaptcha:
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors(captcha_id["request"]),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
             )
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения

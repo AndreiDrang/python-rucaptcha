@@ -22,8 +22,7 @@ RTMQ_VHOST = "rucaptcha_vhost"
 async def register_new_queue(route: str):
     async with aiohttp.ClientSession() as session:
         async with session.post(
-            f"http://{HOST}:{PORT}/{route}",
-            json={"key": QUEUE_KEY, "vhost": "rucaptcha_vhost"},
+            f"http://{HOST}:{PORT}/{route}", json={"key": QUEUE_KEY, "vhost": "rucaptcha_vhost"}
         ) as resp:
             answer = await resp.text()
             print(f"\tNew queue creation status - {answer};")

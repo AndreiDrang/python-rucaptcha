@@ -109,10 +109,7 @@ raise ValueError
 """
 
 user_answer_const = ImageCaptcha.ImageCaptcha(
-    rucaptcha_key=RUCAPTCHA_KEY,
-    img_path="test_files",
-    img_clearing=False,
-    save_format="const",
+    rucaptcha_key=RUCAPTCHA_KEY, img_path="test_files", img_clearing=False, save_format="const"
 ).captcha_handler(captcha_link=image_link)
 print(user_answer_const)
 """
@@ -130,14 +127,12 @@ print(user_answer_temp)
 An example of working with decoding in base64 a captcha file after downloading. 
 """
 base_64_link = base64.b64encode(
-    requests.get(
-        "http://85.255.8.26/static/image/common_image_example/862963.png"
-    ).content
+    requests.get("http://85.255.8.26/static/image/common_image_example/862963.png").content
 ).decode("utf-8")
 
-user_answer_base64 = ImageCaptcha.ImageCaptcha(
-    rucaptcha_key=RUCAPTCHA_KEY
-).captcha_handler(captcha_base64=base_64_link)
+user_answer_base64 = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
+    captcha_base64=base_64_link
+)
 print(user_answer_base64)
 """
 user_answer_... - это JSON строка с соответствующими полями
@@ -225,9 +220,9 @@ captcha_file = "088636.png"
 # captcha_file = r'D:\Python\933588.png'
 # captcha_file = 'D:\/Python\/933588.png'
 try:
-    user_answer_local = ImageCaptcha.ImageCaptcha(
-        rucaptcha_key=RUCAPTCHA_KEY
-    ).captcha_handler(captcha_file=captcha_file)
+    user_answer_local = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
+        captcha_file=captcha_file
+    )
     if not user_answer_local["error"]:
         # решение капчи
         print(user_answer_local["captchaSolve"])
@@ -324,9 +319,7 @@ server_ip = "85.255.8.26"
 # и по желанию - порт на сервере который слушает ваше веб-приложение
 server_port = 8001
 # регистрация нового домена для callback/pingback
-answer = RuCaptchaControl.RuCaptchaControl(
-    rucaptcha_key=RUCAPTCHA_KEY
-).additional_methods(
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
     action="add_pingback", addr=f"http://{server_ip}:{server_port}/", json=1
 )
 print(answer)

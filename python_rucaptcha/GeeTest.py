@@ -20,7 +20,7 @@ class GeeTest:
         api_server: str = None,
         sleep_time: int = 15,
         pingback: str = None,
-        **kwargs
+        **kwargs,
     ):
         """
 		Модуль отвечает за решение GeeTest
@@ -103,10 +103,7 @@ class GeeTest:
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors(captcha_id["request"]),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
             )
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения
@@ -142,7 +139,7 @@ class aioGeeTest:
         api_server: str = None,
         sleep_time: int = 15,
         pingback: str = None,
-        **kwargs
+        **kwargs,
     ):
         """
 		Модуль отвечает за решение GeeTest
@@ -228,10 +225,7 @@ class aioGeeTest:
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors(captcha_id["request"]),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
             )
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения

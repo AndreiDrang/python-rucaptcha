@@ -52,9 +52,7 @@ with FunCaptcha.FunCaptcha(rucaptcha_key=RUCAPTCHA_KEY) as fun_captcha:
 # асинхронный пример contextmanager
 async def aiocontext():
     with FunCaptcha.aioFunCaptcha(rucaptcha_key=RUCAPTCHA_KEY) as fun_captcha:
-        result = await fun_captcha.captcha_handler(
-            public_key=public_key, page_url=pageurl
-        )
+        result = await fun_captcha.captcha_handler(public_key=public_key, page_url=pageurl)
         print(result)
 
 
@@ -99,9 +97,9 @@ elif answer["error"]:
 
 async def run():
     try:
-        answer = await FunCaptcha.aioFunCaptcha(
-            rucaptcha_key="RUCAPTCHA_KEY"
-        ).captcha_handler(public_key=public_key, page_url=pageurl)
+        answer = await FunCaptcha.aioFunCaptcha(rucaptcha_key="RUCAPTCHA_KEY").captcha_handler(
+            public_key=public_key, page_url=pageurl
+        )
         if not answer["error"]:
             # решение капчи
             print(answer["captchaSolve"])
@@ -127,9 +125,7 @@ server_ip = "85.255.8.26"
 # и по желанию - порт на сервере который слушает ваше веб-приложение
 server_port = 8001
 # регистрация нового домена для callback/pingback
-answer = RuCaptchaControl.RuCaptchaControl(
-    rucaptcha_key=RUCAPTCHA_KEY
-).additional_methods(
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
     action="add_pingback", addr=f"http://{server_ip}:{server_port}/", json=1
 )
 print(answer)

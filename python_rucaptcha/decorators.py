@@ -21,10 +21,7 @@ def api_key_check(func):
             return func(self, *args, **kwargs)
         else:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors("ERROR_WRONG_USER_KEY"),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors("ERROR_WRONG_USER_KEY")}
             )
             return self.result
 

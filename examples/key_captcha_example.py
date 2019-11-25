@@ -105,9 +105,7 @@ elif answer["error"] == 1:
 
 async def run():
     try:
-        answer = await KeyCaptcha.aioKeyCaptcha(
-            rucaptcha_key=RUCAPTCHA_KEY
-        ).captcha_handler(
+        answer = await KeyCaptcha.aioKeyCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
             key_params={
                 "s_s_c_user_id": 15,
                 "s_s_c_session_id": "8f460599bebe02cb0dd096b1fe70b089",
@@ -143,9 +141,7 @@ server_ip = "85.255.8.26"
 # и по желанию - порт на сервере который слушает ваше веб-приложение
 server_port = 8001
 # регистрация нового домена для callback/pingback
-answer = RuCaptchaControl.RuCaptchaControl(
-    rucaptcha_key=RUCAPTCHA_KEY
-).additional_methods(
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
     action="add_pingback", addr=f"http://{server_ip}:{server_port}/", json=1
 )
 print(answer)

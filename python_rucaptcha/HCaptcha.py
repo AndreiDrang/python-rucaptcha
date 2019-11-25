@@ -105,10 +105,7 @@ class HCaptcha:
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors(captcha_id["request"]),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
             )
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения
@@ -227,10 +224,7 @@ class aioHCaptcha:
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors(captcha_id["request"]),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
             )
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения

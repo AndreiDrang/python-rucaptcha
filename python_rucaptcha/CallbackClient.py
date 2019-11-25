@@ -4,15 +4,7 @@ import time
 import pika
 import requests
 
-from .config import (
-    HOST,
-    PORT,
-    RTMQ_USERNAME,
-    RTMQ_PASSWORD,
-    RTMQ_HOST,
-    RTMQ_PORT,
-    RTMQ_VHOST,
-)
+from .config import HOST, PORT, RTMQ_USERNAME, RTMQ_PASSWORD, RTMQ_HOST, RTMQ_PORT, RTMQ_VHOST
 
 
 class CallbackClient:
@@ -160,19 +152,13 @@ class CallbackClient:
                     else self.rtmq_password
                 )
                 self.rtmq_host = (
-                    auth_params["rtmq_host"]
-                    if auth_params.get("rtmq_host")
-                    else self.rtmq_host
+                    auth_params["rtmq_host"] if auth_params.get("rtmq_host") else self.rtmq_host
                 )
                 self.rtmq_port = (
-                    auth_params["rtmq_port"]
-                    if auth_params.get("rtmq_port")
-                    else self.rtmq_port
+                    auth_params["rtmq_port"] if auth_params.get("rtmq_port") else self.rtmq_port
                 )
                 self.rtmq_vhost = (
-                    auth_params["rtmq_vhost"]
-                    if auth_params.get("rtmq_vhost")
-                    else self.rtmq_vhost
+                    auth_params["rtmq_vhost"] if auth_params.get("rtmq_vhost") else self.rtmq_vhost
                 )
 
         # получение данных из кеша

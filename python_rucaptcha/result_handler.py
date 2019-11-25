@@ -9,9 +9,7 @@ from .errors import RuCaptchaError
 
 
 # синхронный метод
-def get_sync_result(
-    get_payload: dict, sleep_time: int, url_response: str, result: dict
-):
+def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, result: dict):
     # генератор для повторных попыток подключения к серверу
     connect_gen = connect_generator()
     while True:
@@ -25,12 +23,7 @@ def get_sync_result(
             # при ошибке во время решения
             elif captcha_response["status"] == 0:
                 result.update(
-                    {
-                        "error": 1,
-                        "errorBody": RuCaptchaError().errors(
-                            captcha_response["request"]
-                        ),
-                    }
+                    {"error": 1, "errorBody": RuCaptchaError().errors(captcha_response["request"])}
                 )
                 return result
 
@@ -40,9 +33,7 @@ def get_sync_result(
 
                 # если это ReCaptcha v3 то получаем от сервера
                 # дополнительные поля, с ID юзера и его счётом
-                if captcha_response.get("user_check") and captcha_response.get(
-                    "user_score"
-                ):
+                if captcha_response.get("user_check") and captcha_response.get("user_score"):
                     result.update(
                         {
                             "user_check": captcha_response.get("user_check"),
@@ -61,9 +52,7 @@ def get_sync_result(
 
 
 # асинхронный метод
-async def get_async_result(
-    get_payload: dict, sleep_time: int, url_response: str, result: dict
-):
+async def get_async_result(get_payload: dict, sleep_time: int, url_response: str, result: dict):
     # генератор для повторных попыток подключения к серверу
     connect_gen = connect_generator()
     # отправляем запрос на результат решения капчи, если не решена ожидаем
@@ -82,9 +71,7 @@ async def get_async_result(
                         result.update(
                             {
                                 "error": True,
-                                "errorBody": RuCaptchaError().errors(
-                                    captcha_response["request"]
-                                ),
+                                "errorBody": RuCaptchaError().errors(captcha_response["request"]),
                             }
                         )
                         return result
@@ -110,7 +97,5 @@ async def get_async_result(
                 if next(connect_gen) < 4:
                     time.sleep(2)
                 else:
-                    result.update(
-                        {"error": True, "errorBody": {"text": error, "id": -1}}
-                    )
+                    result.update({"error": True, "errorBody": {"text": error, "id": -1}})
                     return result

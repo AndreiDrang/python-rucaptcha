@@ -67,10 +67,7 @@ class RuCaptchaControl:
 
         if answer.json()["status"] == 0:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors(answer.json()["request"]),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors(answer.json()["request"])}
             )
             return self.result
 
@@ -136,9 +133,7 @@ class aioRuCaptchaControl:
         try:
             async with aiohttp.ClientSession() as session:
                 # отправляем на сервер данные с вашим запросом
-                async with session.post(
-                    self.url_response, data=self.post_payload
-                ) as resp:
+                async with session.post(self.url_response, data=self.post_payload) as resp:
                     answer = await resp.json()
 
         except Exception as error:

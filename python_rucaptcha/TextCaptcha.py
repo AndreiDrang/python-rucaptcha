@@ -17,7 +17,7 @@ class TextCaptcha:
         sleep_time: int = 5,
         service_type: str = "2captcha",
         pingback: str = None,
-        **kwargs
+        **kwargs,
     ):
         """
 		Инициализация нужных переменных.
@@ -33,12 +33,7 @@ class TextCaptcha:
         # тип URL на с которым будет работать библиотека
         self.service_type = service_type
         # пайлоад POST запроса на отправку капчи на сервер
-        self.post_payload = {
-            "key": rucaptcha_key,
-            "method": "post",
-            "json": 1,
-            "soft_id": app_key,
-        }
+        self.post_payload = {"key": rucaptcha_key, "method": "post", "json": 1, "soft_id": app_key}
         # если был передан параметр для callback`a - добавляем его
         if pingback:
             self.post_payload.update({"pingback": pingback})
@@ -91,10 +86,7 @@ class TextCaptcha:
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors(captcha_id["request"]),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
             )
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения
@@ -128,7 +120,7 @@ class aioTextCaptcha:
         sleep_time: int = 5,
         service_type: str = "2captcha",
         pingback: str = None,
-        **kwargs
+        **kwargs,
     ):
         """
 		Инициализация нужных переменных.
@@ -144,12 +136,7 @@ class aioTextCaptcha:
         # тип URL на с которым будет работать библиотека
         self.service_type = service_type
         # пайлоад POST запроса на отправку капчи на сервер
-        self.post_payload = {
-            "key": rucaptcha_key,
-            "method": "post",
-            "json": 1,
-            "soft_id": app_key,
-        }
+        self.post_payload = {"key": rucaptcha_key, "method": "post", "json": 1, "soft_id": app_key}
         # если был передан параметр для callback`a - добавляем его
         if pingback:
             self.post_payload.update({"pingback": pingback})
@@ -203,10 +190,7 @@ class aioTextCaptcha:
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors(captcha_id["request"]),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
             )
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения

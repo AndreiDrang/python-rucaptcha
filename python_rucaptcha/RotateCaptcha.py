@@ -18,7 +18,7 @@ class RotateCaptcha:
         service_type: str = "2captcha",
         sleep_time: int = 5,
         pingback: str = None,
-        **kwargs
+        **kwargs,
     ):
         """
         Инициализация нужных переменных, создание папки для изображений и кэша
@@ -106,10 +106,7 @@ class RotateCaptcha:
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors(captcha_id["request"]),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
             )
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения
@@ -142,7 +139,7 @@ class aioRotateCaptcha:
         service_type: str = "2captcha",
         sleep_time: int = 5,
         pingback: str = None,
-        **kwargs
+        **kwargs,
     ):
         """
         Инициализация нужных переменных, создание папки для изображений и кэша
@@ -229,10 +226,7 @@ class aioRotateCaptcha:
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors(captcha_id["request"]),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
             )
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения

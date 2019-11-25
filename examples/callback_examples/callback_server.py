@@ -234,10 +234,7 @@ async def anticaptcha_cache_get_handle(request):
         data = {"taskId": task_id, "message": json.loads(cache_data.decode())}
     else:
         # response dict
-        data = {
-            "taskId": task_id,
-            "message": {"taskId": task_id, "status": "processing"},
-        }
+        data = {"taskId": task_id, "message": {"taskId": task_id, "status": "processing"}}
 
     return web.json_response(data)
 

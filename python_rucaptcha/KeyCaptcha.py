@@ -17,7 +17,7 @@ class KeyCaptcha:
         service_type: str = "2captcha",
         sleep_time: int = 15,
         pingback: str = None,
-        **kwargs
+        **kwargs,
     ):
         """
 
@@ -105,10 +105,7 @@ class KeyCaptcha:
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors(captcha_id["request"]),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
             )
             return self.result
 
@@ -146,7 +143,7 @@ class aioKeyCaptcha:
         service_type: str = "2captcha",
         sleep_time: int = 15,
         pingback: str = None,
-        **kwargs
+        **kwargs,
     ):
         """
         :param rucaptcha_key: АПИ ключ капчи из кабинета пользователя
@@ -242,18 +239,13 @@ class aioKeyCaptcha:
 
         # получаем ID капчи
         async with aiohttp.ClientSession() as session:
-            async with session.post(
-                url=self.url_request, data=self.post_payload
-            ) as resp:
+            async with session.post(url=self.url_request, data=self.post_payload) as resp:
                 captcha_id = await resp.json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
             self.result.update(
-                {
-                    "error": True,
-                    "errorBody": RuCaptchaError().errors(captcha_id["request"]),
-                }
+                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
             )
             return self.result
 
