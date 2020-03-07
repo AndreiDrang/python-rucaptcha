@@ -28,7 +28,7 @@ cd python-rucaptcha
 python setup.py install
 ```
 ***
-По всем вопросам можете писать в [Telegram](https://t.me/joinchat/CD2EtQ5Pm0dmoSQQMTkVlw) чат.
+По всем вопросам можете писать в [Telegram](https://t.me/pythoncaptcha) чат.
 ***
 ### Последние обновления
 **v.2.0** - Обновление JSON ответа, ключа с информацией об ошибке(создание собственного списка ошибок с уникальными `id`). 
