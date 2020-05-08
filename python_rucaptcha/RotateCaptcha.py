@@ -3,12 +3,14 @@ import asyncio
 
 import aiohttp
 import requests
+import mimetypes
 from requests.adapters import HTTPAdapter
 
 from python_rucaptcha.config import app_key
 from python_rucaptcha.errors import RuCaptchaError
 from python_rucaptcha.result_handler import get_sync_result, get_async_result
 from python_rucaptcha.decorators import api_key_check, service_check
+
 
 
 class RotateCaptcha:
@@ -73,7 +75,7 @@ class RotateCaptcha:
         """
         Метод получает от вас ссылку на изображение, скачивает его, отправляет изображение на сервер
         RuCaptcha, дожидается решения капчи и вовзращает вам результат
-        :param captcha_link: Ссылка на изображение
+        :param captcha_link: Ссылка на изображение или путь до файла
         :param kwargs: Для передачи дополнительных параметров
         :return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
@@ -93,10 +95,11 @@ class RotateCaptcha:
                 self.get_payload.update({key: kwargs[key]})
 
         # Скачиваем изображение
-        content = self.session.get(captcha_link).content
+        content = self.session.get(captcha_link).content if "http" in captcha_link else open(captcha_link, "rb")
 
         # Отправляем изображение файлом
-        files = {"file": content}
+        files = {"file_1": ("file_1", content, mimetypes.guess_type(captcha_link)[0])}
+
         # Отправляем на рукапча изображение капчи и другие парметры,
         # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
         captcha_id = self.session.post(
