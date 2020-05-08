@@ -98,7 +98,7 @@ class RotateCaptcha:
         content = self.session.get(captcha_link).content if "http" in captcha_link else open(captcha_link, "rb")
 
         # Отправляем изображение файлом
-        files = {"file_1": ("file_1", content, mimetypes.guess_type(captcha_link))}
+        files = {"file_1": ("file_1", content, mimetypes.guess_type(captcha_link)[0])}
 
         # Отправляем на рукапча изображение капчи и другие парметры,
         # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
