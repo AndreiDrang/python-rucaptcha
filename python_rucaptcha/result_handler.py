@@ -5,7 +5,6 @@ import aiohttp
 import requests
 
 from .config import connect_generator
-from .errors import RuCaptchaError
 
 
 # синхронный метод
@@ -22,9 +21,7 @@ def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, resul
 
             # при ошибке во время решения
             elif captcha_response["status"] == 0:
-                result.update(
-                    {"error": 1, "errorBody": RuCaptchaError().errors(captcha_response["request"])}
-                )
+                result.update({"error": 1, "errorBody": captcha_response["request"]})
                 return result
 
             # при решении капчи
@@ -69,10 +66,7 @@ async def get_async_result(get_payload: dict, sleep_time: int, url_response: str
                     # при ошибке во время решения
                     elif captcha_response["status"] == 0:
                         result.update(
-                            {
-                                "error": True,
-                                "errorBody": RuCaptchaError().errors(captcha_response["request"]),
-                            }
+                            {"error": True, "errorBody": captcha_response["request"],}
                         )
                         return result
 

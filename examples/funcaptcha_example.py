@@ -86,8 +86,7 @@ if not answer["error"]:
     print(answer["taskId"])
 elif answer["error"]:
     # Тело ошибки, если есть
-    print(answer["errorBody"]["text"])
-    print(answer["errorBody"]["id"])
+    print(answer["errorBody"])
 
 
 """
@@ -106,8 +105,7 @@ async def run():
             print(answer["taskId"])
         elif answer["error"]:
             # Тело ошибки, если есть
-            print(answer["errorBody"]["text"])
-            print(answer["errorBody"]["id"])
+            print(answer["errorBody"])
     except Exception as err:
         print(err)
 

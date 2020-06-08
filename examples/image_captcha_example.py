@@ -3,7 +3,7 @@ import asyncio
 import base64
 
 from python_rucaptcha import ImageCaptcha, CallbackClient, RuCaptchaControl
-from python_rucaptcha import errors
+
 
 """
 UPDATE 2.4
@@ -152,8 +152,7 @@ if not user_answer_const["error"]:
     print(user_answer_const["taskId"])
 elif user_answer_const["error"]:
     # Тело ошибки, если есть
-    print(user_answer_const["errorBody"]["text"])
-    print(user_answer_const["errorBody"]["id"])
+    print(user_answer_const["errorBody"])
 
 if not user_answer_temp["error"]:
     # решение капчи
@@ -161,8 +160,7 @@ if not user_answer_temp["error"]:
     print(user_answer_temp["taskId"])
 elif user_answer_temp["error"]:
     # Тело ошибки, если есть
-    print(user_answer_temp["errorBody"]["text"])
-    print(user_answer_temp["errorBody"]["id"])
+    print(user_answer_temp["errorBody"])
 
 if not user_answer_base64["error"]:
     # решение капчи
@@ -170,8 +168,7 @@ if not user_answer_base64["error"]:
     print(user_answer_base64["taskId"])
 elif user_answer_base64["error"]:
     # Тело ошибки, если есть
-    print(user_answer_base64["errorBody"]["text"])
-    print(user_answer_base64["errorBody"]["id"])
+    print(user_answer_base64["errorBody"])
 
 """
 Так же класс в качестве параметра может принимать список необязательных переменных, таких как:
@@ -207,8 +204,8 @@ if not user_answer_full["error"]:
     print(user_answer_full["taskId"])
 elif user_answer_full["error"]:
     # Тело ошибки, если есть
-    print(user_answer_full["errorBody"]["text"])
-    print(user_answer_full["errorBody"]["id"])
+    print(user_answer_full["errorBody"])
+    print(user_answer_full["errorBody"])
 
 """
 Пример для работы с локальными файлами
@@ -229,8 +226,8 @@ try:
         print(user_answer_local["taskId"])
     elif user_answer_local["error"]:
         # Тело ошибки, если есть
-        print(user_answer_local["errorBody"]["text"])
-        print(user_answer_local["errorBody"]["id"])
+        print(user_answer_local["errorBody"])
+        print(user_answer_local["errorBody"])
 
 # отлов ошибки при проблемах чтения файла-изображения
 except errors.ReadError as err:
@@ -258,8 +255,8 @@ async def run():
             print(answer_aio_image["taskId"])
         elif answer_aio_image["error"]:
             # Тело ошибки, если есть
-            print(answer_aio_image["errorBody"]["text"])
-            print(answer_aio_image["errorBody"]["id"])
+            print(answer_aio_image["errorBody"])
+            print(answer_aio_image["errorBody"])
     except Exception as err:
         print(err)
 
@@ -282,8 +279,8 @@ async def run():
             print(answer_aio_local_image["taskId"])
         elif answer_aio_local_image["error"]:
             # Тело ошибки, если есть
-            print(answer_aio_local_image["errorBody"]["text"])
-            print(answer_aio_local_image["errorBody"]["id"])
+            print(answer_aio_local_image["errorBody"])
+            print(answer_aio_local_image["errorBody"])
     except Exception as err:
         print(err)
     """
@@ -300,8 +297,8 @@ async def run():
             print(answer_aio_image["taskId"])
         elif answer_aio_image["error"]:
             # Тело ошибки, если есть
-            print(answer_aio_image["errorBody"]["text"])
-            print(answer_aio_image["errorBody"]["id"])
+            print(answer_aio_image["errorBody"])
+            print(answer_aio_image["errorBody"])
     except Exception as err:
         print(err)
 

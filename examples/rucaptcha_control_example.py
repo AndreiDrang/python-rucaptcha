@@ -1,6 +1,6 @@
 import asyncio
 
-from python_rucaptcha import RuCaptchaControl, ImageCaptcha
+from python_rucaptcha import RuCaptchaControl
 
 """
 Этот пример показывает работу модуля управления аккаунтом RuCaptcha.

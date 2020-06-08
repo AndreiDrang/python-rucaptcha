@@ -95,8 +95,7 @@ if answer["error"] == 0:
 # во время решения капчи возникли ошибки, ошибка = 1
 elif answer["error"] == 1:
     # Тело ошибки, если есть
-    print(answer["errorBody"]["text"])
-    print(answer["errorBody"]["id"])
+    print(answer["errorBody"])
 
 """
 Пример асинхронного кода
@@ -121,8 +120,7 @@ async def run():
             print(answer["taskId"])
         elif answer["error"]:
             # Тело ошибки, если есть
-            print(answer["errorBody"]["text"])
-            print(answer["errorBody"]["id"])
+            print(answer["errorBody"])
     except Exception as err:
         print(f"ERRRRORORO - {err}")
 

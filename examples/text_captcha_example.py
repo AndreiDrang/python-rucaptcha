@@ -43,8 +43,7 @@ if user_answer["error"] == 0:
     print(user_answer["taskId"])
 elif user_answer["error"] == 1:
     # Тело ошибки, если есть
-    print(user_answer["errorBody"]["text"])
-    print(user_answer["errorBody"]["id"])
+    print(user_answer["errorBody"])
 
 """
 Так же класс в качестве параметра может принимать список необязательных переменных, таких как:
@@ -66,8 +65,7 @@ if user_answer_full["error"] == 0:
     print(user_answer_full["taskId"])
 elif user_answer_full["error"] == 1:
     # Тело ошибки, если есть
-    print(user_answer_full["errorBody"]["text"])
-    print(user_answer_full["errorBody"]["id"])
+    print(user_answer_full["errorBody"])
 
 
 """

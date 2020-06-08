@@ -56,8 +56,7 @@ if not answer_usual_re3["error"]:
     print(answer_usual_re3["user_score"])
 elif answer_usual_re3["error"]:
     # Тело ошибки, если есть
-    print(answer_usual_re3["errorBody"]["text"])
-    print(answer_usual_re3["errorBody"]["id"])
+    print(answer_usual_re3["errorBody"])
 
 # обычная recaptcha v3
 if not answer_usual_re3_f["error"]:
@@ -68,8 +67,7 @@ if not answer_usual_re3_f["error"]:
     print(answer_usual_re3["user_score"])
 elif answer_usual_re3_f["error"]:
     # Тело ошибки, если есть
-    print(answer_usual_re3_f["errorBody"]["text"])
-    print(answer_usual_re3_f["errorBody"]["id"])
+    print(answer_usual_re3_f["errorBody"])
 
 """
 Пример асинхронной работы 
@@ -92,8 +90,7 @@ async def run():
             print(answer_aio_re3["user_score"])
         elif answer_aio_re3["error"]:
             # Тело ошибки, если есть
-            print(answer_aio_re3["errorBody"]["text"])
-            print(answer_aio_re3["errorBody"]["id"])
+            print(answer_aio_re3["errorBody"])
     except Exception as err:
         print(err)
 

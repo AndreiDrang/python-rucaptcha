@@ -3,8 +3,8 @@ import asyncio
 
 import aiohttp
 import requests
+
 from python_rucaptcha.config import app_key
-from python_rucaptcha.errors import RuCaptchaError
 from python_rucaptcha.decorators import api_key_check, service_check
 from python_rucaptcha.result_handler import get_sync_result, get_async_result
 
@@ -94,11 +94,7 @@ class ReCaptchaV2:
                     captchaSolve - решение капчи,
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
                     error - False - если всё хорошо, True - если есть ошибка,
-                    errorBody - полная информация об ошибке:
-                        {
-                            text - Развернётое пояснение ошибки
-                            id - уникальный номер ошибка в ЭТОЙ бибилотеке
-                        }
+                    errorBody - название ошибки
         """
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
@@ -113,9 +109,7 @@ class ReCaptchaV2:
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
-            self.result.update(
-                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
-            )
+            self.result.update({"error": True, "errorBody": captcha_id["request"]})
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения
         else:
@@ -222,11 +216,7 @@ class aioReCaptchaV2:
                     captchaSolve - решение капчи,
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
                     error - False - если всё хорошо, True - если есть ошибка,
-                    errorBody - полная информация об ошибке:
-                        {
-                            text - Развернётое пояснение ошибки
-                            id - уникальный номер ошибка в ЭТОЙ бибилотеке
-                        }
+                    errorBody - название ошибки
 		"""
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
@@ -243,9 +233,7 @@ class aioReCaptchaV2:
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
-            self.result.update(
-                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
-            )
+            self.result.update({"error": True, "errorBody": captcha_id["request"]})
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения
         else:

@@ -38,8 +38,8 @@ errorBody - полная информация об ошибке:
     }
 """
 JSON_RESPONSE = {
-    "serverAnswer": None,
-    "captchaSolve": None,
+    "serverAnswer": {},
+    "captchaSolve": {},
     "taskId": None,
     "error": False,
     "errorBody": {"text": None, "id": 0},

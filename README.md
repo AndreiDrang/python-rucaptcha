@@ -50,6 +50,26 @@ python setup.py install
 **v.2.6.3** - Добавление `Distil` метода. С синхронным и асинхронным исполнением.
 
 **v.2.6.4** - Добавление `HCaptcha` метода. С синхронным и асинхронным исполнением.
+
+**v.2.6.5** - Добавление `CapyPuzzle` метода. С синхронным и асинхронным исполнением.
+
+**v.3.0** - Удаление кастомных ошибиок и вывода текста о них.
+1. Замена структуры: 
+    ```json
+    {
+      "errorBody":
+        {
+          "text": "some text",
+          "id": 1
+        }
+    }
+    ```
+1. На структуру: 
+    ```json
+    {
+      "errorBody": "ERROR_NAME"
+    }
+    ```
 ***
 ### Будущие обновления
 v.3.0 -  ...
@@ -100,21 +120,21 @@ print(callback_queue_response)
 
 #### Если вы хотите запустить данный callback сервер у себя:
 
-Небольшая [инструкция-памятка](https://github.com/AndreiDrang/python-rucaptcha/blob/master/examples/callback_examples/readme.txt) по шагам.
+Небольшая [инструкция-памятка](./examples/callback_examples/readme.txt) по шагам.
 
 Установить и запустить веб-приложение, которое будет принимать POST-запросы, парсить их, и совершать прочую, нужную вам, магию.
 
-[Пример такого сервера, написанный на aiohttp](https://github.com/AndreiDrang/python-rucaptcha/blob/master/examples/callback_examples/callback_server.py).
+[Пример такого сервера, написанный на aiohttp](./examples/callback_examples/callback_server.py).
 
-Все тесты можно проводить на локальном сервере, эмулируя POST-запросы от RuCaptcha при помощи [локального клиента](https://github.com/AndreiDrang/python-rucaptcha/blob/master/examples/callback_examples/rucaptcha_server.py).
+Все тесты можно проводить на локальном сервере, эмулируя POST-запросы от RuCaptcha при помощи [локального клиента](./examples/callback_examples/rucaptcha_server.py).
 
-Примеры создания реальных заданий для callback(pingback) способа вы можете посмотреть в [папке с примерами](https://github.com/AndreiDrang/python-rucaptcha/tree/master/examples), для конкретного метода капчи.
+Примеры создания реальных заданий для callback(pingback) способа вы можете посмотреть в [папке с примерами](./examples), для конкретного метода капчи.
 
 ***
 
 #### Работа обычным методом - ожидание решения капчи периодическим опросом сервера.
 
-1.[Решение капчи-изображения(большие и маленькие).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ImageCaptcha.py)
+1.[Решение капчи-изображения(большие и маленькие).](./python_rucaptcha/ImageCaptcha.py)
 
 ```python
 from python_rucaptcha import ImageCaptcha
@@ -131,11 +151,11 @@ if not user_answer['error']:
 	print(user_answer['taskId'])
 elif user_answer['error']:
 	# Тело ошибки, если есть
-	print(user_answer['errorBody']['text'])
-	print(user_answer['errorBody']['id'])
+	print(user_answer ['errorBody'])
+	print(user_answer ['errorBody'])
 ```
 
-2.[Решение KeyCaptcha(пазл-капча).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/KeyCaptcha.py)
+2.[Решение KeyCaptcha(пазл-капча).](./python_rucaptcha/KeyCaptcha.py)
 
 ```python
 from python_rucaptcha import KeyCaptcha
@@ -163,7 +183,7 @@ elif answer['error']:
 	print(answer['errorBody'])
 ``` 
 
-3.[Решение ReCaptcha v2.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV2.py)
+3.[Решение ReCaptcha v2.](./python_rucaptcha/ReCaptchaV2.py)
 
 ```python
 from python_rucaptcha import ReCaptchaV2
@@ -183,11 +203,11 @@ if not user_answer['error']:
 	print(user_answer['taskId'])
 elif user_answer['error']:
 	# Тело ошибки, если есть
-	print(user_answer['errorBody']['text'])
-	print(user_answer['errorBody']['id'])
+	print(user_answer ['errorBody'])
+	print(user_answer ['errorBody'])
 ```
 
-4.[Решение новой ReCaptcha v3.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/ReCaptchaV3.py)
+4.[Решение ReCaptcha v3.](./python_rucaptcha/ReCaptchaV3.py)
 
 ```python
 from python_rucaptcha import ReCaptchaV3
@@ -202,10 +222,13 @@ ACTION = 'verify'
 # Требуемое значение рейтинга (score) работника, от 0.1(робот) до 0.9(человечный человек)
 MIN_SCORE = 0.4
 # Возвращается JSON содержащий информацию для решения капчи
-user_answer = ReCaptchaV3.ReCaptchaV3(rucaptcha_key=RUCAPTCHA_KEY, 
-				      action = ACTION, 
-				      min_score = MIN_SCORE).captcha_handler(site_key=SITE_KEY,
-					  				     page_url=PAGE_URL)
+user_answer = ReCaptchaV3.ReCaptchaV3(
+                                    rucaptcha_key=RUCAPTCHA_KEY, 
+				                    action = ACTION, 
+				                    min_score = MIN_SCORE).captcha_handler(
+                                                site_key=SITE_KEY,
+					  				            page_url=PAGE_URL
+                                            )
 
 if not user_answer['error']:
 	# решение капчи
@@ -215,13 +238,13 @@ if not user_answer['error']:
 	print(user_answer['user_score'])
 elif user_answer['error']:
 	# Тело ошибки, если есть
-	print(user_answer['errorBody']['text'])
-	print(user_answer['errorBody']['id'])
+	print(user_answer ['errorBody'])
+	print(user_answer ['errorBody'])
 ```
 
-5.[Решение RotateCaptcha(повернуть изображение).](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/RotateCaptcha.py)
+5.[Решение RotateCaptcha(повернуть изображение).](./python_rucaptcha/RotateCaptcha.py)
 
-6.[Решение текстовой капчи.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/TextCaptcha.py)
+6.[Решение текстовой капчи.](./python_rucaptcha/TextCaptcha.py)
 
 ```python
 from python_rucaptcha import TextCaptcha
@@ -238,11 +261,11 @@ if not user_answer['error']:
 	print(user_answer['taskId'])
 elif user_answer['error']:
 	# Тело ошибки, если есть
-	print(user_answer['errorBody']['text'])
-	print(user_answer['errorBody']['id'])
+	print(user_answer ['errorBody'])
+	print(user_answer ['errorBody'])
 ```
 
-7.[Решение FunCaptcha.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/FunCaptcha.py)
+7.[Решение FunCaptcha.](./python_rucaptcha/FunCaptcha.py)
 
 ```python
 from python_rucaptcha import FunCaptcha
@@ -265,16 +288,13 @@ if not answer['error']:
     print(answer['taskId'])
 elif answer['error']:
     # Тело ошибки, если есть
-    print(answer['errorBody']['text'])
-    print(answer['errorBody']['id'])
+    print(answer ['errorBody'])
     
 ```
-8.[Модуль для получения инофрмации о балансе аккаунта и отправке жалоб.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/RuCaptchaControl.py)
-
-9.[Решение DistilCaptcha.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/DistilCaptcha.py)
+8.[Модуль для получения инофрмации о балансе аккаунта и отправке жалоб.](./python_rucaptcha/RuCaptchaControl.py)
 
 ```python
-from python_rucaptcha.DistilCaptcha import DistilCaptcha
+from python_rucaptcha.RuCaptchaControl import RuCaptchaControl
 # Введите ключ от рукапчи из своего аккаунта
 RUCAPTCHA_KEY = ''
 
@@ -282,21 +302,33 @@ JsSha1 = "af2d0557c23ff2d8f40ccf4bec57e480704634e9"
 JsUri = "http://www.targetwebsite.com/pvvhnzyazwpzgkhv.js"
 JsData = "IWZ1bmN0fewfwefwefwef9905j0g4905jh9046hj3cpCg=="
 
-answer = DistilCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
-    JsSha1=JsSha1, JsUri=JsUri, JsData=JsData
-)
+answer = RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
+            action="getbalance"
+        )
 
-if not answer['error']:
-    # решение капчи
-    print(answer['captchaSolve'])
-    print(answer['taskId'])
-elif answer['error']:
+if not answer["error"]:
+    print("Your balance is: ", answer["serverAnswer"], " rub.")
+
+elif answer["error"]:
     # Тело ошибки, если есть
-    print(answer['errorBody']['text'])
-    print(answer['errorBody']['id'])
-    
+    print(answer["errorBody"])
+
+# Пример отправки жалобы на неправильно решённую капчу под ID "666"
+wrong_captcha_id = 666
+
+answer = RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
+            action="reportbad", id=wrong_captcha_id
+        )
+
+# Если заявка принята
+if not answer["error"]:
+    print("Заявка принята.")
+
+# Если возникла ошибка
+elif answer["error"]:
+    print(answer["errorBody"])
 ```
-10.[Решение HCaptcha.](https://github.com/AndreiDrang/python-rucaptcha/blob/master/python_rucaptcha/HCaptcha.py)
+9.[Решение HCaptcha.](./python_rucaptcha/HCaptcha.py)
 
 ```python
 from python_rucaptcha.HCaptcha import HCaptcha
@@ -315,50 +347,36 @@ if not answer['error']:
     print(answer['taskId'])
 elif answer['error']:
     # Тело ошибки, если есть
-    print(answer['errorBody']['text'])
-    print(answer['errorBody']['id'])
+    print(answer ['errorBody'])
+    
+```
+10.[Решение CapyPuzzle.](./python_rucaptcha/CapyPuzzle.py)
+
+```python
+from python_rucaptcha.CapyPuzzle import CapyPuzzle
+RUCAPTCHA_KEY = ''
+
+captchakey="PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w"
+page_url="https://www.capy.me/account/register/"
+
+answer = CapyPuzzle(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
+            captchakey=captchakey, page_url=page_url
+        )
+
+if not answer['error']:
+    # решение капчи
+    print(answer['captchaSolve'])
+    print(answer['taskId'])
+elif answer['error']:
+    # Тело ошибки, если есть
+    print(answer ['errorBody'])
     
 ```
 ***
 Кроме того, для тестирования различных типов капчи предоставляется [специальный сайт](http://85.255.8.26/), на котором собраны все имеющиеся типы капчи, с удобной системой тестирования ваших скриптов.
 ***
-### Errors table
-| Error ID       | Ошибка
-| ------------- |:-------------:|
-| -1      | Внутренняя ошибка (в соединении и т.п.), не относится к сервису RuCaptcha 
+### Errors description. Описания ошибок
+**В обоих ссылках находятся валидные описания ошибок**
+1. https://rucaptcha.com/api-rucaptcha#in_errors
+1. https://rucaptcha.docs.apiary.io/#reference/2
 
-| Error ID       | in.php Rucaptcha код ошибки
-| ------------- |:-------------:|
-| 10      | ERROR_WRONG_USER_KEY 
-| 11      | ERROR_KEY_DOES_NOT_EXIST 
-| 12      | ERROR_ZERO_BALANCE      
-| 13      | ERROR_PAGEURL 
-| 14      | ERROR_NO_SLOT_AVAILABLE   
-| 15      | ERROR_ZERO_CAPTCHA_FILESIZE         
-| 16      | ERROR_TOO_BIG_CAPTCHA_FILESIZE 
-| 17      | ERROR_WRONG_FILE_EXTENSION   
-| 18      | ERROR_IMAGE_TYPE_NOT_SUPPORTED       
-| 19      | ERROR_UPLOAD 
-| 20      | ERROR_IP_NOT_ALLOWED  
-| 21      | IP_BANNED        
-| 22      | ERROR_BAD_TOKEN_OR_PAGEURL
-| 23      | ERROR_GOOGLEKEY   
-| 24      | ERROR_CAPTCHAIMAGE_BLOCKED     
-| 25      | MAX_USER_TURN 
-
-| Error ID      | res.php Rucaptcha код ошибки
-| ------------- |:-------------:| 
-| 30      | CAPCHA_NOT_READY 
-| 31      | ERROR_CAPTCHA_UNSOLVABLE  
-| 32      | ERROR_WRONG_ID_FORMAT       
-| 33      | ERROR_WRONG_CAPTCHA_ID 
-| 34      | ERROR_BAD_DUPLICATES   
-| 35      | REPORT_NOT_RECORDED   
-
-| Error ID      | NNNN Rucaptcha код ошибки
-| ------------- |:-------------:|
-| 40      | ERROR: 1001 
-| 41      | ERROR: 1002  
-| 42      | ERROR: 1003        
-| 43      | ERROR: 1004 
-| 44      | ERROR: 1005  
