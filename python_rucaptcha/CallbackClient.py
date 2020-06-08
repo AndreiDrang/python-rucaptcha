@@ -4,7 +4,7 @@ import time
 import pika
 import requests
 
-from .config import HOST, PORT, RTMQ_USERNAME, RTMQ_PASSWORD, RTMQ_HOST, RTMQ_PORT, RTMQ_VHOST
+from .config import HOST, PORT, RTMQ_HOST, RTMQ_PORT, RTMQ_VHOST, RTMQ_PASSWORD, RTMQ_USERNAME
 
 
 class CallbackClient:

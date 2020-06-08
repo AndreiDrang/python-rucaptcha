@@ -1,16 +1,14 @@
 import time
 import asyncio
+import mimetypes
 
 import aiohttp
 import requests
-import mimetypes
 from requests.adapters import HTTPAdapter
-
 from python_rucaptcha.config import app_key
 from python_rucaptcha.errors import RuCaptchaError
-from python_rucaptcha.result_handler import get_sync_result, get_async_result
 from python_rucaptcha.decorators import api_key_check, service_check
-
+from python_rucaptcha.result_handler import get_sync_result, get_async_result
 
 
 class RotateCaptcha:
@@ -95,7 +93,11 @@ class RotateCaptcha:
                 self.get_payload.update({key: kwargs[key]})
 
         # Скачиваем изображение
-        content = self.session.get(captcha_link).content if "http" in captcha_link else open(captcha_link, "rb")
+        content = (
+            self.session.get(captcha_link).content
+            if "http" in captcha_link
+            else open(captcha_link, "rb")
+        )
 
         # Отправляем изображение файлом
         files = {"file_1": ("file_1", content, mimetypes.guess_type(captcha_link)[0])}
