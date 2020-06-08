@@ -1,6 +1,5 @@
 import aiohttp
 import requests
-
 from python_rucaptcha.errors import RuCaptchaError
 from python_rucaptcha.decorators import api_key_check, service_check
 

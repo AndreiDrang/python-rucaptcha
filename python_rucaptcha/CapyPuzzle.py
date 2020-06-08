@@ -9,33 +9,29 @@ from python_rucaptcha.decorators import api_key_check, service_check
 from python_rucaptcha.result_handler import get_sync_result, get_async_result
 
 
-class HCaptcha:
+class CapyPuzzle:
     """
-    The class is used to work with HCaptcha.
-    """
+	Класс служит для работы с CapyPuzzle.
+	Capy - это капча в виде пазла
+	"""
 
     def __init__(
         self,
         rucaptcha_key,
         service_type: str = "2captcha",
         sleep_time: int = 10,
-        proxy: str = None,
-        proxytype: str = None,
         pingback: str = None,
         **kwargs,
     ):
         """
-        Initialization of the necessary variables.
-        : param rucaptcha_key: API captcha key from user account
-        : param service_type: URL with which the program will work, the option "2captcha" (standard) is possible
-                                     and "rucaptcha"
-        : param sleep_time: Verma waiting for a captcha solution
-        : param proxy: To solve recaptcha through a proxy, proxies and authentication data are transmitted.
-                        `login: password@IP_address:PORT` /` login: password @ IP: port`.
-        : param proxytype: The type of proxy to use. Available: `HTTP`,` HTTPS`, `SOCKS4`,` SOCKS5`.
-        : param pingback: Parameter for the link with which there will be a wait for a callback response from RuCaptcha
-        : param kwargs: To pass additional parameters
-        """
+		Инициализация нужных переменных.
+		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
+		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
+                             и "rucaptcha"
+		:param sleep_time: Вермя ожидания решения капчи
+        :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha
+		:param kwargs: Для передачи дополнительных параметров
+		"""
         # время ожидания решения капчи
         self.sleep_time = sleep_time
         # тип URL на с которым будет работать библиотека
@@ -43,7 +39,7 @@ class HCaptcha:
         # пайлоад POST запроса на отправку капчи на сервер
         self.post_payload = {
             "key": rucaptcha_key,
-            "method": "hcaptcha",
+            "method": "capy",
             "json": 1,
             "soft_id": app_key,
         }
@@ -56,10 +52,6 @@ class HCaptcha:
         # если был передан параметр для callback`a - добавляем его
         if pingback:
             self.post_payload.update({"pingback": pingback})
-
-        # добавление прокси для решения капчи с того же IP
-        if proxy and proxytype:
-            self.post_payload.update({"proxy": proxy, "proxytype": proxytype})
 
         # пайлоад GET запроса на получение результата решения капчи
         self.get_payload = {"key": rucaptcha_key, "action": "get", "json": 1}
@@ -74,21 +66,21 @@ class HCaptcha:
 
     @api_key_check
     @service_check
-    def captcha_handler(self, site_key: str, page_url: str, **kwargs):
+    def captcha_handler(self, captchakey: str, page_url: str, **kwargs):
         """
-        The method is responsible for transferring data to the server to solve captcha
-        : param site_key: Website sitekey
-        : param page_url: Link to the page where the captcha is located
-        : param kwargs: To pass additional parameters
-        : return: Answer to the captcha as a JSON string with fields:
-                    captchaSolve - captcha solution,
-                    taskId - is the Id of the task to solve the captcha, can be used for complaints and other things,
-                    error - False - if everything is fine, True - if there is an error,
-                    errorBody - full error information:
-                        {
-                            text - Extended error explanation
-                            id - unique error number in THIS library
-                        }
+		Метод отвечает за передачу данных на сервер для решения капчи
+		:param captchakey: Значение параметра captchakey, которое вы нашли в коде страницы
+		:param page_url: Ссылка на страницу на которой находится капча
+		:param kwargs: Для передачи дополнительных параметров
+		:return: Ответ на капчу в виде JSON строки с полями:
+                    captchaSolve - решение капчи,
+                    taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+                    error - False - если всё хорошо, True - если есть ошибка,
+                    errorBody - полная информация об ошибке:
+                        {
+                            text - Развернётое пояснение ошибки
+                            id - уникальный номер ошибка в ЭТОЙ бибилотеке
+                        }
         """
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
@@ -97,7 +89,7 @@ class HCaptcha:
             for key in kwargs:
                 self.get_payload.update({key: kwargs[key]})
 
-        self.post_payload.update({"sitekey": site_key, "pageurl": page_url})
+        self.post_payload.update({"captchakey": captchakey, "pageurl": page_url})
         # получаем ID капчи
         captcha_id = requests.post(self.url_request, data=self.post_payload).json()
 
@@ -130,48 +122,43 @@ class HCaptcha:
                 )
 
 
-class aioHCaptcha:
+# асинхронный метод для решения РеКапчи 2
+class aioReCaptchaV2:
     """
-    The class is used to work with HCaptcha.
-    """
+	Класс служит для асинхронной работы с новой ReCaptcha от Гугла и Invisible ReCaptcha.
+	Для работы потребуется передать ключ от РуКапчи, затем ключ сайта(подробности его получения в описании на сайте)
+	И так же ссылку на сайт.
+	"""
 
     def __init__(
         self,
         rucaptcha_key: str,
         service_type: str = "2captcha",
         sleep_time: int = 10,
-        proxy: str = None,
-        proxytype: str = None,
         pingback: str = None,
         **kwargs,
     ):
         """
-        Initialization of the necessary variables.
-        : param rucaptcha_key: API captcha key from user account
-        : param service_type: URL with which the program will work, the option "2captcha" (standard) is possible
-                                     and "rucaptcha"
-        : param sleep_time: Verma waiting for a captcha solution
-        : param proxy: To solve recaptcha through a proxy, proxies and authentication data are transmitted.
-                        `login: password@IP_address:PORT` /` login: password @ IP: port`.
-        : param proxytype: The type of proxy to use. Available: `HTTP`,` HTTPS`, `SOCKS4`,` SOCKS5`.
-        : param pingback: Parameter for the link with which there will be a wait for a callback response from RuCaptcha
-        : param kwargs: To pass additional parameters
-        """
+		Инициализация нужных переменных.
+		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
+		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
+                             и "rucaptcha"
+		:param sleep_time: Время ожидания решения капчи
+        :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha
+		:param kwargs: Для передачи дополнительных параметров
+		"""
         # время ожидания решения капчи
         self.sleep_time = sleep_time
         # тип URL на с которым будет работать библиотека
         self.service_type = service_type
+
         # пайлоад POST запроса на отправку капчи на сервер
         self.post_payload = {
             "key": rucaptcha_key,
-            "method": "hcaptcha",
+            "method": "userrecaptcha",
             "json": 1,
             "soft_id": app_key,
         }
-
-        # добавление прокси для решения капчи с того же IP
-        if proxy and proxytype:
-            self.post_payload.update({"proxy": proxy, "proxytype": proxytype})
 
         # если был передан параметр для callback`a - добавляем его
         if pingback:
@@ -191,22 +178,22 @@ class aioHCaptcha:
     # Работа с капчей
     @api_key_check
     @service_check
-    async def captcha_handler(self, site_key: str, page_url: str, **kwargs):
+    async def captcha_handler(self, captchakey: str, page_url: str, **kwargs):
         """
-        The method is responsible for transferring data to the server to solve captcha
-        : param site_key: Website sitekey
-        : param page_url: Link to the page where the captcha is located
-        : param kwargs: To pass additional parameters
-        : return: Answer to the captcha as a JSON string with fields:
-                    captchaSolve - captcha solution,
-                    taskId - is the Id of the task to solve the captcha, can be used for complaints and other things,
-                    error - False - if everything is fine, True - if there is an error,
-                    errorBody - full error information:
-                        {
-                            text - Extended error explanation
-                            id - unique error number in THIS library
-                        }
-        """
+		Метод отвечает за передачу данных на сервер для решения капчи
+		:param captchakey: Значение параметра captchakey, которое вы нашли в коде страницы
+		:param page_url: Ссылка на страницу на которой находится капча
+		:param kwargs: Для передачи дополнительных параметров
+		:return: Ответ на капчу в виде JSON строки с полями:
+                    captchaSolve - решение капчи,
+                    taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
+                    error - False - если всё хорошо, True - если есть ошибка,
+                    errorBody - полная информация об ошибке:
+                        {
+                            text - Развернётое пояснение ошибки
+                            id - уникальный номер ошибка в ЭТОЙ бибилотеке
+                        }
+		"""
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
         # Если переданы ещё параметры - вносим их в get_payload
@@ -214,7 +201,7 @@ class aioHCaptcha:
             for key in kwargs:
                 self.get_payload.update({key: kwargs[key]})
 
-        self.post_payload.update({"sitekey": site_key, "pageurl": page_url})
+        self.post_payload.update({"captchakey": captchakey, "pageurl": page_url})
         # получаем ID капчи
         async with aiohttp.ClientSession() as session:
             async with session.post(self.url_request, data=self.post_payload) as resp:

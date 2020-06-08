@@ -1,18 +1,17 @@
 import os
 import time
+import uuid
+import base64
 import shutil
 import asyncio
-import base64
-import uuid
 
 import aiohttp
 import requests
 from requests.adapters import HTTPAdapter
-
 from python_rucaptcha.config import app_key
 from python_rucaptcha.errors import RuCaptchaError
-from python_rucaptcha.result_handler import get_sync_result, get_async_result
 from python_rucaptcha.decorators import api_key_check, service_check
+from python_rucaptcha.result_handler import get_sync_result, get_async_result
 
 
 class ImageCaptcha:

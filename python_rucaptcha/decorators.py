@@ -1,11 +1,11 @@
-from .errors import RuCaptchaError
 from .config import (
-    url_request_2captcha,
-    url_response_2captcha,
-    url_request_rucaptcha,
-    url_response_rucaptcha,
     JSON_RESPONSE,
+    url_request_2captcha,
+    url_request_rucaptcha,
+    url_response_2captcha,
+    url_response_rucaptcha,
 )
+from .errors import RuCaptchaError
 
 
 def api_key_check(func):

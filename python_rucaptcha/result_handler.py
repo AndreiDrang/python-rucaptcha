@@ -1,8 +1,8 @@
 import time
 import asyncio
 
-import requests
 import aiohttp
+import requests
 
 from .config import connect_generator
 from .errors import RuCaptchaError

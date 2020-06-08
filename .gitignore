@@ -15,3 +15,5 @@ CaptchaTester/callback_examples/__pycache__/
 __pycache__/
 
 dist/
+
+env/
