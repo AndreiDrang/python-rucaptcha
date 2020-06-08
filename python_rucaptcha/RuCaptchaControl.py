@@ -1,6 +1,6 @@
 import aiohttp
 import requests
-from python_rucaptcha.errors import RuCaptchaError
+
 from python_rucaptcha.decorators import api_key_check, service_check
 
 
@@ -41,11 +41,7 @@ class RuCaptchaControl:
                     serverAnswer - ответ сервера при использовании RuCaptchaControl(баланс/жалобы и т.д.),
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
                     error - False - если всё хорошо, True - если есть ошибка,
-                    errorBody - полная информация об ошибке:
-                        {
-                            text - Развернётое пояснение ошибки
-                            id - уникальный номер ошибка в ЭТОЙ бибилотеке
-                        }
+                    errorBody - название ошибки
         Больше подробностей и примеров можно прочитать в 'CaptchaTester/rucaptcha_control_example.py'
         """
         # result, url_response - задаются в декораторе `service_check`, после проверки переданного названия
@@ -65,9 +61,7 @@ class RuCaptchaControl:
             return self.result
 
         if answer.json()["status"] == 0:
-            self.result.update(
-                {"error": True, "errorBody": RuCaptchaError().errors(answer.json()["request"])}
-            )
+            self.result.update({"error": True, "errorBody": answer.json()["request"]})
             return self.result
 
         elif answer.json()["status"] == 1:
@@ -113,11 +107,7 @@ class aioRuCaptchaControl:
                     serverAnswer - ответ сервера при использовании RuCaptchaControl(баланс/жалобы и т.д.),
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
                     error - False - если всё хорошо, True - если есть ошибка,
-                    errorBody - полная информация об ошибке:
-                        {
-                            text - Развернётое пояснение ошибки
-                            id - уникальный номер ошибка в ЭТОЙ бибилотеке
-                        }
+                    errorBody - название ошибки
         Больше подробностей и примеров можно прочитать в 'CaptchaTester/rucaptcha_control_example.py'
         """
         # result, url_response - задаются в декораторе `service_check`, после проверки переданного названия
@@ -140,9 +130,7 @@ class aioRuCaptchaControl:
             return self.result
 
         if answer["status"] == 0:
-            self.result.update(
-                {"error": True, "errorBody": RuCaptchaError().errors(answer["request"])}
-            )
+            self.result.update({"error": True, "errorBody": answer["request"]})
             return self.result
 
         elif answer["status"] == 1:

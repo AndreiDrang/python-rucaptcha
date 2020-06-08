@@ -6,7 +6,7 @@ remove:
 
 refactor:
 	pip install black isort
-	black python_rucaptcha/
+	black python_rucaptcha/ examples/
 	isort -rc python_rucaptcha/
 
 upload:

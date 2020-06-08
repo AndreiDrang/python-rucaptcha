@@ -5,7 +5,6 @@ from .config import (
     url_response_2captcha,
     url_response_rucaptcha,
 )
-from .errors import RuCaptchaError
 
 
 def api_key_check(func):
@@ -20,9 +19,7 @@ def api_key_check(func):
         if len(self.post_payload.get("key")) == 32:
             return func(self, *args, **kwargs)
         else:
-            self.result.update(
-                {"error": True, "errorBody": RuCaptchaError().errors("ERROR_WRONG_USER_KEY")}
-            )
+            self.result.update({"error": True, "errorBody": "ERROR_WRONG_USER_KEY"})
             return self.result
 
     return wrapper

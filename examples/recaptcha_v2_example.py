@@ -71,8 +71,7 @@ if not answer_usual_re2["error"]:
     print(answer_usual_re2["taskId"])
 elif answer_usual_re2["error"]:
     # Тело ошибки, если есть
-    print(answer_usual_re2["errorBody"]["text"])
-    print(answer_usual_re2["errorBody"]["id"])
+    print(answer_usual_re2["errorBody"])
 
 # invisible recaptcha v2
 if not answer_invisible["error"]:
@@ -81,8 +80,7 @@ if not answer_invisible["error"]:
     print(answer_invisible["taskId"])
 elif answer_invisible["error"]:
     # Тело ошибки, если есть
-    print(answer_invisible["errorBody"]["text"])
-    print(answer_invisible["errorBody"]["id"])
+    print(answer_invisible["errorBody"])
 
 
 """
@@ -102,8 +100,8 @@ async def run():
             print(answer_aio_re2["taskId"])
         elif answer_aio_re2["error"]:
             # Тело ошибки, если есть
-            print(answer_aio_re2["errorBody"]["text"])
-            print(answer_aio_re2["errorBody"]["id"])
+            print(answer_aio_re2["errorBody"])
+            print(answer_aio_re2["errorBody"])
     except Exception as err:
         print(err)
 

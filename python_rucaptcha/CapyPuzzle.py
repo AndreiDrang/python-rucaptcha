@@ -3,8 +3,8 @@ import asyncio
 
 import aiohttp
 import requests
+
 from python_rucaptcha.config import app_key
-from python_rucaptcha.errors import RuCaptchaError
 from python_rucaptcha.decorators import api_key_check, service_check
 from python_rucaptcha.result_handler import get_sync_result, get_async_result
 
@@ -76,11 +76,7 @@ class CapyPuzzle:
                     captchaSolve - решение капчи,
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
                     error - False - если всё хорошо, True - если есть ошибка,
-                    errorBody - полная информация об ошибке:
-                        {
-                            text - Развернётое пояснение ошибки
-                            id - уникальный номер ошибка в ЭТОЙ бибилотеке
-                        }
+                    errorBody - название ошибки
         """
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
@@ -95,9 +91,7 @@ class CapyPuzzle:
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
-            self.result.update(
-                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
-            )
+            self.result.update({"error": True, "errorBody": captcha_id["request"]})
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения
         else:
@@ -122,12 +116,10 @@ class CapyPuzzle:
                 )
 
 
-# асинхронный метод для решения РеКапчи 2
-class aioReCaptchaV2:
+class aioCapyPuzzle:
     """
-	Класс служит для асинхронной работы с новой ReCaptcha от Гугла и Invisible ReCaptcha.
-	Для работы потребуется передать ключ от РуКапчи, затем ключ сайта(подробности его получения в описании на сайте)
-	И так же ссылку на сайт.
+	Класс служит для работы с CapyPuzzle.
+	Capy - это капча в виде пазла
 	"""
 
     def __init__(
@@ -143,7 +135,7 @@ class aioReCaptchaV2:
 		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
 		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
                              и "rucaptcha"
-		:param sleep_time: Время ожидания решения капчи
+		:param sleep_time: Вермя ожидания решения капчи
         :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha
 		:param kwargs: Для передачи дополнительных параметров
 		"""
@@ -151,11 +143,10 @@ class aioReCaptchaV2:
         self.sleep_time = sleep_time
         # тип URL на с которым будет работать библиотека
         self.service_type = service_type
-
         # пайлоад POST запроса на отправку капчи на сервер
         self.post_payload = {
             "key": rucaptcha_key,
-            "method": "userrecaptcha",
+            "method": "capy",
             "json": 1,
             "soft_id": app_key,
         }
@@ -188,11 +179,7 @@ class aioReCaptchaV2:
                     captchaSolve - решение капчи,
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
                     error - False - если всё хорошо, True - если есть ошибка,
-                    errorBody - полная информация об ошибке:
-                        {
-                            text - Развернётое пояснение ошибки
-                            id - уникальный номер ошибка в ЭТОЙ бибилотеке
-                        }
+                    errorBody - название ошибки
 		"""
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
@@ -209,9 +196,7 @@ class aioReCaptchaV2:
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:
-            self.result.update(
-                {"error": True, "errorBody": RuCaptchaError().errors(captcha_id["request"])}
-            )
+            self.result.update({"error": True, "errorBody": captcha_id["request"]})
             return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения
         else:
