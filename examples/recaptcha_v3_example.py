@@ -1,6 +1,4 @@
-import requests
-
-from python_rucaptcha import ReCaptchaV3, RuCaptchaControl, CallbackClient
+from python_rucaptcha import ReCaptchaV3
 
 """
 UPDATE 2.5
