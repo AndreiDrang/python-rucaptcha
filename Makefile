@@ -2,7 +2,7 @@ install:
 	python setup.py install
 
 remove:
-	pip uninstall python3-anticaptcha -y
+	pip uninstall python_rucaptcha -y
 
 refactor:
 	pip install black isort
