@@ -6,7 +6,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/698b08b078e94e03ab9ba8b098a2b41d)](https://app.codacy.com/app/drang.andray/python-rucaptcha?utm_source=github.com&utm_medium=referral&utm_content=AndreiDrang/python-rucaptcha&utm_campaign=Badge_Grade_Settings)
 ![Callback_Server_Status Run](https://img.shields.io/badge/Callback_Server_Status-Run-blue.svg)
 
-Библиотека предназначена для разрабаотчиков ПО и служит для облегчения работы с API сервиса RuCaptcha.
+Библиотека предназначена для разработчиков ПО и служит для облегчения работы с API сервиса RuCaptcha.
 
 Присутствуют [примеры работы с библиотекой](https://github.com/AndreiDrang/python-rucaptcha/tree/master/examples).
 
