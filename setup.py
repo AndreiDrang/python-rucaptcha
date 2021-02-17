@@ -13,7 +13,7 @@ EMAIL = "drang.andray@gmail.com"
 AUTHOR = "AndreiDrang, redV0ID"
 REQUIRES_PYTHON = ">=3.6.0"
 VERSION = "3.0.1"
-REQUIRED = ["requests>=2.21.0", "aiohttp==3.*", "pika==1.*"]
+REQUIRED = ["requests>=2.21.0", "aiohttp==3.*", "pika==1.*", 'websockets==8.*', 'pydantic==1.7.*']
 
 here = os.path.abspath(os.path.dirname(__file__))
 
