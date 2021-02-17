@@ -135,7 +135,7 @@ if __name__ == "__main__":
 Callback пример
 """
 # нужно передать IP/URL ранее зарегистрированного сервера
-server_ip = "85.255.8.26"
+server_ip = "pythoncaptcha.tech"
 # и по желанию - порт на сервере который слушает ваше веб-приложение
 server_port = 8001
 # регистрация нового домена для callback/pingback
@@ -158,7 +158,7 @@ if answer.text == "OK":
     # создаём задание на сервере, ответ на которое придёт на заданный pingback URL в виде POST запроса
     task_creation_answer = KeyCaptcha.KeyCaptcha(
         rucaptcha_key=RUCAPTCHA_KEY,
-        pingback=f"85.255.8.26:8001/rucaptcha/key_captcha/{queue_name}",
+        pingback=f"pythoncaptcha.tech:8001/rucaptcha/key_captcha/{queue_name}",
     ).captcha_handler(
         key_params={
             "s_s_c_user_id": 15,

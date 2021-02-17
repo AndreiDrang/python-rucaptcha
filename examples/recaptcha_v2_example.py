@@ -33,7 +33,7 @@ RUCAPTCHA_KEY = ""
 # Google sitekey
 SITE_KEY = "6Lf77CsUAAAAALLFD1wIhbfQRD07VxhvPbyQFaQJ"
 # ссылка на страницу с капчёй
-PAGE_URL = "http://85.255.8.26/"
+PAGE_URL = "https://pythoncaptcha.tech/"
 
 # Пример работы с модулем ReCaptchaV2
 answer_usual_re2 = ReCaptchaV2.ReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
@@ -45,7 +45,7 @@ print(answer_usual_re2)
 """
 
 SITE_KEY = "6LcC7SsUAAAAAN3AOB-clPIsrKfnBUlO2QkC_vQ7"
-PAGE_URL = "http://85.255.8.26/invisible_recaptcha/"
+PAGE_URL = "https://pythoncaptcha.tech/invisible_recaptcha/"
 
 # Пример работы с модулем ReCaptchaV2
 answer_invisible = ReCaptchaV2.ReCaptchaV2(
@@ -115,7 +115,7 @@ if __name__ == "__main__":
 Callback пример
 """
 # нужно передать IP/URL ранее зарегистрированного сервера
-server_ip = "85.255.8.26"
+server_ip = "pythoncaptcha.tech"
 # и по желанию - порт на сервере который слушает ваше веб-приложение
 server_port = 8001
 # регистрация нового домена для callback/pingback
@@ -138,7 +138,7 @@ if answer.text == "OK":
     # создаём задание на сервере, ответ на которое придёт на заданный pingback URL в виде POST запроса
     task_creation_answer = ReCaptchaV2.ReCaptchaV2(
         rucaptcha_key=RUCAPTCHA_KEY,
-        pingback=f"85.255.8.26:8001/rucaptcha/recaptcha_captcha/{queue_name}",
+        pingback=f"pythoncaptcha.tech:8001/rucaptcha/recaptcha_captcha/{queue_name}",
     ).captcha_handler(site_key=SITE_KEY, page_url=PAGE_URL)
 
     print(task_creation_answer)

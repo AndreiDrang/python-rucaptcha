@@ -14,7 +14,7 @@ RUCAPTCHA_KEY = ""
 # Google sitekey
 SITE_KEY = "6Lf77CsUAAAAALLFD1wIhbfQRD07VxhvPbyQFaQJ"
 # ссылка на страницу с капчёй
-PAGE_URL = "http://85.255.8.26/"
+PAGE_URL = "https://pythoncaptcha.tech/"
 # Значение параметра action, которые вы нашли в коде сайта
 ACTION = "verify"
 # Требуемое значение рейтинга (score) работника, от 0.1(робот) до 0.9(человечный человек)

@@ -119,7 +119,7 @@ if __name__ == "__main__":
 Callback пример
 """
 # нужно передать IP/URL ранее зарегистрированного сервера
-server_ip = "85.255.8.26"
+server_ip = "pythoncaptcha.tech"
 # и по желанию - порт на сервере который слушает ваше веб-приложение
 server_port = 8001
 # регистрация нового домена для callback/pingback
@@ -142,7 +142,7 @@ if answer.text == "OK":
     # создаём задание на сервере, ответ на которое придёт на заданный pingback URL в виде POST запроса
     task_creation_answer = FunCaptcha.FunCaptcha(
         rucaptcha_key=RUCAPTCHA_KEY,
-        pingback=f"85.255.8.26:8001/rucaptcha/fun_captcha/{queue_name}",
+        pingback=f"pythoncaptcha.tech:8001/rucaptcha/fun_captcha/{queue_name}",
     ).captcha_handler(public_key=public_key, page_url=pageurl)
 
     print(task_creation_answer)

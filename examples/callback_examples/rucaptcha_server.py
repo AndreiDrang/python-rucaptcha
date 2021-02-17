@@ -9,7 +9,7 @@ import aiohttp
 YOUR_HOST_OR_IP:PORT
 """
 # IP для работы callback`a
-HOST = "85.255.8.26"
+HOST = "pythoncaptcha.tech"
 # PORT для работы callback`a
 PORT = 8001
 

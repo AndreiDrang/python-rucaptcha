@@ -101,7 +101,7 @@ Callback примеры
 """
 # регистрация нового домена для callback/pingback
 answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
-    action="add_pingback", addr="http://85.255.8.26/", json=1
+    action="add_pingback", addr="http://pythoncaptcha.tech/", json=1
 )
 print(answer)
 # получение списка активных IP адресов
@@ -111,7 +111,7 @@ answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).addition
 print(answer)
 # удаление конкретного IP адреса
 answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
-    action="del_pingback", addr="http://85.255.8.26/"
+    action="del_pingback", addr="http://pythoncaptcha.tech/"
 )
 print(answer)
 # удаление всех IP адресов
