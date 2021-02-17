@@ -7,7 +7,7 @@ remove:
 refactor:
 	pip install black isort
 	black python_rucaptcha/ examples/
-	isort -rc python_rucaptcha/
+	isort python_rucaptcha/
 
 upload:
 	pip install twine
