@@ -10,9 +10,7 @@ from python_rucaptcha import RuCaptchaControl
 RUCAPTCHA_KEY = "ba86e77f9007a106c2eb2d7436e74440"
 
 # пример получения информации о балансе
-answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
-    action="getbalance"
-)
+answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action="getbalance")
 
 """
 answer - это JSON строка с соответствующими полями:
@@ -74,16 +72,16 @@ https://rucaptcha.com/api-rucaptcha#complain
 async def run():
     try:
         # пример с отправкой репорта на неверно решённую капчу
-        answer_aio_report = await RuCaptchaControl.aioRuCaptchaControl(
-            rucaptcha_key=RUCAPTCHA_KEY
-        ).additional_methods(action="reportbad", id=wrong_captcha_id)
+        answer_aio_report = await RuCaptchaControl.aioRuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
+            action="reportbad", id=wrong_captcha_id
+        )
 
         print(answer_aio_report)
 
         # прмиер с получением актуального баланса аккаунта
-        answer_aio_balance = await RuCaptchaControl.aioRuCaptchaControl(
-            rucaptcha_key=RUCAPTCHA_KEY
-        ).additional_methods(action="getbalance")
+        answer_aio_balance = await RuCaptchaControl.aioRuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
+            action="getbalance"
+        )
 
         print("Your balance is: ", answer_aio_balance["serverAnswer"], " rub.")
     except Exception as err:
@@ -97,25 +95,20 @@ if __name__ == "__main__":
 
 
 """
-Callback примеры
+WebSockets example
 """
-# регистрация нового домена для callback/pingback
-answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
-    action="add_pingback", addr="http://pythoncaptcha.tech/", json=1
+# create captcha class instance
+socket_captcha = RuCaptchaControl.sockRuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY)
+# get account balance info
+socket_captcha_balance = asyncio.get_event_loop().run_until_complete(socket_captcha.get_balance())
+print(socket_captcha_balance)
+# report failed captcha result
+socket_captcha_report_fail = asyncio.get_event_loop().run_until_complete(
+    socket_captcha.report(success=False, captchaId=50342849185)
 )
-print(answer)
-# получение списка активных IP адресов
-answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
-    action="get_pingback", json=1
+print(socket_captcha_report_fail)
+# report success captcha result
+socket_captcha_report_succ = asyncio.get_event_loop().run_until_complete(
+    socket_captcha.report(success=True, captchaId=435255349185)
 )
-print(answer)
-# удаление конкретного IP адреса
-answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
-    action="del_pingback", addr="http://pythoncaptcha.tech/"
-)
-print(answer)
-# удаление всех IP адресов
-answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(
-    action="del_pingback", addr="all"
-)
-print(answer)
+print(socket_captcha_report_fail)
