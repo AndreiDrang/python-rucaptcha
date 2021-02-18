@@ -26,7 +26,7 @@ class WebSocketRuCaptcha:
             "method": "auth",
             "requestId": str(uuid4()),
             "key": self.rucaptcha_key,
-            "options": {"allSessions": False, "suppressSuccess": False},
+            "options": {"allSessions": False, "suppressSuccess": True},
         }
         await self.sock.send(json.dumps(auth_data))
         return json.loads(await self.sock.recv())

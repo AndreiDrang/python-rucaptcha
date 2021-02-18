@@ -151,7 +151,6 @@ class sockRuCaptchaControl(WebSocketRuCaptcha):
         """
         super().__init__()
         self.rucaptcha_key = rucaptcha_key
-        self.sock = None
 
     async def get_balance(self) -> dict:
         """

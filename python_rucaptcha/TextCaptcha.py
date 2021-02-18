@@ -1,11 +1,14 @@
 import time
 import asyncio
+from uuid import uuid4
 
 import aiohttp
 import requests
 
 from python_rucaptcha.config import app_key
+from python_rucaptcha.SocketAPI import WebSocketRuCaptcha
 from python_rucaptcha.decorators import api_key_check, service_check
+from python_rucaptcha.serializer import TextCaptchaSer, CaptchaOptionsSer
 from python_rucaptcha.result_handler import get_sync_result, get_async_result
 
 
@@ -19,14 +22,14 @@ class TextCaptcha:
         **kwargs,
     ):
         """
-		Инициализация нужных переменных.
-		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
-		:param sleep_time: Время ожидания решения капчи
-		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
+                Инициализация нужных переменных.
+                :param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
+                :param sleep_time: Время ожидания решения капчи
+                :param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
                              и "rucaptcha"
         :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha
-		:param kwargs: Для передачи дополнительных параметров
-		"""
+                :param kwargs: Для передачи дополнительных параметров
+        """
         # время ожидания решения капчи
         self.sleep_time = sleep_time
         # тип URL на с которым будет работать библиотека
@@ -56,15 +59,15 @@ class TextCaptcha:
     @service_check
     def captcha_handler(self, captcha_text: str, **kwargs):
         """
-		Метод отвечает за передачу данных на сервер для решения капчи
-		:param captcha_text: Текстовый вопрос
-		:param kwargs: Для передачи дополнительных параметров
+                Метод отвечает за передачу данных на сервер для решения капчи
+                :param captcha_text: Текстовый вопрос
+                :param kwargs: Для передачи дополнительных параметров
         :return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
                     error - False - если всё хорошо, True - если есть ошибка,
                     errorBody - название ошибки
-		"""
+        """
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
         # Если переданы ещё параметры - вносим их в get_payload
@@ -116,14 +119,14 @@ class aioTextCaptcha:
         **kwargs,
     ):
         """
-		Инициализация нужных переменных.
-		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
-		:param sleep_time: Время ожидания решения капчи
-		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
+                Инициализация нужных переменных.
+                :param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
+                :param sleep_time: Время ожидания решения капчи
+                :param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
                              и "rucaptcha"
         :param pingback: Параметр для ссылки с на которой будет ожидание callback ответа от RuCaptcha
-		:param kwargs: Для передачи дополнительных параметров
-		"""
+                :param kwargs: Для передачи дополнительных параметров
+        """
         # время ожидания решения капчи
         self.sleep_time = sleep_time
         # тип URL на с которым будет работать библиотека
@@ -153,15 +156,15 @@ class aioTextCaptcha:
     @service_check
     async def captcha_handler(self, captcha_text: str, **kwargs):
         """
-		Метод отвечает за передачу данных на сервер для решения капчи
-		:param captcha_text: Текстовый вопрос
-		:param kwargs: Для передачи дополнительных параметров
+                Метод отвечает за передачу данных на сервер для решения капчи
+                :param captcha_text: Текстовый вопрос
+                :param kwargs: Для передачи дополнительных параметров
         :return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
                     error - False - если всё хорошо, True - если есть ошибка,
                     errorBody - название ошибки
-		"""
+        """
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
         # Если переданы ещё параметры - вносим их в get_payload
@@ -201,3 +204,33 @@ class aioTextCaptcha:
                     url_response=self.url_response,
                     result=self.result,
                 )
+
+
+# Async WebSocket method
+class sockTextCaptcha(WebSocketRuCaptcha):
+    def __init__(self, rucaptcha_key: str):
+        """
+        The asynchronous WebSocket module is responsible for text captcha solving.
+            Available 2 methods - `getbalance` and `report`
+        :param rucaptcha_key: Key from RuCaptcha
+        """
+        super().__init__()
+        self.rucaptcha_key = rucaptcha_key
+
+    async def captcha_handler(self, captcha_text: str, **kwargs) -> dict:
+        """
+        The asynchronous WebSocket method return account balance.
+        More info - https://wsrucaptcha.docs.apiary.io/#reference/text-captcha
+        :param captcha_text: Text captcha task string
+        :param kwargs: Options variables
+        :return: Server response dict
+        """
+        text_captcha_payload = TextCaptchaSer(
+            **{
+                "method": "text",
+                "requestId": str(uuid4()),
+                "text": captcha_text,
+                "options": CaptchaOptionsSer(**kwargs),
+            }
+        )
+        return await self.send_request(text_captcha_payload.dict())

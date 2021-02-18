@@ -6,7 +6,7 @@ from pydantic import BaseModel, ValidationError, validator
 from uuid import uuid4
 
 
-class CaptchaOptions(BaseModel):
+class CaptchaOptionsSer(BaseModel):
     phrase: bool = False
     caseSensitive: bool = False
     numeric: int = 0
@@ -42,8 +42,15 @@ class CaptchaOptions(BaseModel):
         return value
 
 
-class NormalCaptcha(BaseModel):
+class NormalCaptchaSer(BaseModel):
     method: str = "normal"
     requestId: str = uuid4()
     body: str
-    options: "CaptchaOptions" = CaptchaOptions()
+    options: "CaptchaOptionsSer" = CaptchaOptionsSer()
+
+
+class TextCaptchaSer(BaseModel):
+    method: str = "normal"
+    requestId: str = uuid4()
+    text: str
+    options: "CaptchaOptionsSer" = CaptchaOptionsSer()
