@@ -1,6 +1,9 @@
+from uuid import uuid4
+
 import aiohttp
 import requests
 
+from python_rucaptcha.SocketAPI import WebSocketRuCaptcha
 from python_rucaptcha.decorators import api_key_check, service_check
 
 
@@ -136,3 +139,45 @@ class aioRuCaptchaControl:
         elif answer["status"] == 1:
             self.result.update({"serverAnswer": answer["request"]})
             return self.result
+
+
+# Async WebSocket method
+class sockRuCaptchaControl(WebSocketRuCaptcha):
+    def __init__(self, rucaptcha_key: str):
+        """
+        The asynchronous WebSocket module is responsible for additional actions with the account and captcha.
+            Available 2 methods - `getbalance` and `report`
+        :param rucaptcha_key: Key from RuCaptcha
+        """
+        super().__init__()
+        self.rucaptcha_key = rucaptcha_key
+        self.sock = None
+
+    async def get_balance(self) -> dict:
+        """
+        The asynchronous WebSocket method return account balance.
+        More info - https://wsrucaptcha.docs.apiary.io/#reference/4
+        :return: Server response dict
+        """
+        balance_payload = {
+            "method": "balance",
+            "requestId": str(uuid4()),
+        }
+        return await self.send_request(balance_payload)
+
+    async def report(self, success: bool, captchaId: int) -> dict:
+        """
+        The asynchronous WebSocket method send captcha solving reports (success or fail).
+        More info - https://wsrucaptcha.docs.apiary.io/#reference/2
+        :param success: Is captcha solved success?
+        :param captchaId: Captcha task unique id. For example - 5034284222
+        :return: Server response dict
+        """
+        report_payload = {
+            "requestId": str(uuid4()),
+            "method": "report",
+            "success": success,
+            "captchaId": captchaId,
+        }
+
+        return await self.send_request(report_payload)
