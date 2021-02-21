@@ -7,7 +7,6 @@ import requests
 from .config import connect_generator
 
 
-# синхронный метод
 def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, result: dict):
     # генератор для повторных попыток подключения к серверу
     connect_gen = connect_generator()
@@ -48,7 +47,6 @@ def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, resul
                 return result
 
 
-# асинхронный метод
 async def get_async_result(get_payload: dict, sleep_time: int, url_response: str, result: dict):
     # генератор для повторных попыток подключения к серверу
     connect_gen = connect_generator()
@@ -79,9 +77,7 @@ async def get_async_result(get_payload: dict, sleep_time: int, url_response: str
 
                         # если это ReCaptcha v3 то получаем от сервера
                         # дополнительные поля, с ID юзера и его счётом
-                        if captcha_response.get("user_check") and captcha_response.get(
-                            "user_score"
-                        ):
+                        if captcha_response.get("user_check") and captcha_response.get("user_score"):
                             result.update(
                                 {
                                     "user_check": captcha_response.get("user_check"),
@@ -92,7 +88,7 @@ async def get_async_result(get_payload: dict, sleep_time: int, url_response: str
 
             except Exception as error:
                 if next(connect_gen) < 4:
-                    time.sleep(2)
+                    await asyncio.sleep(2)
                 else:
                     result.update({"error": True, "errorBody": {"text": error, "id": -1}})
                     return result
