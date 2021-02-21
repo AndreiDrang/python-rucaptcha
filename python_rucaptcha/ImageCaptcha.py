@@ -4,13 +4,16 @@ import uuid
 import base64
 import shutil
 import asyncio
+from uuid import uuid4
 
 import aiohttp
 import requests
 from requests.adapters import HTTPAdapter
 
 from python_rucaptcha.config import app_key
+from python_rucaptcha.SocketAPI import WebSocketRuCaptcha
 from python_rucaptcha.decorators import api_key_check, service_check
+from python_rucaptcha.serializer import NormalCaptchaSer, CaptchaOptionsSer
 from python_rucaptcha.result_handler import get_sync_result, get_async_result
 
 
@@ -135,13 +138,10 @@ class ImageCaptcha:
             with open(os.path.join(self.img_path, f"im-{image_name}.png"), "wb") as out_image:
                 out_image.write(content)
 
-            with open(os.path.join(self.img_path, f"im-{image_name}.png"), "rb") as captcha_image:
-                # Отправляем на рукапча изображение капчи и другие парметры,
-                # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
-                self.post_payload.update(
-                    {"body": base64.b64encode(captcha_image.read()).decode("utf-8")}
-                )
-                captcha_id = self.session.post(self.url_request, data=self.post_payload).json()
+            # Отправляем на рукапча изображение капчи и другие парметры,
+            # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
+            self.post_payload.update({"body": base64.b64encode(content).decode("utf-8")})
+            captcha_id = self.session.post(self.url_request, data=self.post_payload).json()
 
         except (IOError, FileNotFoundError) as error:
             self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
@@ -169,9 +169,7 @@ class ImageCaptcha:
             # на рукапчу для решения
             if content_type == "file":
                 with open(content, "rb") as captcha_image:
-                    self.post_payload.update(
-                        {"body": base64.b64encode(captcha_image.read()).decode("utf-8")}
-                    )
+                    self.post_payload.update({"body": base64.b64encode(captcha_image.read()).decode("utf-8")})
 
             # вносим закодированный файл в post_payload для отправки на рукапчу для решения
             elif content_type == "base64":
@@ -179,8 +177,7 @@ class ImageCaptcha:
 
             else:
                 raise ValueError(
-                    f"Передан неверный тип контента! Допустимые: `file` и `base64`. "
-                    f"Вы передали: `{content_type}`"
+                    f"Передан неверный тип контента! Допустимые: `file` и `base64`. " f"Вы передали: `{content_type}`"
                 )
 
             # Отправляем на рукапча изображение капчи и другие парметры,
@@ -244,9 +241,7 @@ class ImageCaptcha:
 
         else:
             # если не передан ни один из параметров
-            self.result.update(
-                {"error": True, "errorBody": "You did not send any file local link or URL."}
-            )
+            self.result.update({"error": True, "errorBody": "You did not send any file local link or URL."})
             return self.result
         # проверяем наличие ошибок при скачивании/передаче файла на сервер
         if self.result["error"]:
@@ -400,14 +395,10 @@ class aioImageCaptcha:
             with open(os.path.join(self.img_path, f"im-{image_name}.png"), "wb") as out_image:
                 out_image.write(content)
 
-            with open(os.path.join(self.img_path, f"im-{image_name}.png"), "rb") as captcha_image:
-                # Отправляем на рукапча изображение капчи и другие парметры
-                self.post_payload.update(
-                    {"body": base64.b64encode(captcha_image.read()).decode("utf-8")}
-                )
-                async with aiohttp.ClientSession() as session:
-                    async with session.post(self.url_request, data=self.post_payload) as resp:
-                        captcha_id = await resp.json()
+            self.post_payload.update({"body": base64.b64encode(content).decode("utf-8")})
+            async with aiohttp.ClientSession() as session:
+                async with session.post(self.url_request, data=self.post_payload) as resp:
+                    captcha_id = await resp.json()
 
         except (IOError, FileNotFoundError) as error:
             self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
@@ -434,17 +425,14 @@ class aioImageCaptcha:
             if content_type == "file":
                 with open(content, "rb") as captcha_image:
                     # Отправляем на рукапча изображение капчи и другие парметры
-                    self.post_payload.update(
-                        {"body": base64.b64encode(captcha_image.read()).decode("utf-8")}
-                    )
+                    self.post_payload.update({"body": base64.b64encode(captcha_image.read()).decode("utf-8")})
 
             elif content_type == "base64":
                 self.post_payload.update({"body": content})
 
             else:
                 raise ValueError(
-                    f"Передан неверный тип контента! Допустимые: `file` и `base64`. "
-                    f"Вы передали: `{content_type}`"
+                    f"Передан неверный тип контента! Допустимые: `file` и `base64`. " f"Вы передали: `{content_type}`"
                 )
 
             async with aiohttp.ClientSession() as session:
@@ -507,9 +495,7 @@ class aioImageCaptcha:
                 captcha_id = await self.__image_temp_saver(content)
 
         else:
-            self.result.update(
-                {"error": True, "errorBody": "You did not send any file local link or URL."}
-            )
+            self.result.update({"error": True, "errorBody": "You did not send any file local link or URL."})
             return self.result
 
         # проверяем наличие ошибок при скачивании/передаче файла на сервер
