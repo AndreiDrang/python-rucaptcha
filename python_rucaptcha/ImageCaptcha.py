@@ -532,3 +532,35 @@ class aioImageCaptcha:
         if self.save_format == "const":
             if self.img_clearing:
                 shutil.rmtree(self.img_path)
+
+
+class sockNormalCaptcha(WebSocketRuCaptcha):
+    """
+    Class for ImageCaptcha
+    """
+
+    def __init__(self, rucaptcha_key: str, allSessions: bool = None, suppressSuccess: bool = None):
+        """
+        Method setup WebSocket connection data
+        """
+        super().__init__(allSessions, suppressSuccess)
+        self.rucaptcha_key = rucaptcha_key
+
+    async def captcha_handler(self, captcha_image_base64: str, **kwargs) -> dict:
+        """
+        The asynchronous WebSocket method return account balance.
+        More info - https://wsrucaptcha.docs.apiary.io/#reference/text-captcha
+        :param captcha_image_base64: Image captcha base64 data in string format (decoded in utf-8)
+        :param kwargs: Options variables
+        :return: Server response dict
+        """
+        normal_captcha_payload = NormalCaptchaSer(
+            **{
+                "method": "normal",
+                "requestId": str(uuid4()),
+                "body": captcha_image_base64,
+                "options": CaptchaOptionsSer(**kwargs),
+            }
+        )
+
+        return await self.send_request(normal_captcha_payload.dict())
