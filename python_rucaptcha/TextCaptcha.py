@@ -211,7 +211,6 @@ class sockTextCaptcha(WebSocketRuCaptcha):
     def __init__(self, rucaptcha_key: str):
         """
         The asynchronous WebSocket module is responsible for text captcha solving.
-            Available 2 methods - `getbalance` and `report`
         :param rucaptcha_key: Key from RuCaptcha
         """
         super().__init__()
