@@ -171,9 +171,7 @@ if answer.text == "OK":
     print(task_creation_answer)
 
     # подключаемся к серверу и ждём решения капчи из кеша
-    callback_server_response = CallbackClient.CallbackClient(
-        task_id=task_creation_answer.get("id")
-    ).captcha_handler()
+    callback_server_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get("id")).captcha_handler()
 
     print(callback_server_response)
 

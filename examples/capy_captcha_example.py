@@ -21,9 +21,7 @@ elif result["error"]:
 
 async def run():
     try:
-        result = await aioCapyPuzzle(
-            rucaptcha_key="2bfbe92f00f1498e90e1460550b1ad94"
-        ).captcha_handler(
+        result = await aioCapyPuzzle(rucaptcha_key="2bfbe92f00f1498e90e1460550b1ad94").captcha_handler(
             captchakey="PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w",
             page_url="https://www.capy.me/account/register/",
         )

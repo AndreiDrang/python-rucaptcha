@@ -48,9 +48,9 @@ SITE_KEY = "6LcC7SsUAAAAAN3AOB-clPIsrKfnBUlO2QkC_vQ7"
 PAGE_URL = "https://pythoncaptcha.tech/invisible_recaptcha/"
 
 # Пример работы с модулем ReCaptchaV2
-answer_invisible = ReCaptchaV2.ReCaptchaV2(
-    rucaptcha_key=RUCAPTCHA_KEY, invisible=1
-).captcha_handler(site_key=SITE_KEY, page_url=PAGE_URL)
+answer_invisible = ReCaptchaV2.ReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY, invisible=1).captcha_handler(
+    site_key=SITE_KEY, page_url=PAGE_URL
+)
 print(answer_invisible)
 """
 answer_... - это JSON строка с соответствующими полями
@@ -91,9 +91,9 @@ import asyncio
 
 async def run():
     try:
-        answer_aio_re2 = await ReCaptchaV2.aioReCaptchaV2(
-            rucaptcha_key=RUCAPTCHA_KEY
-        ).captcha_handler(site_key=SITE_KEY, page_url=PAGE_URL)
+        answer_aio_re2 = await ReCaptchaV2.aioReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
+            site_key=SITE_KEY, page_url=PAGE_URL
+        )
         if not answer_aio_re2["error"]:
             # решение капчи
             print(answer_aio_re2["captchaSolve"])
@@ -144,9 +144,7 @@ if answer.text == "OK":
     print(task_creation_answer)
 
     # подключаемся к серверу и ждём решения капчи из кеша
-    callback_server_response = CallbackClient.CallbackClient(
-        task_id=task_creation_answer.get("id")
-    ).captcha_handler()
+    callback_server_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get("id")).captcha_handler()
 
     print(callback_server_response)
 

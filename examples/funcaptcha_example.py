@@ -64,9 +64,7 @@ if __name__ == "__main__":
 """
 Обычный пример для решения FunCaptcha
 """
-answer = FunCaptcha.FunCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
-    public_key=public_key, page_url=pageurl
-)
+answer = FunCaptcha.FunCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(public_key=public_key, page_url=pageurl)
 
 """
 answer - это JSON строка с соответствующими полями
@@ -148,9 +146,7 @@ if answer.text == "OK":
     print(task_creation_answer)
 
     # подключаемся к серверу и ждём решения капчи из кеша
-    callback_server_response = CallbackClient.CallbackClient(
-        task_id=task_creation_answer.get("id")
-    ).captcha_handler()
+    callback_server_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get("id")).captcha_handler()
 
     print(callback_server_response)
 

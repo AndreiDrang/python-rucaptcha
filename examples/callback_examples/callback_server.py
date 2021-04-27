@@ -30,9 +30,7 @@ async def registr_key(request):
     """
     data = await request.json()
     try:
-        connection = await aio_pika.connect_robust(
-            f"amqp://{USERNAME}:{PASSWORD}@localhost/{data['vhost']}"
-        )
+        connection = await aio_pika.connect_robust(f"amqp://{USERNAME}:{PASSWORD}@localhost/{data['vhost']}")
 
         channel = await connection.channel()
 
@@ -63,9 +61,7 @@ def save_rucaptcha_result_cache(message: dict):
 
 
 async def send_data_in_rucaptcha_qeue(qeue_key: str, message: dict):
-    connection = await aio_pika.connect_robust(
-        f"amqp://{USERNAME}:{PASSWORD}@localhost/rucaptcha_vhost"
-    )
+    connection = await aio_pika.connect_robust(f"amqp://{USERNAME}:{PASSWORD}@localhost/rucaptcha_vhost")
     channel = await connection.channel()
 
     json_message = json.dumps({"id": message.get("id"), "code": message.get("code")})
@@ -190,9 +186,7 @@ def save_anticaptcha_result_cache(message: dict):
 
 
 async def send_data_in_anticaptcha_qeue(qeue_key: str, message: dict):
-    connection = await aio_pika.connect_robust(
-        f"amqp://{USERNAME}:{PASSWORD}@localhost/anticaptcha_vhost"
-    )
+    connection = await aio_pika.connect_robust(f"amqp://{USERNAME}:{PASSWORD}@localhost/anticaptcha_vhost")
     channel = await connection.channel()
 
     json_message = json.dumps({"taskId": message.get("taskId"), "message": message})

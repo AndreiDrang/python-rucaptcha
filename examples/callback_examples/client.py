@@ -39,9 +39,7 @@ if __name__ == "__main__":
 print(CallbackClient.CallbackClient(task_id=TASK_ID).captcha_handler())
 
 print(
-    CallbackClient.CallbackClient(
-        task_id=TASK_ID, queue_name=QUEUE_KEY, call_type="queue"
-    ).captcha_handler(
+    CallbackClient.CallbackClient(task_id=TASK_ID, queue_name=QUEUE_KEY, call_type="queue").captcha_handler(
         requests_timeout=0.5,
         auth_params={
             "host": "pythoncaptcha.tech",

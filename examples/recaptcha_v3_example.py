@@ -77,9 +77,9 @@ import asyncio
 
 async def run():
     try:
-        answer_aio_re3 = await ReCaptchaV3.aioReCaptchaV3(
-            rucaptcha_key=RUCAPTCHA_KEY
-        ).captcha_handler(site_key=SITE_KEY, page_url=PAGE_URL)
+        answer_aio_re3 = await ReCaptchaV3.aioReCaptchaV3(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
+            site_key=SITE_KEY, page_url=PAGE_URL
+        )
         if not answer_aio_re3["error"]:
             # решение капчи
             print(answer_aio_re3["captchaSolve"])

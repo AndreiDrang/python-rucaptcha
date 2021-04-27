@@ -61,9 +61,9 @@ UPDATE 1.6.1
 # Введите ключ от рукапчи из своего аккаунта
 RUCAPTCHA_KEY = "2597d7cb1f9435a3b531ac283ce987d5"
 # Для получения ссылки на обычную капчу нужно послать GET запрос с соответствующим парметром
-image_link = requests.get(
-    "https://pythoncaptcha.tech/api/", params={"captcha_type": "get_common_captcha"}
-).json()["captcha_src"]
+image_link = requests.get("https://pythoncaptcha.tech/api/", params={"captcha_type": "get_common_captcha"}).json()[
+    "captcha_src"
+]
 
 """
 contextmanager пример
@@ -117,9 +117,9 @@ print(user_answer_const)
 Было выяснено, что он не работает с некоторыми видами капч - если возникают проблемы, то стоит использовать первый 
 вариант
 """
-user_answer_temp = ImageCaptcha.ImageCaptcha(
-    rucaptcha_key=RUCAPTCHA_KEY, save_format="temp"
-).captcha_handler(captcha_link=image_link)
+user_answer_temp = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, save_format="temp").captcha_handler(
+    captcha_link=image_link
+)
 print(user_answer_temp)
 
 """
@@ -130,9 +130,7 @@ base_64_link = base64.b64encode(
     requests.get("https://pythoncaptcha.tech/static/image/common_image_example/862963.png").content
 ).decode("utf-8")
 
-user_answer_base64 = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
-    captcha_base64=base_64_link
-)
+user_answer_base64 = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_base64=base_64_link)
 print(user_answer_base64)
 """
 user_answer_... - это JSON строка с соответствующими полями
@@ -245,9 +243,9 @@ https://docs.aiohttp.org/en/stable/client_advanced.html#proxy-support
 
 async def run():
     try:
-        answer_aio_image = await ImageCaptcha.aioImageCaptcha(
-            rucaptcha_key=RUCAPTCHA_KEY
-        ).captcha_handler(captcha_link=image_link)
+        answer_aio_image = await ImageCaptcha.aioImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
+            captcha_link=image_link
+        )
         print(answer_aio_image)
         if not answer_aio_image["error"]:
             # решение капчи
@@ -269,9 +267,9 @@ async def run():
     # captcha_file = 'D:\/Python\/933588.png'
 
     try:
-        answer_aio_local_image = await ImageCaptcha.aioImageCaptcha(
-            rucaptcha_key=RUCAPTCHA_KEY
-        ).captcha_handler(captcha_file=captcha_file)
+        answer_aio_local_image = await ImageCaptcha.aioImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
+            captcha_file=captcha_file
+        )
         print(answer_aio_local_image)
         if not answer_aio_local_image["error"]:
             # решение капчи
@@ -288,9 +286,9 @@ async def run():
     !!!Поддерживаются только HTTP прокси!!!
     """
     try:
-        answer_aio_image = await ImageCaptcha.aioImageCaptcha(
-            rucaptcha_key=RUCAPTCHA_KEY
-        ).captcha_handler(captcha_link=image_link, proxy="https://pythoncaptcha.tech:8080")
+        answer_aio_image = await ImageCaptcha.aioImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
+            captcha_link=image_link, proxy="https://pythoncaptcha.tech:8080"
+        )
         if not answer_aio_image["error"]:
             # решение капчи
             print(answer_aio_image["captchaSolve"])

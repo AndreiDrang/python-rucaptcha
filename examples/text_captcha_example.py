@@ -33,9 +33,7 @@ text_question = "Если завтра суббота, то какой сего�
 Тут нужно воспользоваться бибилотекой, отослать на решение ссылку на капчу и получить ответ
 далее его записать в user_answer
 """
-user_answer = TextCaptcha.TextCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
-    captcha_text=text_question
-)
+user_answer = TextCaptcha.TextCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_text=text_question)
 
 if user_answer["error"] == 0:
     # решение капчи
@@ -55,9 +53,9 @@ https://rucaptcha.com/api-rucaptcha#solving_text_captcha
 
 Полный пример выглядит так:
 """
-user_answer_full = TextCaptcha.TextCaptcha(
-    rucaptcha_key=RUCAPTCHA_KEY, language=1
-).captcha_handler(captcha_text=text_question)
+user_answer_full = TextCaptcha.TextCaptcha(rucaptcha_key=RUCAPTCHA_KEY, language=1).captcha_handler(
+    captcha_text=text_question
+)
 
 if user_answer_full["error"] == 0:
     # решение капчи
@@ -102,9 +100,7 @@ if answer.text == "OK":
     print(task_creation_answer)
 
     # подключаемся к серверу и ждём решения капчи из кеша
-    callback_server_response = CallbackClient.CallbackClient(
-        task_id=task_creation_answer.get("id")
-    ).captcha_handler()
+    callback_server_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get("id")).captcha_handler()
 
     print(callback_server_response)
 

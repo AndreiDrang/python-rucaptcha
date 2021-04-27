@@ -11,9 +11,7 @@ RUCAPTCHA_KEY = "3ca91ab80ece74da44cfb7eec27493ed"
 website_link - The full URL of the page where you decide hCaptcha
 data_sitekey - The value of the data-sitekey parameter that you found in the page code
 """
-website_link = (
-    "https://secure2.e-konsulat.gov.pl/Uslugi/RejestracjaTerminu.aspx?IDUSLUGI=1&IDPlacowki=94"
-)
+website_link = "https://secure2.e-konsulat.gov.pl/Uslugi/RejestracjaTerminu.aspx?IDUSLUGI=1&IDPlacowki=94"
 data_sitekey = "39fccce0-e3e3-4f9d-a942-ea415c102beb"
 
 # Sync example
