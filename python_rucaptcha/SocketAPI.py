@@ -5,6 +5,9 @@ from uuid import uuid4
 
 import websockets
 from tenacity import retry, after_log, wait_fixed, stop_after_attempt
+from websockets.client import WebSocketClientProtocol
+
+from python_rucaptcha.serializer import SockAuthSer, SocketResponse
 
 
 class WebSocketRuCaptcha:
@@ -17,7 +20,9 @@ class WebSocketRuCaptcha:
                                 `True` if u need final answer without any addition info.
         More info - https://wsrucaptcha.docs.apiary.io/#reference/0
         """
-        self.sock = None
+        self.sock: WebSocketClientProtocol = None
+        self.result = SocketResponse()
+        self.auth_result = SocketResponse()
 
         self.allSessions = allSessions or False
         self.suppressSuccess = suppressSuccess or True
@@ -47,57 +52,59 @@ class WebSocketRuCaptcha:
             return False
         return True
 
-    @retry(wait=wait_fixed(5), stop=stop_after_attempt(5), after=after_log(logging, logging.ERROR), reraise=True)
-    async def socket_session(self):
+    async def __socket_session(self):
         """
         Create new socket session
         """
         self.sock = await websockets.connect(self.URL, ssl=self.ssl_context)
 
-    @retry(wait=wait_fixed(5), stop=stop_after_attempt(5), after=after_log(logging, logging.ERROR), reraise=True)
-    async def socket_session_recreate(self):
+    async def __socket_session_recreate(self):
         """
         If socket session not exist - create it
         """
+        # if socket not exist
         if not self.sock:
-            await self.socket_session()
+            await self.__socket_session()
+        # if socket exist but closed
+        elif self.sock.closed:
+            await self.sock.close()
+            await self.__socket_session()
 
-    @retry(wait=wait_fixed(5), stop=stop_after_attempt(5), after=after_log(logging, logging.ERROR), reraise=True)
-    async def __auth(self) -> dict:
+    async def __auth(self) -> SocketResponse:
         """
         Method setup connection with RuCaptcha and auth user
         :return: Server response dict
         """
-        await self.socket_session_recreate()
+        await self.__socket_session_recreate()
 
-        auth_data = {
-            "method": "auth",
-            "requestId": str(uuid4()),
-            "key": self.rucaptcha_key,
-            "options": {"allSessions": self.allSessions, "suppressSuccess": self.suppressSuccess},
-        }
-        await self.sock.send(json.dumps(auth_data))
-        return json.loads(await self.sock.recv())
+        auth_data = SockAuthSer(
+            **{
+                "key": self.rucaptcha_key,
+                "options": {"allSessions": self.allSessions, "suppressSuccess": self.suppressSuccess},
+            }
+        )
+        await self.sock.send(auth_data.json())
+        return self.auth_result.parse_raw(await self.sock.recv())
 
-    @retry(wait=wait_fixed(5), stop=stop_after_attempt(5), after=after_log(logging, logging.ERROR), reraise=True)
+    @retry(wait=wait_fixed(5), stop=stop_after_attempt(3), after=after_log(logging, logging.ERROR), reraise=True)
     async def get_request(self) -> dict:
-        await self.socket_session_recreate()
+        await self.__socket_session_recreate()
 
-        return json.loads(await self.sock.recv())
+        response = await self.sock.recv()
 
-    @retry(wait=wait_fixed(5), stop=stop_after_attempt(5), after=after_log(logging, logging.ERROR), reraise=True)
-    async def send_request(self, payload: dict) -> dict:
+        return self.result.parse_raw(response).dict(exclude_defaults=True)
+
+    @retry(wait=wait_fixed(5), stop=stop_after_attempt(3), after=after_log(logging, logging.ERROR), reraise=True)
+    async def send_request(self, payload: json) -> dict:
         """
         Method send request to server and wait response
-        :param payload: Dict payload with data
+        :param payload: JSON payload with data
         :return: Server response dict
         """
-        await self.socket_session_recreate()
-
         auth_result = await self.__auth()
         # check if auth is success
-        if auth_result["success"]:
-            await self.sock.send(json.dumps(payload))
+        if auth_result.success:
+            await self.sock.send(payload)
             return await self.get_request()
         else:
-            return auth_result
+            return auth_result.dict()
