@@ -44,8 +44,6 @@ def service_check(func):
             return func(self, *args, **kwargs)
         # вызываем ошибку, если сервис неизвестный
         else:
-            raise ValueError(
-                "Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`."
-            )
+            raise ValueError("Wrong `service_type` parameter. Valid formats: `rucaptcha` or `2captcha`.")
 
     return wrapper
