@@ -14,3 +14,8 @@ exclude = '''
   | dist
 )/
 '''
+[tool.isort]
+profile = "black"
+skip_glob = 'examples/**'
+line_length = 120
+length_sort = true
