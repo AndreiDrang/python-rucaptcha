@@ -5,35 +5,38 @@ import aiohttp
 import requests
 
 from .config import connect_generator
+from .serializer import ResponseSer, ServiceGetResponseSer
 
 
-def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, result: dict):
+def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, result: ResponseSer) -> dict:
     # генератор для повторных попыток подключения к серверу
     connect_gen = connect_generator()
     while True:
         try:
             # отправляем запрос на результат решения капчи
-            captcha_response = requests.get(url_response, params=get_payload).json()
+            captcha_response = ServiceGetResponseSer(**requests.get(url_response, params=get_payload).json())
             # если капча ещё не решена - ожидаем
-            if captcha_response["request"] == "CAPCHA_NOT_READY":
+            if captcha_response.request == "CAPCHA_NOT_READY":
                 time.sleep(sleep_time)
 
             # при ошибке во время решения
-            elif captcha_response["status"] == 0:
-                result.update({"error": 1, "errorBody": captcha_response["request"]})
-                return result
+            elif captcha_response.status == 0:
+                result.error = True
+                result.errorBody = captcha_response.request
+                return result.dict()
 
             # при решении капчи
-            elif captcha_response["status"] == 1:
-                result.update({"captchaSolve": captcha_response["request"]})
+            elif captcha_response.status == 1:
+                result.captchaSolve = captcha_response.request
 
                 # если это ReCaptcha v3 то получаем от сервера
                 # дополнительные поля, с ID юзера и его счётом
-                if captcha_response.get("user_check") and captcha_response.get("user_score"):
+                if captcha_response.user_check and captcha_response.user_score:
+                    result = result.dict()
                     result.update(
                         {
-                            "user_check": captcha_response.get("user_check"),
-                            "user_score": captcha_response.get("user_score"),
+                            "user_check": captcha_response.user_check,
+                            "user_score": captcha_response.user_score,
                         }
                     )
 
@@ -43,8 +46,9 @@ def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, resul
             if next(connect_gen) < 4:
                 time.sleep(2)
             else:
-                result.update({"error": True, "errorBody": {"text": error, "id": -1}})
-                return result
+                result.error = True
+                result.errorBody = error
+                return result.dict()
 
 
 async def get_async_result(get_payload: dict, sleep_time: int, url_response: str, result: dict):

@@ -10,20 +10,6 @@ url_response_rucaptcha = "http://rucaptcha.com/res.php"
 app_key = "1899"
 
 """
-Параметры для callback
-"""
-# IP для работы callback`a
-HOST = "85.255.8.26"
-# PORT для работы callback`a
-PORT = 8001
-# данные для подключения к RabbitMQ на callback сервере
-RTMQ_USERNAME = "hardworker_1"
-RTMQ_PASSWORD = "password"
-RTMQ_HOST = "85.255.8.26"
-RTMQ_PORT = 5672
-RTMQ_VHOST = "rucaptcha_vhost"
-
-"""
 JSON возвращаемы пользователю после решения капчи
 
 serverAnswer - ответ сервера при использовании RuCaptchaControl

@@ -1,9 +1,16 @@
 from uuid import uuid4
 
-from pydantic import Field, BaseModel, validator
+from pydantic import Field, BaseModel, validator, root_validator
+
+from . import enums
+from .config import app_key
+
+"""
+Socket API Serializers
+"""
 
 
-class CaptchaOptionsSer(BaseModel):
+class CaptchaOptionsSocketSer(BaseModel):
     phrase: bool = False
     caseSensitive: bool = False
     numeric: int = 0
@@ -39,18 +46,18 @@ class CaptchaOptionsSer(BaseModel):
         return value
 
 
-class NormalCaptchaSer(BaseModel):
+class NormalCaptchaSocketSer(BaseModel):
     method: str = "normal"
     requestId: str = Field(default_factory=uuid4)
     body: str = str()
-    options: "CaptchaOptionsSer" = CaptchaOptionsSer()
+    options: "CaptchaOptionsSocketSer" = CaptchaOptionsSocketSer()
 
 
-class TextCaptchaSer(BaseModel):
+class TextCaptchaSocketSer(BaseModel):
     method: str = "text"
     requestId: str = Field(default_factory=uuid4)
     body: str = str()
-    options: "CaptchaOptionsSer" = CaptchaOptionsSer()
+    options: "CaptchaOptionsSocketSer" = CaptchaOptionsSocketSer()
 
 
 class SocketResponse(BaseModel):
@@ -75,17 +82,93 @@ class SockAuthSer(BaseModel):
 
 
 """
-Response
+HTTP API Serializers
 """
 
 
-class ResponseErrorSer(BaseModel):
-    text: str
-    id: str
+class PostRequestSer(BaseModel):
+    key: str
+    method: str
+    json: int = 1
+    soft_id: str = app_key
+
+
+class GetRequestSer(BaseModel):
+    key: str
+    action: str = "get"
+    json: int = 1
+
+
+class CaptchaOptionsSer(BaseModel):
+    rucaptcha_key: str
+    sleep_time: int = 5
+    save_format: str = enums.SaveFormatsEnm.TEMP.value
+    service_type: str = enums.ServicesEnm.TWOCAPTCHA.value
+    img_clearing: bool = True
+    img_path: str = "PythonRuCaptchaImages"
+
+    url_request: str = ""
+    url_response: str = ""
+
+    @validator("rucaptcha_key")
+    def len_check(cls, value):
+        if len(value) != 32:
+            raise ValueError("ERROR_WRONG_USER_KEY")
+        return value
+
+    @validator("sleep_time")
+    def len_check(cls, value):
+        if value < 5:
+            raise ValueError("Too little sleep time")
+        return value
+
+    @validator("save_format")
+    def len_check(cls, value):
+        if value not in enums.SaveFormatsEnm.list_values():
+            raise ValueError(
+                f"Invalid `save_format`, valid params - {','.join(enums.SaveFormatsEnm.list_values())}, send - {value}"
+            )
+        return value
+
+    @validator("service_type")
+    def len_check(cls, value):
+        if value not in enums.ServicesEnm.list_values():
+            raise ValueError(
+                f"Invalid `service_type`, valid params - {','.join(enums.ServicesEnm.list_values())}, send - {value}"
+            )
+        return value
+
+    @root_validator
+    def soft_id_set(cls, values):
+        service_type = values.get("service_type")
+        values.update(
+            {"url_request": f"http://{service_type}.com/in.php", "url_response": f"http://{service_type}.com/res.php"}
+        )
+        return values
+
+
+"""
+HTTP API Response
+"""
+
+
+class ServicePostResponseSer(BaseModel):
+    status: int
+    request: str
+
+
+class ServiceGetResponseSer(BaseModel):
+    status: int
+    request: str
+
+    # ReCaptcha V3 params
+    user_check: str = ""
+    user_score: str = ""
 
 
 class ResponseSer(BaseModel):
-    captchaSolve: str
-    taskId: str
+    serverAnswer: dict = {}
+    captchaSolve: dict = {}
+    taskId: int = 0
     error: bool = False
-    errorBody: ResponseErrorSer
+    errorBody: str = ""

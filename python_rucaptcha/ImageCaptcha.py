@@ -10,11 +10,19 @@ import aiohttp
 import requests
 from requests.adapters import HTTPAdapter
 
-from python_rucaptcha.config import app_key
-from python_rucaptcha.SocketAPI import WebSocketRuCaptcha
-from python_rucaptcha.decorators import api_key_check, service_check
-from python_rucaptcha.serializer import NormalCaptchaSer, CaptchaOptionsSer
-from python_rucaptcha.result_handler import get_sync_result, get_async_result
+from . import enums
+from .config import app_key
+from .SocketAPI import WebSocketRuCaptcha
+from .serializer import (
+    ResponseSer,
+    GetRequestSer,
+    PostRequestSer,
+    CaptchaOptionsSer,
+    NormalCaptchaSocketSer,
+    ServicePostResponseSer,
+    CaptchaOptionsSocketSer,
+)
+from .result_handler import get_sync_result, get_async_result
 
 
 class ImageCaptcha:
@@ -50,49 +58,31 @@ class ImageCaptcha:
 
         Подробней с примерами можно ознакомиться в 'CaptchaTester/image_captcha_example.py'
         """
-        # время ожидания решения капчи
-        self.sleep_time = sleep_time
-        # тип URL на с которым будет работать библиотека
-        self.service_type = service_type
+        # assign args to validator
+        self.params = CaptchaOptionsSer(**locals())
 
-        # проверяем переданный параметр способа сохранения капчи
-        if save_format in ["const", "temp"]:
-            self.save_format = save_format
-            # если файл сохраняется в папку, берём параметр названия папки и очистк/не очистки папки от капч
-            if self.save_format == "const":
-                # очищаем папку после решения капчи - True, сохраняем все файлы - False
-                self.img_clearing = img_clearing
-                # название папки для сохранения файлов капчи
-                self.img_path = img_path
-                # создаём папку для сохранения капч
-                os.makedirs(self.img_path, exist_ok=True)
+        # prepare POST payload
+        self.post_payload = PostRequestSer(
+            key=self.params.rucaptcha_key,
+            method="base64",
+        ).dict()
+        # prepare GET payload
+        self.get_payload = GetRequestSer(key=self.params.rucaptcha_key).dict()
+        # prepare result payload
+        self.result = ResponseSer()
 
-        else:
-            raise ValueError(
-                "\nПередан неверный формат сохранения файла изображения. "
-                f"\n\tВозможные варинты: `temp` и `const`. Вы передали - `{save_format}`"
-                "\nWrong `save_format` parameter. Valid params: `const` or `temp`."
-                f"\n\tYour param - `{save_format}`"
-            )
+        # если файл сохраняется в папку, берём параметр названия папки и очистк/не очистки папки от капч
+        if self.params.save_format == enums.SaveFormatsEnm.CONST.value:
+            # создаём папку для сохранения капч
+            os.makedirs(self.params.img_path, exist_ok=True)
 
-        # пайлоад POST запроса на отправку капчи на сервер
-        self.post_payload = {
-            "key": rucaptcha_key,
-            "method": "base64",
-            "json": 1,
-            "soft_id": app_key,
-        }
         # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:
             for key in kwargs:
                 self.post_payload.update({key: kwargs[key]})
 
-        # пайлоад GET запроса на получение результата решения капчи
-        self.get_payload = {"key": rucaptcha_key, "action": "get", "json": 1}
-
-        # создаём сессию
+        # prepare session
         self.session = requests.Session()
-        # выставляем кол-во попыток подключения к серверу при ошибке
         self.session.mount("http://", HTTPAdapter(max_retries=5))
         self.session.mount("https://", HTTPAdapter(max_retries=5))
 
@@ -107,20 +97,23 @@ class ImageCaptcha:
     def __image_temp_saver(self, content: bytes):
         """
         Метод сохраняет файл изображения как временный и отправляет его сразу на сервер для расшифровки.
-        :return: Возвращает ID капчи из сервиса
         """
-        captcha_id = None
         try:
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
             self.post_payload.update({"body": base64.b64encode(content).decode("utf-8")})
-            captcha_id = self.session.post(self.url_request, data=self.post_payload).json()
+            response = ServicePostResponseSer(
+                **self.session.post(self.params.url_request, data=self.post_payload).json()
+            )
+            if response.status == 1:
+                self.result.taskId = response.request
+            else:
+                self.result.error = True
+                self.result.errorBody = response.request
 
         except Exception as error:
-            self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
-
-        finally:
-            return captcha_id
+            self.result.error = True
+            self.result.errorBody = error
 
     def __image_const_saver(self, content: bytes):
         """
@@ -128,30 +121,30 @@ class ImageCaptcha:
         :param content: Файл для сохранения;
         :return: Возвращает ID капчи из сервиса
         """
-        captcha_id = None
 
         try:
             # уникальное имя изображения
             image_name = uuid.uuid4()
 
             # сохраняем в папку изображение
-            with open(os.path.join(self.img_path, f"im-{image_name}.png"), "wb") as out_image:
+            with open(os.path.join(self.params.img_path, f"im-{image_name}.png"), "wb") as out_image:
                 out_image.write(content)
 
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
             self.post_payload.update({"body": base64.b64encode(content).decode("utf-8")})
-            captcha_id = self.session.post(self.url_request, data=self.post_payload).json()
-
-        except (IOError, FileNotFoundError) as error:
-            self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
+            response = ServicePostResponseSer(
+                **self.session.post(self.params.url_request, data=self.post_payload).json()
+            )
+            if response.status == 1:
+                self.result.taskId = response.request
+            else:
+                self.result.error = True
+                self.result.errorBody = response.request
 
         except Exception as error:
-            self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
-
-        finally:
-
-            return captcha_id
+            self.result.error = True
+            self.result.errorBody = error
 
     def __local_image_captcha(self, content: str, content_type: str = "file"):
         """
@@ -162,8 +155,6 @@ class ImageCaptcha:
                             `base64`(если передано изображение в кодировке base64)
         :return: ID капчи в сервисе
         """
-        captcha_id = None
-
         try:
             # пробуем открыть файл, закодировать в base64, затем вносим закодированный файл в post_payload для отправки
             # на рукапчу для решения
@@ -182,26 +173,26 @@ class ImageCaptcha:
 
             # Отправляем на рукапча изображение капчи и другие парметры,
             # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
-            captcha_id = self.session.post(self.url_request, data=self.post_payload).json()
-
-        except (IOError, FileNotFoundError) as error:
-            self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
+            response = ServicePostResponseSer(
+                **self.session.post(self.params.url_request, data=self.post_payload).json()
+            )
+            if response.status == 1:
+                self.result.taskId = response.request
+            else:
+                self.result.error = True
+                self.result.errorBody = response.request
 
         except Exception as error:
-            self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
+            self.result.error = True
+            self.result.errorBody = error
 
-        finally:
-            return captcha_id
-
-    @api_key_check
-    @service_check
     def captcha_handler(
         self,
         captcha_link: str = None,
         captcha_file: str = None,
         captcha_base64: str = None,
         **kwargs,
-    ):
+    ) -> dict:
         """
         Метод получает от вас ссылку на изображение, отправляет изображение на сервер
         RuCaptcha, дожидается решения капчи и вовзращает вам результат
@@ -216,67 +207,54 @@ class ImageCaptcha:
                     error - False - если всё хорошо, True - если есть ошибка,
                     errorBody - название ошибки
         """
-        # result, url_request, url_response -
-        # задаются в декораторе `service_check`, после проверки переданного названия
-
         # если передана локальная ссылка на файл
         if captcha_file:
-            captcha_id = self.__local_image_captcha(captcha_file)
+            self.__local_image_captcha(captcha_file)
         # если передан файл в кодировке base64
         elif captcha_base64:
-            captcha_id = self.__local_image_captcha(captcha_base64, content_type="base64")
+            self.__local_image_captcha(captcha_base64, content_type="base64")
         # если передан URL
         elif captcha_link:
             try:
                 content = self.session.get(url=captcha_link, **kwargs).content
             except Exception as error:
-                self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
-                return self.result
+                self.result.error = True
+                self.result.errorBody = error
+                return self.result.dict()
 
             # согласно значения переданного параметра выбираем функцию для сохранения изображения
-            if self.save_format == "const":
-                captcha_id = self.__image_const_saver(content)
-            elif self.save_format == "temp":
-                captcha_id = self.__image_temp_saver(content)
+            if self.params.save_format == enums.SaveFormatsEnm.CONST.value:
+                self.__image_const_saver(content)
+            elif self.params.save_format == enums.SaveFormatsEnm.TEMP.value:
+                self.__image_temp_saver(content)
 
         else:
             # если не передан ни один из параметров
-            self.result.update({"error": True, "errorBody": "You did not send any file local link or URL."})
-            return self.result
+            self.result.error = True
+            self.result.errorBody = "You did not send any file local link or URL."
+            return self.result.dict()
         # проверяем наличие ошибок при скачивании/передаче файла на сервер
-        if self.result["error"]:
-            return self.result
+        if self.result.error:
+            return self.result.dict()
 
-        # если вернулся ответ с ошибкой то записываем её и возвращаем результат
-        elif captcha_id["status"] == 0:
-            self.result.update({"error": True, "errorBody": captcha_id["request"]})
-            return self.result
         # иначе берём ключ отправленной на решение капчи и ждём решения
         else:
-            captcha_id = captcha_id["request"]
-            # вписываем в taskId ключ отправленной на решение капчи
-            self.result.update({"taskId": captcha_id})
             # обновляем пайлоад, вносим в него ключ отправленной на решение капчи
-            self.get_payload.update({"id": captcha_id})
+            self.get_payload.update({"id": self.result.taskId})
 
-            # если передан параметр `pingback` - не ждём решения капчи а возвращаем незаполненный ответ
-            if self.post_payload.get("pingback"):
-                return self.get_payload
-
-            else:
-                # Ожидаем решения капчи
-                time.sleep(self.sleep_time)
-                return get_sync_result(
-                    get_payload=self.get_payload,
-                    sleep_time=self.sleep_time,
-                    url_response=self.url_response,
-                    result=self.result,
-                )
+            # Ожидаем решения капчи
+            time.sleep(self.params.sleep_time)
+            return get_sync_result(
+                get_payload=self.get_payload,
+                sleep_time=self.params.sleep_time,
+                url_response=self.params.url_response,
+                result=self.result,
+            )
 
     def __del__(self):
-        if self.save_format == "const":
-            if self.img_clearing:
-                shutil.rmtree(self.img_path)
+        if self.params.save_format == enums.SaveFormatsEnm.CONST.value:
+            if self.params.img_clearing:
+                shutil.rmtree(self.params.img_path)
 
 
 class aioImageCaptcha:
@@ -554,12 +532,12 @@ class sockNormalCaptcha(WebSocketRuCaptcha):
         :param kwargs: Options variables
         :return: Server response dict
         """
-        normal_captcha_payload = NormalCaptchaSer(
+        normal_captcha_payload = NormalCaptchaSocketSer(
             **{
                 "method": "normal",
                 "requestId": str(uuid4()),
                 "body": captcha_image_base64,
-                "options": CaptchaOptionsSer(**kwargs),
+                "options": CaptchaOptionsSocketSer(**kwargs),
             }
         )
 
