@@ -72,3 +72,20 @@ class SockAuthSer(BaseModel):
     requestId: str = Field(default_factory=uuid4)
     key: str
     options: dict
+
+
+"""
+Response
+"""
+
+
+class ResponseErrorSer(BaseModel):
+    text: str
+    id: str
+
+
+class ResponseSer(BaseModel):
+    captchaSolve: str
+    taskId: str
+    error: bool = False
+    errorBody: ResponseErrorSer
