@@ -1,9 +1,6 @@
-from datetime import datetime
-from typing import List, Optional
-from pydantic import BaseModel
-from pydantic import BaseModel, ValidationError, validator
-
 from uuid import uuid4
+
+from pydantic import Field, BaseModel, validator
 
 
 class CaptchaOptionsSer(BaseModel):
@@ -44,13 +41,34 @@ class CaptchaOptionsSer(BaseModel):
 
 class NormalCaptchaSer(BaseModel):
     method: str = "normal"
-    requestId: str = uuid4()
-    body: str
+    requestId: str = Field(default_factory=uuid4)
+    body: str = str()
     options: "CaptchaOptionsSer" = CaptchaOptionsSer()
 
 
 class TextCaptchaSer(BaseModel):
-    method: str = "normal"
-    requestId: str = uuid4()
-    text: str
+    method: str = "text"
+    requestId: str = Field(default_factory=uuid4)
+    body: str = str()
     options: "CaptchaOptionsSer" = CaptchaOptionsSer()
+
+
+class SocketResponse(BaseModel):
+    method: str = str()
+    success: bool = None
+    code: str = str()
+    # captcha task ID at RuCaptcha service
+    captchaId: int = -1
+    # manually generated requestID
+    requestId: str = Field(default_factory=uuid4)
+    error: str = str()
+    # specific fields for balance request response
+    balance: float = 0
+    valute: str = str()
+
+
+class SockAuthSer(BaseModel):
+    method: str = "auth"
+    requestId: str = Field(default_factory=uuid4)
+    key: str
+    options: dict
