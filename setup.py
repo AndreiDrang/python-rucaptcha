@@ -3,7 +3,7 @@ import os
 import sys
 from shutil import rmtree
 
-from setuptools import setup, Command
+from setuptools import Command, setup
 
 # Package meta-data.
 NAME = "python-rucaptcha"
@@ -13,7 +13,7 @@ EMAIL = "drang.andray@gmail.com"
 AUTHOR = "AndreiDrang, redV0ID"
 REQUIRES_PYTHON = ">=3.6.0"
 VERSION = "3.0.1"
-REQUIRED = ["requests>=2.21.0", "aiohttp==3.*", "pika==1.*", 'websockets==8.*', 'pydantic==1.7.*']
+REQUIRED = ["requests>=2.21.0", "aiohttp==3.*", "pika==1.*", "websockets==8.*", "pydantic==1.7.*", "tenacity==6.*"]
 
 here = os.path.abspath(os.path.dirname(__file__))
 
