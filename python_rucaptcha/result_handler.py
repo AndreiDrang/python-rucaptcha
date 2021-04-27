@@ -39,8 +39,9 @@ def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, resul
                             "user_score": captcha_response.user_score,
                         }
                     )
+                    return result
 
-                return result
+                return result.dict()
 
         except Exception as error:
             if next(connect_gen) < 4:

@@ -66,8 +66,11 @@ class ImageCaptcha:
             key=self.params.rucaptcha_key,
             method="base64",
         ).dict()
+        self.post_payload.update({"json": 1})
+
         # prepare GET payload
         self.get_payload = GetRequestSer(key=self.params.rucaptcha_key).dict()
+        self.get_payload.update({"json": 1})
         # prepare result payload
         self.result = ResponseSer()
 
@@ -425,8 +428,6 @@ class aioImageCaptcha:
         finally:
             return captcha_id
 
-    @api_key_check
-    @service_check
     async def captcha_handler(
         self,
         captcha_link: str = None,

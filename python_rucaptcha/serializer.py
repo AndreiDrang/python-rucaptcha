@@ -89,14 +89,12 @@ HTTP API Serializers
 class PostRequestSer(BaseModel):
     key: str
     method: str
-    json: int = 1
     soft_id: str = app_key
 
 
 class GetRequestSer(BaseModel):
     key: str
     action: str = "get"
-    json: int = 1
 
 
 class CaptchaOptionsSer(BaseModel):
@@ -117,13 +115,13 @@ class CaptchaOptionsSer(BaseModel):
         return value
 
     @validator("sleep_time")
-    def len_check(cls, value):
+    def sleep_time_check(cls, value):
         if value < 5:
             raise ValueError("Too little sleep time")
         return value
 
     @validator("save_format")
-    def len_check(cls, value):
+    def save_format_check(cls, value):
         if value not in enums.SaveFormatsEnm.list_values():
             raise ValueError(
                 f"Invalid `save_format`, valid params - {','.join(enums.SaveFormatsEnm.list_values())}, send - {value}"
@@ -131,7 +129,7 @@ class CaptchaOptionsSer(BaseModel):
         return value
 
     @validator("service_type")
-    def len_check(cls, value):
+    def service_type_check(cls, value):
         if value not in enums.ServicesEnm.list_values():
             raise ValueError(
                 f"Invalid `service_type`, valid params - {','.join(enums.ServicesEnm.list_values())}, send - {value}"
@@ -139,7 +137,7 @@ class CaptchaOptionsSer(BaseModel):
         return value
 
     @root_validator
-    def soft_id_set(cls, values):
+    def urls_set(cls, values):
         service_type = values.get("service_type")
         values.update(
             {"url_request": f"http://{service_type}.com/in.php", "url_response": f"http://{service_type}.com/res.php"}
