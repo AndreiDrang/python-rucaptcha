@@ -2,7 +2,7 @@ import requests
 import asyncio
 import base64
 
-from python_rucaptcha import ImageCaptcha, CallbackClient, RuCaptchaControl
+from python_rucaptcha import ImageCaptcha
 
 
 """
@@ -65,6 +65,8 @@ image_link = requests.get("https://pythoncaptcha.tech/api/", params={"captcha_ty
     "captcha_src"
 ]
 
+print(image_link)
+
 """
 contextmanager пример
 """
@@ -75,7 +77,6 @@ with ImageCaptcha.ImageCaptcha(
     img_path="test_files",
     img_clearing=True,
     save_format="const",
-    debug_dump=1,
 ) as img_captcha:
     result = img_captcha.captcha_handler(captcha_link=image_link)
     print(result)
@@ -87,18 +88,13 @@ async def aiocontext():
         img_path="test_files",
         img_clearing=True,
         save_format="const",
-        debug_dump=1,
     ) as img_captcha:
         result = await img_captcha.captcha_handler(captcha_link=image_link)
         print(result)
 
 
-if __name__ == "__main__":
-    loop = asyncio.new_event_loop()
-    loop.run_until_complete(aiocontext())
-    loop.close()
+asyncio.run(aiocontext())
 
-raise ValueError
 """
 Синхронный метод
 
@@ -203,33 +199,27 @@ if not user_answer_full["error"]:
 elif user_answer_full["error"]:
     # Тело ошибки, если есть
     print(user_answer_full["errorBody"])
-    print(user_answer_full["errorBody"])
 
 """
 Пример для работы с локальными файлами
 """
 # папка в которой находится изображение, один из вариантов написания
-captcha_file = "088636.png"
+captcha_file = "examples/088636.png"
 
 # так же есть возможность передать так:
 # captcha_file = r'D:\Python\933588.png'
 # captcha_file = 'D:\/Python\/933588.png'
-try:
-    user_answer_local = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
-        captcha_file=captcha_file
-    )
-    if not user_answer_local["error"]:
-        # решение капчи
-        print(user_answer_local["captchaSolve"])
-        print(user_answer_local["taskId"])
-    elif user_answer_local["error"]:
-        # Тело ошибки, если есть
-        print(user_answer_local["errorBody"])
-        print(user_answer_local["errorBody"])
+user_answer_local = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
+    captcha_file=captcha_file
+)
+if not user_answer_local["error"]:
+    # решение капчи
+    print(user_answer_local["captchaSolve"])
+    print(user_answer_local["taskId"])
+elif user_answer_local["error"]:
+    # Тело ошибки, если есть
+    print(user_answer_local["errorBody"])
 
-# отлов ошибки при проблемах чтения файла-изображения
-except errors.ReadError as err:
-    print(err)
 """
 Асинхронный пример
 Асинхронный способ поддерживает все параметры обычного метода
@@ -254,7 +244,6 @@ async def run():
         elif answer_aio_image["error"]:
             # Тело ошибки, если есть
             print(answer_aio_image["errorBody"])
-            print(answer_aio_image["errorBody"])
     except Exception as err:
         print(err)
 
@@ -278,7 +267,6 @@ async def run():
         elif answer_aio_local_image["error"]:
             # Тело ошибки, если есть
             print(answer_aio_local_image["errorBody"])
-            print(answer_aio_local_image["errorBody"])
     except Exception as err:
         print(err)
     """
@@ -296,12 +284,8 @@ async def run():
         elif answer_aio_image["error"]:
             # Тело ошибки, если есть
             print(answer_aio_image["errorBody"])
-            print(answer_aio_image["errorBody"])
     except Exception as err:
         print(err)
 
 
-if __name__ == "__main__":
-    loop = asyncio.new_event_loop()
-    loop.run_until_complete(run())
-    loop.close()
+asyncio.run(run())
