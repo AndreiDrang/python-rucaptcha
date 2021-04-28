@@ -65,8 +65,6 @@ image_link = requests.get("https://pythoncaptcha.tech/api/", params={"captcha_ty
     "captcha_src"
 ]
 
-print(image_link)
-
 """
 contextmanager пример
 """
@@ -128,41 +126,6 @@ base_64_link = base64.b64encode(
 
 user_answer_base64 = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_base64=base_64_link)
 print(user_answer_base64)
-"""
-user_answer_... - это JSON строка с соответствующими полями
-captchaSolve - решение капчи,
-taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
-error - False - если всё хорошо, True - если есть ошибка,
-errorBody - полная информация об ошибке: 
-    {
-        text - Развернётое пояснение ошибки
-        id - уникальный номер ошибка в ЭТОЙ бибилотеке
-    }
-"""
-
-if not user_answer_const["error"]:
-    # решение капчи
-    print(user_answer_const["captchaSolve"])
-    print(user_answer_const["taskId"])
-elif user_answer_const["error"]:
-    # Тело ошибки, если есть
-    print(user_answer_const["errorBody"])
-
-if not user_answer_temp["error"]:
-    # решение капчи
-    print(user_answer_temp["captchaSolve"])
-    print(user_answer_temp["taskId"])
-elif user_answer_temp["error"]:
-    # Тело ошибки, если есть
-    print(user_answer_temp["errorBody"])
-
-if not user_answer_base64["error"]:
-    # решение капчи
-    print(user_answer_base64["captchaSolve"])
-    print(user_answer_base64["taskId"])
-elif user_answer_base64["error"]:
-    # Тело ошибки, если есть
-    print(user_answer_base64["errorBody"])
 
 """
 Так же класс в качестве параметра может принимать список необязательных переменных, таких как:
@@ -191,34 +154,21 @@ user_answer_full = ImageCaptcha.ImageCaptcha(
     textinstructions="",
     pingback="",
 ).captcha_handler(captcha_link=image_link, verify=False, proxies={})
-
-if not user_answer_full["error"]:
-    # решение капчи
-    print(user_answer_full["captchaSolve"])
-    print(user_answer_full["taskId"])
-elif user_answer_full["error"]:
-    # Тело ошибки, если есть
-    print(user_answer_full["errorBody"])
+print(user_answer_full)
 
 """
 Пример для работы с локальными файлами
 """
 # папка в которой находится изображение, один из вариантов написания
-captcha_file = "examples/088636.png"
+CAPTCHA_FILE = "examples/088636.png"
 
 # так же есть возможность передать так:
 # captcha_file = r'D:\Python\933588.png'
 # captcha_file = 'D:\/Python\/933588.png'
-user_answer_local = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
-    captcha_file=captcha_file
+user_answer_local = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, numeric=1).captcha_handler(
+    captcha_file=CAPTCHA_FILE
 )
-if not user_answer_local["error"]:
-    # решение капчи
-    print(user_answer_local["captchaSolve"])
-    print(user_answer_local["taskId"])
-elif user_answer_local["error"]:
-    # Тело ошибки, если есть
-    print(user_answer_local["errorBody"])
+print(user_answer_local)
 
 """
 Асинхронный пример
@@ -237,13 +187,6 @@ async def run():
             captcha_link=image_link
         )
         print(answer_aio_image)
-        if not answer_aio_image["error"]:
-            # решение капчи
-            print(answer_aio_image["captchaSolve"])
-            print(answer_aio_image["taskId"])
-        elif answer_aio_image["error"]:
-            # Тело ошибки, если есть
-            print(answer_aio_image["errorBody"])
     except Exception as err:
         print(err)
 
@@ -257,16 +200,9 @@ async def run():
 
     try:
         answer_aio_local_image = await ImageCaptcha.aioImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(
-            captcha_file=captcha_file
+            captcha_file=CAPTCHA_FILE
         )
         print(answer_aio_local_image)
-        if not answer_aio_local_image["error"]:
-            # решение капчи
-            print(answer_aio_local_image["captchaSolve"])
-            print(answer_aio_local_image["taskId"])
-        elif answer_aio_local_image["error"]:
-            # Тело ошибки, если есть
-            print(answer_aio_local_image["errorBody"])
     except Exception as err:
         print(err)
     """
