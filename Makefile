@@ -5,9 +5,10 @@ remove:
 	pip uninstall python_rucaptcha -y
 
 refactor:
-	pip install black isort
+	pip install black isort autoflake
+	autoflake --in-place --recursive --remove-unused-variables python_rucaptcha/ examples/
 	black python_rucaptcha/ examples/
-	isort python_rucaptcha/
+	isort python_rucaptcha/ examples/
 
 upload:
 	pip install twine

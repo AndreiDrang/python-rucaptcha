@@ -1,13 +1,12 @@
 import ssl
 import json
 import logging
-from uuid import uuid4
 
 import websockets
 from tenacity import retry, after_log, wait_fixed, stop_after_attempt
 from websockets.client import WebSocketClientProtocol
 
-from python_rucaptcha.serializer import SockAuthSer, SocketResponse
+from .serializer import SockAuthSer, SocketResponse
 
 
 class WebSocketRuCaptcha:
