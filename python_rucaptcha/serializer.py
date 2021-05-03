@@ -95,6 +95,7 @@ class PostRequestSer(BaseModel):
 class GetRequestSer(BaseModel):
     key: str
     action: str = "get"
+    field_json: int = Field(1, alias="json")
 
 
 class CaptchaOptionsSer(BaseModel):
