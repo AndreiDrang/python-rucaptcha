@@ -59,15 +59,14 @@ class ImageCaptcha(BaseCaptcha):
         self.params = CaptchaOptionsSer(**locals())
 
         # prepare POST payload
-        self.post_payload = PostRequestSer(
-            key=self.params.rucaptcha_key,
-            method="base64",
-        ).dict()
-        self.post_payload.update({"json": 1})
+        self.post_payload = PostRequestSer(key=self.params.rucaptcha_key, method="base64", field_json=1).dict(
+            by_alias=True
+        )
 
         # prepare GET payload
-        self.get_payload = GetRequestSer(key=self.params.rucaptcha_key).dict()
-        self.get_payload.update({"json": 1})
+        self.get_payload = GetRequestSer(key=self.params.rucaptcha_key, field_json=1).dict(
+            by_alias=True, exclude_none=True
+        )
         # prepare result payload
         self.result = ResponseSer()
 
@@ -209,7 +208,7 @@ class ImageCaptcha(BaseCaptcha):
             except Exception as error:
                 self.result.error = True
                 self.result.errorBody = error
-                return self.result.dict()
+                return self.result.dict(exclude_none=True)
 
             # according to the value of the passed parameter, select the function to save the image
             if self.params.save_format == enums.SaveFormatsEnm.CONST.value:
@@ -221,10 +220,10 @@ class ImageCaptcha(BaseCaptcha):
             # if none of the parameters are passed
             self.result.error = True
             self.result.errorBody = "You did not send any file, local link or URL."
-            return self.result.dict()
+            return self.result.dict(exclude_none=True)
         # check for errors when downloading / transferring a file to the server
         if self.result.error:
-            return self.result.dict()
+            return self.result.dict(exclude_none=True)
         # if all is ok - send captcha to service and wait solution
         else:
             # update payload - add captcha taskId
@@ -428,7 +427,7 @@ class aioImageCaptcha(BaseCaptcha):
             except Exception as error:
                 self.result.error = True
                 self.result.errorBody = error
-                return self.result.dict()
+                return self.result.dict(exclude_none=True)
 
             # according to the value of the passed parameter, select the function to save the image
             if self.params.save_format == enums.SaveFormatsEnm.CONST.value:
@@ -440,10 +439,10 @@ class aioImageCaptcha(BaseCaptcha):
             # if none of the parameters are passed
             self.result.error = True
             self.result.errorBody = "You did not send any file, local link or URL."
-            return self.result.dict()
+            return self.result.dict(exclude_none=True)
         # check for errors when downloading / transferring a file to the server
         if self.result.error:
-            return self.result.dict()
+            return self.result.dict(exclude_none=True)
         # if all is ok - send captcha to service and wait solution
         else:
             # update payload - add captcha taskId
