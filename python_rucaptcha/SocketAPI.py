@@ -6,10 +6,11 @@ import websockets
 from tenacity import retry, after_log, wait_fixed, stop_after_attempt
 from websockets.client import WebSocketClientProtocol
 
+from .base import BaseCaptcha
 from .serializer import SockAuthSer, SocketResponse
 
 
-class WebSocketRuCaptcha:
+class WebSocketRuCaptcha(BaseCaptcha):
     def __init__(self, allSessions: bool = False, suppressSuccess: bool = True):
         """
         Method setup WebSocket connection data
@@ -43,14 +44,6 @@ class WebSocketRuCaptcha:
         self.ssl_context.check_hostname = False
         self.ssl_context.verify_mode = ssl.CERT_NONE
 
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        if exc_type:
-            return False
-        return True
-
     async def __socket_session(self):
         """
         Create new socket session
@@ -75,6 +68,8 @@ class WebSocketRuCaptcha:
         :return: Server response dict
         """
         await self.__socket_session_recreate()
+
+        logging.warning(self.rucaptcha_key)
 
         auth_data = SockAuthSer(
             **{
