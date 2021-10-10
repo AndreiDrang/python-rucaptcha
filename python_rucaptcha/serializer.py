@@ -48,35 +48,42 @@ class CaptchaOptionsSocketSer(BaseModel):
 
 class NormalCaptchaSocketSer(BaseModel):
     method: str = "normal"
-    requestId: str = Field(default_factory=uuid4)
+    requestId: str = Field(default_factory=lambda: str(uuid4()))
     body: str = str()
     options: "CaptchaOptionsSocketSer" = CaptchaOptionsSocketSer()
 
 
 class TextCaptchaSocketSer(BaseModel):
     method: str = "text"
-    requestId: str = Field(default_factory=uuid4)
+    requestId: str = Field(default_factory=lambda: str(uuid4()))
     body: str = str()
     options: "CaptchaOptionsSocketSer" = CaptchaOptionsSocketSer()
 
 
+class ControlCaptchaSocketSer(BaseModel):
+    method: str
+    requestId: str = Field(default_factory=lambda: str(uuid4()))
+    success: str = None
+    captchaId: int = None
+
+
 class SocketResponse(BaseModel):
-    method: str = str()
+    method: str = None
     success: bool = None
-    code: str = str()
+    code: str = None
     # captcha task ID at RuCaptcha service
-    captchaId: int = -1
+    captchaId: int = None
     # manually generated requestID
-    requestId: str = Field(default_factory=uuid4)
-    error: str = str()
+    requestId: str = Field(default_factory=lambda: str(uuid4()))
+    error: str = None
     # specific fields for balance request response
-    balance: float = 0
-    valute: str = str()
+    balance: float = None
+    valute: str = None
 
 
 class SockAuthSer(BaseModel):
     method: str = "auth"
-    requestId: str = Field(default_factory=uuid4)
+    requestId: str = Field(default_factory=lambda: str(uuid4()))
     key: str
     options: dict
 
