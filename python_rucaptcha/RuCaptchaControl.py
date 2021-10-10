@@ -143,13 +143,11 @@ class aioRuCaptchaControl:
 
 # Async WebSocket method
 class sockRuCaptchaControl(WebSocketRuCaptcha):
-    def __init__(self, rucaptcha_key: str):
+    def __init__(self, rucaptcha_key: str, allSessions: bool = None, suppressSuccess: bool = None):
         """
-        The asynchronous WebSocket module is responsible for additional actions with the account and captcha.
-            Available 2 methods - `getbalance` and `report`
-        :param rucaptcha_key: Key from RuCaptcha
+        Method setup WebSocket connection data
         """
-        super().__init__()
+        super().__init__(allSessions, suppressSuccess)
         self.rucaptcha_key = rucaptcha_key
 
     async def get_balance(self) -> dict:
