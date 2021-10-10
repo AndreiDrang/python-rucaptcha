@@ -1,0 +1,6 @@
+pika==1.2.*
+requests==2.*
+aiohttp==3.*
+websockets==9.*
+pydantic==1.8.*
+tenacity==7.*
