@@ -65,74 +65,18 @@ python setup.py install
 1. На структуру: 
     ```json
     {
-      "errorBody": "ERROR_NAME"
+      "errorBody": "ERROR_NAME or error text description"
     }
     ```
 ***
 ### Будущие обновления
-v.4.0 - Переработка классов и методов. Добавление наследований и сериализаторов.
+v.4.0 - Переработка классов и методов. Добавление наследований и сериализаторов. Собственный Callback-сервер - deprecated.
 ***
 ### Реализованы следующие методы:
 
-0. [Работа через callback(pingback)](https://github.com/AndreiDrang/python-rucaptcha/tree/master/examples/callback_examples).
-
-Структура и принцип работы системы подробно [расписан в данной схеме](https://esk.one/p/i7oKYboABXJ/)
-
-Краткий пример:
-
-```python
-import requests
-from python_rucaptcha import ImageCaptcha, RuCaptchaControl, CallbackClient
-# Введите ключ от сервиса RuCaptcha, из своего аккаунта
-RUCAPTCHA_KEY = ""
-# Ссылка на изображения для расшифровки
-image_link = ""
-
-# для начала работы нужно зарегистрировать IP/URL(делается с того же IP, который регистрируете):
-RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='add_pingback', addr='http://85.255.8.26/')
-# проверка зарегистрированных адресов
-answer = RuCaptchaControl.RuCaptchaControl(rucaptcha_key=RUCAPTCHA_KEY).additional_methods(action='get_pingback', json=1)
-print(answer)
-
-# нужно придумать сложное название очереди(15+ знаков подойдёт) для получения результатов решения капчи
-queue_name = 'ba86e77f9007_andrei_drang_7436e744_cute_queue'
-# регистрируем очередь на callback сервере
-answer = requests.post(f'http://85.255.8.26:8001/register_key', json={'key':queue_name, 'vhost': 'rucaptcha_vhost'})
-print(answer.text)
-
-# создаём задание в сервисе RuCaptcha и указываем `pingback` параметр
-task_creation_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY, 
-                                                     pingback=f'85.255.8.26:8001/rucaptcha/image_captcha/{queue_name}', 
-                                                    ).captcha_handler(captcha_link=image_link)
-
-print(task_creation_answer)
-# Два варианта получения решения: кеш(результат хранится 1 час) и  rabbitmq очередь(результат удаляется после первого чтения)
-# подключаемся к серверу и ждём решения капчи из кеша
-callback_cache_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get('id')).captcha_handler()
-# подключаемся к серверу и ждём решения капчи из RabbitMQ queue
-callback_queue_response = CallbackClient.CallbackClient(task_id=task_creation_answer.get('id'), queue_name=queue_name, call_type='queue').captcha_handler()
-
-print(callback_cache_response)
-print(callback_queue_response)
-```
-
-#### Если вы хотите запустить данный callback сервер у себя:
-
-Небольшая [инструкция-памятка](./examples/callback_examples/readme.txt) по шагам.
-
-Установить и запустить веб-приложение, которое будет принимать POST-запросы, парсить их, и совершать прочую, нужную вам, магию.
-
-[Пример такого сервера, написанный на aiohttp](./examples/callback_examples/callback_server.py).
-
-Все тесты можно проводить на локальном сервере, эмулируя POST-запросы от RuCaptcha при помощи [локального клиента](./examples/callback_examples/rucaptcha_server.py).
-
-Примеры создания реальных заданий для callback(pingback) способа вы можете посмотреть в [папке с примерами](./examples), для конкретного метода капчи.
-
-***
-
 #### Работа обычным методом - ожидание решения капчи периодическим опросом сервера.
 
-1. [Решение капчи-изображения(большие и маленькие).](./python_rucaptcha/ImageCaptcha.py)
+1. [Решение капчи-изображения.](./python_rucaptcha/ImageCaptcha.py)
 
 ```python
 from python_rucaptcha import ImageCaptcha
@@ -149,7 +93,6 @@ if not user_answer['error']:
 	print(user_answer['taskId'])
 elif user_answer['error']:
 	# Тело ошибки, если есть
-	print(user_answer ['errorBody'])
 	print(user_answer ['errorBody'])
 ```
 
@@ -202,7 +145,6 @@ if not user_answer['error']:
 elif user_answer['error']:
 	# Тело ошибки, если есть
 	print(user_answer ['errorBody'])
-	print(user_answer ['errorBody'])
 ```
 
 4. [Решение ReCaptcha v3.](./python_rucaptcha/ReCaptchaV3.py)
@@ -237,7 +179,6 @@ if not user_answer['error']:
 elif user_answer['error']:
 	# Тело ошибки, если есть
 	print(user_answer ['errorBody'])
-	print(user_answer ['errorBody'])
 ```
 
 5. [Решение RotateCaptcha(повернуть изображение).](./python_rucaptcha/RotateCaptcha.py)
@@ -259,7 +200,6 @@ if not user_answer['error']:
 	print(user_answer['taskId'])
 elif user_answer['error']:
 	# Тело ошибки, если есть
-	print(user_answer ['errorBody'])
 	print(user_answer ['errorBody'])
 ```
 
@@ -371,7 +311,7 @@ elif answer['error']:
     
 ```
 ***
-Кроме того, для тестирования различных типов капчи предоставляется [специальный сайт](http://85.255.8.26/), на котором собраны все имеющиеся типы капчи, с удобной системой тестирования ваших скриптов.
+Кроме того, для тестирования различных типов капчи предоставляется [специальный сайт](https://pythoncaptcha.xyz/), на котором собраны все имеющиеся типы капчи, с удобной системой тестирования ваших скриптов.
 ***
 ### Errors description. Описания ошибок
 **В обоих ссылках находятся валидные описания ошибок**
