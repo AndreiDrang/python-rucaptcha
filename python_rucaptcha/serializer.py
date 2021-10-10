@@ -90,12 +90,17 @@ class PostRequestSer(BaseModel):
     key: str
     method: str
     soft_id: str = app_key
+    field_json: int = Field(1, alias="json")
 
 
 class GetRequestSer(BaseModel):
     key: str
     action: str = "get"
     field_json: int = Field(1, alias="json")
+
+    # Control keys
+    ids: str = None
+    id: str = None
 
 
 class CaptchaOptionsSer(BaseModel):
@@ -170,4 +175,4 @@ class ResponseSer(BaseModel):
     captchaSolve: dict = {}
     taskId: int = 0
     error: bool = False
-    errorBody: str = ""
+    errorBody: str = None
