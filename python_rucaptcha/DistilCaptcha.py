@@ -12,19 +12,17 @@ from python_rucaptcha.result_handler import get_sync_result, get_async_result
 class DistilCaptcha:
     """
     Класс служит для работы с DistilCaptcha.
-	"""
+    """
 
-    def __init__(
-        self, rucaptcha_key: str, service_type: str = "2captcha", sleep_time: int = 15, **kwargs
-    ):
+    def __init__(self, rucaptcha_key: str, service_type: str = "2captcha", sleep_time: int = 15, **kwargs):
         """
-		Инициализация нужных переменных.
-		:param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
-		:param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
-                             и "rucaptcha"
-		:param sleep_time: Вермя ожидания решения капчи
-		:param kwargs: Для передачи дополнительных параметров
-		"""
+        Инициализация нужных переменных.
+        :param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
+        :param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
+                     и "rucaptcha"
+        :param sleep_time: Вермя ожидания решения капчи
+        :param kwargs: Для передачи дополнительных параметров
+        """
         # время ожидания решения капчи
         self.sleep_time = sleep_time
         # тип URL на с которым будет работать библиотека
@@ -58,18 +56,18 @@ class DistilCaptcha:
     @service_check
     def captcha_handler(self, JsSha1: str, JsUri: str, JsData: str, **kwargs) -> dict:
         """
-		Метод отвечает за передачу данных на сервер для решения капчи
-		:param JsSha1: контрольная сумма SHA1 для javascript библиотеки
-		:param JsUri: URL javascript библиотеки
+                Метод отвечает за передачу данных на сервер для решения капчи
+                :param JsSha1: контрольная сумма SHA1 для javascript библиотеки
+                :param JsUri: URL javascript библиотеки
         :param JsData: данные библиотеки, закодированные в base64
-		:param kwargs: Для передачи дополнительных параметров для `data`
+                :param kwargs: Для передачи дополнительных параметров для `data`
 
-		:return: Ответ на капчу в виде JSON строки с полями:
+                :return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
                     error - False - всё хорошо, True - есть ошибка,
                     errorBody - название ошибки
-		"""
+        """
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
         # Если переданы ещё параметры - вносим их в get_payload
@@ -115,9 +113,7 @@ class aioDistilCaptcha:
     Класс служит для работы с DistilCaptcha.
     """
 
-    def __init__(
-        self, rucaptcha_key: str, service_type: str = "2captcha", sleep_time: int = 15, **kwargs
-    ):
+    def __init__(self, rucaptcha_key: str, service_type: str = "2captcha", sleep_time: int = 15, **kwargs):
         """
         Инициализация нужных переменных.
         :param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
@@ -158,18 +154,18 @@ class aioDistilCaptcha:
     @service_check
     async def captcha_handler(self, JsSha1: str, JsUri: str, JsData: str, **kwargs) -> dict:
         """
-		Метод отвечает за передачу данных на сервер для решения капчи
-		:param JsSha1: контрольная сумма SHA1 для javascript библиотеки
-		:param JsUri: URL javascript библиотеки
+                Метод отвечает за передачу данных на сервер для решения капчи
+                :param JsSha1: контрольная сумма SHA1 для javascript библиотеки
+                :param JsUri: URL javascript библиотеки
         :param JsData: данные библиотеки, закодированные в base64
-		:param kwargs: Для передачи дополнительных параметров для `data`
+                :param kwargs: Для передачи дополнительных параметров для `data`
 
-		:return: Ответ на капчу в виде JSON строки с полями:
+                :return: Ответ на капчу в виде JSON строки с полями:
                     captchaSolve - решение капчи,
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
                     error - False - если всё хорошо, True - если есть ошибка,
                     errorBody - название ошибки
-		"""
+        """
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
         # Если переданы ещё параметры - вносим их в get_payload

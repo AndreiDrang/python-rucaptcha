@@ -89,20 +89,14 @@ class RotateCaptcha:
                 self.get_payload.update({key: kwargs[key]})
 
         # Скачиваем изображение
-        content = (
-            self.session.get(captcha_link).content
-            if "http" in captcha_link
-            else open(captcha_link, "rb")
-        )
+        content = self.session.get(captcha_link).content if "http" in captcha_link else open(captcha_link, "rb")
 
         # Отправляем изображение файлом
         files = {"file_1": ("file_1", content, mimetypes.guess_type(captcha_link)[0])}
 
         # Отправляем на рукапча изображение капчи и другие парметры,
         # в результате получаем JSON ответ с номером решаемой капчи и получая ответ - извлекаем номер
-        captcha_id = self.session.post(
-            self.url_request, data=self.post_payload, files=files
-        ).json()
+        captcha_id = self.session.post(self.url_request, data=self.post_payload, files=files).json()
 
         # если вернулся ответ с ошибкой то записываем её и возвращаем результат
         if captcha_id["status"] == 0:

@@ -81,14 +81,14 @@ class HCaptcha:
         : param page_url: Link to the page where the captcha is located
         : param kwargs: To pass additional parameters
         : return: Answer to the captcha as a JSON string with fields:
-                    captchaSolve - captcha solution,
-                    taskId - is the Id of the task to solve the captcha, can be used for complaints and other things,
-                    error - False - if everything is fine, True - if there is an error,
-                    errorBody - full error information:
-                        {
-                            text - Extended error explanation
-                            id - unique error number in THIS library
-                        }
+                    captchaSolve - captcha solution,
+                    taskId - is the Id of the task to solve the captcha, can be used for complaints and other things,
+                    error - False - if everything is fine, True - if there is an error,
+                    errorBody - full error information:
+                        {
+                            text - Extended error explanation
+                            id - unique error number in THIS library
+                        }
         """
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 
@@ -196,14 +196,14 @@ class aioHCaptcha:
         : param page_url: Link to the page where the captcha is located
         : param kwargs: To pass additional parameters
         : return: Answer to the captcha as a JSON string with fields:
-                    captchaSolve - captcha solution,
-                    taskId - is the Id of the task to solve the captcha, can be used for complaints and other things,
-                    error - False - if everything is fine, True - if there is an error,
-                    errorBody - full error information:
-                        {
-                            text - Extended error explanation
-                            id - unique error number in THIS library
-                        }
+                    captchaSolve - captcha solution,
+                    taskId - is the Id of the task to solve the captcha, can be used for complaints and other things,
+                    error - False - if everything is fine, True - if there is an error,
+                    errorBody - full error information:
+                        {
+                            text - Extended error explanation
+                            id - unique error number in THIS library
+                        }
         """
         # result, url_request, url_response - задаются в декораторе `service_check`, после проверки переданного названия
 

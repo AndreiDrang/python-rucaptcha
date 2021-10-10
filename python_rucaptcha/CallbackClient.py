@@ -102,9 +102,7 @@ class CallbackClient:
         session = requests.Session()
 
         while attempts > 0:
-            with session.get(
-                f"http://{self.host}:{self.port}/rucaptcha/cache/{self.task_id}"
-            ) as resp:
+            with session.get(f"http://{self.host}:{self.port}/rucaptcha/cache/{self.task_id}") as resp:
                 json_body = resp.json()
 
             # если получен результат решения капчи, а не информация об отсутсвии решения
@@ -142,24 +140,14 @@ class CallbackClient:
             # кастомные параметры для подключения к очереди
             if self.call_type == "queue":
                 self.rtmq_username = (
-                    auth_params["rtmq_username"]
-                    if auth_params.get("rtmq_username")
-                    else self.rtmq_username
+                    auth_params["rtmq_username"] if auth_params.get("rtmq_username") else self.rtmq_username
                 )
                 self.rtmq_password = (
-                    auth_params["rtmq_password"]
-                    if auth_params.get("rtmq_password")
-                    else self.rtmq_password
+                    auth_params["rtmq_password"] if auth_params.get("rtmq_password") else self.rtmq_password
                 )
-                self.rtmq_host = (
-                    auth_params["rtmq_host"] if auth_params.get("rtmq_host") else self.rtmq_host
-                )
-                self.rtmq_port = (
-                    auth_params["rtmq_port"] if auth_params.get("rtmq_port") else self.rtmq_port
-                )
-                self.rtmq_vhost = (
-                    auth_params["rtmq_vhost"] if auth_params.get("rtmq_vhost") else self.rtmq_vhost
-                )
+                self.rtmq_host = auth_params["rtmq_host"] if auth_params.get("rtmq_host") else self.rtmq_host
+                self.rtmq_port = auth_params["rtmq_port"] if auth_params.get("rtmq_port") else self.rtmq_port
+                self.rtmq_vhost = auth_params["rtmq_vhost"] if auth_params.get("rtmq_vhost") else self.rtmq_vhost
 
         # получение данных из кеша
         if self.call_type == "cache":
