@@ -5,7 +5,6 @@ remove:
 	pip uninstall python_rucaptcha -y
 
 refactor:
-	pip install black isort autoflake
 	autoflake --in-place \
 				--recursive \
 				--remove-unused-variables \
