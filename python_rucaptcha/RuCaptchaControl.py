@@ -1,5 +1,3 @@
-from uuid import uuid4
-
 import aiohttp
 import requests
 
@@ -8,7 +6,7 @@ from python_rucaptcha.SocketAPI import WebSocketRuCaptcha
 from . import enums
 from .base import BaseCaptcha
 from .SocketAPI import WebSocketRuCaptcha
-from .serializer import ResponseSer, GetRequestSer, CaptchaOptionsSer
+from .serializer import ResponseSer, GetRequestSer, CaptchaOptionsSer, ControlCaptchaSocketSer
 
 
 class RuCaptchaControl(BaseCaptcha):
@@ -149,11 +147,12 @@ class sockRuCaptchaControl(WebSocketRuCaptcha):
         More info - https://wsrucaptcha.docs.apiary.io/#reference/4
         :return: Server response dict
         """
-        balance_payload = {
-            "method": "balance",
-            "requestId": str(uuid4()),
-        }
-        return await self.send_request(balance_payload)
+        balance_payload = ControlCaptchaSocketSer(
+            **{
+                "method": "balance",
+            }
+        )
+        return await self.send_request(balance_payload.json(exclude_none=True))
 
     async def report(self, success: bool, captchaId: int) -> dict:
         """
@@ -163,11 +162,12 @@ class sockRuCaptchaControl(WebSocketRuCaptcha):
         :param captchaId: Captcha task unique id. For example - 5034284222
         :return: Server response dict
         """
-        report_payload = {
-            "requestId": str(uuid4()),
-            "method": "report",
-            "success": success,
-            "captchaId": captchaId,
-        }
+        report_payload = ControlCaptchaSocketSer(
+            **{
+                "method": "report",
+                "success": success,
+                "captchaId": captchaId,
+            }
+        )
 
-        return await self.send_request(report_payload)
+        return await self.send_request(report_payload.json(exclude_none=True))
