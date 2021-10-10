@@ -1,5 +1,4 @@
 import ssl
-import json
 import logging
 
 import websockets
@@ -62,14 +61,12 @@ class WebSocketRuCaptcha(BaseCaptcha):
             await self.sock.close()
             await self.__socket_session()
 
-    async def __auth(self) -> SocketResponse:
+    async def __auth(self):
         """
         Method setup connection with RuCaptcha and auth user
         :return: Server response dict
         """
         await self.__socket_session_recreate()
-
-        logging.warning(self.rucaptcha_key)
 
         auth_data = SockAuthSer(
             **{
@@ -78,7 +75,7 @@ class WebSocketRuCaptcha(BaseCaptcha):
             }
         )
         await self.sock.send(auth_data.json())
-        return self.auth_result.parse_raw(await self.sock.recv())
+        self.auth_result = self.auth_result.parse_raw(await self.sock.recv())
 
     @retry(wait=wait_fixed(5), stop=stop_after_attempt(3), after=after_log(logging, logging.ERROR), reraise=True)
     async def get_request(self) -> dict:
@@ -86,19 +83,19 @@ class WebSocketRuCaptcha(BaseCaptcha):
 
         response = await self.sock.recv()
 
-        return self.result.parse_raw(response).dict(exclude_defaults=True)
+        return self.result.parse_raw(response).dict(exclude_none=True)
 
     @retry(wait=wait_fixed(5), stop=stop_after_attempt(3), after=after_log(logging, logging.ERROR), reraise=True)
-    async def send_request(self, payload: json) -> dict:
+    async def send_request(self, payload: str) -> dict:
         """
         Method send request to server and wait response
         :param payload: JSON payload with data
         :return: Server response dict
         """
-        auth_result = await self.__auth()
+        await self.__auth()
         # check if auth is success
-        if auth_result.success:
+        if self.auth_result.success:
             await self.sock.send(payload)
             return await self.get_request()
         else:
-            return auth_result.dict()
+            return self.auth_result.dict(exclude_none=True)
