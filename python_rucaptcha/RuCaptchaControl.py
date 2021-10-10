@@ -4,77 +4,74 @@ import aiohttp
 import requests
 
 from python_rucaptcha.SocketAPI import WebSocketRuCaptcha
-from python_rucaptcha.decorators import api_key_check, service_check
+
+from . import enums
+from .base import BaseCaptcha
+from .SocketAPI import WebSocketRuCaptcha
+from .serializer import ResponseSer, GetRequestSer, CaptchaOptionsSer
 
 
-class RuCaptchaControl:
-    def __init__(self, rucaptcha_key: str, service_type: str = "2captcha", **kwargs):
+class RuCaptchaControl(BaseCaptcha):
+    def __init__(self, rucaptcha_key: str, service_type: str = enums.ServicesEnm.TWOCAPTCHA.value, **kwargs):
         """
         Модуль отвечает за дополнительные действия с аккаунтом и капчей.
         :param rucaptcha_key: Ключ от RuCaptcha
         :param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
                             и "rucaptcha"
+        :param kwargs: Для передачи дополнительных параметров
         """
-        self.service_type = service_type
-        self.post_payload = {"key": rucaptcha_key, "json": 1}
+        # assign args to validator
+        self.params = CaptchaOptionsSer(**locals())
+
+        self.get_payload = GetRequestSer(key=self.params.rucaptcha_key, field_json=1).dict(
+            by_alias=True, exclude_none=True
+        )
         # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:
             for key in kwargs:
-                self.post_payload.update({key: kwargs[key]})
+                self.get_payload.update({key: kwargs[key]})
+        # prepare result payload
+        self.result = ResponseSer()
 
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        if exc_type:
-            return False
-        return True
-
-    @api_key_check
-    @service_check
-    def additional_methods(self, action: str, **kwargs):
+    def additional_methods(self, action: str, **kwargs) -> dict:
         """
-        Метод который выполняет дополнительные действия, такие как жалобы/получение баланса и прочее.
-        :param action: Тип действия, самые типичные:
-                            getbalance(получение баланса),
-                            reportbad(жалоба на неверное решение).
-                            reportgood(оповещение при верном решении капчи, для сбора статистики по ReCaptcha V3)
+        Синхронный метод который выполняет дополнительные действия, такие как жалобы/получение баланса и прочее.
+        :param action: Тип действия
         :param kwargs: Для передачи дополнительных параметров
         :return: Возвращает JSON строку с соответствующими полями:
                     serverAnswer - ответ сервера при использовании RuCaptchaControl(баланс/жалобы и т.д.),
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
                     error - False - если всё хорошо, True - если есть ошибка,
                     errorBody - название ошибки
-        Больше подробностей и примеров можно прочитать в 'CaptchaTester/rucaptcha_control_example.py'
+        Больше подробностей в https://rucaptcha.com/api-rucaptcha#additional
         """
-        # result, url_response - задаются в декораторе `service_check`, после проверки переданного названия
+        self.get_payload.update({"action": action})
 
         # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:
             for key in kwargs:
-                self.post_payload.update({key: kwargs[key]})
-
-        self.post_payload.update({"action": action})
+                self.get_payload.update({key: kwargs[key]})
 
         try:
             # отправляем на сервер данные с вашим запросом
-            answer = requests.post(self.url_response, data=self.post_payload)
+            answer = requests.get(self.params.url_response, params=self.get_payload)
+            if answer.json()["status"] == 0:
+                self.result.error = True
+                self.result.errorBody = answer.json()["request"]
+
+            elif answer.json()["status"] == 1:
+                self.result.serverAnswer = answer.json()["request"]
         except Exception as error:
-            self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
-            return self.result
+            self.result.error = True
+            self.result.errorBody = error
 
-        if answer.json()["status"] == 0:
-            self.result.update({"error": True, "errorBody": answer.json()["request"]})
-            return self.result
-
-        elif answer.json()["status"] == 1:
-            self.result.update({"serverAnswer": answer.json()["request"]})
-            return self.result
+        finally:
+            return self.result.dict(exclude_none=True)
 
 
 # асинхронный метод
-class aioRuCaptchaControl:
-    def __init__(self, rucaptcha_key: str, service_type: str = "2captcha", **kwargs):
+class aioRuCaptchaControl(BaseCaptcha):
+    def __init__(self, rucaptcha_key: str, service_type: str = enums.ServicesEnm.TWOCAPTCHA.value, **kwargs):
         """
         Асинхронный модуль отвечает за дополнительные действия с аккаунтом и капчей.
         :param rucaptcha_key: Ключ от RuCaptcha
@@ -82,63 +79,58 @@ class aioRuCaptchaControl:
                              и "rucaptcha"
         :param kwargs: Для передачи дополнительных параметров
         """
-        self.service_type = service_type
-        self.post_payload = {"key": rucaptcha_key, "json": 1}
+        # assign args to validator
+        self.params = CaptchaOptionsSer(**locals())
+
+        self.get_payload = GetRequestSer(key=self.params.rucaptcha_key, field_json=1).dict(
+            by_alias=True, exclude_none=True
+        )
 
         # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:
             for key in kwargs:
-                self.post_payload.update({key: kwargs[key]})
+                self.get_payload.update({key: kwargs[key]})
+        # prepare result payload
+        self.result = ResponseSer()
 
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        if exc_type:
-            return False
-        return True
-
-    @api_key_check
-    @service_check
-    async def additional_methods(self, action: str, **kwargs):
+    async def additional_methods(self, action: str, **kwargs) -> dict:
         """
         Асинхронный метод который выполняет дополнительные действия, такие как жалобы/получение баланса и прочее.
-        :param action: Тип действия, самые типичные: getbalance(получение баланса),
-                                                     reportbad(жалоба на неверное решение).
+        :param action: Тип действия
         :param kwargs: Для передачи дополнительных параметров
         :return: Возвращает JSON строку с соответствующими полями:
                     serverAnswer - ответ сервера при использовании RuCaptchaControl(баланс/жалобы и т.д.),
                     taskId - находится Id задачи на решение капчи, можно использовать при жалобах и прочем,
                     error - False - если всё хорошо, True - если есть ошибка,
                     errorBody - название ошибки
-        Больше подробностей и примеров можно прочитать в 'CaptchaTester/rucaptcha_control_example.py'
+        Больше подробностей в https://rucaptcha.com/api-rucaptcha#additional
         """
-        # result, url_response - задаются в декораторе `service_check`, после проверки переданного названия
+        self.get_payload.update({"action": action})
 
         # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:
             for key in kwargs:
-                self.post_payload.update({key: kwargs[key]})
-
-        self.post_payload.update({"action": action})
+                self.get_payload.update({key: kwargs[key]})
 
         try:
             async with aiohttp.ClientSession() as session:
                 # отправляем на сервер данные с вашим запросом
-                async with session.post(self.url_response, data=self.post_payload) as resp:
+                async with session.get(self.params.url_response, params=self.get_payload) as resp:
                     answer = await resp.json()
 
+            if answer["status"] == 0:
+                self.result.error = True
+                self.result.errorBody = answer["request"]
+
+            elif answer["status"] == 1:
+                self.result.serverAnswer = answer["request"]
+
         except Exception as error:
-            self.result.update({"error": True, "errorBody": {"text": error, "id": -1}})
-            return self.result
+            self.result.error = True
+            self.result.errorBody = error
 
-        if answer["status"] == 0:
-            self.result.update({"error": True, "errorBody": answer["request"]})
-            return self.result
-
-        elif answer["status"] == 1:
-            self.result.update({"serverAnswer": answer["request"]})
-            return self.result
+        finally:
+            return self.result.dict(exclude_none=True)
 
 
 # Async WebSocket method
@@ -146,6 +138,7 @@ class sockRuCaptchaControl(WebSocketRuCaptcha):
     def __init__(self, rucaptcha_key: str, allSessions: bool = None, suppressSuccess: bool = None):
         """
         Method setup WebSocket connection data
+        Params description check in parent class
         """
         super().__init__(allSessions, suppressSuccess)
         self.rucaptcha_key = rucaptcha_key
