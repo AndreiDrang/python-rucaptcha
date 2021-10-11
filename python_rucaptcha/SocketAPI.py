@@ -43,6 +43,13 @@ class WebSocketRuCaptcha(BaseCaptcha):
         self.ssl_context.check_hostname = False
         self.ssl_context.verify_mode = ssl.CERT_NONE
 
+    async def __socket_session_close(self):
+        """
+        Method close exist socket session
+        """
+        if self.sock:
+            await self.sock.close()
+
     async def __socket_session(self):
         """
         Create new socket session
@@ -58,13 +65,12 @@ class WebSocketRuCaptcha(BaseCaptcha):
             await self.__socket_session()
         # if socket exist but closed
         elif self.sock.closed:
-            await self.sock.close()
+            await self.__socket_session_close()
             await self.__socket_session()
 
     async def __auth(self):
         """
         Method setup connection with RuCaptcha and auth user
-        :return: Server response dict
         """
         await self.__socket_session_recreate()
 
@@ -79,9 +85,14 @@ class WebSocketRuCaptcha(BaseCaptcha):
 
     @retry(wait=wait_fixed(5), stop=stop_after_attempt(3), after=after_log(logging, logging.ERROR), reraise=True)
     async def get_request(self) -> dict:
+        """
+        Method send GET request and write result to response model
+        :return: server response info, serialized to dict without NONE values
+        """
         await self.__socket_session_recreate()
 
         response = await self.sock.recv()
+        await self.__socket_session_close()
 
         return self.result.parse_raw(response).dict(exclude_none=True)
 
@@ -98,4 +109,5 @@ class WebSocketRuCaptcha(BaseCaptcha):
             await self.sock.send(payload)
             return await self.get_request()
         else:
+            await self.__socket_session_close()
             return self.auth_result.dict(exclude_none=True)
