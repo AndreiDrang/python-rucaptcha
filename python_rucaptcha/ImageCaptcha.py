@@ -49,8 +49,8 @@ class ImageCaptcha(BaseCaptcha):
                             либо как обычное изображение в папку созданную библиотекой - 'const'.
         :param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
                              и "rucaptcha"
-        :param img_path: Папка для сохранения изображений капчи;
         :param img_clearing: True - удалять файл после решения, False - не удалять файл после решения;
+        :param img_path: Папка для сохранения изображений капчи;
         :param kwargs: Служит для передачи необязательных параметров в пайлоад для запроса к RuCaptcha
 
         Подробней с примерами можно ознакомиться в 'CaptchaTester/image_captcha_example.py'
@@ -59,14 +59,10 @@ class ImageCaptcha(BaseCaptcha):
         self.params = CaptchaOptionsSer(**locals())
 
         # prepare POST payload
-        self.post_payload = PostRequestSer(key=self.params.rucaptcha_key, method="base64", field_json=1).dict(
-            by_alias=True
-        )
+        self.post_payload = PostRequestSer(key=self.params.rucaptcha_key, method="base64").dict(by_alias=True)
 
         # prepare GET payload
-        self.get_payload = GetRequestSer(key=self.params.rucaptcha_key, field_json=1).dict(
-            by_alias=True, exclude_none=True
-        )
+        self.get_payload = GetRequestSer(key=self.params.rucaptcha_key).dict(by_alias=True, exclude_none=True)
         # prepare result payload
         self.result = ResponseSer()
 

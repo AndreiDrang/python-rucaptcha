@@ -21,9 +21,7 @@ class RuCaptchaControl(BaseCaptcha):
         # assign args to validator
         self.params = CaptchaOptionsSer(**locals())
 
-        self.get_payload = GetRequestSer(key=self.params.rucaptcha_key, field_json=1).dict(
-            by_alias=True, exclude_none=True
-        )
+        self.get_payload = GetRequestSer(key=self.params.rucaptcha_key).dict(by_alias=True, exclude_none=True)
         # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:
             for key in kwargs:
@@ -80,9 +78,7 @@ class aioRuCaptchaControl(BaseCaptcha):
         # assign args to validator
         self.params = CaptchaOptionsSer(**locals())
 
-        self.get_payload = GetRequestSer(key=self.params.rucaptcha_key, field_json=1).dict(
-            by_alias=True, exclude_none=True
-        )
+        self.get_payload = GetRequestSer(key=self.params.rucaptcha_key).dict(by_alias=True, exclude_none=True)
 
         # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:
