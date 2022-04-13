@@ -24,3 +24,8 @@ class ServicesEnm(MyEnum):
 class SaveFormatsEnm(MyEnum):
     TEMP = "temp"
     CONST = "const"
+
+
+class GeetestEnm(MyEnum):
+    GEETEST = "geetest"
+    GEETEST_V4 = "geetest_v4"

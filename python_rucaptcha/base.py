@@ -20,7 +20,7 @@ class BaseCaptcha:
         self.params = CaptchaOptionsSer(**locals())
 
         # prepare POST payload
-        self.post_payload = PostRequestSer(key=self.params.rucaptcha_key, method="geetest").dict(by_alias=True)
+        self.post_payload = PostRequestSer(key=self.params.rucaptcha_key).dict(by_alias=True)
         # prepare GET payload
         self.get_payload = GetRequestSer(key=self.params.rucaptcha_key).dict(by_alias=True, exclude_none=True)
         # prepare result payload

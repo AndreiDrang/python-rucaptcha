@@ -7,21 +7,11 @@ import asyncio
 from uuid import uuid4
 
 import aiohttp
-import requests
-from requests.adapters import HTTPAdapter
 
 from . import enums
 from .base import BaseCaptcha
 from .SocketAPI import WebSocketRuCaptcha
-from .serializer import (
-    ResponseSer,
-    GetRequestSer,
-    PostRequestSer,
-    CaptchaOptionsSer,
-    NormalCaptchaSocketSer,
-    ServicePostResponseSer,
-    CaptchaOptionsSocketSer,
-)
+from .serializer import CaptchaOptionsSer, NormalCaptchaSocketSer, ServicePostResponseSer, CaptchaOptionsSocketSer
 from .result_handler import get_sync_result, get_async_result
 
 
@@ -52,33 +42,14 @@ class ImageCaptcha(BaseCaptcha):
         :param img_clearing: True - удалять файл после решения, False - не удалять файл после решения;
         :param img_path: Папка для сохранения изображений капчи;
         :param kwargs: Служит для передачи необязательных параметров в пайлоад для запроса к RuCaptcha
+            Подробнее о параметрах:
+                https://rucaptcha.com/api-rucaptcha#solving_normal_captcha
 
         Подробней с примерами можно ознакомиться в 'CaptchaTester/image_captcha_example.py'
         """
+        super().__init__(rucaptcha_key, sleep_time, service_type, **kwargs)
         # assign args to validator
         self.params = CaptchaOptionsSer(**locals())
-
-        # prepare POST payload
-        self.post_payload = PostRequestSer(key=self.params.rucaptcha_key, method="base64").dict(by_alias=True)
-
-        # prepare GET payload
-        self.get_payload = GetRequestSer(key=self.params.rucaptcha_key).dict(by_alias=True, exclude_none=True)
-        # prepare result payload
-        self.result = ResponseSer()
-
-        # if the file is saved to a folder, we take the parameter of the folder name and clear folder for files store
-        if self.params.save_format == enums.SaveFormatsEnm.CONST.value:
-            os.makedirs(self.params.img_path, exist_ok=True)
-
-        # If more parameters are passed, add them to post_payload
-        if kwargs:
-            for key in kwargs:
-                self.post_payload.update({key: kwargs[key]})
-
-        # prepare session
-        self.session = requests.Session()
-        self.session.mount("http://", HTTPAdapter(max_retries=5))
-        self.session.mount("https://", HTTPAdapter(max_retries=5))
 
     def __image_temp_saver(self, content: bytes):
         """
@@ -270,33 +241,14 @@ class aioImageCaptcha(BaseCaptcha):
                             False - не удалять файл после решения;
         :param kwargs: Служит для передачи необязательных параметров
                         в пайлоад для запроса к RuCaptcha
+            Подробнее о параметрах:
+                https://rucaptcha.com/api-rucaptcha#solving_normal_captcha
 
         Подробней с примерами можно ознакомиться в 'CaptchaTester/image_captcha_example.py'
         """
+        super().__init__(rucaptcha_key, sleep_time, service_type, **kwargs)
         # assign args to validator
         self.params = CaptchaOptionsSer(**locals())
-
-        # prepare POST payload
-        self.post_payload = PostRequestSer(
-            key=self.params.rucaptcha_key,
-            method="base64",
-        ).dict()
-        self.post_payload.update({"json": 1})
-
-        # prepare GET payload
-        self.get_payload = GetRequestSer(key=self.params.rucaptcha_key).dict()
-        self.get_payload.update({"json": 1})
-        # prepare result payload
-        self.result = ResponseSer()
-
-        # if the file is saved to a folder, we take the parameter of the folder name and clear folder for files store
-        if self.params.save_format == enums.SaveFormatsEnm.CONST.value:
-            os.makedirs(self.params.img_path, exist_ok=True)
-
-        # If more parameters are passed, add them to post_payload
-        if kwargs:
-            for key in kwargs:
-                self.post_payload.update({key: kwargs[key]})
 
     async def __image_temp_saver(self, content: bytes):
         """

@@ -113,6 +113,8 @@ class GetRequestSer(BaseModel):
 class CaptchaOptionsSer(BaseModel):
     rucaptcha_key: str
     sleep_time: int = 5
+
+    # CaptchaImage
     save_format: str = enums.SaveFormatsEnm.TEMP.value
     service_type: str = enums.ServicesEnm.TWOCAPTCHA.value
     img_clearing: bool = True
