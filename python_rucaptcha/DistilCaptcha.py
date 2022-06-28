@@ -4,7 +4,7 @@ import asyncio
 import aiohttp
 import requests
 
-from python_rucaptcha.config import app_key
+from python_rucaptcha.config import APP_KEY
 from python_rucaptcha.decorators import api_key_check, service_check
 from python_rucaptcha.result_handler import get_sync_result, get_async_result
 
@@ -34,7 +34,7 @@ class DistilCaptcha:
             "method": "distil",
             "data": {},
             "json": 1,
-            "soft_id": app_key,
+            "soft_id": APP_KEY,
         }
         # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:
@@ -132,7 +132,7 @@ class aioDistilCaptcha:
             "method": "distil",
             "data": {},
             "json": 1,
-            "soft_id": app_key,
+            "soft_id": APP_KEY,
         }
         # Если переданы ещё параметры - вносим их в post_payload
         if kwargs:

@@ -3,7 +3,7 @@ from uuid import uuid4
 from pydantic import Field, BaseModel, validator, root_validator
 
 from . import enums
-from .config import app_key
+from .config import APP_KEY
 
 """
 Socket API Serializers
@@ -96,7 +96,7 @@ HTTP API Serializers
 class PostRequestSer(BaseModel):
     key: str
     method: str
-    soft_id: str = app_key
+    soft_id: str = APP_KEY
     field_json: int = Field(1, alias="json")
 
 
@@ -112,7 +112,8 @@ class GetRequestSer(BaseModel):
 
 class CaptchaOptionsSer(BaseModel):
     rucaptcha_key: str
-    sleep_time: int = 5
+    method: str
+    sleep_time: int = 10
 
     # CaptchaImage
     save_format: str = enums.SaveFormatsEnm.TEMP.value

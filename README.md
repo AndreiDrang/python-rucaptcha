@@ -318,3 +318,4 @@ elif answer['error']:
 1. https://rucaptcha.com/api-rucaptcha#in_errors
 1. https://rucaptcha.docs.apiary.io/#reference/2
 
+![img.png](files/img.png)

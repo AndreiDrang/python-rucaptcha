@@ -4,7 +4,7 @@ import asyncio
 import aiohttp
 import requests
 
-from python_rucaptcha.config import app_key
+from python_rucaptcha.config import APP_KEY
 from python_rucaptcha.decorators import api_key_check, service_check
 from python_rucaptcha.result_handler import get_sync_result, get_async_result
 
@@ -51,7 +51,7 @@ class ReCaptchaV3:
             "json": 1,
             "action": action,
             "min_score": min_score,
-            "soft_id": app_key,
+            "soft_id": APP_KEY,
         }
 
         # если был передан параметр для callback`a - добавляем его
@@ -175,7 +175,7 @@ class aioReCaptchaV3:
             "json": 1,
             "action": action,
             "min_score": min_score,
-            "soft_id": app_key,
+            "soft_id": APP_KEY,
         }
 
         # если был передан параметр для callback`a - добавляем его

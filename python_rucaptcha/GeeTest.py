@@ -1,113 +1,65 @@
-import time
-import asyncio
-
-import aiohttp
-
 from .base import BaseCaptcha
-from .serializer import ServicePostResponseSer
-from .result_handler import get_sync_result, get_async_result
+from .enums import GeetestEnm
 
 
-class GeeTest(BaseCaptcha):
+class BaseGeeTest(BaseCaptcha):
+    def __init__(self, pageurl: str, gt: str = None, captcha_id: str = None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # insert `gt` param to payload
+        self.post_payload.update({"gt": gt, "pageurl": pageurl, "captcha_id": captcha_id})
+
+        # check user params
+        assert self.method in GeetestEnm.list_values()
+        if self.method == GeetestEnm.GEETEST_V4.value:
+            assert captcha_id is not None
+        elif self.method == GeetestEnm.GEETEST.value:
+            assert gt is not None
+
+
+class GeeTest(BaseGeeTest):
     """
-    Модуль отвечает за решение Geetest и Geetest v4
-    Подробнее о параметрах:
+    Class for solve Geetest and Geetest v4 captcha
+    Solve description:
         https://rucaptcha.com/api-rucaptcha#solving_geetest
         https://rucaptcha.com/api-rucaptcha#geetest-v4
     """
 
     def captcha_handler(self, challenge: str = None, **kwargs):
         """
-        Метод отвечает за передачу данных на сервер для решения капчи
-        :param challenge: Значение параметра challenge найденное на сайте
-        :param kwargs: Параметры для библиотеки `requests`
-        :return: Ответ на капчу в виде JSON строки с полями:
-                    captchaSolve - решение капчи,
-                    taskId - находится Id задачи на решение капчи,
-                    error - False - если всё хорошо, True - если есть ошибка,
-                    errorBody - название ошибки
+        The method is responsible for sending data to the server to solve the captcha
+        :param challenge: The value of the challenge parameter found on the site
+        :param kwargs: Parameters for the `requests` library
+        :return: Response to captcha as JSON string with fields:
+                 captchaSolve - captcha solution,
+                 taskId - finds the Id of the task to solve the captcha,
+                 error - False - if everything is fine, True - if there is an error,
+                 errorBody - error name
         """
-        self.post_payload.update({"challenge": challenge})
-        try:
-            response = ServicePostResponseSer(
-                **self.session.post(self.params.url_request, data=self.post_payload, **kwargs).json()
-            )
-            if response.status == 1:
-                self.result.taskId = response.request
-            else:
-                self.result.error = True
-                self.result.errorBody = response.request
-        except Exception as error:
-            self.result.error = True
-            self.result.errorBody = error
-
-        # check for errors when downloading / transferring a file to the server
-        if self.result.error:
-            return self.result.dict(exclude_none=True)
-        # if all is ok - send captcha to service and wait solution
-        else:
-            # update payload - add captcha taskId
-            self.get_payload.update({"id": self.result.taskId})
-
-            # wait captcha solving
-            time.sleep(self.params.sleep_time)
-            return get_sync_result(
-                get_payload=self.get_payload,
-                sleep_time=self.params.sleep_time,
-                url_response=self.params.url_response,
-                result=self.result,
-            )
+        if self.method == GeetestEnm.GEETEST.value:
+            assert challenge is not None
+            self.post_payload.update({"challenge": challenge})
+        return self._processing_response(**kwargs)
 
 
-class aioGeeTest(BaseCaptcha):
+class aioGeeTest(BaseGeeTest):
     """
-    Модуль отвечает за асинхронное решение Geetest и Geetest v4
-    Подробнее о параметрах:
+    Class for async solve Geetest and Geetest v4 captcha
+    Solve description:
         https://rucaptcha.com/api-rucaptcha#solving_geetest
         https://rucaptcha.com/api-rucaptcha#geetest-v4
     """
 
     async def captcha_handler(self, challenge: str = None):
         """
-        Метод отвечает за передачу данных на сервер для решения капчи
-        :param challenge: Значение параметра challenge найденное на сайте
-        :param proxy: Прокси для aiohttp модуля
-        :return: Ответ на капчу в виде JSON строки с полями:
-                    captchaSolve - решение капчи,
-                    taskId - находится Id задачи на решение капчи,
-                    error - False - если всё хорошо, True - если есть ошибка,
-                    errorBody - название ошибки
+        The method is responsible for sending data to the server to solve the captcha
+        :param challenge: The value of the challenge parameter found on the site
+        :return: Response to captcha as JSON string with fields:
+                 captchaSolve - captcha solution,
+                 taskId - finds the Id of the task to solve the captcha,
+                 error - False - if everything is fine, True - if there is an error,
+                 errorBody - error name
         """
-        self.post_payload.update({"challenge": challenge})
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.post(self.params.url_request, data=self.post_payload) as resp:
-                    response_json = await resp.json()
-                    response = ServicePostResponseSer(**response_json)
-
-            if response.status == 1:
-                self.result.taskId = response.request
-            else:
-                self.result.error = True
-                self.result.errorBody = response.request
-
-        except Exception as error:
-            self.result.error = True
-            self.result.errorBody = error
-
-        # check for errors when downloading / transferring a file to the server
-        if self.result.error:
-            return self.result.dict(exclude_none=True)
-        # if all is ok - send captcha to service and wait solution
-        else:
-            # update payload - add captcha taskId
-            self.get_payload.update({"id": self.result.taskId})
-
-            # wait captcha solving
-            await asyncio.sleep(self.params.sleep_time)
-            return await get_async_result(
-                get_payload=self.get_payload,
-                sleep_time=self.params.sleep_time,
-                url_response=self.params.url_response,
-                result=self.result,
-            )
+        if self.method == GeetestEnm.GEETEST.value:
+            assert challenge is not None
+            self.post_payload.update({"challenge": challenge})
+        return await self._aio_processing_response()
