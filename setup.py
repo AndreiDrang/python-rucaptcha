@@ -15,6 +15,7 @@ REQUIRES_PYTHON = ">=3.6.0"
 VERSION = "4.0"
 REQUIRED = ["pika==1.2.*", "requests>=2.21.0", "aiohttp>=3.7.4", "websockets==9.*", "pydantic==1.*", "tenacity==8.*"]
 
+
 here = os.path.abspath(os.path.dirname(__file__))
 
 # Import the README and use it as the long-description.
