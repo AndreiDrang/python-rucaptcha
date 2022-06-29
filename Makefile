@@ -26,4 +26,4 @@ upload:
 
 tests:
 	coverage run --rcfile=.coveragerc -m pytest -vv --disable-warnings
-	coverage report --precision=1 --sort=cover -m
+	coverage report --precision=3 --sort=cover -m
