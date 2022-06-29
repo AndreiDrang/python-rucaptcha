@@ -12,18 +12,19 @@ class BaseGeeTest(BaseCaptcha):
         *args,
         **kwargs,
     ):
+        self.method = method
         # check user params
-        if method not in GeetestEnm.list_values():
+        if self.method not in GeetestEnm.list_values():
             raise ValueError(f"Invalid method parameter set, available - {GeetestEnm.list_values()}")
 
-        super().__init__(method=method, *args, **kwargs)
+        super().__init__(method=self.method, *args, **kwargs)
         # insert `gt` param to payload
         self.post_payload.update({"gt": gt, "pageurl": pageurl, "captcha_id": captcha_id})
 
-        if method == GeetestEnm.GEETEST_V4.value and captcha_id is None:
-            raise ValueError(f"For {method} captcha_id is required")
-        elif method == GeetestEnm.GEETEST.value and gt is None:
-            raise ValueError(f"For {method} gt is required")
+        if self.method == GeetestEnm.GEETEST_V4.value and captcha_id is None:
+            raise ValueError(f"For {self.method} captcha_id is required")
+        elif self.method == GeetestEnm.GEETEST.value and gt is None:
+            raise ValueError(f"For {self.method} gt is required")
 
 
 class GeeTest(BaseGeeTest):
