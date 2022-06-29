@@ -6,7 +6,7 @@ from ..python_rucaptcha.CapyPuzzle import CapyPuzzle, aioCapyPuzzle
 from ..python_rucaptcha.serializer import ResponseSer
 
 
-class TestGeetest(CoreTest):
+class TestCapyPuzzle(CoreTest):
     captchakey = "PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w"
     pageurl = "https://www.capy.me/account/register/"
     api_server = "https://jp.api.capy.me/"
@@ -17,7 +17,7 @@ class TestGeetest(CoreTest):
     """
 
     @pytest.mark.parametrize("version", versions)
-    def test_geetest_basic_data(self, version):
+    def test_capypuzzle_basic_data(self, version):
         instance = CapyPuzzle(
             pageurl=self.pageurl,
             captchakey=self.captchakey,
@@ -41,7 +41,7 @@ class TestGeetest(CoreTest):
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("version", versions)
-    async def test_aio_geetest_basic_data(self, version):
+    async def test_aio_capypuzzle_basic_data(self, version):
         instance = aioCapyPuzzle(
             pageurl=self.pageurl,
             captchakey=self.captchakey,
@@ -68,7 +68,7 @@ class TestGeetest(CoreTest):
     """
 
     @pytest.mark.parametrize("version", versions)
-    def test_failed_geetest_method(self, version):
+    def test_failed_capypuzzle_method(self, version):
         with pytest.raises(ValueError):
             CapyPuzzle(
                 pageurl=self.pageurl,
@@ -81,7 +81,7 @@ class TestGeetest(CoreTest):
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("version", versions)
-    def test_aio_failed_geetest_method(self, version):
+    def test_aio_failed_capypuzzle_method(self, version):
         with pytest.raises(ValueError):
             aioCapyPuzzle(
                 pageurl=self.pageurl,
