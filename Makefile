@@ -16,9 +16,9 @@ refactor:
 	isort src/
 
 lint:
-	autoflake --in-place --recursive python_rucaptcha/ examples/ --check
-	black python_rucaptcha/ examples/ --check
-	isort python_rucaptcha/ examples/ --check-only
+	autoflake --in-place --recursive src/ --check
+	black src/ --check
+	isort src/ --check-only
 
 upload:
 	pip install twine
