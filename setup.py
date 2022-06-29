@@ -78,13 +78,20 @@ setup(
     license="AGPL-3.0",
     keywords="""
                 captcha 
-				rucaptcha 
+				rucaptcha
+				2captcha
+				recaptcha
+				geetest
+				hcaptcha
+				capypuzzle
+				tiktok
+				rotatecaptcha
+				funcaptcha
+				keycaptcha
 				python3
-				flask
 				recaptcha
 				captcha
 				security
-				api
 				python-library
 				python-rucaptcha
 				rucaptcha-client
