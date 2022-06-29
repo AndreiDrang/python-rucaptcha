@@ -1,9 +1,10 @@
+import os
 import random
 import string
 
 
 class CoreTest:
-    RUCAPTCHA_KEY = "ad9053f3182ca81755768608fa758570"
+    RUCAPTCHA_KEY = os.getenv("RUCAPTCHA_KEY", "ad9053f3182ca81755768608fa758570")
 
     def get_random_string(self, length):
         # choose from all lowercase letter
