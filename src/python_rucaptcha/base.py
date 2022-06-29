@@ -134,3 +134,11 @@ class BaseCaptcha:
         if exc_type:
             return False
         return True
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, exc_type, exc_value, traceback):
+        if exc_type:
+            return False
+        return True
