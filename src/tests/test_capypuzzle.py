@@ -63,6 +63,53 @@ class TestCapyPuzzle(CoreTest):
         assert result["taskId"].isnumeric()
         assert result.keys() == ResponseSer().dict().keys()
 
+    @pytest.mark.parametrize("version", versions)
+    def test_context_capypuzzle_basic_data(self, version):
+        with CapyPuzzle(
+            pageurl=self.pageurl,
+            captchakey=self.captchakey,
+            method=CapyPuzzleEnm.CAPY.value,
+            rucaptcha_key=self.RUCAPTCHA_KEY,
+            api_server=self.api_server,
+            version=version,
+        ) as instance:
+            assert instance.params.method == CapyPuzzleEnm.CAPY.value
+            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
+            assert instance.post_payload["pageurl"] == self.pageurl
+            assert instance.post_payload["api_server"] == self.api_server
+            assert instance.post_payload["version"] == version
+
+            result = instance.captcha_handler()
+
+            assert isinstance(result, dict) is True
+            assert result["error"] is True
+            assert result["taskId"].isnumeric()
+            assert result.keys() == ResponseSer().dict().keys()
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("version", versions)
+    async def test_context_aio_capypuzzle_basic_data(self, version):
+        async with aioCapyPuzzle(
+            pageurl=self.pageurl,
+            captchakey=self.captchakey,
+            method=CapyPuzzleEnm.CAPY.value,
+            rucaptcha_key=self.RUCAPTCHA_KEY,
+            api_server=self.api_server,
+            version=version,
+        ) as instance:
+            assert instance.params.method == CapyPuzzleEnm.CAPY.value
+            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
+            assert instance.post_payload["pageurl"] == self.pageurl
+            assert instance.post_payload["api_server"] == self.api_server
+            assert instance.post_payload["version"] == version
+
+            result = await instance.captcha_handler()
+
+            assert isinstance(result, dict) is True
+            assert result["error"] is True
+            assert result["taskId"].isnumeric()
+            assert result.keys() == ResponseSer().dict().keys()
+
     """
     Failed tests
     """

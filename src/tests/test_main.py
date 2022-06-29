@@ -10,6 +10,13 @@ class TestMain(CoreTest):
     Success tests
     """
 
+    def test_context_class_create(self):
+        with BaseCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, method=GeetestEnm.GEETEST.value) as bc:
+            pass
+
+    def test_class_create(self):
+        bc = BaseCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, method=GeetestEnm.GEETEST.value)
+
     """
     Failed tests
     """

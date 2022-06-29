@@ -27,8 +27,6 @@ class BaseCaptcha:
                              и "rucaptcha"
         :param kwargs: Designed to pass OPTIONAL parameters to the payload for a request to RuCaptcha
         """
-        # save method name
-        self.method = method
         # assign args to validator
         self.params = CaptchaOptionsSer(**locals())
 

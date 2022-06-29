@@ -9,7 +9,7 @@ class BaseCapyPuzzle(BaseCaptcha):
         self.post_payload.update({"captchakey": captchakey, "pageurl": pageurl})
 
         # check user params
-        if self.method not in CapyPuzzleEnm.list_values():
+        if method not in CapyPuzzleEnm.list_values():
             raise ValueError(f"Invalid method parameter set, available - {CapyPuzzleEnm.list_values()}")
 
 
