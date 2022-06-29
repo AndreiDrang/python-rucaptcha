@@ -10,13 +10,13 @@ class TestGeetest(CoreTest):
     captchakey = "PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w"
     pageurl = "https://www.capy.me/account/register/"
     api_server = "https://jp.api.capy.me/"
-    version = ["puzzle", "avatar"]
+    versions = ["puzzle", "avatar"]
 
     """
     Success tests
     """
 
-    @pytest.mark.parametrize("version", version)
+    @pytest.mark.parametrize("version", versions)
     def test_geetest_basic_data(self, version):
         instance = CapyPuzzle(
             pageurl=self.pageurl,
@@ -30,7 +30,7 @@ class TestGeetest(CoreTest):
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
         assert instance.post_payload["pageurl"] == self.pageurl
         assert instance.post_payload["api_server"] == self.api_server
-        assert instance.post_payload["version"] == self.version
+        assert instance.post_payload["version"] == version
 
         result = instance.captcha_handler()
 
@@ -40,7 +40,7 @@ class TestGeetest(CoreTest):
         assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize("version", version)
+    @pytest.mark.parametrize("version", versions)
     async def test_aio_geetest_basic_data(self, version):
         instance = aioCapyPuzzle(
             pageurl=self.pageurl,
@@ -54,7 +54,7 @@ class TestGeetest(CoreTest):
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
         assert instance.post_payload["pageurl"] == self.pageurl
         assert instance.post_payload["api_server"] == self.api_server
-        assert instance.post_payload["version"] == self.version
+        assert instance.post_payload["version"] == version
 
         result = await instance.captcha_handler()
 
@@ -67,7 +67,7 @@ class TestGeetest(CoreTest):
     Failed tests
     """
 
-    @pytest.mark.parametrize("version", version)
+    @pytest.mark.parametrize("version", versions)
     def test_failed_geetest_method(self, version):
         with pytest.raises(ValueError):
             CapyPuzzle(
@@ -80,7 +80,7 @@ class TestGeetest(CoreTest):
             )
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize("version", version)
+    @pytest.mark.parametrize("version", versions)
     def test_aio_failed_geetest_method(self, version):
         with pytest.raises(ValueError):
             aioCapyPuzzle(
