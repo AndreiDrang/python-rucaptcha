@@ -14,8 +14,16 @@ exclude = '''
   | dist
 )/
 '''
+
 [tool.isort]
 profile = "black"
 skip_glob = 'examples/**'
 line_length = 120
 length_sort = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+asyncio_mode = "auto"
+testpaths = [
+    "src/tests",
+]

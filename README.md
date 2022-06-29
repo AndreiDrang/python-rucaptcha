@@ -76,10 +76,12 @@ v.4.0 - Переработка классов и методов. Добавле�
 
 #### Работа обычным методом - ожидание решения капчи периодическим опросом сервера.
 
-1. [Решение капчи-изображения.](./python_rucaptcha/ImageCaptcha.py)
+1. [Решение капчи-изображения.](src/python_rucaptcha/ImageCaptcha.py)
 
 ```python
-from python_rucaptcha import ImageCaptcha
+
+import ImageCaptcha
+
 # Введите ключ от сервиса RuCaptcha, из своего аккаунта
 RUCAPTCHA_KEY = ""
 # Ссылка на изображения для расшифровки
@@ -88,15 +90,15 @@ image_link = ""
 user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_link=image_link)
 
 if not user_answer['error']:
-	# решение капчи
-	print(user_answer['captchaSolve'])
-	print(user_answer['taskId'])
+   # решение капчи
+   print(user_answer['captchaSolve'])
+   print(user_answer['taskId'])
 elif user_answer['error']:
-	# Тело ошибки, если есть
-	print(user_answer ['errorBody'])
+   # Тело ошибки, если есть
+   print(user_answer['errorBody'])
 ```
 
-2. [Решение KeyCaptcha(пазл-капча).](./python_rucaptcha/KeyCaptcha.py)
+2. [Решение KeyCaptcha(пазл-капча).](src/python_rucaptcha/KeyCaptcha.py)
 
 ```python
 from python_rucaptcha import KeyCaptcha
@@ -124,7 +126,7 @@ elif answer['error']:
 	print(answer['errorBody'])
 ``` 
 
-3. [Решение ReCaptcha v2.](./python_rucaptcha/ReCaptchaV2.py)
+3. [Решение ReCaptcha v2.](src/python_rucaptcha/ReCaptchaV2.py)
 
 ```python
 from python_rucaptcha import ReCaptchaV2
@@ -147,7 +149,7 @@ elif user_answer['error']:
 	print(user_answer ['errorBody'])
 ```
 
-4. [Решение ReCaptcha v3.](./python_rucaptcha/ReCaptchaV3.py)
+4. [Решение ReCaptcha v3.](src/python_rucaptcha/ReCaptchaV3.py)
 
 ```python
 from python_rucaptcha import ReCaptchaV3
@@ -181,9 +183,9 @@ elif user_answer['error']:
 	print(user_answer ['errorBody'])
 ```
 
-5. [Решение RotateCaptcha(повернуть изображение).](./python_rucaptcha/RotateCaptcha.py)
+5. [Решение RotateCaptcha(повернуть изображение).](src/python_rucaptcha/RotateCaptcha.py)
 
-6. [Решение текстовой капчи.](./python_rucaptcha/TextCaptcha.py)
+6. [Решение текстовой капчи.](src/python_rucaptcha/TextCaptcha.py)
 
 ```python
 from python_rucaptcha import TextCaptcha
@@ -203,7 +205,7 @@ elif user_answer['error']:
 	print(user_answer ['errorBody'])
 ```
 
-7. [Решение FunCaptcha.](./python_rucaptcha/FunCaptcha.py)
+7. [Решение FunCaptcha.](src/python_rucaptcha/FunCaptcha.py)
 
 ```python
 from python_rucaptcha import FunCaptcha
@@ -229,7 +231,7 @@ elif answer['error']:
     print(answer ['errorBody'])
     
 ```
-8. [Модуль для получения инофрмации о балансе аккаунта и отправке жалоб.](./python_rucaptcha/RuCaptchaControl.py)
+8. [Модуль для получения инофрмации о балансе аккаунта и отправке жалоб.](src/python_rucaptcha/RuCaptchaControl.py)
 
 ```python
 from python_rucaptcha.RuCaptchaControl import RuCaptchaControl
@@ -266,7 +268,7 @@ if not answer["error"]:
 elif answer["error"]:
     print(answer["errorBody"])
 ```
-9. [Решение HCaptcha.](./python_rucaptcha/HCaptcha.py)
+9. [Решение HCaptcha.](src/python_rucaptcha/HCaptcha.py)
 
 ```python
 from python_rucaptcha.HCaptcha import HCaptcha
@@ -288,7 +290,7 @@ elif answer['error']:
     print(answer ['errorBody'])
     
 ```
-10. [Решение CapyPuzzle.](./python_rucaptcha/CapyPuzzle.py)
+10. [Решение CapyPuzzle.](src/python_rucaptcha/CapyPuzzle.py)
 
 ```python
 from python_rucaptcha.CapyPuzzle import CapyPuzzle

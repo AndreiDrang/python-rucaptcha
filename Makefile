@@ -11,9 +11,9 @@ refactor:
 				--remove-duplicate-keys \
 				--remove-all-unused-imports \
 				--ignore-init-module-imports \
-				python_rucaptcha/ examples/
-	black python_rucaptcha/ examples/
-	isort python_rucaptcha/ examples/
+				src/
+	black src/
+	isort src/
 
 lint:
 	autoflake --in-place --recursive python_rucaptcha/ examples/ --check
@@ -23,3 +23,7 @@ lint:
 upload:
 	pip install twine
 	python setup.py upload
+
+tests:
+	coverage run --rcfile=.coveragerc -m pytest -vv --disable-warnings
+	coverage report --precision=1 --sort=cover -m

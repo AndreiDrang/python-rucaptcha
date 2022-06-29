@@ -3,12 +3,12 @@ python_rucaptcha.egg-info/
 \.idea/
 Web-Interface/
 /ico.png
-python_rucaptcha/__pycache__/
+src/python_rucaptcha/__pycache__/
 build/
 
 \.vscode/
 
-examples/callback_examples/__pycache__/
+src/examples/callback_examples/__pycache__/
 
 CaptchaTester/callback_examples/__pycache__/
 
