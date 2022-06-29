@@ -4,7 +4,7 @@ from .enums import CapyPuzzleEnm
 
 class BaseCapyPuzzle(BaseCaptcha):
     def __init__(self, pageurl: str, captchakey: str, method: str = CapyPuzzleEnm.CAPY.value, *args, **kwargs):
-        super().__init__(method, *args, **kwargs)
+        super().__init__(method=method, *args, **kwargs)
 
         self.post_payload.update({"captchakey": captchakey, "pageurl": pageurl})
 
