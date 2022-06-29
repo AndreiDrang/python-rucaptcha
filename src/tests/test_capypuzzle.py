@@ -26,8 +26,8 @@ class TestCapyPuzzle(CoreTest):
             api_server=self.api_server,
             version=version,
         )
-        assert instance.params.method == CapyPuzzleEnm.CAPY.value
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
+        assert instance.post_payload["method"] == CapyPuzzleEnm.CAPY.value
         assert instance.post_payload["pageurl"] == self.pageurl
         assert instance.post_payload["api_server"] == self.api_server
         assert instance.post_payload["version"] == version
@@ -50,8 +50,8 @@ class TestCapyPuzzle(CoreTest):
             api_server=self.api_server,
             version=version,
         )
-        assert instance.params.method == CapyPuzzleEnm.CAPY.value
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
+        assert instance.post_payload["method"] == CapyPuzzleEnm.CAPY.value
         assert instance.post_payload["pageurl"] == self.pageurl
         assert instance.post_payload["api_server"] == self.api_server
         assert instance.post_payload["version"] == version
@@ -73,8 +73,8 @@ class TestCapyPuzzle(CoreTest):
             api_server=self.api_server,
             version=version,
         ) as instance:
-            assert instance.params.method == CapyPuzzleEnm.CAPY.value
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
+            assert instance.post_payload["method"] == CapyPuzzleEnm.CAPY.value
             assert instance.post_payload["pageurl"] == self.pageurl
             assert instance.post_payload["api_server"] == self.api_server
             assert instance.post_payload["version"] == version
@@ -97,8 +97,8 @@ class TestCapyPuzzle(CoreTest):
             api_server=self.api_server,
             version=version,
         ) as instance:
-            assert instance.params.method == CapyPuzzleEnm.CAPY.value
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
+            assert instance.post_payload["method"] == CapyPuzzleEnm.CAPY.value
             assert instance.post_payload["pageurl"] == self.pageurl
             assert instance.post_payload["api_server"] == self.api_server
             assert instance.post_payload["version"] == version
