@@ -29,3 +29,7 @@ class SaveFormatsEnm(MyEnum):
 class GeetestEnm(MyEnum):
     GEETEST = "geetest"
     GEETEST_V4 = "geetest_v4"
+
+
+class CapyPuzzleEnm(MyEnum):
+    CAPY = "capy"
