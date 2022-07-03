@@ -10,6 +10,12 @@
 
 Присутствуют [примеры работы с библиотекой](https://github.com/AndreiDrang/python-rucaptcha/tree/master/examples).
 
+***
+По всем вопросам можете писать в [Telegram](https://t.me/pythoncaptcha) чат.
+
+Либо на email - python-captcha@pm.me
+***
+
 **Используется Python версии 3.6+.**
 
 ## How to install? Как установить?
@@ -27,9 +33,6 @@ git clone https://github.com/AndreiDrang/python-rucaptcha.git
 cd python-rucaptcha
 python setup.py install
 ```
-***
-По всем вопросам можете писать в [Telegram](https://t.me/pythoncaptcha) чат.
-***
 ### Последние обновления
 **v.2.0** - Обновление JSON ответа, ключа с информацией об ошибке(создание собственного списка ошибок с уникальными `id`). 
 Добавление в `errorBody` двух ключей: `text`(текст ошибки) и `id`(уникальный номер ошибки). [Таблица с ошибками и их номерами](#errors-table).
