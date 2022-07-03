@@ -1,7 +1,7 @@
 import asyncio
 
-from python_rucaptcha.CapyPuzzle import CapyPuzzle, aioCapyPuzzle
 from python_rucaptcha.enums import CapyPuzzleEnm
+from python_rucaptcha.CapyPuzzle import CapyPuzzle, aioCapyPuzzle
 
 # Rucaptcha API Key from your account
 RUCAPTCHA_KEY = "ad9053f31821111111111608fa758570"
@@ -13,8 +13,8 @@ versions = ["puzzle", "avatar"]
 
 capy = CapyPuzzle(
     rucaptcha_key=RUCAPTCHA_KEY,
-    captchakey="PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w",
-    pageurl="https://www.capy.me/account/register/",
+    captchakey=captchakey,
+    pageurl=pageurl,
     method=CapyPuzzleEnm.CAPY.value,
     api_server=api_server,
     version=versions[0],
@@ -28,8 +28,8 @@ async def run():
     try:
         result = await aioCapyPuzzle(
             rucaptcha_key=RUCAPTCHA_KEY,
-            captchakey="PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w",
-            pageurl="https://www.capy.me/account/register/",
+            captchakey=captchakey,
+            pageurl=pageurl,
             method=CapyPuzzleEnm.CAPY.value,
             api_server=api_server,
             version=versions[0],

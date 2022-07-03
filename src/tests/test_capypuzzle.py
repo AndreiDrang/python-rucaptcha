@@ -16,21 +16,20 @@ class TestCapyPuzzle(CoreTest):
     Success tests
     """
 
-    @pytest.mark.parametrize("version", versions)
-    def test_capypuzzle_basic_data(self, version):
+    def test_capypuzzle_basic_data(self):
         instance = CapyPuzzle(
             pageurl=self.pageurl,
             captchakey=self.captchakey,
             method=CapyPuzzleEnm.CAPY.value,
             rucaptcha_key=self.RUCAPTCHA_KEY,
             api_server=self.api_server,
-            version=version,
+            version=self.versions[0],
         )
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
         assert instance.post_payload["method"] == CapyPuzzleEnm.CAPY.value
         assert instance.post_payload["pageurl"] == self.pageurl
         assert instance.post_payload["api_server"] == self.api_server
-        assert instance.post_payload["version"] == version
+        assert instance.post_payload["version"] == self.versions[0]
 
         result = instance.captcha_handler()
 
@@ -42,21 +41,20 @@ class TestCapyPuzzle(CoreTest):
         assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize("version", versions)
-    async def test_aio_capypuzzle_basic_data(self, version):
+    async def test_aio_capypuzzle_basic_data(self):
         instance = aioCapyPuzzle(
             pageurl=self.pageurl,
             captchakey=self.captchakey,
             method=CapyPuzzleEnm.CAPY.value,
             rucaptcha_key=self.RUCAPTCHA_KEY,
             api_server=self.api_server,
-            version=version,
+            version=self.versions[0],
         )
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
         assert instance.post_payload["method"] == CapyPuzzleEnm.CAPY.value
         assert instance.post_payload["pageurl"] == self.pageurl
         assert instance.post_payload["api_server"] == self.api_server
-        assert instance.post_payload["version"] == version
+        assert instance.post_payload["version"] == self.versions[0]
 
         result = await instance.captcha_handler()
 
@@ -67,21 +65,20 @@ class TestCapyPuzzle(CoreTest):
         assert isinstance(result["captchaSolve"], dict) is True
         assert result.keys() == ResponseSer().dict().keys()
 
-    @pytest.mark.parametrize("version", versions)
-    def test_context_capypuzzle_basic_data(self, version):
+    def test_context_capypuzzle_basic_data(self):
         with CapyPuzzle(
             pageurl=self.pageurl,
             captchakey=self.captchakey,
             method=CapyPuzzleEnm.CAPY.value,
             rucaptcha_key=self.RUCAPTCHA_KEY,
             api_server=self.api_server,
-            version=version,
+            version=self.versions[0],
         ) as instance:
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
             assert instance.post_payload["method"] == CapyPuzzleEnm.CAPY.value
             assert instance.post_payload["pageurl"] == self.pageurl
             assert instance.post_payload["api_server"] == self.api_server
-            assert instance.post_payload["version"] == version
+            assert instance.post_payload["version"] == self.versions[0]
 
             result = instance.captcha_handler()
 
@@ -93,21 +90,20 @@ class TestCapyPuzzle(CoreTest):
             assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize("version", versions)
-    async def test_context_aio_capypuzzle_basic_data(self, version):
+    async def test_context_aio_capypuzzle_basic_data(self):
         async with aioCapyPuzzle(
             pageurl=self.pageurl,
             captchakey=self.captchakey,
             method=CapyPuzzleEnm.CAPY.value,
             rucaptcha_key=self.RUCAPTCHA_KEY,
             api_server=self.api_server,
-            version=version,
+            version=self.versions[0],
         ) as instance:
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
             assert instance.post_payload["method"] == CapyPuzzleEnm.CAPY.value
             assert instance.post_payload["pageurl"] == self.pageurl
             assert instance.post_payload["api_server"] == self.api_server
-            assert instance.post_payload["version"] == version
+            assert instance.post_payload["version"] == self.versions[0]
 
             result = await instance.captcha_handler()
 
