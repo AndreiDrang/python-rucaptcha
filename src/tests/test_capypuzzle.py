@@ -145,7 +145,7 @@ class TestCapyPuzzle(CoreTest):
 
     @pytest.mark.parametrize("elements", [31, 33])
     @pytest.mark.parametrize("version", versions)
-    def test_failed_capypuzzle_key(self, elements, version):
+    def test_failed_capypuzzle_key_len(self, elements, version):
         with pytest.raises(ValueError):
             CapyPuzzle(
                 pageurl=self.pageurl,
@@ -159,7 +159,7 @@ class TestCapyPuzzle(CoreTest):
     @pytest.mark.asyncio
     @pytest.mark.parametrize("elements", [31, 33])
     @pytest.mark.parametrize("version", versions)
-    def test_aio_failed_capypuzzle_key(self, elements, version):
+    def test_aio_failed_capypuzzle_key_len(self, elements, version):
         with pytest.raises(ValueError):
             aioCapyPuzzle(
                 pageurl=self.pageurl,
@@ -169,3 +169,81 @@ class TestCapyPuzzle(CoreTest):
                 api_server=self.api_server,
                 version=version,
             )
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("version", versions)
+    async def test_aio_failed_capypuzzle_key(self, version):
+        instance = aioCapyPuzzle(
+            pageurl=self.pageurl,
+            captchakey=self.captchakey,
+            method=CapyPuzzleEnm.CAPY.value,
+            rucaptcha_key=self.get_random_string(32),
+            api_server=self.api_server,
+            version=version,
+        )
+        result = await instance.captcha_handler()
+
+        assert isinstance(result, dict) is True
+        assert result["error"] is True
+        assert result["taskId"].isnumeric()
+        assert result["errorBody"] == "ERROR_KEY_DOES_NOT_EXIST"
+        assert isinstance(result["captchaSolve"], dict) is True
+        assert result.keys() == ResponseSer().dict().keys()
+
+    @pytest.mark.parametrize("version", versions)
+    def test_failed_capypuzzle_key(self, version):
+        instance = CapyPuzzle(
+            pageurl=self.pageurl,
+            captchakey=self.captchakey,
+            method=CapyPuzzleEnm.CAPY.value,
+            rucaptcha_key=self.get_random_string(32),
+            api_server=self.api_server,
+            version=version,
+        )
+        result = instance.captcha_handler()
+
+        assert isinstance(result, dict) is True
+        assert result["error"] is True
+        assert result["taskId"].isnumeric()
+        assert result["errorBody"] == "ERROR_KEY_DOES_NOT_EXIST"
+        assert isinstance(result["captchaSolve"], dict) is True
+        assert result.keys() == ResponseSer().dict().keys()
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("version", versions)
+    async def test_context_aio_failed_capypuzzle_key(self, version):
+        async with aioCapyPuzzle(
+            pageurl=self.pageurl,
+            captchakey=self.captchakey,
+            method=CapyPuzzleEnm.CAPY.value,
+            rucaptcha_key=self.get_random_string(32),
+            api_server=self.api_server,
+            version=version,
+        ) as instance:
+            result = await instance.captcha_handler()
+
+        assert isinstance(result, dict) is True
+        assert result["error"] is True
+        assert result["taskId"].isnumeric()
+        assert result["errorBody"] == "ERROR_KEY_DOES_NOT_EXIST"
+        assert isinstance(result["captchaSolve"], dict) is True
+        assert result.keys() == ResponseSer().dict().keys()
+
+    @pytest.mark.parametrize("version", versions)
+    def test_context_failed_capypuzzle_key(self, version):
+        with CapyPuzzle(
+            pageurl=self.pageurl,
+            captchakey=self.captchakey,
+            method=CapyPuzzleEnm.CAPY.value,
+            rucaptcha_key=self.get_random_string(32),
+            api_server=self.api_server,
+            version=version,
+        ) as instance:
+            result = instance.captcha_handler()
+
+        assert isinstance(result, dict) is True
+        assert result["error"] is True
+        assert result["taskId"].isnumeric()
+        assert result["errorBody"] == "ERROR_KEY_DOES_NOT_EXIST"
+        assert isinstance(result["captchaSolve"], dict) is True
+        assert result.keys() == ResponseSer().dict().keys()

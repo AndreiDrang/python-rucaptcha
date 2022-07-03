@@ -4,7 +4,7 @@ from python_rucaptcha.enums import CapyPuzzleEnm
 from python_rucaptcha.CapyPuzzle import CapyPuzzle, aioCapyPuzzle
 
 # Rucaptcha API Key from your account
-RUCAPTCHA_KEY = "ad9053f31821111111111608fa758570"
+RUCAPTCHA_KEY = "ad911111111111ca81755768608fa758570"
 
 captchakey = "PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w"
 pageurl = "https://www.capy.me/account/register/"
