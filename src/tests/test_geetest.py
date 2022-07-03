@@ -1,3 +1,5 @@
+import logging
+
 import pytest
 
 from .conftest import CoreTest
@@ -38,7 +40,7 @@ class TestGeetest(CoreTest):
 
         assert isinstance(result, dict) is True
         assert result["error"] is True
-        assert isinstance(result["taskId"], int) is True
+        assert result["taskId"].isnumeric() is True
         assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
@@ -61,9 +63,10 @@ class TestGeetest(CoreTest):
 
         result = await instance.captcha_handler(challenge=self.challenge)
 
+        logging.warning(result)
         assert isinstance(result, dict) is True
         assert result["error"] is True
-        assert isinstance(result["taskId"], int) is True
+        assert result["taskId"].isnumeric() is True
         assert result.keys() == ResponseSer().dict().keys()
 
     """

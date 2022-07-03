@@ -1,3 +1,4 @@
+import logging
 from uuid import uuid4
 from typing import Union
 
@@ -184,6 +185,14 @@ class ServiceGetResponseSer(BaseModel):
 class ResponseSer(BaseModel):
     serverAnswer: dict = {}
     captchaSolve: dict = {}
-    taskId: int = 0
+    taskId: int = None
     error: bool = False
     errorBody: str = None
+
+    @validator("taskId", pre=True, always=True)
+    def dt_check(cls, value):
+        logging.warning(value)
+        logging.warning(type(value))
+        if value:
+            value = int(value)
+        return value
