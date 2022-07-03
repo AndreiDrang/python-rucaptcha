@@ -33,7 +33,7 @@ class TestFuncaptcha(CoreTest):
 
         assert isinstance(result, dict) is True
         assert result["error"] is False
-        assert result["taskId"].isnumeric()
+        assert isinstance(result["taskId"], int) is True
         assert result["errorBody"] is None
         assert isinstance(result["captchaSolve"], dict) is True
         assert result.keys() == ResponseSer().dict().keys()
@@ -57,7 +57,7 @@ class TestFuncaptcha(CoreTest):
 
         assert isinstance(result, dict) is True
         assert result["error"] is False
-        assert result["taskId"].isnumeric()
+        assert isinstance(result["taskId"], int) is True
         assert result["errorBody"] is None
         assert isinstance(result["captchaSolve"], dict) is True
         assert result.keys() == ResponseSer().dict().keys()
@@ -80,7 +80,7 @@ class TestFuncaptcha(CoreTest):
 
         assert isinstance(result, dict) is True
         assert result["error"] is False
-        assert result["taskId"].isnumeric()
+        assert isinstance(result["taskId"], int) is True
         assert result["errorBody"] is None
         assert isinstance(result["captchaSolve"], dict) is True
         assert result.keys() == ResponseSer().dict().keys()
@@ -104,7 +104,7 @@ class TestFuncaptcha(CoreTest):
 
         assert isinstance(result, dict) is True
         assert result["error"] is False
-        assert result["taskId"].isnumeric()
+        assert isinstance(result["taskId"], int) is True
         assert result["errorBody"] is None
         assert isinstance(result["captchaSolve"], dict) is True
         assert result.keys() == ResponseSer().dict().keys()
@@ -170,7 +170,7 @@ class TestFuncaptcha(CoreTest):
 
         assert isinstance(result, dict) is True
         assert result["error"] is True
-        assert result["taskId"].isnumeric()
+        assert isinstance(result["taskId"], int) is True
         assert result["errorBody"] == "ERROR_KEY_DOES_NOT_EXIST"
         assert isinstance(result["captchaSolve"], dict) is True
         assert result.keys() == ResponseSer().dict().keys()
@@ -187,7 +187,7 @@ class TestFuncaptcha(CoreTest):
 
         assert isinstance(result, dict) is True
         assert result["error"] is True
-        assert result["taskId"].isnumeric()
+        assert isinstance(result["taskId"], int) is True
         assert result["errorBody"] == "ERROR_KEY_DOES_NOT_EXIST"
         assert isinstance(result["captchaSolve"], dict) is True
         assert result.keys() == ResponseSer().dict().keys()
@@ -205,7 +205,7 @@ class TestFuncaptcha(CoreTest):
 
         assert isinstance(result, dict) is True
         assert result["error"] is True
-        assert result["taskId"].isnumeric()
+        assert isinstance(result["taskId"], int) is True
         assert result["errorBody"] == "ERROR_KEY_DOES_NOT_EXIST"
         assert isinstance(result["captchaSolve"], dict) is True
         assert result.keys() == ResponseSer().dict().keys()
@@ -222,7 +222,7 @@ class TestFuncaptcha(CoreTest):
 
         assert isinstance(result, dict) is True
         assert result["error"] is True
-        assert result["taskId"].isnumeric()
+        assert isinstance(result["taskId"], int) is True
         assert result["errorBody"] == "ERROR_KEY_DOES_NOT_EXIST"
         assert isinstance(result["captchaSolve"], dict) is True
         assert result.keys() == ResponseSer().dict().keys()
@@ -240,7 +240,7 @@ class TestFuncaptcha(CoreTest):
 
         assert isinstance(result, dict) is True
         assert result["error"] is True
-        assert result["taskId"].isnumeric()
+        assert isinstance(result["taskId"], int) is True
         assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert isinstance(result["captchaSolve"], dict) is True
         assert result.keys() == ResponseSer().dict().keys()
@@ -257,7 +257,7 @@ class TestFuncaptcha(CoreTest):
 
         assert isinstance(result, dict) is True
         assert result["error"] is True
-        assert result["taskId"].isnumeric()
+        assert isinstance(result["taskId"], int) is True
         assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert isinstance(result["captchaSolve"], dict) is True
         assert result.keys() == ResponseSer().dict().keys()
@@ -275,7 +275,7 @@ class TestFuncaptcha(CoreTest):
 
         assert isinstance(result, dict) is True
         assert result["error"] is True
-        assert result["taskId"].isnumeric()
+        assert isinstance(result["taskId"], int) is True
         assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert isinstance(result["captchaSolve"], dict) is True
         assert result.keys() == ResponseSer().dict().keys()
@@ -292,7 +292,7 @@ class TestFuncaptcha(CoreTest):
 
         assert isinstance(result, dict) is True
         assert result["error"] is True
-        assert result["taskId"].isnumeric()
+        assert isinstance(result["taskId"], int) is True
         assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert isinstance(result["captchaSolve"], dict) is True
         assert result.keys() == ResponseSer().dict().keys()

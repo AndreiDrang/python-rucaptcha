@@ -25,7 +25,8 @@ async def run():
             pageurl=pageurl,
             publickey=publickey,
             surl=surl,
-            method=FunCaptchaEnm.FUNCAPTCHA.value).captcha_handler()
+            method=FunCaptchaEnm.FUNCAPTCHA.value,
+        ).captcha_handler()
         print(result)
     except Exception as err:
         print(err)

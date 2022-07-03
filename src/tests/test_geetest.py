@@ -38,7 +38,7 @@ class TestGeetest(CoreTest):
 
         assert isinstance(result, dict) is True
         assert result["error"] is True
-        assert result["taskId"].isnumeric()
+        assert isinstance(result["taskId"], int) is True
         assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
@@ -63,7 +63,7 @@ class TestGeetest(CoreTest):
 
         assert isinstance(result, dict) is True
         assert result["error"] is True
-        assert result["taskId"].isnumeric()
+        assert isinstance(result["taskId"], int) is True
         assert result.keys() == ResponseSer().dict().keys()
 
     """
