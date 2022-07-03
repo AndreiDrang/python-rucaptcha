@@ -35,8 +35,10 @@ class TestCapyPuzzle(CoreTest):
         result = instance.captcha_handler()
 
         assert isinstance(result, dict) is True
-        assert result["error"] is True
+        assert result["error"] is False
         assert result["taskId"].isnumeric()
+        assert result["errorBody"] is None
+        assert isinstance(result["captchaSolve"], dict) is True
         assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
@@ -59,8 +61,10 @@ class TestCapyPuzzle(CoreTest):
         result = await instance.captcha_handler()
 
         assert isinstance(result, dict) is True
-        assert result["error"] is True
+        assert result["error"] is False
         assert result["taskId"].isnumeric()
+        assert result["errorBody"] is None
+        assert isinstance(result["captchaSolve"], dict) is True
         assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.parametrize("version", versions)
@@ -82,8 +86,10 @@ class TestCapyPuzzle(CoreTest):
             result = instance.captcha_handler()
 
             assert isinstance(result, dict) is True
-            assert result["error"] is True
+            assert result["error"] is False
             assert result["taskId"].isnumeric()
+            assert result["errorBody"] is None
+            assert isinstance(result["captchaSolve"], dict) is True
             assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
@@ -106,8 +112,10 @@ class TestCapyPuzzle(CoreTest):
             result = await instance.captcha_handler()
 
             assert isinstance(result, dict) is True
-            assert result["error"] is True
+            assert result["error"] is False
             assert result["taskId"].isnumeric()
+            assert result["errorBody"] is None
+            assert isinstance(result["captchaSolve"], dict) is True
             assert result.keys() == ResponseSer().dict().keys()
 
     """
@@ -135,6 +143,33 @@ class TestCapyPuzzle(CoreTest):
                 captchakey=self.captchakey,
                 method=self.get_random_string(5),
                 rucaptcha_key=self.RUCAPTCHA_KEY,
+                api_server=self.api_server,
+                version=version,
+            )
+
+    @pytest.mark.parametrize("elements", [31, 33])
+    @pytest.mark.parametrize("version", versions)
+    def test_failed_capypuzzle_key(self, elements, version):
+        with pytest.raises(ValueError):
+            CapyPuzzle(
+                pageurl=self.pageurl,
+                captchakey=self.captchakey,
+                method=CapyPuzzleEnm.CAPY.value,
+                rucaptcha_key=self.get_random_string(elements),
+                api_server=self.api_server,
+                version=version,
+            )
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("elements", [31, 33])
+    @pytest.mark.parametrize("version", versions)
+    def test_aio_failed_capypuzzle_key(self, elements, version):
+        with pytest.raises(ValueError):
+            aioCapyPuzzle(
+                pageurl=self.pageurl,
+                captchakey=self.captchakey,
+                method=CapyPuzzleEnm.CAPY.value,
+                rucaptcha_key=self.get_random_string(elements),
                 api_server=self.api_server,
                 version=version,
             )

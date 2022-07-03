@@ -1,4 +1,5 @@
 from uuid import uuid4
+from typing import Union
 
 from pydantic import Field, BaseModel, validator, root_validator
 
@@ -173,7 +174,7 @@ class ServicePostResponseSer(BaseModel):
 
 class ServiceGetResponseSer(BaseModel):
     status: int
-    request: str
+    request: Union[str, dict]
 
     # ReCaptcha V3 params
     user_check: str = ""
