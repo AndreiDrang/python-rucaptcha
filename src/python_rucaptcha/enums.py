@@ -33,3 +33,7 @@ class GeetestEnm(MyEnum):
 
 class CapyPuzzleEnm(MyEnum):
     CAPY = "capy"
+
+
+class FunCaptchaEnm(MyEnum):
+    FUNCAPTCHA = "funcaptcha"
