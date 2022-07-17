@@ -37,3 +37,7 @@ class CapyPuzzleEnm(MyEnum):
 
 class FunCaptchaEnm(MyEnum):
     FUNCAPTCHA = "funcaptcha"
+
+
+class ReCaptcha(MyEnum):
+    USER_RECAPTCHA = "userrecaptcha"

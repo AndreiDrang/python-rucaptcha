@@ -191,8 +191,6 @@ class ResponseSer(BaseModel):
 
     @validator("taskId", pre=True, always=True)
     def dt_check(cls, value):
-        logging.warning(value)
-        logging.warning(type(value))
         if value:
             value = int(value)
         return value
