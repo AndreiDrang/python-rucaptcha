@@ -6,7 +6,6 @@ class BaseLeminCroppedCaptcha(BaseCaptcha):
     def __init__(
         self,
         pageurl: str,
-        captchakey: str,
         captcha_id: str,
         div_id: str,
         method: str = LeminCroppedCaptchaEnm.LEMIN.value,
@@ -15,9 +14,7 @@ class BaseLeminCroppedCaptcha(BaseCaptcha):
     ):
         super().__init__(method=method, *args, **kwargs)
 
-        self.post_payload.update(
-            {"captchakey": captchakey, "pageurl": pageurl, "captcha_id": captcha_id, "div_id": div_id}
-        )
+        self.post_payload.update({"pageurl": pageurl, "captcha_id": captcha_id, "div_id": div_id})
 
         # check user params
         if method not in LeminCroppedCaptchaEnm.list_values():
@@ -38,7 +35,7 @@ class LeminCroppedCaptcha(BaseLeminCroppedCaptcha):
         :param kwargs: Parameters for the `requests` library
         :return: Response to captcha as JSON string with fields:
                  captchaSolve - captcha solution,
-                 taskId - finds the Id of the task to solve the captcha,
+                 taskId - finds the ID of the task to solve the captcha,
                  error - False - if everything is fine, True - if there is an error,
                  errorBody - error name
         """
