@@ -45,3 +45,7 @@ class ReCaptchaEnm(MyEnum):
 
 class LeminCroppedCaptchaEnm(MyEnum):
     LEMIN = "lemin"
+
+
+class HCaptchaEnm(MyEnum):
+    HCAPTCHA = "hcaptcha"
