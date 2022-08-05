@@ -1,24 +1,35 @@
 from .base import BaseCaptcha
-from .enums import ReCaptchaEnm
+from .enums import LeminCroppedCaptchaEnm
 
 
-class BaseReCaptchaV2(BaseCaptcha):
-    def __init__(self, pageurl: str, googlekey: str, method: str = ReCaptchaEnm.USER_RECAPTCHA.value, *args, **kwargs):
+class BaseLeminCroppedCaptcha(BaseCaptcha):
+    def __init__(
+        self,
+        pageurl: str,
+        captchakey: str,
+        captcha_id: str,
+        div_id: str,
+        method: str = LeminCroppedCaptchaEnm.LEMIN.value,
+        *args,
+        **kwargs,
+    ):
         super().__init__(method=method, *args, **kwargs)
 
-        self.post_payload.update({"googlekey": googlekey, "pageurl": pageurl})
+        self.post_payload.update(
+            {"captchakey": captchakey, "pageurl": pageurl, "captcha_id": captcha_id, "div_id": div_id}
+        )
 
         # check user params
-        if method not in ReCaptchaEnm.list_values():
-            raise ValueError(f"Invalid method parameter set, available - {ReCaptchaEnm.list_values()}")
+        if method not in LeminCroppedCaptchaEnm.list_values():
+            raise ValueError(f"Invalid method parameter set, available - {LeminCroppedCaptchaEnm.list_values()}")
 
 
-class ReCaptchaV2(BaseReCaptchaV2):
+class LeminCroppedCaptcha(BaseLeminCroppedCaptcha):
     """
-    The class is used to work with ReCaptchaV2.
+    The class is used to work with LeminCroppedCaptcha.
     Capy is a captcha in the form of a puzzle
     Solve description:
-        https://rucaptcha.com/api-rucaptcha#solving_recaptchav2_new
+        https://rucaptcha.com/api-rucaptcha#lemin
     """
 
     def captcha_handler(self, **kwargs):
@@ -35,12 +46,12 @@ class ReCaptchaV2(BaseReCaptchaV2):
         return self._processing_response(**kwargs)
 
 
-class aioReCaptchaV2(BaseReCaptchaV2):
+class aioLeminCroppedCaptcha(BaseLeminCroppedCaptcha):
     """
-    Class for async solve ReCaptchaV2 captcha
+    Class for async solve LeminCroppedCaptcha captcha
     Capy is a captcha in the form of a puzzle
     Solve description:
-        https://rucaptcha.com/api-rucaptcha#solving_recaptchav2_new
+        https://rucaptcha.com/api-rucaptcha#lemin
     """
 
     async def captcha_handler(self):

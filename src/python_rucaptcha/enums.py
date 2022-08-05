@@ -39,5 +39,9 @@ class FunCaptchaEnm(MyEnum):
     FUNCAPTCHA = "funcaptcha"
 
 
-class ReCaptcha(MyEnum):
+class ReCaptchaEnm(MyEnum):
     USER_RECAPTCHA = "userrecaptcha"
+
+
+class LeminCroppedCaptchaEnm(MyEnum):
+    LEMIN = "lemin"
