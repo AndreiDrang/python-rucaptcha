@@ -49,3 +49,7 @@ class LeminCroppedCaptchaEnm(MyEnum):
 
 class HCaptchaEnm(MyEnum):
     HCAPTCHA = "hcaptcha"
+
+
+class KeyCaptchaEnm(MyEnum):
+    KEYCAPTCHA = "keycaptcha"
