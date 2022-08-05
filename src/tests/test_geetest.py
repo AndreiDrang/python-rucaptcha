@@ -117,7 +117,8 @@ class TestGeetest(CoreTest):
             await instance.captcha_handler()
 
     @pytest.mark.parametrize(
-        "method_param", [[GeetestEnm.GEETEST.value, {"gt": None}], [GeetestEnm.GEETEST_V4.value, {"captcha_id": None}]]
+        "method_param",
+        [[GeetestEnm.GEETEST.value, {"gt": None}], [GeetestEnm.GEETEST_V4.value, {"captcha_id": None}]],
     )
     def test_failed_geetest_method_params(self, method_param):
         with pytest.raises(ValueError):
