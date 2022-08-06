@@ -114,6 +114,7 @@ class GetRequestSer(BaseModel):
 class CaptchaOptionsSer(BaseModel):
     rucaptcha_key: str
     method: str
+    action: str
     sleep_time: int = 10
     service_type: str = enums.ServicesEnm.TWOCAPTCHA.value
 

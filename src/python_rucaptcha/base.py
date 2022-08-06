@@ -22,7 +22,9 @@ class BaseCaptcha:
         **kwargs,
     ):
         """
-        :param rucaptcha_key:  АПИ ключ капчи из кабинета пользователя
+        :param rucaptcha_key: User API key
+        :param method: Captcha type
+        :param action: Server action
         :param sleep_time: Вермя ожидания решения капчи
         :param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
                              и "rucaptcha"
