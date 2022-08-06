@@ -12,7 +12,7 @@ s_s_c_web_server_sign = "02f7f9669f1269595c4c69bcd4a3c52e"
 s_s_c_web_server_sign2 = "d888700f6f324ec0f32b44c32c50bde1"
 pageurl = "https://rucaptcha.com/demo/keycaptcha"
 
-lemin_captcha = KeyCaptcha(
+key_captcha = KeyCaptcha(
     rucaptcha_key=RUCAPTCHA_KEY,
     pageurl=pageurl,
     s_s_c_user_id=s_s_c_user_id,
@@ -21,14 +21,14 @@ lemin_captcha = KeyCaptcha(
     s_s_c_web_server_sign2=s_s_c_web_server_sign2,
     method=KeyCaptchaEnm.KEYCAPTCHA.value,
 )
-result = lemin_captcha.captcha_handler()
+result = key_captcha.captcha_handler()
 
 print(result)
 
 
 async def run():
     try:
-        lemin_captcha = await aioKeyCaptcha(
+        key_captcha = await aioKeyCaptcha(
             rucaptcha_key=RUCAPTCHA_KEY,
             pageurl=pageurl,
             s_s_c_user_id=s_s_c_user_id,
@@ -37,7 +37,7 @@ async def run():
             s_s_c_web_server_sign2=s_s_c_web_server_sign2,
             method=KeyCaptchaEnm.KEYCAPTCHA.value,
         ).captcha_handler()
-        print(lemin_captcha)
+        print(key_captcha)
     except Exception as err:
         print(err)
 
