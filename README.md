@@ -126,10 +126,11 @@ elif answer['error']:
 	print(answer['errorBody'])
 ``` 
 
-3. [Решение ReCaptcha v2.](src/python_rucaptcha/ReCaptchaV2.py)
+3. [Решение ReCaptcha v2.](src/python_rucaptcha/ReCaptcha.py)
 
 ```python
-from python_rucaptcha import ReCaptchaV2
+from python_rucaptcha import ReCaptcha
+
 # Введите ключ от сервиса RuCaptcha, из своего аккаунта
 RUCAPTCHA_KEY = ""
 # G-ReCaptcha ключ сайта
@@ -141,12 +142,12 @@ user_answer = ReCaptchaV2.ReCaptchaV2(rucaptcha_key=RUCAPTCHA_KEY).captcha_handl
                                                                                    page_url=PAGE_URL)
 
 if not user_answer['error']:
-	# решение капчи
-	print(user_answer['captchaSolve'])
-	print(user_answer['taskId'])
+    # решение капчи
+    print(user_answer['captchaSolve'])
+    print(user_answer['taskId'])
 elif user_answer['error']:
-	# Тело ошибки, если есть
-	print(user_answer ['errorBody'])
+    # Тело ошибки, если есть
+    print(user_answer['errorBody'])
 ```
 
 4. [Решение ReCaptcha v3.](src/python_rucaptcha/ReCaptchaV3.py)

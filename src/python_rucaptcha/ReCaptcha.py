@@ -2,7 +2,7 @@ from .base import BaseCaptcha
 from .enums import ReCaptchaEnm
 
 
-class BaseReCaptchaV2(BaseCaptcha):
+class BaseReCaptcha(BaseCaptcha):
     def __init__(self, pageurl: str, googlekey: str, method: str = ReCaptchaEnm.USER_RECAPTCHA.value, *args, **kwargs):
         super().__init__(method=method, *args, **kwargs)
 
@@ -13,12 +13,14 @@ class BaseReCaptchaV2(BaseCaptcha):
             raise ValueError(f"Invalid method parameter set, available - {ReCaptchaEnm.list_values()}")
 
 
-class ReCaptchaV2(BaseReCaptchaV2):
+class ReCaptcha(BaseReCaptcha):
     """
-    The class is used to work with ReCaptchaV2.
-    Capy is a captcha in the form of a puzzle
+    The class is used to work with ReCaptcha
     Solve description:
         https://rucaptcha.com/api-rucaptcha#solving_recaptchav2_new
+        https://rucaptcha.com/api-rucaptcha#invisible
+        https://rucaptcha.com/api-rucaptcha#solving_recaptchav3
+        https://rucaptcha.com/api-rucaptcha#solving_recaptcha_enterprise
     """
 
     def captcha_handler(self, **kwargs):
@@ -35,12 +37,14 @@ class ReCaptchaV2(BaseReCaptchaV2):
         return self._processing_response(**kwargs)
 
 
-class aioReCaptchaV2(BaseReCaptchaV2):
+class aioReCaptcha(BaseReCaptcha):
     """
-    Class for async solve ReCaptchaV2 captcha
-    Capy is a captcha in the form of a puzzle
+    The class is used to async work with ReCaptcha
     Solve description:
         https://rucaptcha.com/api-rucaptcha#solving_recaptchav2_new
+        https://rucaptcha.com/api-rucaptcha#invisible
+        https://rucaptcha.com/api-rucaptcha#solving_recaptchav3
+        https://rucaptcha.com/api-rucaptcha#solving_recaptcha_enterprise
     """
 
     async def captcha_handler(self):
