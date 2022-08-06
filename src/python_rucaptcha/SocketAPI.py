@@ -1,14 +1,4 @@
-import ssl
-import logging
-
-import websockets
-from tenacity import retry, after_log, wait_fixed, stop_after_attempt
-from websockets.client import WebSocketClientProtocol
-
-from .base import BaseCaptcha
-from .serializer import SockAuthSer, SocketResponse
-
-
+'''
 class WebSocketRuCaptcha(BaseCaptcha):
     def __init__(self, allSessions: bool = False, suppressSuccess: bool = True):
         """
@@ -111,3 +101,4 @@ class WebSocketRuCaptcha(BaseCaptcha):
         else:
             await self.__socket_session_close()
             return self.auth_result.dict(exclude_none=True)
+'''
