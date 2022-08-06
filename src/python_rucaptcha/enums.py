@@ -59,6 +59,10 @@ class RotateCaptchaEnm(MyEnum):
     ROTATECAPTCHA = "rotatecaptcha"
 
 
+class TikTokCaptchaEnm(MyEnum):
+    TIKTOK = "tiktok"
+
+
 class CaptchaControlEnm(MyEnum):
     # default
     GET = "get"
