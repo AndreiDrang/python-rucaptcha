@@ -57,3 +57,20 @@ class KeyCaptchaEnm(MyEnum):
 
 class RotateCaptchaEnm(MyEnum):
     ROTATECAPTCHA = "rotatecaptcha"
+
+
+class CaptchaControlEnm(MyEnum):
+    # default
+    GET = "get"
+    # https://rucaptcha.com/api-rucaptcha#manage_pingback
+    ADD_PINGBACK = "add_pingback"
+    GET_PINGBACK = "get_pingback"
+    DEL_PINGBACK = "del_pingback"
+
+    # https://rucaptcha.com/api-rucaptcha#additional
+    GETBALANCE = "getbalance"
+    GET2 = "get2"
+
+    # https://rucaptcha.com/api-rucaptcha#complain
+    REPORTGOOD = "reportgood"
+    REPORTBAD = "reportbad"

@@ -1,7 +1,7 @@
 import requests
 import CallbackClient
 
-from python_rucaptcha import TextCaptcha, RuCaptchaControl
+from python_rucaptcha import TextCaptcha
 
 """
 Этот пример показывает то как нужно работать с модулем для решения текстовых капч
@@ -89,7 +89,7 @@ answer = requests.post(
 
 # если очередь зарегистрирована
 if answer.text == "OK":
-    # IP адрес должен быть ЗАРАНЕЕ зарегистрирован в системе (подробонсти смотри в `CaptchaTester/rucaptcha_control_example.py`)
+    # IP адрес должен быть ЗАРАНЕЕ зарегистрирован в системе (подробонсти смотри в `CaptchaTester/captcha_control_example.py`)
     # создаём задание на сервере, ответ на которое придёт на заданный pingback URL в виде POST запроса
     task_creation_answer = TextCaptcha.TextCaptcha(
         rucaptcha_key=RUCAPTCHA_KEY,
