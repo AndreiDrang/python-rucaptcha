@@ -53,3 +53,7 @@ class HCaptchaEnm(MyEnum):
 
 class KeyCaptchaEnm(MyEnum):
     KEYCAPTCHA = "keycaptcha"
+
+
+class RotateCaptchaEnm(MyEnum):
+    ROTATECAPTCHA = "rotatecaptcha"

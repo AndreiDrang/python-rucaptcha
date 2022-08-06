@@ -27,7 +27,7 @@ class CapyPuzzle(BaseCapyPuzzle):
         :param kwargs: Parameters for the `requests` library
         :return: Response to captcha as JSON string with fields:
                  captchaSolve - captcha solution,
-                 taskId - finds the Id of the task to solve the captcha,
+                 taskId - finds the ID of the task to solve the captcha,
                  error - False - if everything is fine, True - if there is an error,
                  errorBody - error name
         """
@@ -48,7 +48,7 @@ class aioCapyPuzzle(BaseCapyPuzzle):
         The method is responsible for sending data to the server to solve the captcha
         :return: Response to captcha as JSON string with fields:
                  captchaSolve - captcha solution,
-                 taskId - finds the Id of the task to solve the captcha,
+                 taskId - finds the ID of the task to solve the captcha,
                  error - False - if everything is fine, True - if there is an error,
                  errorBody - error name
         """
