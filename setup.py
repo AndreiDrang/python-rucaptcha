@@ -12,7 +12,7 @@ URL = "https://github.com/AndreiDrang/python-rucaptcha"
 EMAIL = "drang.andray@gmail.com"
 AUTHOR = "AndreiDrang, redV0ID"
 REQUIRES_PYTHON = ">=3.6.0"
-VERSION = "4.0"
+VERSION = "4.0.a"
 
 here = os.path.abspath(os.path.dirname(__file__))
 
