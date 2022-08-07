@@ -11,9 +11,9 @@ refactor:
 				--remove-duplicate-keys \
 				--remove-all-unused-imports \
 				--ignore-init-module-imports \
-				src/
-	black src/
-	isort src/
+				src/ setup.py
+	black src/ setup.py
+	isort src/ setup.py
 
 lint:
 	autoflake --in-place --recursive src/ --check
