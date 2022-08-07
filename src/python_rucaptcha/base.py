@@ -94,17 +94,15 @@ class BaseCaptcha:
         """
         return self.session.get(url=url, **kwargs)
 
-    async def aio_url_open(self, url: str, **kwargs):
+    async def aio_url_read(self, url: str, **kwargs) -> bytes:
         """
-        Async method open links
+        Async method read bytes from link
         """
         async with aiohttp.ClientSession() as session:
             async for attempt in ASYNC_RETRIES:
                 with attempt:
                     async with session.get(url=url, **kwargs) as resp:
-                        return resp
-
-        return self.session.get(url=url, **kwargs)
+                        return await resp.content.read()
 
     async def _aio_processing_response(self) -> dict:
         """

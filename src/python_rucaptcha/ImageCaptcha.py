@@ -175,8 +175,7 @@ class aioImageCaptcha(BaseImageCaptcha):
         # if a URL is passed
         elif captcha_link:
             try:
-                result = await self.aio_url_open(url=captcha_link, **kwargs)
-                content = await result.content.read()
+                content = await self.aio_url_read(url=captcha_link, **kwargs)
             except Exception as error:
                 self.result.error = True
                 self.result.errorBody = error
@@ -193,7 +192,7 @@ class aioImageCaptcha(BaseImageCaptcha):
             self.result.errorBody = "You did not send any file, local link or URL."
             return self.result.dict(exclude_none=True)
 
-        return self._processing_response(**kwargs)
+        return await self._aio_processing_response()
 
     def __del__(self):
         if self.save_format == SaveFormatsEnm.CONST.value and self.img_clearing:
