@@ -60,15 +60,13 @@ class ImageCaptcha(BaseImageCaptcha):
         with open(os.path.join(self.img_path, self._image_name), "wb") as out_image:
             out_image.write(content)
 
-    def __local_image_captcha(
-        self,
-        content: str,
-    ):
+    @staticmethod
+    def __local_image_captcha(captcha_file: str):
         """
         Method get local image, read it and prepare for sending to Captcha solving service
         """
-        with open(content, "rb") as captcha_image:
-            return captcha_image.read()
+        with open(captcha_file, "rb") as file:
+            return file.read()
 
     def captcha_handler(
         self,
@@ -91,7 +89,9 @@ class ImageCaptcha(BaseImageCaptcha):
         """
         # if a local file link is passed
         if captcha_file:
-            self.__local_image_captcha(captcha_file)
+            self.post_payload.update(
+                {"body": base64.b64encode(self.__local_image_captcha(captcha_file)).decode("utf-8")}
+            )
         # if the file is transferred in base64 encoding
         elif captcha_base64:
             self.post_payload.update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
