@@ -31,6 +31,10 @@ class GeetestEnm(MyEnum):
     GEETEST_V4 = "geetest_v4"
 
 
+class ImageCaptchaEnm(MyEnum):
+    BASE64 = "base64"
+
+
 class CapyPuzzleEnm(MyEnum):
     CAPY = "capy"
 

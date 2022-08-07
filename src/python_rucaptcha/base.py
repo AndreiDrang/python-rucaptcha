@@ -94,6 +94,18 @@ class BaseCaptcha:
         """
         return self.session.get(url=url, **kwargs)
 
+    async def aio_url_open(self, url: str, **kwargs):
+        """
+        Async method open links
+        """
+        async with aiohttp.ClientSession() as session:
+            async for attempt in ASYNC_RETRIES:
+                with attempt:
+                    async with session.get(url=url, **kwargs) as resp:
+                        return resp
+
+        return self.session.get(url=url, **kwargs)
+
     async def _aio_processing_response(self) -> dict:
         """
         Method processing async captcha solving task creation result
