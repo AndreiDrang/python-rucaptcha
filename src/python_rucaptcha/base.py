@@ -25,9 +25,9 @@ class BaseCaptcha:
         :param rucaptcha_key: User API key
         :param method: Captcha type
         :param action: Server action
-        :param sleep_time: Вермя ожидания решения капчи
-        :param service_type: URL с которым будет работать программа, возможен вариант "2captcha"(стандартный)
-                             и "rucaptcha"
+        :param sleep_time: Time to wait for captcha solution
+        :param service_type: URL with which the program will work, "2captcha" option is possible (standard)
+                              and "rucaptcha"
         :param kwargs: Designed to pass OPTIONAL parameters to the payload for a request to RuCaptcha
         """
         # assign args to validator
