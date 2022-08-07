@@ -106,20 +106,21 @@ setup(
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
         "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
         "Programming Language :: Python",
-        "Programming Language :: Python:: 3",
-        "Programming Language :: Python:: 3:: Only",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3 :: Only",
         "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python:: 3.7",
-        "Programming Language :: Python:: 3.8",
-        "Programming Language :: Python:: 3.9",
-        "Programming Language :: Python:: 3.10",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Development Status :: 5 - Production/Stable",
         "Framework :: AsyncIO",
         "Operating System :: Unix",
         "Operating System :: Microsoft :: Windows",
         "Operating System :: MacOS",
     ],
-    # Build and upload package: `python3 setup.py upload`
+    # Build - `python setup.py bdist_wheel`
+    # Upload package: `python3 setup.py upload`
     cmdclass={"upload": UploadCommand},
 )
 print("🤖 Success install ...")
