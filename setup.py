@@ -3,7 +3,7 @@ import os
 import sys
 from shutil import rmtree
 
-from setuptools import setup, Command
+from setuptools import Command, setup
 
 # Package meta-data.
 NAME = "python-rucaptcha"
@@ -12,8 +12,7 @@ URL = "https://github.com/AndreiDrang/python-rucaptcha"
 EMAIL = "drang.andray@gmail.com"
 AUTHOR = "AndreiDrang, redV0ID"
 REQUIRES_PYTHON = ">=3.6.0"
-VERSION = "3.0.1"
-REQUIRED = ["requests>=2.21.0", "aiohttp>=3.7.4", "pika==1.*"]
+VERSION = "4.0"
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -77,13 +76,20 @@ setup(
     license="AGPL-3.0",
     keywords="""
                 captcha 
-				rucaptcha 
+				rucaptcha
+				2captcha
+				recaptcha
+				geetest
+				hcaptcha
+				capypuzzle
+				tiktok
+				rotatecaptcha
+				funcaptcha
+				keycaptcha
 				python3
-				flask
 				recaptcha
 				captcha
 				security
-				api
 				python-library
 				python-rucaptcha
 				rucaptcha-client

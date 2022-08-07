@@ -5,10 +5,25 @@ remove:
 	pip uninstall python_rucaptcha -y
 
 refactor:
-	pip install black isort
-	black python_rucaptcha/ examples/
-	isort -rc python_rucaptcha/
+	autoflake --in-place \
+				--recursive \
+				--remove-unused-variables \
+				--remove-duplicate-keys \
+				--remove-all-unused-imports \
+				--ignore-init-module-imports \
+				src/
+	black src/
+	isort src/
+
+lint:
+	autoflake --in-place --recursive src/ --check
+	black src/ --check
+	isort src/ --check-only
 
 upload:
 	pip install twine
 	python setup.py upload
+
+tests:
+	coverage run --rcfile=.coveragerc -m pytest -vv --disable-warnings
+	coverage report --precision=3 --sort=cover -m
