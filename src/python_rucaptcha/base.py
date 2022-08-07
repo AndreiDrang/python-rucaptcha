@@ -88,6 +88,12 @@ class BaseCaptcha:
             result=self.result,
         )
 
+    def url_open(self, url: str, **kwargs):
+        """
+        Method open links
+        """
+        return self.session.get(url=url, **kwargs)
+
     async def _aio_processing_response(self) -> dict:
         """
         Method processing async captcha solving task creation result

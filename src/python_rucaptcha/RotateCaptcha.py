@@ -35,7 +35,7 @@ class RotateCaptcha(BaseRotateCaptcha):
         """
         # if user send link - download file
         if "http" in captcha_link:
-            content: bytes = self.session.get(captcha_link).content
+            content: bytes = self.url_open(url=captcha_link, **kwargs).content
         # is user send file path - read ir
         else:
             with open(captcha_link, "rb") as captcha_image:
