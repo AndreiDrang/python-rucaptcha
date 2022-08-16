@@ -42,9 +42,8 @@ Geetest 4 example
 gt = GeeTest(
     rucaptcha_key=RUCAPTCHA_KEY,
     method=GeetestEnm.GEETEST_V4.value,
-    pageurl="https://www.site.com/page/",
-    captcha_id="f1ab2cdefa3456789012345b6c78d90e",
-    api_server="api-na.geetest.com",
+    pageurl="https://rucaptcha.com/demo/geetest-v4",
+    captcha_id="e392e1d7fd421dc63325744d5a2b9c73",
 )
 
 print(gt.captcha_handler())
@@ -54,9 +53,8 @@ async def run():
     gt = aioGeeTest(
         rucaptcha_key=RUCAPTCHA_KEY,
         method=GeetestEnm.GEETEST_V4.value,
-        pageurl="https://www.site.com/page/",
-        captcha_id="f1ab2cdefa3456789012345b6c78d90e",
-        api_server="api-na.geetest.com",
+        pageurl="https://rucaptcha.com/demo/geetest-v4",
+        captcha_id="e392e1d7fd421dc63325744d5a2b9c73",
     )
     result = await gt.captcha_handler()
     print(result)
