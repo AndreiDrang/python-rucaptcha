@@ -82,3 +82,7 @@ class CaptchaControlEnm(MyEnum):
     # https://rucaptcha.com/api-rucaptcha#complain
     REPORTGOOD = "reportgood"
     REPORTBAD = "reportbad"
+
+
+class YandexSmartCaptchaEnm(MyEnum):
+    YANDEX = "yandex"

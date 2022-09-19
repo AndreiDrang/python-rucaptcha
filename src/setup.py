@@ -13,7 +13,7 @@ URL = "https://github.com/AndreiDrang/python-rucaptcha"
 EMAIL = "drang.andray@gmail.com"
 AUTHOR = "AndreiDrang, redV0ID"
 REQUIRES_PYTHON = ">=3.6.0"
-VERSION = "4.1"
+VERSION = "4.2"
 with open("requirements.txt", "rt") as requirements_txt:
     REQUIRED = [str(requirement) for requirement in parse_requirements(requirements_txt)]
 

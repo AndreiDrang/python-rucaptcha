@@ -38,6 +38,10 @@ v.4.0 - Переработка классов и методов. Добавле�
 
 v.4.0 - Reworking of classes and methods. Adding `TikTok` captcha. Adding inheritances and serializers. `Callback-server` - deprecated.
 
+v.4.2 - Добавлена [Yandex Smart Captcha](https://rucaptcha.com/api-rucaptcha#yandex).
+
+v.4.2 - Added [Yandex Smart Captcha](https://rucaptcha.com/api-rucaptcha#yandex).
+
 ***
 
 ## [All examples. Все примеры работы с бибилиотекой](src/examples)
