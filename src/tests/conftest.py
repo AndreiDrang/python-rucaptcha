@@ -1,8 +1,14 @@
 import os
+import time
 import random
 import string
 
+@pytest.fixture(scope="class")
+def delay():
+    asyncio.sleep(300)
 
+
+@pytest.mark.usefixtures("delay")
 class CoreTest:
     RUCAPTCHA_KEY = os.getenv("RUCAPTCHA_KEY", "ad9053f3182ca81755768608fa758570")
 
