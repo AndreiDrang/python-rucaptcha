@@ -2,6 +2,7 @@ import os
 import time
 import random
 import string
+import pytest
 
 @pytest.fixture(scope="class")
 def delay():
