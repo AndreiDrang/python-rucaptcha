@@ -6,7 +6,7 @@ import pytest
 
 @pytest.fixture(scope="class")
 def delay():
-    asyncio.sleep(300)
+    time.sleep(300)
 
 
 @pytest.mark.usefixtures("delay")
