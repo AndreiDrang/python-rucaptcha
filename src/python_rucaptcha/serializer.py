@@ -1,7 +1,7 @@
 from uuid import uuid4
 from typing import Union
 
-from pydantic import Field, BaseModel, validator, root_validator
+from pydantic import Field, BaseModel, validator, root_validator, conint, constr
 
 from . import enums
 from .config import APP_KEY
@@ -14,26 +14,14 @@ Socket API Serializers
 class CaptchaOptionsSocketSer(BaseModel):
     phrase: bool = False
     caseSensitive: bool = False
-    numeric: int = 0
+    numeric: conint(ge=1, le=4) = 0
     calc: bool = False
-    minLen: int = 0
-    maxLen: int = 0
+    minLen: conint(ge=0, le=20) = 0
+    maxLen: conint(ge=0, le=20) = 0
     lang: str = ""
-    hintText: str = ""
+    hintText: constr(max_length=139) = ""
     hintImg: str = ""
     softId: str = "1899"
-
-    @validator("numeric")
-    def numeric_check(cls, value):
-        if value not in range(1, 5):
-            raise ValueError("Invalid `numeric` param value")
-        return value
-
-    @validator("minLen", "maxLen")
-    def len_check(cls, value):
-        if value not in range(0, 21):
-            raise ValueError("Invalid `minLen \ maxLen` param value")
-        return value
 
     @validator("hintText")
     def hint_text_check(cls, value):
@@ -112,10 +100,10 @@ class GetRequestSer(BaseModel):
 
 
 class CaptchaOptionsSer(BaseModel):
-    rucaptcha_key: str
+    rucaptcha_key: constr(min_length=32, max_length=32)
     method: str
     action: str
-    sleep_time: int = 10
+    sleep_time: conint(gt=5) = 10
     service_type: str = enums.ServicesEnm.TWOCAPTCHA.value
 
     # CaptchaImage
@@ -125,26 +113,6 @@ class CaptchaOptionsSer(BaseModel):
 
     url_request: str = ""
     url_response: str = ""
-
-    @validator("rucaptcha_key")
-    def len_check(cls, value):
-        if len(value) != 32:
-            raise ValueError("ERROR_WRONG_USER_KEY")
-        return value
-
-    @validator("sleep_time")
-    def sleep_time_check(cls, value):
-        if value < 5:
-            raise ValueError("Too little sleep time")
-        return value
-
-    """@validator("save_format")
-    def save_format_check(cls, value):
-        if value not in enums.SaveFormatsEnm.list_values():
-            raise ValueError(
-                f"Invalid `save_format`, valid params - {','.join(enums.SaveFormatsEnm.list_values())}, send - {value}"
-            )
-        return value"""
 
     @validator("service_type")
     def service_type_check(cls, value):
