@@ -98,6 +98,7 @@ setup(
 				python-library
 				python-rucaptcha
 				rucaptcha-client
+				yandex
                """,
     python_requires=REQUIRES_PYTHON,
     zip_safe=False,
