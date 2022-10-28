@@ -2,11 +2,13 @@ import os
 import time
 import random
 import string
+
 import pytest
 
-@pytest.fixture(scope="class")
+
+@pytest.fixture(scope="function")
 def delay():
-    time.sleep(300)
+    time.sleep(60)
 
 
 @pytest.mark.usefixtures("delay")
