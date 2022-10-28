@@ -10,7 +10,7 @@ from pkg_resources import parse_requirements
 NAME = "python-rucaptcha"
 DESCRIPTION = "Python 3.6+ RuCaptcha library with AIO module."
 URL = "https://github.com/AndreiDrang/python-rucaptcha"
-EMAIL = "drang.andray@gmail.com"
+EMAIL = "python-captcha@pm.me"
 AUTHOR = "AndreiDrang, redV0ID"
 REQUIRES_PYTHON = ">=3.6.0"
 VERSION = "4.2"
@@ -77,7 +77,7 @@ setup(
     include_package_data=True,
     py_modules=["python_rucaptcha"],
     url=URL,
-    license="AGPL-3.0",
+    license="MIT",
     keywords="""
                 captcha 
 				rucaptcha
@@ -105,7 +105,8 @@ setup(
     classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
-        "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3 :: Only",
