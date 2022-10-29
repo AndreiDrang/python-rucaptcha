@@ -1,7 +1,7 @@
 from uuid import uuid4
 from typing import Union
 
-from pydantic import Field, BaseModel, validator, root_validator, conint, constr
+from pydantic import Field, BaseModel, conint, constr, validator, root_validator
 
 from . import enums
 from .config import APP_KEY
