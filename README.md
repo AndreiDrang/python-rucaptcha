@@ -1,14 +1,27 @@
 # python-rucaptcha
 
+
+![](files/RuCaptcha.png)
+
 [![PyPI version](https://badge.fury.io/py/python-rucaptcha.svg)](https://badge.fury.io/py/python-rucaptcha)
-[![Maintainability](https://api.codeclimate.com/v1/badges/aec93bb04a277cf0dde9/maintainability)](https://codeclimate.com/github/AndreiDrang/python-rucaptcha/maintainability)
+[![Python versions](https://img.shields.io/pypi/pyversions/python-rucaptcha.svg?logo=python&logoColor=FBE072)](https://badge.fury.io/py/python-rucaptcha)
 [![Downloads](https://pepy.tech/badge/python-rucaptcha/month)](https://pepy.tech/project/python-rucaptcha)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/aec93bb04a277cf0dde9/maintainability)](https://codeclimate.com/github/AndreiDrang/python-rucaptcha/maintainability)
 
-The library is intended for software developers and serves to facilitate work with the RuCaptcha service API.
+Python3 library for [RuCaptcha](https://rucaptcha.com/) and [2Captcha](https://2captcha.com/) service API.
 
-If you have any questions, please write to [Telegram](https://t.me/pythoncaptcha) chat. 
-Or to [email](python-captcha@pm.me).
+Tested on UNIX based OS.
+
+The library is intended for software developers and is used to work with the [RuCaptcha](https://rucaptcha.com/) and [2Captcha](https://2captcha.com/) service API.
+
+***
+
+Application in [RuCaptcha software](https://rucaptcha.com/software/python-rucaptcha) and [2Captcha software](https://2captcha.com/software/python-rucaptcha).
+
+If you have any questions, please send a message to the [Telegram](https://t.me/pythoncaptcha) chat room.
+
+Or email python-captcha@pm.me
 
 ***
 
