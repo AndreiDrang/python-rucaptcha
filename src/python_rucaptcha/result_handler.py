@@ -4,7 +4,7 @@ import asyncio
 import aiohttp
 import requests
 
-from .config import connect_generator
+from .config import attempts_generator
 from .serializer import ResponseSer, ServiceGetResponseSer
 
 
@@ -41,8 +41,8 @@ def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, resul
     Function periodically send the SYNC request to service and wait for captcha solving result
     """
     # generator for repeated attempts to connect to the server
-    connect_gen = connect_generator()
-    while True:
+    attempts = attempts_generator()
+    for attempt in attempts:
         try:
             # send a request for the result of solving the captcha
             captcha_response = ServiceGetResponseSer(**requests.get(url_response, params=get_payload).json())
@@ -53,12 +53,9 @@ def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, resul
                 return result_processing(captcha_response, result)
 
         except Exception as error:
-            if next(connect_gen) < 4:
-                time.sleep(2)
-            else:
-                result.error = True
-                result.errorBody = error
-                return result.dict()
+            result.error = True
+            result.errorBody = error
+            return result.dict()
 
 
 async def get_async_result(get_payload: dict, sleep_time: int, url_response: str, result: ResponseSer) -> dict:
@@ -66,9 +63,9 @@ async def get_async_result(get_payload: dict, sleep_time: int, url_response: str
     Function periodically send the ASYNC request to service and wait for captcha solving result
     """
     # generator for repeated attempts to connect to the server
-    connect_gen = connect_generator()
+    attempts = attempts_generator()
     async with aiohttp.ClientSession() as session:
-        while True:
+        for attempt in attempts:
             try:
                 # send a request for the result of solving the captcha
                 async with session.get(url_response, params=get_payload, raise_for_status=True) as resp:
@@ -83,9 +80,6 @@ async def get_async_result(get_payload: dict, sleep_time: int, url_response: str
                         return result_processing(captcha_response, result)
 
             except Exception as error:
-                if next(connect_gen) < 4:
-                    await asyncio.sleep(2)
-                else:
-                    result.error = True
-                    result.errorBody = error
-                    return result.dict()
+                result.error = True
+                result.errorBody = error
+                return result.dict()
