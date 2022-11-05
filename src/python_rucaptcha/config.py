@@ -1,3 +1,5 @@
+from typing import Generator
+
 from tenacity import AsyncRetrying, wait_fixed, stop_after_attempt
 from requests.adapters import Retry
 
@@ -8,6 +10,15 @@ APP_KEY = "1899"
 
 
 # Connection retry generator
-def connect_generator():
-    for i in range(5):
+def attempts_generator(amount: int = 5):
+    """
+    Function generates a generator of length equal to `amount`
+
+    Args:
+        amount: number of attempts generated
+
+    Returns:
+        Attempt number
+    """
+    for i in range(1, amount):
         yield i
