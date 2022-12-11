@@ -1,10 +1,13 @@
 import io
 import os
 import sys
-from shutil import rmtree
+import shutil
+import logging
 
 from setuptools import Command, setup
 from pkg_resources import parse_requirements
+
+from python_rucaptcha.__version__ import __version__
 
 # Package meta-data.
 NAME = "python-rucaptcha"
@@ -13,7 +16,7 @@ URL = "https://github.com/AndreiDrang/python-rucaptcha"
 EMAIL = "python-captcha@pm.me"
 AUTHOR = "AndreiDrang, redV0ID"
 REQUIRES_PYTHON = ">=3.6.0"
-VERSION = "4.2"
+VERSION = __version__
 with open("requirements.txt", "rt") as requirements_txt:
     REQUIRED = [str(requirement) for requirement in parse_requirements(requirements_txt)]
 
@@ -47,19 +50,20 @@ class UploadCommand(Command):
         pass
 
     def run(self):
-        try:
-            self.status("Removing previous builds…")
-            rmtree(os.path.join(here, "dist"))
-        except OSError:
-            pass
+        logging.info("Clean builds . . .")
+        shutil.rmtree("dist/", ignore_errors=True)
 
-        self.status("Building Source and Wheel distribution…")
-        os.system("{0} setup.py sdist bdist_wheel".format(sys.executable))
+        logging.info("Building Source and Wheel distribution . . .")
+        os.system("python setup.py bdist_wheel")
 
-        self.status("Uploading the package to PyPI via Twine…")
-        os.system("twine upload dist/*")
+        logging.info("Uploading the package to PyPI via Twin . . .")
+        os.system("twine upload dist/* --verbose")
 
-        print("🤖 Uploaded ...")
+        logging.info("🤖 Uploaded . . .")
+
+        logging.info("Clean builds . . .")
+        shutil.rmtree("dist/")
+
         sys.exit()
 
 
@@ -111,7 +115,6 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",

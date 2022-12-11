@@ -22,7 +22,7 @@ lint:
 
 upload:
 	pip install twine
-	python setup.py upload
+	cd src/ && python setup.py upload
 
 tests:
 	coverage run --rcfile=.coveragerc -m pytest -vv --disable-warnings

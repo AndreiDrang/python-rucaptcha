@@ -3,9 +3,7 @@ from .enums import TurnstileCaptchaEnm
 
 
 class BaseTurnstile(BaseCaptcha):
-    def __init__(
-        self, pageurl: str, sitekey: str, method: str = TurnstileCaptchaEnm.TURNSTILE.value, *args, **kwargs
-    ):
+    def __init__(self, pageurl: str, sitekey: str, method: str = TurnstileCaptchaEnm.TURNSTILE.value, *args, **kwargs):
         super().__init__(method=method, *args, **kwargs)
 
         self.post_payload.update({"sitekey": sitekey, "pageurl": pageurl})
