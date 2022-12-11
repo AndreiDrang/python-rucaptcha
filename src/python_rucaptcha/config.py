@@ -1,5 +1,3 @@
-from typing import Generator
-
 from tenacity import AsyncRetrying, wait_fixed, stop_after_attempt
 from requests.adapters import Retry
 

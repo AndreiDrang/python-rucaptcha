@@ -99,6 +99,7 @@ setup(
 				python-rucaptcha
 				rucaptcha-client
 				yandex
+				turnstile
                """,
     python_requires=REQUIRES_PYTHON,
     zip_safe=False,

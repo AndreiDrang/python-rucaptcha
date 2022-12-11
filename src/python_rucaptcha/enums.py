@@ -86,3 +86,7 @@ class CaptchaControlEnm(MyEnum):
 
 class YandexSmartCaptchaEnm(MyEnum):
     YANDEX = "yandex"
+
+
+class TurnstileCaptchaEnm(MyEnum):
+    TURNSTILE = "turnstile"
