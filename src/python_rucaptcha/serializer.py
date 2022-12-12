@@ -85,7 +85,7 @@ HTTP API Serializers
 class PostRequestSer(BaseModel):
     key: str
     method: str
-    soft_id: str = APP_KEY
+    soft_id: str = Field(APP_KEY, const=True)
     field_json: int = Field(1, alias="json")
 
 
