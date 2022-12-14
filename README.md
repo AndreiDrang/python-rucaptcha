@@ -3,6 +3,7 @@
 
 ![](files/RuCaptcha.png)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a9f7361b29c54bc09189f34e8ed39a9b)](https://app.codacy.com/gh/AndreiDrang/python-rucaptcha?utm_source=github.com&utm_medium=referral&utm_content=AndreiDrang/python-rucaptcha&utm_campaign=Badge_Grade_Settings)
 [![PyPI version](https://badge.fury.io/py/python-rucaptcha.svg)](https://badge.fury.io/py/python-rucaptcha)
 [![Python versions](https://img.shields.io/pypi/pyversions/python-rucaptcha.svg?logo=python&logoColor=FBE072)](https://badge.fury.io/py/python-rucaptcha)
 [![Downloads](https://pepy.tech/badge/python-rucaptcha/month)](https://pepy.tech/project/python-rucaptcha)
