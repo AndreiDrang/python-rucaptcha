@@ -1,7 +1,7 @@
 import pytest
 
 from .conftest import CoreTest
-from ..python_rucaptcha.enums import FunCaptchaEnm
+from ..python_rucaptcha.core.enums import FunCaptchaEnm
 from ..python_rucaptcha.FunCaptcha import FunCaptcha, aioFunCaptcha
 from ..python_rucaptcha.serializer import ResponseSer
 

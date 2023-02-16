@@ -1,5 +1,5 @@
-from .base import BaseCaptcha
-from .enums import CapyPuzzleEnm
+from python_rucaptcha.core.base import BaseCaptcha
+from python_rucaptcha.core.enums import CapyPuzzleEnm
 
 
 class BaseCapyPuzzle(BaseCaptcha):

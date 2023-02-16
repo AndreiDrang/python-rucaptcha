@@ -2,8 +2,8 @@ import base64
 
 import aiohttp
 
-from .base import BaseCaptcha
-from .enums import RotateCaptchaEnm
+from python_rucaptcha.core.base import BaseCaptcha
+from python_rucaptcha.core.enums import RotateCaptchaEnm
 
 
 class BaseRotateCaptcha(BaseCaptcha):

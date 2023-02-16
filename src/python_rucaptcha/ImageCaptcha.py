@@ -3,8 +3,8 @@ import uuid
 import base64
 import shutil
 
-from .base import BaseCaptcha
-from .enums import SaveFormatsEnm, ImageCaptchaEnm
+from python_rucaptcha.core.base import BaseCaptcha
+from python_rucaptcha.core.enums import SaveFormatsEnm, ImageCaptchaEnm
 
 
 class BaseImageCaptcha(BaseCaptcha):

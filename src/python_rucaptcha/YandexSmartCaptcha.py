@@ -1,5 +1,5 @@
-from .base import BaseCaptcha
-from .enums import YandexSmartCaptchaEnm
+from python_rucaptcha.core.base import BaseCaptcha
+from python_rucaptcha.core.enums import YandexSmartCaptchaEnm
 
 
 class BaseYandexSmartCaptcha(BaseCaptcha):

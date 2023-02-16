@@ -1,8 +1,8 @@
 import pytest
 
 from .conftest import CoreTest
-from ..python_rucaptcha.base import BaseCaptcha
-from ..python_rucaptcha.enums import GeetestEnm
+from ..python_rucaptcha.core.base import BaseCaptcha
+from ..python_rucaptcha.core.enums import GeetestEnm
 
 
 class TestMain(CoreTest):

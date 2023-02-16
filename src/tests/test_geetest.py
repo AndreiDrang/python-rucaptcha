@@ -3,7 +3,7 @@ import logging
 import pytest
 
 from .conftest import CoreTest
-from ..python_rucaptcha.enums import GeetestEnm
+from ..python_rucaptcha.core.enums import GeetestEnm
 from ..python_rucaptcha.GeeTest import GeeTest, aioGeeTest
 from ..python_rucaptcha.serializer import ResponseSer
 
