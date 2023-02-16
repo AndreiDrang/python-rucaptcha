@@ -5,7 +5,7 @@ import aiohttp
 import requests
 
 from .config import attempts_generator
-from .serializer import ResponseSer, ServiceGetResponseSer
+from serializer import ResponseSer, ServiceGetResponseSer
 
 
 def result_processing(captcha_response: ServiceGetResponseSer, result: ResponseSer) -> dict:

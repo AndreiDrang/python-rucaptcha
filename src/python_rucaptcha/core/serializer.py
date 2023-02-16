@@ -3,7 +3,7 @@ from typing import Union
 
 from pydantic import Field, BaseModel, conint, constr, validator, root_validator
 
-from . import enums
+from python_rucaptcha import enums
 from .config import APP_KEY
 
 """

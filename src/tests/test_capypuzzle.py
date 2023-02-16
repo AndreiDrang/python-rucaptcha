@@ -3,7 +3,7 @@ import pytest
 from .conftest import CoreTest
 from ..python_rucaptcha.core.enums import CapyPuzzleEnm
 from ..python_rucaptcha.CapyPuzzle import CapyPuzzle, aioCapyPuzzle
-from ..python_rucaptcha.serializer import ResponseSer
+from core.serializer import ResponseSer
 
 
 class TestCapyPuzzle(CoreTest):
