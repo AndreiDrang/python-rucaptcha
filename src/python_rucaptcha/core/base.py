@@ -7,8 +7,8 @@ from requests.adapters import HTTPAdapter
 
 from . import enums
 from .config import RETRIES, ASYNC_RETRIES
-from .serializer import ResponseSer, GetRequestSer, PostRequestSer, CaptchaOptionsSer, ServicePostResponseSer
-from .result_handler import get_sync_result, get_async_result
+from serializer import ResponseSer, GetRequestSer, PostRequestSer, CaptchaOptionsSer, ServicePostResponseSer
+from result_handler import get_sync_result, get_async_result
 
 
 class BaseCaptcha:
