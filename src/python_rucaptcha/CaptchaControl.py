@@ -1,6 +1,7 @@
+from core.result_handler import get_sync_result, get_async_result
+
 from python_rucaptcha.core.base import BaseCaptcha
 from python_rucaptcha.core.enums import CaptchaControlEnm
-from core.result_handler import get_sync_result, get_async_result
 
 
 class BaseCaptchaControl(BaseCaptcha):

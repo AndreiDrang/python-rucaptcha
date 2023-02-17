@@ -1,8 +1,8 @@
 import pytest
+from core.serializer import ResponseSer
 
 from .conftest import CoreTest
 from ..python_rucaptcha.core.enums import CaptchaControlEnm
-from core.serializer import ResponseSer
 from ..python_rucaptcha.CaptchaControl import CaptchaControl, aioCaptchaControl
 
 

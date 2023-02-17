@@ -1,9 +1,9 @@
 import pytest
+from core.serializer import ResponseSer
 
 from .conftest import CoreTest
 from ..python_rucaptcha.core.enums import FunCaptchaEnm
 from ..python_rucaptcha.FunCaptcha import FunCaptcha, aioFunCaptcha
-from core.serializer import ResponseSer
 
 
 class TestFuncaptcha(CoreTest):

@@ -7,8 +7,8 @@ from requests.adapters import HTTPAdapter
 
 from . import enums
 from .config import RETRIES, ASYNC_RETRIES
-from serializer import ResponseSer, GetRequestSer, PostRequestSer, CaptchaOptionsSer, ServicePostResponseSer
-from result_handler import get_sync_result, get_async_result
+from .serializer import ResponseSer, GetRequestSer, PostRequestSer, CaptchaOptionsSer, ServicePostResponseSer
+from .result_handler import get_sync_result, get_async_result
 
 
 class BaseCaptcha:
@@ -73,7 +73,7 @@ class BaseCaptcha:
 
         # check for errors while make request to server
         if self.result.error:
-            return self.result.dict(exclude_none=True)
+            return self.result.dict()
 
         # if all is ok - send captcha to service and wait solution
         # update payload - add captcha taskId
@@ -123,7 +123,7 @@ class BaseCaptcha:
 
         # check for errors while make request to server
         if self.result.error:
-            return self.result.dict(exclude_none=True)
+            return self.result.dict()
 
         # if all is ok - send captcha to service and wait solution
         # update payload - add captcha taskId

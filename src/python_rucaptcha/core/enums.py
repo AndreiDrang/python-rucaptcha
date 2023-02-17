@@ -90,3 +90,7 @@ class YandexSmartCaptchaEnm(MyEnum):
 
 class TurnstileCaptchaEnm(MyEnum):
     TURNSTILE = "turnstile"
+
+
+class AmazonWAFCaptchaEnm(MyEnum):
+    AMAZON_WAF = "amazon_waf"

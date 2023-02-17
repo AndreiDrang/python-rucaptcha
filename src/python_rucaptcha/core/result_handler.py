@@ -5,7 +5,7 @@ import aiohttp
 import requests
 
 from .config import attempts_generator
-from serializer import ResponseSer, ServiceGetResponseSer
+from .serializer import ResponseSer, ServiceGetResponseSer
 
 
 def result_processing(captcha_response: ServiceGetResponseSer, result: ResponseSer) -> dict:
@@ -42,7 +42,7 @@ def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, resul
     """
     # generator for repeated attempts to connect to the server
     attempts = attempts_generator()
-    for attempt in attempts:
+    for _ in attempts:
         try:
             # send a request for the result of solving the captcha
             captcha_response = ServiceGetResponseSer(**requests.get(url_response, params=get_payload).json())
@@ -65,7 +65,7 @@ async def get_async_result(get_payload: dict, sleep_time: int, url_response: str
     # generator for repeated attempts to connect to the server
     attempts = attempts_generator()
     async with aiohttp.ClientSession() as session:
-        for attempt in attempts:
+        for _ in attempts:
             try:
                 # send a request for the result of solving the captcha
                 async with session.get(url_response, params=get_payload, raise_for_status=True) as resp:

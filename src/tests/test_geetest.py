@@ -1,11 +1,11 @@
 import logging
 
 import pytest
+from core.serializer import ResponseSer
 
 from .conftest import CoreTest
-from ..python_rucaptcha.core.enums import GeetestEnm
 from ..python_rucaptcha.GeeTest import GeeTest, aioGeeTest
-from core.serializer import ResponseSer
+from ..python_rucaptcha.core.enums import GeetestEnm
 
 
 class TestGeetest(CoreTest):

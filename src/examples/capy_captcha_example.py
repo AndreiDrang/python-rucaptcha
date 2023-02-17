@@ -1,7 +1,7 @@
 import asyncio
 
-from python_rucaptcha.enums import CapyPuzzleEnm
 from python_rucaptcha.CapyPuzzle import CapyPuzzle, aioCapyPuzzle
+from python_rucaptcha.core.enums import CapyPuzzleEnm
 
 # Rucaptcha API Key from your account
 RUCAPTCHA_KEY = "ad911111111111ca81755768608fa758570"

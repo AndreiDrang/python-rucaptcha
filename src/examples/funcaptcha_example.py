@@ -1,6 +1,6 @@
 import asyncio
 
-from python_rucaptcha.enums import FunCaptchaEnm
+from python_rucaptcha.core.enums import FunCaptchaEnm
 from python_rucaptcha.FunCaptcha import FunCaptcha, aioFunCaptcha
 
 # Rucaptcha API Key from your account

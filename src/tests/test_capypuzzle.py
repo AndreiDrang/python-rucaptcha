@@ -1,9 +1,9 @@
 import pytest
+from core.serializer import ResponseSer
 
 from .conftest import CoreTest
-from ..python_rucaptcha.core.enums import CapyPuzzleEnm
 from ..python_rucaptcha.CapyPuzzle import CapyPuzzle, aioCapyPuzzle
-from core.serializer import ResponseSer
+from ..python_rucaptcha.core.enums import CapyPuzzleEnm
 
 
 class TestCapyPuzzle(CoreTest):
