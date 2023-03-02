@@ -3,7 +3,6 @@ from python_rucaptcha.core.enums import AmazonWAFCaptchaEnm
 
 
 class AmazonWAF(BaseCaptcha):
-
     def __init__(
         self,
         rucaptcha_key: str,
@@ -53,8 +52,6 @@ class AmazonWAF(BaseCaptcha):
         # check user params
         if method not in AmazonWAFCaptchaEnm.list_values():
             raise ValueError(f"Invalid method parameter set, available - {AmazonWAFCaptchaEnm.list_values()}")
-
-
 
     def captcha_handler(self, **kwargs) -> dict:
         """
