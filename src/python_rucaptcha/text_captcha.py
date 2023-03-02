@@ -29,6 +29,7 @@ class BaseTextCaptcha(BaseCaptcha):
     Notes:
         https://rucaptcha.com/api-rucaptcha#amazon-waf
     """
+
     def __init__(
         self,
         rucaptcha_key: str,
@@ -48,7 +49,7 @@ class TextCaptcha(BaseTextCaptcha):
         https://rucaptcha.com/api-rucaptcha#solving_text_captcha
     """
 
-    def captcha_handler(self, textcaptcha: str, **kwargs)->dict:
+    def captcha_handler(self, textcaptcha: str, **kwargs) -> dict:
         """
         Synchronous method for captcha solving
 
@@ -80,7 +81,7 @@ class TextCaptcha(BaseTextCaptcha):
 
         return self._processing_response(**kwargs)
 
-    async def aio_captcha_handler(self, textcaptcha: str)->dict:
+    async def aio_captcha_handler(self, textcaptcha: str) -> dict:
         """
         Asynchronous method for captcha solving
 
