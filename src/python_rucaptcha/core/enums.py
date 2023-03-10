@@ -16,58 +16,58 @@ class MyEnum(Enum):
         return list(map(lambda c: c.name, cls))
 
 
-class ServicesEnm(MyEnum):
+class ServicesEnm(str, MyEnum):
     TWOCAPTCHA = "2captcha"
     RUCAPTCHA = "rucaptcha"
 
 
-class SaveFormatsEnm(MyEnum):
+class SaveFormatsEnm(str, MyEnum):
     TEMP = "temp"
     CONST = "const"
 
 
-class GeetestEnm(MyEnum):
+class GeetestEnm(str, MyEnum):
     GEETEST = "geetest"
     GEETEST_V4 = "geetest_v4"
 
 
-class ImageCaptchaEnm(MyEnum):
+class ImageCaptchaEnm(str, MyEnum):
     BASE64 = "base64"
 
 
-class CapyPuzzleEnm(MyEnum):
+class CapyPuzzleEnm(str, MyEnum):
     CAPY = "capy"
 
 
-class FunCaptchaEnm(MyEnum):
+class FunCaptchaEnm(str, MyEnum):
     FUNCAPTCHA = "funcaptcha"
 
 
-class ReCaptchaEnm(MyEnum):
+class ReCaptchaEnm(str, MyEnum):
     USER_RECAPTCHA = "userrecaptcha"
 
 
-class LeminCroppedCaptchaEnm(MyEnum):
+class LeminCroppedCaptchaEnm(str, MyEnum):
     LEMIN = "lemin"
 
 
-class HCaptchaEnm(MyEnum):
+class HCaptchaEnm(str, MyEnum):
     HCAPTCHA = "hcaptcha"
 
 
-class KeyCaptchaEnm(MyEnum):
+class KeyCaptchaEnm(str, MyEnum):
     KEYCAPTCHA = "keycaptcha"
 
 
-class RotateCaptchaEnm(MyEnum):
+class RotateCaptchaEnm(str, MyEnum):
     ROTATECAPTCHA = "rotatecaptcha"
 
 
-class TikTokCaptchaEnm(MyEnum):
+class TikTokCaptchaEnm(str, MyEnum):
     TIKTOK = "tiktok"
 
 
-class ControlEnm(MyEnum):
+class ControlEnm(str, MyEnum):
     # default
     GET = "get"
     # https://rucaptcha.com/api-rucaptcha#manage_pingback
@@ -84,13 +84,13 @@ class ControlEnm(MyEnum):
     REPORTBAD = "reportbad"
 
 
-class YandexSmartCaptchaEnm(MyEnum):
+class YandexSmartCaptchaEnm(str, MyEnum):
     YANDEX = "yandex"
 
 
-class TurnstileCaptchaEnm(MyEnum):
+class TurnstileCaptchaEnm(str, MyEnum):
     TURNSTILE = "turnstile"
 
 
-class AmazonWAFCaptchaEnm(MyEnum):
+class AmazonWAFCaptchaEnm(str, MyEnum):
     AMAZON_WAF = "amazon_waf"
