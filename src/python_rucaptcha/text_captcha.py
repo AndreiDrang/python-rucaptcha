@@ -20,7 +20,17 @@ class TextCaptcha(BaseCaptcha):
         {
             'serverAnswer': {},
             'captchaSolve': 'earth',
-            'taskId': '7111111984',
+            'taskId': '73043008354',
+            'error': False,
+            'errorBody': None
+        }
+
+        >>> TextCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122")\
+        ...             .captcha_handler(textcaptcha="Our planet name?")
+        {
+            'serverAnswer': {},
+            'captchaSolve': 'earth',
+            'taskId': '73043008354',
             'error': False,
             'errorBody': None
         }
@@ -55,8 +65,8 @@ class TextCaptcha(BaseCaptcha):
             ...             language=2).captcha_handler(textcaptcha="Our planet name?")
             {
                 'serverAnswer': {},
-                'captchaSolve': 'eyJ0e......jNuSFqtyP4Ho',
-                'taskId': '7111111984',
+                'captchaSolve': 'earth',
+                'taskId': '73043008354',
                 'error': False,
                 'errorBody': None
             }
@@ -87,8 +97,8 @@ class TextCaptcha(BaseCaptcha):
             ...             language=2).aio_captcha_handler(textcaptcha="Our planet name?")
             {
                 'serverAnswer': {},
-                'captchaSolve': 'eyJ0e......jNuSFqtyP4Ho',
-                'taskId': '7111111984',
+                'captchaSolve': 'earth',
+                'taskId': '73043008354',
                 'error': False,
                 'errorBody': None
             }
