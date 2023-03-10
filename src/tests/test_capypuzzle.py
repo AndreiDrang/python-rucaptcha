@@ -16,6 +16,10 @@ class TestCapyPuzzle(CoreTest):
     Success tests
     """
 
+    def test_methods_exists(self):
+        assert "captcha_handler" in CapyPuzzle.__dict__.keys()
+        assert "aio_captcha_handler" in CapyPuzzle.__dict__.keys()
+
     def test_capypuzzle_basic_data(self):
         instance = CapyPuzzle(
             pageurl=self.pageurl,
