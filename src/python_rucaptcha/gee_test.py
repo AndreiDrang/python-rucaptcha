@@ -1,7 +1,9 @@
+from typing import Optional
+
 from python_rucaptcha.core.base import BaseCaptcha
 from python_rucaptcha.core.enums import GeetestEnm
 
-from typing import Optional
+
 class GeeTest(BaseCaptcha):
     def __init__(
         self,
