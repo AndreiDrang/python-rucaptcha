@@ -1,9 +1,11 @@
 from python_rucaptcha.core.base import BaseCaptcha
 
 
-class BaseTextCaptcha(BaseCaptcha):
+class TextCaptcha(BaseCaptcha):
     """
-    The class is used to work with Amazon WAF
+    The class is used to work with TextCaptcha.
+    Solve description:
+        https://rucaptcha.com/api-rucaptcha#solving_text_captcha
 
     Args:
         rucaptcha_key: User API key
@@ -27,7 +29,7 @@ class BaseTextCaptcha(BaseCaptcha):
         Dict with full server response
 
     Notes:
-        https://rucaptcha.com/api-rucaptcha#amazon-waf
+        https://rucaptcha.com/api-rucaptcha#solving_text_captcha
     """
 
     def __init__(
@@ -40,14 +42,6 @@ class BaseTextCaptcha(BaseCaptcha):
         super().__init__(rucaptcha_key=rucaptcha_key, *args, **kwargs)
 
         self.post_payload.update({"language": language})
-
-
-class TextCaptcha(BaseTextCaptcha):
-    """
-    The class is used to work with TextCaptcha.
-    Solve description:
-        https://rucaptcha.com/api-rucaptcha#solving_text_captcha
-    """
 
     def captcha_handler(self, textcaptcha: str, **kwargs) -> dict:
         """
