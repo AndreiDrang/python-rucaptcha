@@ -41,7 +41,7 @@ class TestFunCaptcha(BaseTest):
         assert result["error"] is False
         assert result["taskId"].isnumeric() is True
         assert result["errorBody"] is None
-        assert isinstance(result["captchaSolve"], dict) is True
+        assert isinstance(result["captchaSolve"], str) is True
         assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
@@ -65,7 +65,7 @@ class TestFunCaptcha(BaseTest):
         assert result["error"] is False
         assert result["taskId"].isnumeric() is True
         assert result["errorBody"] is None
-        assert isinstance(result["captchaSolve"], dict) is True
+        assert isinstance(result["captchaSolve"], str) is True
         assert result.keys() == ResponseSer().dict().keys()
 
     def test_context_basic_data(self):
