@@ -292,15 +292,30 @@ class Control(BaseCaptcha):
 
     def additional_methods(self, **kwargs) -> dict:
         """
-        Callback results report
+        Some additional methods for control API (like balance and etc.)
+
+        Args:
+            kwargs: Additional params for method, like `id`, `ids`, more info in service docs.
+
+        Examples:
+            >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...         action=ControlEnm.GETBALANCE.value).additional_methods()
+            {
+                'serverAnswer': {},
+                'captchaSolve': '1044.23118',
+                'taskId': None,
+                'error': False,
+                'errorBody': None
+            }
+
+        Returns:
+            Dict with full server response
+
+        Notes:
             https://rucaptcha.com/api-rucaptcha#additional
-        :param kwargs: Additional params for method
-        :return: Dict with result
         """
-        # If more parameters are passed, add them to get_payload
-        if kwargs:
-            for key in kwargs:
-                self.get_payload.update({key: kwargs[key]})
+        for key in kwargs:
+            self.get_payload.update({key: kwargs[key]})
         return get_sync_result(
             get_payload=self.get_payload,
             sleep_time=self.params.sleep_time,
@@ -310,15 +325,30 @@ class Control(BaseCaptcha):
 
     async def aio_additional_methods(self, **kwargs) -> dict:
         """
-        Callback results report
+        Some additional methods for control API (like balance and etc.)
+
+        Args:
+            kwargs: Additional params for method, like `id`, `ids`, more info in service docs.
+
+        Examples:
+            >>> await Control(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...         action=ControlEnm.GETBALANCE.value).aio_additional_methods()
+            {
+                'serverAnswer': {},
+                'captchaSolve': '1044.23118',
+                'taskId': None,
+                'error': False,
+                'errorBody': None
+            }
+
+        Returns:
+            Dict with full server response
+
+        Notes:
             https://rucaptcha.com/api-rucaptcha#additional
-        :param kwargs: Additional params for method
-        :return: Dict with result
         """
-        # If more parameters are passed, add them to get_payload
-        if kwargs:
-            for key in kwargs:
-                self.get_payload.update({key: kwargs[key]})
+        for key in kwargs:
+            self.get_payload.update({key: kwargs[key]})
         return await get_async_result(
             get_payload=self.get_payload,
             sleep_time=self.params.sleep_time,
