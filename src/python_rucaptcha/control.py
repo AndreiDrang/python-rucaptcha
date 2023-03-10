@@ -6,48 +6,49 @@ from python_rucaptcha.core.result_handler import get_sync_result, get_async_resu
 
 
 class Control(BaseCaptcha):
-    """
-    The class is used to work with RuCaptcha control methods.
-
-    Args:
-        action: Control action type
-
-    Examples:
-        >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
-        ...         action=ControlEnm.DEL_PINGBACK.value).domain_control(addr="all")
-        {
-            'serverAnswer': {},
-            'captchaSolve': 'OK',
-            'taskId': None,
-            'error': False,
-            'errorBody': None
-        }
-
-        >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
-        ...            action=ControlEnm.GET.value).report(id="73043727671")
-        {
-            'serverAnswer': {},
-            'captchaSolve': '1',
-            'taskId': None,
-            'error': False,
-            'errorBody': None
-        }
-
-    Returns:
-        Dict with full server response
-
-    Notes:
-        https://rucaptcha.com/api-rucaptcha#manage_pingback
-        https://rucaptcha.com/api-rucaptcha#complain
-        https://rucaptcha.com/api-rucaptcha#additional
-    """
-
     def __init__(
         self,
         action: str,
         *args,
         **kwargs,
     ):
+
+        """
+        The class is used to work with RuCaptcha control methods.
+
+        Args:
+            action: Control action type
+
+        Examples:
+            >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...         action=ControlEnm.DEL_PINGBACK.value).domain_control(addr="all")
+            {
+                'serverAnswer': {},
+                'captchaSolve': 'OK',
+                'taskId': None,
+                'error': False,
+                'errorBody': None
+            }
+
+            >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...            action=ControlEnm.GET.value).report(id="73043727671")
+            {
+                'serverAnswer': {},
+                'captchaSolve': '1',
+                'taskId': None,
+                'error': False,
+                'errorBody': None
+            }
+
+        Returns:
+            Dict with full server response
+
+        Notes:
+            https://rucaptcha.com/api-rucaptcha#manage_pingback
+            https://rucaptcha.com/api-rucaptcha#complain
+            https://rucaptcha.com/api-rucaptcha#additional
+        """
+
         super().__init__(action=action, *args, **kwargs)
 
         # check user params
@@ -73,8 +74,7 @@ class Control(BaseCaptcha):
             }
 
             >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...         action=ControlEnm.DEL_PINGBACK.value)\
-            ...             .domain_control(addr="http://mysite.com/pingback/url/")
+            ...         action=ControlEnm.DEL_PINGBACK.value).domain_control(addr="http://mysite.com/pingback/url/")
             {
                 'serverAnswer': {},
                 'captchaSolve': 'OK',
@@ -84,8 +84,7 @@ class Control(BaseCaptcha):
             }
 
             >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...         action=ControlEnm.ADD_PINGBACK.value)\
-            ...             .domain_control(addr="http://mysite.com/pingback/url/")
+            ...         action=ControlEnm.ADD_PINGBACK.value).domain_control(addr="http://mysite.com/pingback/url/")
             {
                 'serverAnswer': {},
                 'captchaSolve': 'OK',
@@ -138,8 +137,7 @@ class Control(BaseCaptcha):
             }
 
             >>> await Control(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...         action=ControlEnm.DEL_PINGBACK.value)\
-            ...             .aio_domain_control(addr="http://mysite.com/pingback/url/")
+            ...         action=ControlEnm.DEL_PINGBACK.value).aio_domain_control(addr="http://mysite.com/pingback/url/")
             {
                 'serverAnswer': {},
                 'captchaSolve': 'OK',
@@ -149,8 +147,7 @@ class Control(BaseCaptcha):
             }
 
             >>> await Control(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...         action=ControlEnm.ADD_PINGBACK.value)\
-            ...             .aio_domain_control(addr="http://mysite.com/pingback/url/")
+            ...         action=ControlEnm.ADD_PINGBACK.value).aio_domain_control(addr="http://mysite.com/pingback/url/")
             {
                 'serverAnswer': {},
                 'captchaSolve': 'OK',
