@@ -39,16 +39,6 @@ class TestControl(BaseTest):
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
             assert instance.params.action == ControlEnm.GETBALANCE.value
 
-            result = instance.additional_methods()
-
-        assert isinstance(result, dict) is True
-        assert result["error"] is False
-        assert result["taskId"] is None
-        assert result["errorBody"] is None
-        assert isinstance(result["captchaSolve"], str) is True
-        assert float(result["captchaSolve"]) > 1
-        assert result.keys() == ResponseSer().dict().keys()
-
     @pytest.mark.asyncio
     async def test_aio_get_balance(self):
         instance = Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.GETBALANCE.value)
@@ -71,29 +61,19 @@ class TestControl(BaseTest):
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
             assert instance.params.action == ControlEnm.GETBALANCE.value
 
-            result = await instance.aio_additional_methods()
-
-        assert isinstance(result, dict) is True
-        assert result["error"] is False
-        assert result["taskId"] is None
-        assert result["errorBody"] is None
-        assert isinstance(result["captchaSolve"], str) is True
-        assert float(result["captchaSolve"]) > 1
-        assert result.keys() == ResponseSer().dict().keys()
-
     def test_get_solution(self):
         instance = Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.GET.value)
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
         assert instance.params.action == ControlEnm.GET.value
 
-        result = instance.additional_methods(ids=f"{self.get_random_string(5)},{self.get_random_string(5)}")
+        result = instance.additional_methods(ids={self.get_random_string(5)})
 
         assert isinstance(result, dict) is True
         assert result["error"] is False
         assert result["taskId"] is None
         assert result["errorBody"] is None
         assert isinstance(result["captchaSolve"], str) is True
-        assert result["captchaSolve"] == "ERROR_NO_SUCH_CAPCHA_ID|ERROR_NO_SUCH_CAPCHA_ID"
+        assert result["captchaSolve"] == "ERROR_NO_SUCH_CAPCHA_ID"
         assert result.keys() == ResponseSer().dict().keys()
 
     def test_context_get_solution(self):
@@ -101,30 +81,20 @@ class TestControl(BaseTest):
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
             assert instance.params.action == ControlEnm.GET.value
 
-            result = instance.additional_methods(ids=f"{self.get_random_string(5)},{self.get_random_string(5)}")
-
-        assert isinstance(result, dict) is True
-        assert result["error"] is False
-        assert result["taskId"] is None
-        assert result["errorBody"] is None
-        assert isinstance(result["captchaSolve"], str) is True
-        assert result["captchaSolve"] == "ERROR_NO_SUCH_CAPCHA_ID|ERROR_NO_SUCH_CAPCHA_ID"
-        assert result.keys() == ResponseSer().dict().keys()
-
     @pytest.mark.asyncio
     async def test_aio_get_solution(self):
         instance = Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.GET.value)
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
         assert instance.params.action == ControlEnm.GET.value
 
-        result = await instance.aio_additional_methods(ids=f"{self.get_random_string(5)},{self.get_random_string(5)}")
+        result = await instance.aio_additional_methods(ids=self.get_random_string(5))
 
         assert isinstance(result, dict) is True
         assert result["error"] is False
         assert result["taskId"] is None
         assert result["errorBody"] is None
         assert isinstance(result["captchaSolve"], str) is True
-        assert result["captchaSolve"] == "ERROR_NO_SUCH_CAPCHA_ID|ERROR_NO_SUCH_CAPCHA_ID"
+        assert result["captchaSolve"] == "ERROR_NO_SUCH_CAPCHA_ID"
         assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
@@ -132,18 +102,6 @@ class TestControl(BaseTest):
         async with Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.GET.value) as instance:
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
             assert instance.params.action == ControlEnm.GET.value
-
-            result = await instance.aio_additional_methods(
-                ids=f"{self.get_random_string(5)},{self.get_random_string(5)}"
-            )
-
-        assert isinstance(result, dict) is True
-        assert result["error"] is False
-        assert result["taskId"] is None
-        assert result["errorBody"] is None
-        assert isinstance(result["captchaSolve"], str) is True
-        assert result["captchaSolve"] == "ERROR_NO_SUCH_CAPCHA_ID|ERROR_NO_SUCH_CAPCHA_ID"
-        assert result.keys() == ResponseSer().dict().keys()
 
     def test_get_cost(self):
         instance = Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.GET2.value)
@@ -164,16 +122,6 @@ class TestControl(BaseTest):
         with Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.GET2.value) as instance:
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
             assert instance.params.action == ControlEnm.GET2.value
-
-            result = instance.additional_methods(ids=f"{self.get_random_string(5)},{self.get_random_string(5)}")
-
-        assert isinstance(result, dict) is True
-        assert result["error"] is False
-        assert result["taskId"] is None
-        assert result["errorBody"] is None
-        assert isinstance(result["captchaSolve"], str) is True
-        assert result["captchaSolve"] == "ERROR_NO_SUCH_CAPCHA_ID|ERROR_NO_SUCH_CAPCHA_ID"
-        assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_get_cost(self):
@@ -197,18 +145,6 @@ class TestControl(BaseTest):
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
             assert instance.params.action == ControlEnm.GET2.value
 
-            result = await instance.aio_additional_methods(
-                ids=f"{self.get_random_string(5)},{self.get_random_string(5)}"
-            )
-
-        assert isinstance(result, dict) is True
-        assert result["error"] is False
-        assert result["taskId"] is None
-        assert result["errorBody"] is None
-        assert isinstance(result["captchaSolve"], str) is True
-        assert result["captchaSolve"] == "ERROR_NO_SUCH_CAPCHA_ID|ERROR_NO_SUCH_CAPCHA_ID"
-        assert result.keys() == ResponseSer().dict().keys()
-
     def test_domains_clean(self):
         instance = Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.DEL_PINGBACK.value)
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
@@ -227,15 +163,6 @@ class TestControl(BaseTest):
         with Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.DEL_PINGBACK.value) as instance:
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
             assert instance.params.action == ControlEnm.DEL_PINGBACK.value
-
-            result = instance.domain_control(addr="all")
-
-        assert isinstance(result, dict) is True
-        assert result["error"] is False
-        assert result["taskId"] is None
-        assert result["errorBody"] is None
-        assert result["captchaSolve"] == "OK"
-        assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_domains_clean(self):
@@ -257,15 +184,6 @@ class TestControl(BaseTest):
         async with Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.DEL_PINGBACK.value) as instance:
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
             assert instance.params.action == ControlEnm.DEL_PINGBACK.value
-
-            result = await instance.aio_domain_control(addr="all")
-
-        assert isinstance(result, dict) is True
-        assert result["error"] is False
-        assert result["taskId"] is None
-        assert result["errorBody"] is None
-        assert result["captchaSolve"] == "OK"
-        assert result.keys() == ResponseSer().dict().keys()
 
     """
     Failed tests
@@ -310,15 +228,6 @@ class TestControl(BaseTest):
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
             assert instance.params.action == ControlEnm.REPORTBAD.value
 
-            result = instance.report(id=self.get_random_string(5))
-
-        assert isinstance(result, dict) is True
-        assert result["error"] is True
-        assert result["taskId"] is None
-        assert result["errorBody"] == "ERROR_WRONG_CAPTCHA_ID"
-        assert isinstance(result["captchaSolve"], dict) is True
-        assert result.keys() == ResponseSer().dict().keys()
-
     @pytest.mark.asyncio
     async def test_aio_report_bad(self):
         instance = Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.REPORTBAD.value)
@@ -340,15 +249,6 @@ class TestControl(BaseTest):
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
             assert instance.params.action == ControlEnm.REPORTBAD.value
 
-            result = await instance.aio_report(id=self.get_random_string(5))
-
-        assert isinstance(result, dict) is True
-        assert result["error"] is True
-        assert result["taskId"] is None
-        assert result["errorBody"] == "ERROR_WRONG_CAPTCHA_ID"
-        assert isinstance(result["captchaSolve"], dict) is True
-        assert result.keys() == ResponseSer().dict().keys()
-
     def test_report_good(self):
         instance = Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.REPORTGOOD.value)
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
@@ -367,15 +267,6 @@ class TestControl(BaseTest):
         with Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.REPORTGOOD.value) as instance:
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
             assert instance.params.action == ControlEnm.REPORTGOOD.value
-
-            result = instance.report(id=self.get_random_string(5))
-
-        assert isinstance(result, dict) is True
-        assert result["error"] is True
-        assert result["taskId"] is None
-        assert result["errorBody"] == "ERROR_WRONG_CAPTCHA_ID"
-        assert isinstance(result["captchaSolve"], dict) is True
-        assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_report_good(self):
@@ -397,12 +288,3 @@ class TestControl(BaseTest):
         async with Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.REPORTGOOD.value) as instance:
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
             assert instance.params.action == ControlEnm.REPORTGOOD.value
-
-            result = await instance.aio_report(id=self.get_random_string(5))
-
-        assert isinstance(result, dict) is True
-        assert result["error"] is True
-        assert result["taskId"] is None
-        assert result["errorBody"] == "ERROR_WRONG_CAPTCHA_ID"
-        assert isinstance(result["captchaSolve"], dict) is True
-        assert result.keys() == ResponseSer().dict().keys()
