@@ -151,7 +151,6 @@ class ServiceGetResponseSer(BaseModel):
 
 
 class ResponseSer(BaseModel):
-    serverAnswer: dict = {}
     captchaSolve: dict = {}
     taskId: int = None
     error: bool = False
