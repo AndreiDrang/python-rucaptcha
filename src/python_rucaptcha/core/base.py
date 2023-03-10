@@ -42,10 +42,8 @@ class BaseCaptcha:
         # prepare result payload
         self.result = ResponseSer()
 
-        # If more parameters are passed, add them to post_payload
-        if kwargs:
-            for key in kwargs:
-                self.post_payload.update({key: kwargs[key]})
+        for key in kwargs:
+            self.post_payload.update({key: kwargs[key]})
 
         # prepare session
         self.session = requests.Session()

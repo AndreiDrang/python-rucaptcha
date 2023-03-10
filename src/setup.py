@@ -15,7 +15,7 @@ DESCRIPTION = "Python 3.6+ RuCaptcha library with AIO module."
 URL = "https://github.com/AndreiDrang/python-rucaptcha"
 EMAIL = "python-captcha@pm.me"
 AUTHOR = "AndreiDrang, redV0ID"
-REQUIRES_PYTHON = ">=3.6.0"
+REQUIRES_PYTHON = ">=3.7.0"
 VERSION = __version__
 with open("requirements.txt", "rt") as requirements_txt:
     REQUIRED = [str(requirement) for requirement in parse_requirements(requirements_txt)]
@@ -104,6 +104,8 @@ setup(
 				rucaptcha-client
 				yandex
 				turnstile
+				amazon
+				amazon_waf
                """,
     python_requires=REQUIRES_PYTHON,
     zip_safe=False,

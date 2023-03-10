@@ -1,14 +1,23 @@
 import pytest
+from tenacity import AsyncRetrying
+from urllib3.util.retry import Retry
 
-from .conftest import CoreTest
-from ..python_rucaptcha.core.base import BaseCaptcha
-from ..python_rucaptcha.core.enums import GeetestEnm
+from src.tests.conftest import CoreTest
+from python_rucaptcha.core.base import BaseCaptcha
+from python_rucaptcha.core.enums import MyEnum, GeetestEnm
+from python_rucaptcha.core.config import RETRIES, ASYNC_RETRIES, attempts_generator
 
 
 class TestMain(CoreTest):
     """
     Success tests
     """
+
+    def test_reties(self):
+        assert isinstance(RETRIES, Retry)
+
+    def test_async_reties(self):
+        assert isinstance(ASYNC_RETRIES, AsyncRetrying)
 
     def test_context_class_create(self):
         with BaseCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, method=GeetestEnm.GEETEST.value) as bc:
@@ -43,3 +52,23 @@ class TestMain(CoreTest):
         with pytest.raises(ValueError):
             async with BaseCaptcha(rucaptcha_key=self.get_random_string(elements), method=GeetestEnm.GEETEST.value):
                 pass
+
+
+class TestEnum(CoreTest):
+    def test_enum_list(self):
+        assert isinstance(MyEnum.list(), list)
+
+    def test_enum_list_values(self):
+        assert isinstance(MyEnum.list_values(), list)
+
+    def test_enum_list_names(self):
+        assert isinstance(MyEnum.list_names(), list)
+
+
+class TestConfig(CoreTest):
+    def test_attempts_generator(self):
+        attempt = None
+        attempts = attempts_generator(amount=5)
+        for attempt in attempts:
+            assert isinstance(attempt, int)
+        assert attempt == 4
