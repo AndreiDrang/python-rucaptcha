@@ -10,13 +10,28 @@ class Control(BaseCaptcha):
     The class is used to work with RuCaptcha control methods.
 
     Args:
-        rucaptcha_key: User API key
-        language: Captcha text lang:
-                    0 - not defined
-                    1 - captcha contains only Cyrillic
-                    2 - captcha contains only latin characters
+        action: Control action type
 
     Examples:
+        >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
+        ...         action=ControlEnm.DEL_PINGBACK.value).domain_control(addr="all")
+        {
+            'serverAnswer': {},
+            'captchaSolve': 'OK',
+            'taskId': None,
+            'error': False,
+            'errorBody': None
+        }
+
+        >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
+        ...            action=ControlEnm.GET.value).report(id="73043727671")
+        {
+            'serverAnswer': {},
+            'captchaSolve': '1',
+            'taskId': None,
+            'error': False,
+            'errorBody': None
+        }
 
     Returns:
         Dict with full server response
