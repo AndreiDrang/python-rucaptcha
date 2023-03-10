@@ -23,3 +23,4 @@ env/
 /src/coverage/lcov.info
 /src/htmlcov/
 /docs/_build/
+/src/coverage/coverage.xml
