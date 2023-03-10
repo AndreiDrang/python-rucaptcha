@@ -39,6 +39,19 @@ class AmazonWAF(BaseCaptcha):
                 'errorBody': None
             }
 
+            >>> AmazonWAF(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...           pageurl="https://page-with-waf.com/",
+            ...           sitekey="some-site-key",
+            ...           iv="some-iv-value",
+            ...           context="some-context-value").aio_captcha_handler()
+            {
+                'serverAnswer': {},
+                'captchaSolve': 'eyJ0e......jNuSFqtyP4Ho',
+                'taskId': '7111111984',
+                'error': False,
+                'errorBody': None
+            }
+
         Returns:
             Dict with full server response
 
