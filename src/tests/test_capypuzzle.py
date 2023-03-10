@@ -20,7 +20,7 @@ class TestCapyPuzzle(BaseTest):
         assert "captcha_handler" in CapyPuzzle.__dict__.keys()
         assert "aio_captcha_handler" in CapyPuzzle.__dict__.keys()
 
-    def test_capypuzzle_basic_data(self):
+    def test_basic_data(self):
         instance = CapyPuzzle(
             pageurl=self.pageurl,
             captchakey=self.captchakey,
@@ -45,7 +45,7 @@ class TestCapyPuzzle(BaseTest):
         assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
-    async def test_aio_capypuzzle_basic_data(self):
+    async def test_aio_basic_data(self):
         instance = CapyPuzzle(
             pageurl=self.pageurl,
             captchakey=self.captchakey,
@@ -69,7 +69,7 @@ class TestCapyPuzzle(BaseTest):
         assert isinstance(result["captchaSolve"], dict) is True
         assert result.keys() == ResponseSer().dict().keys()
 
-    def test_context_capypuzzle_basic_data(self):
+    def test_context_basic_data(self):
         with CapyPuzzle(
             pageurl=self.pageurl,
             captchakey=self.captchakey,
@@ -84,17 +84,8 @@ class TestCapyPuzzle(BaseTest):
             assert instance.post_payload["api_server"] == self.api_server
             assert instance.post_payload["version"] == self.versions[0]
 
-            result = instance.captcha_handler()
-
-            assert isinstance(result, dict) is True
-            assert result["error"] is False
-            assert result["taskId"].isnumeric() is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], dict) is True
-            assert result.keys() == ResponseSer().dict().keys()
-
     @pytest.mark.asyncio
-    async def test_context_aio_capypuzzle_basic_data(self):
+    async def test_context_aio_basic_data(self):
         async with CapyPuzzle(
             pageurl=self.pageurl,
             captchakey=self.captchakey,
@@ -108,15 +99,6 @@ class TestCapyPuzzle(BaseTest):
             assert instance.post_payload["pageurl"] == self.pageurl
             assert instance.post_payload["api_server"] == self.api_server
             assert instance.post_payload["version"] == self.versions[0]
-
-            result = await instance.aio_captcha_handler()
-
-            assert isinstance(result, dict) is True
-            assert result["error"] is False
-            assert result["taskId"].isnumeric() is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], dict) is True
-            assert result.keys() == ResponseSer().dict().keys()
 
     """
     Fail tests
