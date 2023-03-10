@@ -18,3 +18,8 @@ dist/
 
 env/
 /.coverage
+/src/coverage/
+/src/.coverage
+/src/coverage/lcov.info
+/src/htmlcov/
+/docs/_build/
