@@ -2,13 +2,13 @@ import pytest
 from tenacity import AsyncRetrying
 from urllib3.util.retry import Retry
 
-from src.tests.conftest import CoreTest
+from src.tests.conftest import BaseTest
 from python_rucaptcha.core.base import BaseCaptcha
 from python_rucaptcha.core.enums import MyEnum, GeetestEnm
 from python_rucaptcha.core.config import RETRIES, ASYNC_RETRIES, attempts_generator
 
 
-class TestMain(CoreTest):
+class TestMain(BaseTest):
     """
     Success tests
     """
@@ -54,7 +54,7 @@ class TestMain(CoreTest):
                 pass
 
 
-class TestEnum(CoreTest):
+class TestEnum(BaseTest):
     def test_enum_list(self):
         assert isinstance(MyEnum.list(), list)
 
@@ -65,7 +65,7 @@ class TestEnum(CoreTest):
         assert isinstance(MyEnum.list_names(), list)
 
 
-class TestConfig(CoreTest):
+class TestConfig(BaseTest):
     def test_attempts_generator(self):
         attempt = None
         attempts = attempts_generator(amount=5)

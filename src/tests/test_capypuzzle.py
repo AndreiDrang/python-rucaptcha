@@ -1,12 +1,12 @@
 import pytest
 
-from src.tests.conftest import CoreTest
+from src.tests.conftest import BaseTest
 from python_rucaptcha.core.enums import CapyPuzzleEnm
 from python_rucaptcha.capy_puzzle import CapyPuzzle
 from python_rucaptcha.core.serializer import ResponseSer
 
 
-class TestCapyPuzzle(CoreTest):
+class TestCapyPuzzle(BaseTest):
     captchakey = "PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w"
     pageurl = "https://www.capy.me/account/register/"
     api_server = "https://jp.api.capy.me/"
@@ -117,3 +117,16 @@ class TestCapyPuzzle(CoreTest):
             assert result["errorBody"] is None
             assert isinstance(result["captchaSolve"], dict) is True
             assert result.keys() == ResponseSer().dict().keys()
+
+    """
+    Fail tests
+    """
+
+    def test_wrong_method(self):
+        with pytest.raises(ValueError):
+            CapyPuzzle(
+                pageurl=self.pageurl,
+                captchakey=self.captchakey,
+                method=self.get_random_string(length=5),
+                rucaptcha_key=self.RUCAPTCHA_KEY,
+            )

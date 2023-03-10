@@ -12,7 +12,7 @@ def delay():
 
 
 @pytest.mark.usefixtures("delay")
-class CoreTest:
+class BaseTest:
     RUCAPTCHA_KEY = os.getenv("RUCAPTCHA_KEY", "ad9053f3182ca81755768608fa758570")
     sleep_time = 5
 

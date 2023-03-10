@@ -1,12 +1,12 @@
 import pytest
 
-from src.tests.conftest import CoreTest
+from src.tests.conftest import BaseTest
 from python_rucaptcha.control import Control
 from python_rucaptcha.core.enums import ControlEnm
 from python_rucaptcha.core.serializer import ResponseSer
 
 
-class TestControl(CoreTest):
+class TestControl(BaseTest):
     """
     Success tests
     """
