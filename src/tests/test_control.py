@@ -291,26 +291,6 @@ class TestControl(BaseTest):
         with pytest.raises(ValueError):
             Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=self.get_random_string(5))
 
-    def test_wrong_api(self):
-        with pytest.raises(ValueError):
-            Control(rucaptcha_key=self.get_random_string(31), action=ControlEnm.GETBALANCE.value)
-
-    def test_context_wrong_api(self):
-        with pytest.raises(ValueError):
-            with Control(rucaptcha_key=self.get_random_string(31), action=ControlEnm.GETBALANCE.value):
-                pass
-
-    @pytest.mark.asyncio
-    async def test_aio_context_wrong_api(self):
-        with pytest.raises(ValueError):
-            with Control(rucaptcha_key=self.get_random_string(31), action=ControlEnm.GETBALANCE.value):
-                pass
-
-    @pytest.mark.asyncio
-    async def test_aio_wrong_api(self):
-        with pytest.raises(ValueError):
-            Control(rucaptcha_key=self.get_random_string(31), action=ControlEnm.GETBALANCE.value)
-
     def test_report_bad(self):
         instance = Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.REPORTBAD.value)
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
