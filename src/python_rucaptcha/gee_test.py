@@ -1,8 +1,8 @@
 from python_rucaptcha.core.base import BaseCaptcha
 from python_rucaptcha.core.enums import GeetestEnm
 
-
-class BaseGeeTest(BaseCaptcha):
+from typing import Optional
+class GeeTest(BaseCaptcha):
     def __init__(
         self,
         pageurl: str,
@@ -12,12 +12,43 @@ class BaseGeeTest(BaseCaptcha):
         *args,
         **kwargs,
     ):
+        """
+        The class is used to work with Arkose Labs FunCaptcha.
+
+        Args:
+            rucaptcha_key: User API key
+            pageurl: Full URL of the captcha page
+            publickey: The value of the `pk` or `data-pkey` parameter you found in the page code
+            method: Captcha type
+
+        Examples:
+            >>> FunCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             pageurl="https://api.funcaptcha.com/tile-game-lite-mode/fc/api/nojs/?pkey=69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC&lang=en",
+            ...             publickey="69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC",
+            ...             surl="https://client-api.arkoselabs.com",
+            ...             method=FunCaptchaEnm.FUNCAPTCHA.value
+            ...             ).captcha_handler()
+            {
+               "serverAnswer":{},
+               "captchaSolve": "23217....ger",
+               "taskId": "73045070203",
+               "error": False,
+               "errorBody": None
+            }
+
+        Returns:
+            Dict with full server response
+
+        Notes:
+            https://rucaptcha.com/api-rucaptcha#solving_geetest
+            https://rucaptcha.com/api-rucaptcha#geetest-v4
+        """
         self.method = method
+        super().__init__(method=self.method, *args, **kwargs)
         # check user params
         if self.method not in GeetestEnm.list_values():
             raise ValueError(f"Invalid method parameter set, available - {GeetestEnm.list_values()}")
 
-        super().__init__(method=self.method, *args, **kwargs)
         # insert `gt` param to payload
         self.post_payload.update({"gt": gt, "pageurl": pageurl, "captcha_id": captcha_id})
 
@@ -26,25 +57,12 @@ class BaseGeeTest(BaseCaptcha):
         elif self.method == GeetestEnm.GEETEST.value and gt is None:
             raise ValueError(f"For {self.method} gt is required")
 
-
-class GeeTest(BaseGeeTest):
-    """
-    Class for solve Geetest and Geetest v4 captcha
-    Solve description:
-        https://rucaptcha.com/api-rucaptcha#solving_geetest
-        https://rucaptcha.com/api-rucaptcha#geetest-v4
-    """
-
-    def captcha_handler(self, challenge: str = None, **kwargs) -> dict:
+    def captcha_handler(self, challenge: Optional[str] = None, **kwargs) -> dict:
         """
-        The method is responsible for sending data to the server to solve the captcha
+        Sync solving method
+
         :param challenge: The value of the challenge parameter found on the site
         :param kwargs: Parameters for the `requests` library
-        :return: Response to captcha as JSON string with fields:
-                 captchaSolve - captcha solution,
-                 taskId - finds the ID of the task to solve the captcha,
-                 error - False - if everything is fine, True - if there is an error,
-                 errorBody - error name
         """
         if self.method == GeetestEnm.GEETEST.value:
             if challenge is not None:
@@ -54,24 +72,11 @@ class GeeTest(BaseGeeTest):
 
         return self._processing_response(**kwargs)
 
-
-class aioGeeTest(BaseGeeTest):
-    """
-    Class for async solve Geetest and Geetest v4 captcha
-    Solve description:
-        https://rucaptcha.com/api-rucaptcha#solving_geetest
-        https://rucaptcha.com/api-rucaptcha#geetest-v4
-    """
-
-    async def captcha_handler(self, challenge: str = None) -> dict:
+    async def aio_captcha_handler(self, challenge: Optional[str] = None) -> dict:
         """
-        The method is responsible for sending data to the server to solve the captcha
+        Async solving method
+
         :param challenge: The value of the challenge parameter found on the site
-        :return: Response to captcha as JSON string with fields:
-                 captchaSolve - captcha solution,
-                 taskId - finds the ID of the task to solve the captcha,
-                 error - False - if everything is fine, True - if there is an error,
-                 errorBody - error name
         """
         if self.method == GeetestEnm.GEETEST.value:
             if challenge is not None:
