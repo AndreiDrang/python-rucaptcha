@@ -67,7 +67,7 @@ class TikTokCaptchaEnm(MyEnum):
     TIKTOK = "tiktok"
 
 
-class CaptchaControlEnm(MyEnum):
+class ControlEnm(MyEnum):
     # default
     GET = "get"
     # https://rucaptcha.com/api-rucaptcha#manage_pingback
