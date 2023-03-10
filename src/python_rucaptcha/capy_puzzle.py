@@ -87,7 +87,7 @@ class CapyPuzzle(BaseCaptcha):
 
     def captcha_handler(self, **kwargs):
         """
-        The class is used to work with CapyPuzzle.
+        Sync solving method
 
         Args:
             kwargs: additional params for `requests` library
@@ -142,7 +142,7 @@ class CapyPuzzle(BaseCaptcha):
 
     async def aio_captcha_handler(self):
         """
-        The class is used to work with CapyPuzzle.
+        Async solving method
 
         Examples:
             >>> await CapyPuzzle(rucaptcha_key="aa9011f31111181111168611f1151122",
