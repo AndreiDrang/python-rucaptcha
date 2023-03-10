@@ -12,7 +12,6 @@ class Control(BaseCaptcha):
         *args,
         **kwargs,
     ):
-
         """
         The class is used to work with RuCaptcha control methods.
 
