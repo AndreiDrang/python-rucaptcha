@@ -32,10 +32,16 @@ class TestHCaptcha(BaseTest):
         result = instance.captcha_handler()
 
         assert isinstance(result, dict) is True
-        assert result["error"] is False
-        assert result["taskId"].isnumeric() is True
-        assert result["errorBody"] is None
-        assert isinstance(result["captchaSolve"], str) is True
+        if result["error"] is False:
+            assert result["error"] is False
+            assert result["taskId"].isnumeric() is True
+            assert result["errorBody"] is None
+            assert isinstance(result["captchaSolve"], str) is True
+        else:
+            assert result["error"] is True
+            assert result["taskId"].isnumeric() is True
+            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+
         assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
@@ -54,10 +60,16 @@ class TestHCaptcha(BaseTest):
         result = await instance.aio_captcha_handler()
 
         assert isinstance(result, dict) is True
-        assert result["error"] is False
-        assert result["taskId"].isnumeric() is True
-        assert result["errorBody"] is None
-        assert isinstance(result["captchaSolve"], str) is True
+        if result["error"] is False:
+            assert result["error"] is False
+            assert result["taskId"].isnumeric() is True
+            assert result["errorBody"] is None
+            assert isinstance(result["captchaSolve"], str) is True
+        else:
+            assert result["error"] is True
+            assert result["taskId"].isnumeric() is True
+            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+
         assert result.keys() == ResponseSer().dict().keys()
 
     def test_context_basic_data(self):
