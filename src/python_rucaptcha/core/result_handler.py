@@ -49,6 +49,8 @@ def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, resul
             # if the captcha has not been resolved yet, wait
             if captcha_response.request == "CAPCHA_NOT_READY":
                 time.sleep(sleep_time)
+                result.error = True
+                result.errorBody = "ERROR_CAPTCHA_UNSOLVABLE"
             else:
                 return result_processing(captcha_response, result)
 
@@ -76,6 +78,8 @@ async def get_async_result(get_payload: dict, sleep_time: int, url_response: str
                     # if the captcha has not been resolved yet, wait
                     if captcha_response.request == "CAPCHA_NOT_READY":
                         await asyncio.sleep(sleep_time)
+                        result.error = True
+                        result.errorBody = "ERROR_CAPTCHA_UNSOLVABLE"
 
                     else:
                         return result_processing(captcha_response, result)
