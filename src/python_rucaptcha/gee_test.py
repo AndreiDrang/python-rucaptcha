@@ -109,7 +109,7 @@ class GeeTest(BaseCaptcha):
                     "lot_number": "1b....bd2",
                     "pass_token": "f3b....de7f",
                     "gen_time": "1678558017",
-                    "captcha_output": "c3rHzKl....TE=",
+                    "captcha_output": "c3r....TE=",
                 },
                 "taskId": "73052937243",
                 "error": False,
