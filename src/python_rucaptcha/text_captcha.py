@@ -18,7 +18,6 @@ class TextCaptcha(BaseCaptcha):
         >>> TextCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
         ...             language=2).captcha_handler(textcaptcha="Our planet name?")
         {
-            'serverAnswer': {},
             'captchaSolve': 'earth',
             'taskId': '73043008354',
             'error': False,
@@ -28,7 +27,6 @@ class TextCaptcha(BaseCaptcha):
         >>> TextCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122")\
         ...             .captcha_handler(textcaptcha="Our planet name?")
         {
-            'serverAnswer': {},
             'captchaSolve': 'earth',
             'taskId': '73043008354',
             'error': False,
@@ -64,7 +62,6 @@ class TextCaptcha(BaseCaptcha):
             >>> TextCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             language=2).captcha_handler(textcaptcha="Our planet name?")
             {
-                'serverAnswer': {},
                 'captchaSolve': 'earth',
                 'taskId': '73043008354',
                 'error': False,
@@ -96,7 +93,6 @@ class TextCaptcha(BaseCaptcha):
             >>> await TextCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             language=2).aio_captcha_handler(textcaptcha="Our planet name?")
             {
-                'serverAnswer': {},
                 'captchaSolve': 'earth',
                 'taskId': '73043008354',
                 'error': False,

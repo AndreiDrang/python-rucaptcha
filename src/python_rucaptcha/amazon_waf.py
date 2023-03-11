@@ -32,7 +32,6 @@ class AmazonWAF(BaseCaptcha):
             ...           iv="some-iv-value",
             ...           context="some-context-value").captcha_handler()
             {
-                'serverAnswer': {},
                 'captchaSolve': 'eyJ0e......jNuSFqtyP4Ho',
                 'taskId': '7111111984',
                 'error': False,
@@ -45,7 +44,6 @@ class AmazonWAF(BaseCaptcha):
             ...           iv="some-iv-value",
             ...           context="some-context-value").aio_captcha_handler()
             {
-                'serverAnswer': {},
                 'captchaSolve': 'eyJ0e......jNuSFqtyP4Ho',
                 'taskId': '7111111984',
                 'error': False,
@@ -77,7 +75,6 @@ class AmazonWAF(BaseCaptcha):
             ...           iv="some-iv-value",
             ...           context="some-context-value").captcha_handler()
             {
-                'serverAnswer': {},
                 'captchaSolve': 'eyJ0e......jNuSFqtyP4Ho',
                 'taskId': '7111111984',
                 'error': False,
@@ -108,7 +105,6 @@ class AmazonWAF(BaseCaptcha):
             ...           iv="some-iv-value",
             ...           context="some-context-value").aio_captcha_handler()
             {
-                'serverAnswer': {},
                 'captchaSolve': 'eyJ0e......jNuSFqtyP4Ho',
                 'taskId': '7111111984',
                 'error': False,

@@ -21,7 +21,6 @@ class FunCaptcha(BaseCaptcha):
             ...             method=FunCaptchaEnm.FUNCAPTCHA.value
             ...             ).captcha_handler()
             {
-               "serverAnswer":{},
                "captchaSolve": "23217....ger",
                "taskId": "73045070203",
                "error": False,
@@ -58,7 +57,6 @@ class FunCaptcha(BaseCaptcha):
             ...             userAgent="some-user-agent"
             ...             ).captcha_handler()
             {
-               "serverAnswer":{},
                "captchaSolve": "23217....ger",
                "taskId": "73045070203",
                "error": False,
@@ -86,7 +84,6 @@ class FunCaptcha(BaseCaptcha):
             ...             userAgent="some-user-agent"
             ...             ).aio_captcha_handler()
             {
-               "serverAnswer":{},
                "captchaSolve": "23217....ger",
                "taskId": "73045070203",
                "error": False,

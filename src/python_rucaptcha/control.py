@@ -22,7 +22,6 @@ class Control(BaseCaptcha):
             >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...         action=ControlEnm.DEL_PINGBACK.value).domain_control(addr="all")
             {
-                'serverAnswer': {},
                 'captchaSolve': 'OK',
                 'taskId': None,
                 'error': False,
@@ -32,7 +31,6 @@ class Control(BaseCaptcha):
             >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...            action=ControlEnm.GET.value).report(id="73043727671")
             {
-                'serverAnswer': {},
                 'captchaSolve': '1',
                 'taskId': None,
                 'error': False,
@@ -65,7 +63,6 @@ class Control(BaseCaptcha):
             >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...         action=ControlEnm.DEL_PINGBACK.value).domain_control(addr="all")
             {
-                'serverAnswer': {},
                 'captchaSolve': 'OK',
                 'taskId': None,
                 'error': False,
@@ -75,7 +72,6 @@ class Control(BaseCaptcha):
             >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...         action=ControlEnm.DEL_PINGBACK.value).domain_control(addr="http://mysite.com/pingback/url/")
             {
-                'serverAnswer': {},
                 'captchaSolve': 'OK',
                 'taskId': None,
                 'error': False,
@@ -85,7 +81,6 @@ class Control(BaseCaptcha):
             >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...         action=ControlEnm.ADD_PINGBACK.value).domain_control(addr="http://mysite.com/pingback/url/")
             {
-                'serverAnswer': {},
                 'captchaSolve': 'OK',
                 'taskId': None,
                 'error': False,
@@ -95,7 +90,6 @@ class Control(BaseCaptcha):
             >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...         action=ControlEnm.GET_PINGBACK.value).domain_control()
             {
-                'serverAnswer': {},
                 'captchaSolve': 'http://mysite.com/pingback/url/',
                 'taskId': None,
                 'error': False,
@@ -128,7 +122,6 @@ class Control(BaseCaptcha):
             >>> await Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...         action=ControlEnm.DEL_PINGBACK.value).aio_domain_control(addr="all")
             {
-                'serverAnswer': {},
                 'captchaSolve': 'OK',
                 'taskId': None,
                 'error': False,
@@ -138,7 +131,6 @@ class Control(BaseCaptcha):
             >>> await Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...         action=ControlEnm.DEL_PINGBACK.value).aio_domain_control(addr="http://mysite.com/pingback/url/")
             {
-                'serverAnswer': {},
                 'captchaSolve': 'OK',
                 'taskId': None,
                 'error': False,
@@ -148,7 +140,6 @@ class Control(BaseCaptcha):
             >>> await Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...         action=ControlEnm.ADD_PINGBACK.value).aio_domain_control(addr="http://mysite.com/pingback/url/")
             {
-                'serverAnswer': {},
                 'captchaSolve': 'OK',
                 'taskId': None,
                 'error': False,
@@ -158,7 +149,6 @@ class Control(BaseCaptcha):
             >>> await Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...         action=ControlEnm.GET_PINGBACK.value).aio_domain_control()
             {
-                'serverAnswer': {},
                 'captchaSolve': 'http://mysite.com/pingback/url/',
                 'taskId': None,
                 'error': False,
@@ -191,7 +181,6 @@ class Control(BaseCaptcha):
             >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...            action=ControlEnm.GET.value).report(id="73043727671")
             {
-                'serverAnswer': {},
                 'captchaSolve': '1',
                 'taskId': None,
                 'error': False,
@@ -201,7 +190,6 @@ class Control(BaseCaptcha):
             >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             action=ControlEnm.REPORTGOOD.value).report(id="73043727671")
             {
-                'serverAnswer': {},
                 'captchaSolve': 'OK_REPORT_RECORDED',
                 'taskId': None,
                 'error': False,
@@ -211,7 +199,6 @@ class Control(BaseCaptcha):
             >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             action=ControlEnm.REPORTBAD.value).report(id="73043727671")
             {
-                'serverAnswer': {},
                 'captchaSolve': 'OK_REPORT_RECORDED',
                 'taskId': None,
                 'error': False,
@@ -244,7 +231,6 @@ class Control(BaseCaptcha):
             >>> await Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...                 action=ControlEnm.GET.value).aio_report(id="73043727671")
             {
-                'serverAnswer': {},
                 'captchaSolve': '1',
                 'taskId': None,
                 'error': False,
@@ -254,7 +240,6 @@ class Control(BaseCaptcha):
             >>> await Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...                 action=ControlEnm.REPORTGOOD.value).aio_report(id="73043727671")
             {
-                'serverAnswer': {},
                 'captchaSolve': 'OK_REPORT_RECORDED',
                 'taskId': None,
                 'error': False,
@@ -264,7 +249,6 @@ class Control(BaseCaptcha):
             >>> await Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...                 action=ControlEnm.REPORTBAD.value).aio_report(id="73043727671")
             {
-                'serverAnswer': {},
                 'captchaSolve': 'OK_REPORT_RECORDED',
                 'taskId': None,
                 'error': False,
@@ -297,7 +281,6 @@ class Control(BaseCaptcha):
             >>> Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...         action=ControlEnm.GETBALANCE.value).additional_methods()
             {
-                'serverAnswer': {},
                 'captchaSolve': '1044.23118',
                 'taskId': None,
                 'error': False,
@@ -330,7 +313,6 @@ class Control(BaseCaptcha):
             >>> await Control(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...         action=ControlEnm.GETBALANCE.value).aio_additional_methods()
             {
-                'serverAnswer': {},
                 'captchaSolve': '1044.23118',
                 'taskId': None,
                 'error': False,

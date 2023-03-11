@@ -22,7 +22,6 @@ class CapyPuzzle(BaseCaptcha):
             ...             version="puzzle",
             ...             ).captcha_handler()
             {
-               "serverAnswer": {},
                "captchaSolve": {
                   "captchakey": "PUZZLE_C...w",
                   "challengekey": "Uf....It",
@@ -41,7 +40,6 @@ class CapyPuzzle(BaseCaptcha):
             ...             version="avatar",
             ...             ).captcha_handler()
             {
-               "serverAnswer": {},
                "captchaSolve": {
                   "captchakey": "AVATART_C...w",
                   "challengekey": "Uf....It",
@@ -60,7 +58,6 @@ class CapyPuzzle(BaseCaptcha):
             ...             version="puzzle",
             ...             ).captcha_handler()
             {
-               "serverAnswer": {},
                "captchaSolve": {
                   "captchakey": "PUZZLE_C...w",
                   "challengekey": "Uf....It",
@@ -101,7 +98,6 @@ class CapyPuzzle(BaseCaptcha):
             ...             version="puzzle",
             ...             ).captcha_handler()
             {
-               "serverAnswer": {},
                "captchaSolve": {
                   "captchakey": "PUZZLE_C...w",
                   "challengekey": "Uf....It",
@@ -120,7 +116,6 @@ class CapyPuzzle(BaseCaptcha):
             ...             version="avatar",
             ...             ).captcha_handler()
             {
-               "serverAnswer": {},
                "captchaSolve": {
                   "captchakey": "AVATART_C...w",
                   "challengekey": "Uf....It",
@@ -153,7 +148,6 @@ class CapyPuzzle(BaseCaptcha):
             ...             version="puzzle",
             ...             ).aio_captcha_handler()
             {
-               "serverAnswer": {},
                "captchaSolve": {
                   "captchakey": "PUZZLE_C...w",
                   "challengekey": "Uf....It",
@@ -172,7 +166,6 @@ class CapyPuzzle(BaseCaptcha):
             ...             version="avatar",
             ...             ).aio_captcha_handler()
             {
-               "serverAnswer": {},
                "captchaSolve": {
                   "captchakey": "AVATART_C...w",
                   "challengekey": "Uf....It",
