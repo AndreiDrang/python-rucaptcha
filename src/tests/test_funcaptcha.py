@@ -42,7 +42,7 @@ class TestFunCaptcha(BaseTest):
             assert result["error"] is False
             assert result["taskId"].isnumeric() is True
             assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], dict) is True
+            assert isinstance(result["captchaSolve"], str) is True
         else:
             assert result["error"] is True
             assert result["taskId"].isnumeric() is True
@@ -72,7 +72,7 @@ class TestFunCaptcha(BaseTest):
             assert result["error"] is False
             assert result["taskId"].isnumeric() is True
             assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], dict) is True
+            assert isinstance(result["captchaSolve"], str) is True
         else:
             assert result["error"] is True
             assert result["taskId"].isnumeric() is True
