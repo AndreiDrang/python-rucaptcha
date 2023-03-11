@@ -15,7 +15,7 @@ class GeeTest(BaseCaptcha):
         **kwargs,
     ):
         """
-        The class is used to work with Arkose Labs FunCaptcha.
+        The class is used to work with GeeTest.
 
         Args:
             rucaptcha_key: User API key
