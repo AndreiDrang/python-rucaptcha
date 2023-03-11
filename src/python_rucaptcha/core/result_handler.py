@@ -55,7 +55,8 @@ def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, resul
         except Exception as error:
             result.error = True
             result.errorBody = error
-            return result.dict()
+
+    return result.dict()
 
 
 async def get_async_result(get_payload: dict, sleep_time: int, url_response: str, result: ResponseSer) -> dict:
@@ -82,4 +83,4 @@ async def get_async_result(get_payload: dict, sleep_time: int, url_response: str
             except Exception as error:
                 result.error = True
                 result.errorBody = error
-                return result.dict()
+    return result.dict()
