@@ -53,6 +53,23 @@ class TestMain(BaseTest):
             async with BaseCaptcha(rucaptcha_key=self.get_random_string(elements), method=GeetestEnm.GEETEST.value):
                 pass
 
+    def test_failed_service(self):
+        with pytest.raises(ValueError):
+            bc = BaseCaptcha(
+                rucaptcha_key=self.RUCAPTCHA_KEY,
+                method=GeetestEnm.GEETEST.value,
+                service_type=self.get_random_string(length=10),
+            )
+
+    def test_context_failed_service(self):
+        with pytest.raises(ValueError):
+            with BaseCaptcha(
+                rucaptcha_key=self.RUCAPTCHA_KEY,
+                method=GeetestEnm.GEETEST.value,
+                service_type=self.get_random_string(length=10),
+            ) as bc:
+                pass
+
 
 class TestEnum(BaseTest):
     def test_enum_list(self):
