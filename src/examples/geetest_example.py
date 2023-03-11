@@ -1,5 +1,6 @@
 import asyncio
 
+import requests
 from python_rucaptcha.core.enums import GeetestEnm
 from python_rucaptcha.gee_test import GeeTest
 
@@ -10,15 +11,18 @@ RUCAPTCHA_KEY = "ad9053f31111a8171111111111a758570"
 Geetest example
 """
 
+resp = requests.get("https://www.geetest.com/demo/gt/register-enFullpage-official")
+resp_data = resp.json()
+
 gt = GeeTest(
     rucaptcha_key=RUCAPTCHA_KEY,
-    gt="f1ab2cdefa3456789012345b6c78d90e",
+    gt=resp_data["gt"],
     method=GeetestEnm.GEETEST.value,
     pageurl="https://www.site.com/page/",
     api_server="api-na.geetest.com",
 )
 
-print(gt.captcha_handler(challenge="12345678abc90123d45678ef90123a456b"))
+print(gt.captcha_handler(challenge=resp_data["challenge"]))
 
 
 async def run():

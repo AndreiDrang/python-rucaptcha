@@ -9,8 +9,8 @@ class GeeTest(BaseCaptcha):
         self,
         pageurl: str,
         method: str,
-        gt: str = None,
-        captcha_id: str = None,
+        gt: Optional[str] = None,
+        captcha_id: Optional[str] = None,
         *args,
         **kwargs,
     ):
@@ -20,20 +20,61 @@ class GeeTest(BaseCaptcha):
         Args:
             rucaptcha_key: User API key
             pageurl: Full URL of the captcha page
-            publickey: The value of the `pk` or `data-pkey` parameter you found in the page code
+            gt: The value of the `gt` parameter found on the site
             method: Captcha type
+            kwargs: Not required params for task creation request
 
         Examples:
-            >>> FunCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             pageurl="https://api.funcaptcha.com/tile-game-lite-mode/fc/api/nojs/?pkey=69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC&lang=en",
-            ...             publickey="69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC",
-            ...             surl="https://client-api.arkoselabs.com",
-            ...             method=FunCaptchaEnm.FUNCAPTCHA.value
-            ...             ).captcha_handler()
+            >>> import requests
+            >>> resp_data = requests.get("https://www.geetest.com/demo/gt/register-enFullpage-official").json()
+            >>> print(resp_data)
             {
-               "serverAnswer":{},
-               "captchaSolve": "23217....ger",
-               "taskId": "73045070203",
+                'success': 1,
+                'challenge': '1ad03db8aff920037fb8117827eab171',
+                'gt': '022397c99c9f646f6477822485f30404',
+                'new_captcha': True
+            }
+            >>> GeeTest(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             gt=resp_data["gt"],
+            ...             pageurl="https://www.geetest.com/en/demo",
+            ...             method=GeetestEnm.GEETEST.value,
+            ...             api_server="api.geetest.com",
+            ...             new_captcha=1,
+            ...             ).captcha_handler(challenge=resp_data["challenge"])
+            {
+               "captchaSolve": {
+                  "geetest_challenge": "1ad03db8aff920037fb8117827eab171gu",
+                  "geetest_validate": "011309d29dab6e98e8fc3784a95469cc",
+                  "geetest_seccode": "011309d29dab6e98e8fc3784a95469cc|jordan"
+               },
+               "taskId": "73052314114",
+               "error": False,
+               "errorBody": None
+            }
+
+            >>> import requests
+            >>> resp_data = requests.get("https://www.geetest.com/demo/gt/register-enFullpage-official").json()
+            >>> print(resp_data)
+            {
+                'success': 1,
+                'challenge': '1ad03db8aff920037fb8117827eab171',
+                'gt': '022397c99c9f646f6477822485f30404',
+                'new_captcha': True
+            }
+            >>> await GeeTest(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             gt=resp_data["gt"],
+            ...             pageurl="https://www.geetest.com/en/demo",
+            ...             method=GeetestEnm.GEETEST.value,
+            ...             api_server="api.geetest.com",
+            ...             new_captcha=1,
+            ...             ).aio_captcha_handler(challenge=resp_data["challenge"])
+            {
+               "captchaSolve": {
+                  "geetest_challenge": "1ad03db8aff920037fb8117827eab171gu",
+                  "geetest_validate": "011309d29dab6e98e8fc3784a95469cc",
+                  "geetest_seccode": "011309d29dab6e98e8fc3784a95469cc|jordan"
+               },
+               "taskId": "73052314114",
                "error": False,
                "errorBody": None
             }
@@ -63,8 +104,34 @@ class GeeTest(BaseCaptcha):
         """
         Sync solving method
 
-        :param challenge: The value of the challenge parameter found on the site
-        :param kwargs: Parameters for the `requests` library
+        Args:
+            challenge: The value of the challenge parameter found on the site
+            kwargs: Parameters for the `requests` library
+
+        Examples:
+            >>> GeeTest(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             gt="022397c99c9f646f6477822485f30404",
+            ...             pageurl="https://rucaptcha.com/demo/geetest",
+            ...             method=GeetestEnm.GEETEST.value,
+            ...             api_server="api.geetest.com",
+            ...             ).captcha_handler(challenge="537b31c6ff5d2bcfa9d1b75e099edcb2")
+            {
+               "captchaSolve": {
+                  "geetest_challenge": "1ad03db8aff920037fb8117827eab171gu",
+                  "geetest_validate": "011309d29dab6e98e8fc3784a95469cc",
+                  "geetest_seccode": "011309d29dab6e98e8fc3784a95469cc|jordan"
+                },
+               "taskId": "73045070203",
+               "error": False,
+               "errorBody": None
+            }
+
+        Returns:
+            Dict with full server response
+
+        Notes:
+            https://rucaptcha.com/api-rucaptcha#solving_geetest
+            https://rucaptcha.com/api-rucaptcha#geetest-v4
         """
         if self.method == GeetestEnm.GEETEST.value:
             if challenge is not None:
@@ -78,7 +145,33 @@ class GeeTest(BaseCaptcha):
         """
         Async solving method
 
-        :param challenge: The value of the challenge parameter found on the site
+        Args:
+            challenge: The value of the challenge parameter found on the site
+
+        Examples:
+            >>> await GeeTest(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             gt="022397c99c9f646f6477822485f30404",
+            ...             pageurl="https://rucaptcha.com/demo/geetest",
+            ...             method=GeetestEnm.GEETEST.value,
+            ...             api_server="api.geetest.com",
+            ...             ).aio_captcha_handler(challenge="537b31c6ff5d2bcfa9d1b75e099edcb2")
+            {
+               "captchaSolve": {
+                  "geetest_challenge": "1ad03db8aff920037fb8117827eab171gu",
+                  "geetest_validate": "011309d29dab6e98e8fc3784a95469cc",
+                  "geetest_seccode": "011309d29dab6e98e8fc3784a95469cc|jordan"
+                },
+               "taskId": "73045070203",
+               "error": False,
+               "errorBody": None
+            }
+
+        Returns:
+            Dict with full server response
+
+        Notes:
+            https://rucaptcha.com/api-rucaptcha#solving_geetest
+            https://rucaptcha.com/api-rucaptcha#geetest-v4
         """
         if self.method == GeetestEnm.GEETEST.value:
             if challenge is not None:
