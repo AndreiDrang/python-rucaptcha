@@ -21,6 +21,7 @@ class GeeTest(BaseCaptcha):
             rucaptcha_key: User API key
             pageurl: Full URL of the captcha page
             gt: The value of the `gt` parameter found on the site
+            captcha_id: The value of the `captcha_id` parameter found on the site
             method: Captcha type
             kwargs: Not required params for task creation request
 
@@ -70,13 +71,49 @@ class GeeTest(BaseCaptcha):
             ...             ).aio_captcha_handler(challenge=resp_data["challenge"])
             {
                "captchaSolve": {
-                  "geetest_challenge": "1ad03db8aff920037fb8117827eab171gu",
-                  "geetest_validate": "011309d29dab6e98e8fc3784a95469cc",
-                  "geetest_seccode": "011309d29dab6e98e8fc3784a95469cc|jordan"
+                  "geetest_challenge": "1ad0....b171gu",
+                  "geetest_validate": "011....69cc",
+                  "geetest_seccode": "0....c|jordan"
                },
                "taskId": "73052314114",
                "error": False,
                "errorBody": None
+            }
+
+            >>> GeeTest(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             captcha_id="e392e1d7fd421dc63325744d5a2b9c73",
+            ...             pageurl="https://rucaptcha.com/demo/geetest-v4",
+            ...             method=GeetestEnm.GEETEST_V4.value,
+            ...             ).captcha_handler()
+            {
+                "captchaSolve": {
+                    "captcha_id": "e39....73",
+                    "lot_number": "1b....bd2",
+                    "pass_token": "f3b....de7f",
+                    "gen_time": "1678558017",
+                    "captcha_output": "c3rHzKl....TE=",
+                },
+                "taskId": "73052937243",
+                "error": False,
+                "errorBody": "None",
+            }
+
+            >>> await GeeTest(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             captcha_id="e392e1d7fd421dc63325744d5a2b9c73",
+            ...             pageurl="https://rucaptcha.com/demo/geetest-v4",
+            ...             method=GeetestEnm.GEETEST_V4.value,
+            ...             ).aio_captcha_handler()
+            {
+                "captchaSolve": {
+                    "captcha_id": "e39....73",
+                    "lot_number": "1b....bd2",
+                    "pass_token": "f3b....de7f",
+                    "gen_time": "1678558017",
+                    "captcha_output": "c3rHzKl....TE=",
+                },
+                "taskId": "73052937243",
+                "error": False,
+                "errorBody": "None",
             }
 
         Returns:
@@ -126,6 +163,24 @@ class GeeTest(BaseCaptcha):
                "errorBody": None
             }
 
+            >>> GeeTest(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             captcha_id="e392e1d7fd421dc63325744d5a2b9c73",
+            ...             pageurl="https://rucaptcha.com/demo/geetest-v4",
+            ...             method=GeetestEnm.GEETEST_V4.value,
+            ...             ).captcha_handler()
+            {
+                "captchaSolve": {
+                    "captcha_id": "e39....73",
+                    "lot_number": "1b....bd2",
+                    "pass_token": "f3b....de7f",
+                    "gen_time": "1678558017",
+                    "captcha_output": "c3rHzKl....TE=",
+                },
+                "taskId": "73052937243",
+                "error": False,
+                "errorBody": "None",
+            }
+
         Returns:
             Dict with full server response
 
@@ -164,6 +219,24 @@ class GeeTest(BaseCaptcha):
                "taskId": "73045070203",
                "error": False,
                "errorBody": None
+            }
+
+            >>> await GeeTest(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             captcha_id="e392e1d7fd421dc63325744d5a2b9c73",
+            ...             pageurl="https://rucaptcha.com/demo/geetest-v4",
+            ...             method=GeetestEnm.GEETEST_V4.value,
+            ...             ).aio_captcha_handler()
+            {
+                "captchaSolve": {
+                    "captcha_id": "e39....73",
+                    "lot_number": "1b....bd2",
+                    "pass_token": "f3b....de7f",
+                    "gen_time": "1678558017",
+                    "captcha_output": "c3rHzKl....TE=",
+                },
+                "taskId": "73052937243",
+                "error": False,
+                "errorBody": "None",
             }
 
         Returns:
