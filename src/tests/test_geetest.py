@@ -55,6 +55,7 @@ class TestGeeTest(TestGeeTestBase):
         assert result["error"] is True
         assert result["taskId"].isnumeric() is True
         assert isinstance(result["errorBody"], str) is True
+        assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
@@ -80,6 +81,7 @@ class TestGeeTest(TestGeeTestBase):
         assert result["error"] is True
         assert result["taskId"].isnumeric() is True
         assert isinstance(result["errorBody"], str) is True
+        assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == ResponseSer().dict().keys()
 
     def test_context_basic_data(self):
@@ -183,6 +185,7 @@ class TestGeeTestV4(TestGeeTestBase):
         assert result["error"] is True
         assert result["taskId"].isnumeric() is True
         assert isinstance(result["errorBody"], str) is True
+        assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
@@ -208,6 +211,7 @@ class TestGeeTestV4(TestGeeTestBase):
         assert result["error"] is True
         assert result["taskId"].isnumeric() is True
         assert isinstance(result["errorBody"], str) is True
+        assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == ResponseSer().dict().keys()
 
     def test_context_basic_data(self):
