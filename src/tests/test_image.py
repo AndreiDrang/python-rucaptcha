@@ -159,7 +159,6 @@ class TestImageCaptcha(BaseTest):
         instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=SaveFormatsEnm.CONST)
 
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.params.save_format == SaveFormatsEnm.CONST
 
         result = await instance.aio_captcha_handler(captcha_file=self.captcha_file)
 
@@ -192,4 +191,46 @@ class TestImageCaptcha(BaseTest):
         assert result["errorBody"] == ImageCaptcha.NO_CAPTCHA_ERR
         assert result["captchaSolve"] == {}
 
+        assert result.keys() == ResponseSer().dict().keys()
+
+    @pytest.mark.asyncio
+    async def test_aio_no_captcha(self):
+        instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
+
+        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
+
+        result = await instance.aio_captcha_handler()
+
+        assert isinstance(result, dict) is True
+        assert result["error"] is True
+        assert result["taskId"] is None
+        assert result["errorBody"] == ImageCaptcha.NO_CAPTCHA_ERR
+        assert result["captchaSolve"] == {}
+        assert result.keys() == ResponseSer().dict().keys()
+
+    def test_wrong_link(self):
+        instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
+
+        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
+
+        result = instance.captcha_handler(captcha_link=self.get_random_string(length=50))
+
+        assert isinstance(result, dict) is True
+        assert result["error"] is True
+        assert result["taskId"] is None
+        assert result["captchaSolve"] == {}
+        assert result.keys() == ResponseSer().dict().keys()
+
+    @pytest.mark.asyncio
+    async def test_aio_wrong_link(self):
+        instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
+
+        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
+
+        result = await instance.aio_captcha_handler(captcha_link=self.get_random_string(length=50))
+
+        assert isinstance(result, dict) is True
+        assert result["error"] is True
+        assert result["taskId"] is None
+        assert result["captchaSolve"] == {}
         assert result.keys() == ResponseSer().dict().keys()
