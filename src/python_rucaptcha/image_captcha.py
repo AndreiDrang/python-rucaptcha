@@ -10,7 +10,6 @@ from python_rucaptcha.core.enums import SaveFormatsEnm, ImageCaptchaEnm
 
 
 class ImageCaptcha(BaseCaptcha):
-
     NO_CAPTCHA_ERR = "You did not send any file, local link or URL."
 
     def __init__(
