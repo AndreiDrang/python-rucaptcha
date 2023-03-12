@@ -155,7 +155,7 @@ class ImageCaptcha(BaseCaptcha):
             except Exception as error:
                 self.result.error = True
                 self.result.errorBody = error
-                return self.result.dict(exclude_none=True)
+                return self.result.dict()
 
             # according to the value of the passed parameter, select the function to save the image
             if self.save_format == SaveFormatsEnm.CONST.value:
@@ -226,7 +226,7 @@ class ImageCaptcha(BaseCaptcha):
             except Exception as error:
                 self.result.error = True
                 self.result.errorBody = error
-                return self.result.dict(exclude_none=True)
+                return self.result.dict()
 
             # according to the value of the passed parameter, select the function to save the image
             if self.save_format == SaveFormatsEnm.CONST.value:
