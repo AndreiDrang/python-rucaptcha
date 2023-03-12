@@ -20,6 +20,8 @@ def result_processing(captcha_response: ServiceGetResponseSer, result: ResponseS
 
     # if solving is success
     elif captcha_response.status == 1:
+        result.error = False
+        result.errorBody = None
         result.captchaSolve = captcha_response.request
 
         # if this is ReCaptcha v3 then we get it from the server

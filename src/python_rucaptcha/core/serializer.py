@@ -1,5 +1,5 @@
 from uuid import uuid4
-from typing import Union
+from typing import Union, Optional
 
 from pydantic import Field, BaseModel, conint, constr, validator, root_validator
 
@@ -152,9 +152,9 @@ class ServiceGetResponseSer(BaseModel):
 
 class ResponseSer(BaseModel):
     captchaSolve: dict = {}
-    taskId: int = None
+    taskId: Optional[int] = None
     error: bool = False
-    errorBody: str = None
+    errorBody: Optional[str] = None
 
     @validator("taskId", pre=True, always=True)
     def dt_check(cls, value):

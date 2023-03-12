@@ -1,7 +1,7 @@
 import asyncio
 
-from src.python_rucaptcha.enums import KeyCaptchaEnm
-from src.python_rucaptcha.KeyCaptcha import KeyCaptcha, aioKeyCaptcha
+from src.python_rucaptcha.core.enums import KeyCaptchaEnm
+from src.python_rucaptcha.key_captcha import KeyCaptcha
 
 # Rucaptcha API Key from your account
 RUCAPTCHA_KEY = "ad9053f111111111111111fa758570"
@@ -28,7 +28,7 @@ print(result)
 
 async def run():
     try:
-        key_captcha = await aioKeyCaptcha(
+        key_captcha = await KeyCaptcha(
             rucaptcha_key=RUCAPTCHA_KEY,
             pageurl=pageurl,
             s_s_c_user_id=s_s_c_user_id,
@@ -36,7 +36,7 @@ async def run():
             s_s_c_web_server_sign=s_s_c_web_server_sign,
             s_s_c_web_server_sign2=s_s_c_web_server_sign2,
             method=KeyCaptchaEnm.KEYCAPTCHA.value,
-        ).captcha_handler()
+        ).aio_captcha_handler()
         print(key_captcha)
     except Exception as err:
         print(err)
