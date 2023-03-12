@@ -10,9 +10,7 @@ class TextCaptcha(BaseCaptcha):
         **kwargs,
     ):
         """
-        The class is used to work with TextCaptcha.
-        Solve description:
-            https://rucaptcha.com/api-rucaptcha#solving_text_captcha
+        The class is used to work with Text Captcha.
 
         Args:
             rucaptcha_key: User API key
