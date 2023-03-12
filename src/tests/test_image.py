@@ -115,10 +115,51 @@ class TestImageCaptcha(BaseTest):
         assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
+    async def test_aio_basic_data_link_const(self):
+        instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=SaveFormatsEnm.CONST)
+
+        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
+
+        result = await instance.aio_captcha_handler(captcha_link=self.captcha_url)
+
+        assert isinstance(result, dict) is True
+        if result["error"] is False:
+            assert result["error"] is False
+            assert result["taskId"].isnumeric() is True
+            assert result["errorBody"] is None
+            assert isinstance(result["captchaSolve"], str) is True
+        else:
+            assert result["error"] is True
+            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+
+        assert result.keys() == ResponseSer().dict().keys()
+
+    @pytest.mark.asyncio
     async def test_aio_basic_data_file(self):
         instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
 
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
+
+        result = await instance.aio_captcha_handler(captcha_file=self.captcha_file)
+
+        assert isinstance(result, dict) is True
+        if result["error"] is False:
+            assert result["error"] is False
+            assert result["taskId"].isnumeric() is True
+            assert result["errorBody"] is None
+            assert isinstance(result["captchaSolve"], str) is True
+        else:
+            assert result["error"] is True
+            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+
+        assert result.keys() == ResponseSer().dict().keys()
+
+    @pytest.mark.asyncio
+    async def test_aio_basic_data_file_const(self):
+        instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=SaveFormatsEnm.CONST)
+
+        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
+        assert instance.params.save_format == SaveFormatsEnm.CONST
 
         result = await instance.aio_captcha_handler(captcha_file=self.captcha_file)
 
