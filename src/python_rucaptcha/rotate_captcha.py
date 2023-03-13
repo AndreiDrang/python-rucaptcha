@@ -107,7 +107,7 @@ class RotateCaptcha(BaseCaptcha):
                 self.post_payload.update({"body": base64.b64encode(content).decode("utf-8")})
             except Exception as error:
                 self.result.error = True
-                self.result.errorBody = error
+                self.result.errorBody = str(error)
                 return self.result.dict()
 
         else:
@@ -165,7 +165,7 @@ class RotateCaptcha(BaseCaptcha):
                 self.post_payload.update({"body": base64.b64encode(content).decode("utf-8")})
             except Exception as error:
                 self.result.error = True
-                self.result.errorBody = error
+                self.result.errorBody = str(error)
                 return self.result.dict()
 
         else:

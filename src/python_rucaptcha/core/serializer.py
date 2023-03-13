@@ -130,7 +130,7 @@ HTTP API Response
 """
 
 
-class ServicePostResponseSer(BaseModel):
+class ServicePostResponseSer(MyBaseModel):
     status: int
     request: str
 
@@ -145,7 +145,7 @@ class ServiceGetResponseSer(BaseModel):
 
 
 class ResponseSer(MyBaseModel):
-    captchaSolve: dict = {}
+    captchaSolve: Union[dict, str] = {}
     taskId: Optional[int] = None
     error: bool = False
     errorBody: Optional[str] = None

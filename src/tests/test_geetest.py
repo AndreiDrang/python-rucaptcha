@@ -53,7 +53,7 @@ class TestGeeTest(TestGeeTestBase):
 
         assert isinstance(result, dict) is True
         assert result["error"] is True
-        assert result["taskId"].isnumeric() is True
+        assert isinstance(result["taskId"], int) is True
         assert isinstance(result["errorBody"], str) is True
         assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == ResponseSer().dict().keys()
@@ -79,7 +79,7 @@ class TestGeeTest(TestGeeTestBase):
 
         assert isinstance(result, dict) is True
         assert result["error"] is True
-        assert result["taskId"].isnumeric() is True
+        assert isinstance(result["taskId"], int) is True
         assert isinstance(result["errorBody"], str) is True
         assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == ResponseSer().dict().keys()
@@ -183,7 +183,7 @@ class TestGeeTestV4(TestGeeTestBase):
 
         assert isinstance(result, dict) is True
         assert result["error"] is True
-        assert result["taskId"].isnumeric() is True
+        assert isinstance(result["taskId"], int) is True
         assert isinstance(result["errorBody"], str) is True
         assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == ResponseSer().dict().keys()
@@ -209,7 +209,7 @@ class TestGeeTestV4(TestGeeTestBase):
 
         assert isinstance(result, dict) is True
         assert result["error"] is True
-        assert result["taskId"].isnumeric() is True
+        assert isinstance(result["taskId"], int) is True
         assert isinstance(result["errorBody"], str) is True
         assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == ResponseSer().dict().keys()

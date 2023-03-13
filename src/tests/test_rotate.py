@@ -27,7 +27,7 @@ class TestRotateCaptcha(BaseTest):
         assert isinstance(result, dict) is True
         if result["error"] is False:
             assert result["error"] is False
-            assert result["taskId"].isnumeric() is True
+            assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] is None
             assert isinstance(result["captchaSolve"], str) is True
         else:
@@ -46,7 +46,7 @@ class TestRotateCaptcha(BaseTest):
         assert isinstance(result, dict) is True
         if result["error"] is False:
             assert result["error"] is False
-            assert result["taskId"].isnumeric() is True
+            assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] is None
             assert isinstance(result["captchaSolve"], str) is True
         else:
@@ -66,7 +66,7 @@ class TestRotateCaptcha(BaseTest):
         assert isinstance(result, dict) is True
         if result["error"] is False:
             assert result["error"] is False
-            assert result["taskId"].isnumeric() is True
+            assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] is None
             assert isinstance(result["captchaSolve"], str) is True
         else:
@@ -86,7 +86,7 @@ class TestRotateCaptcha(BaseTest):
         assert isinstance(result, dict) is True
         if result["error"] is False:
             assert result["error"] is False
-            assert result["taskId"].isnumeric() is True
+            assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] is None
             assert isinstance(result["captchaSolve"], str) is True
         else:

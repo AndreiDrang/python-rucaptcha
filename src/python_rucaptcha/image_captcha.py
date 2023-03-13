@@ -128,7 +128,7 @@ class ImageCaptcha(BaseCaptcha):
                 content = self.url_open(url=captcha_link, **kwargs).content
             except Exception as error:
                 self.result.error = True
-                self.result.errorBody = error
+                self.result.errorBody = str(error)
                 return self.result.dict()
 
             # according to the value of the passed parameter, select the function to save the image
@@ -199,7 +199,7 @@ class ImageCaptcha(BaseCaptcha):
                 content = await self.aio_url_read(url=captcha_link, **kwargs)
             except Exception as error:
                 self.result.error = True
-                self.result.errorBody = error
+                self.result.errorBody = str(error)
                 return self.result.dict()
 
             # according to the value of the passed parameter, select the function to save the image

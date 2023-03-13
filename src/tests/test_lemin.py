@@ -41,7 +41,7 @@ class TestLeminCroppedCaptcha(BaseTest):
         assert isinstance(result, dict) is True
         if result["error"] is False:
             assert result["error"] is False
-            assert result["taskId"].isnumeric() is True
+            assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] is None
             assert isinstance(result["captchaSolve"], dict) is True
         else:
@@ -72,7 +72,7 @@ class TestLeminCroppedCaptcha(BaseTest):
         assert isinstance(result, dict) is True
         if result["error"] is False:
             assert result["error"] is False
-            assert result["taskId"].isnumeric() is True
+            assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] is None
             assert isinstance(result["captchaSolve"], dict) is True
         else:

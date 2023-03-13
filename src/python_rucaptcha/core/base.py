@@ -72,7 +72,7 @@ class BaseCaptcha:
                 self.result.errorBody = response.request
         except Exception as error:
             self.result.error = True
-            self.result.errorBody = error
+            self.result.errorBody = str(error)
 
         # check for errors while make request to server
         if self.result.error:
@@ -122,7 +122,7 @@ class BaseCaptcha:
                 self.result.errorBody = response.request
         except Exception as error:
             self.result.error = True
-            self.result.errorBody = error
+            self.result.errorBody = str(error)
 
         # check for errors while make request to server
         if self.result.error:

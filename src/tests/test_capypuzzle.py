@@ -40,12 +40,12 @@ class TestCapyPuzzle(BaseTest):
         assert isinstance(result, dict) is True
         if result["error"] is False:
             assert result["error"] is False
-            assert result["taskId"].isnumeric() is True
+            assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] is None
             assert isinstance(result["captchaSolve"], dict) is True
         else:
             assert result["error"] is True
-            assert result["taskId"].isnumeric() is True
+            assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
         assert result.keys() == ResponseSer().dict().keys()
@@ -71,12 +71,12 @@ class TestCapyPuzzle(BaseTest):
         assert isinstance(result, dict) is True
         if result["error"] is False:
             assert result["error"] is False
-            assert result["taskId"].isnumeric() is True
+            assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] is None
             assert isinstance(result["captchaSolve"], dict) is True
         else:
             assert result["error"] is True
-            assert result["taskId"].isnumeric() is True
+            assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
         assert result.keys() == ResponseSer().dict().keys()
