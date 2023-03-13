@@ -1,7 +1,7 @@
 import asyncio
 
-from src.python_rucaptcha.enums import ReCaptchaEnm
-from src.python_rucaptcha.ReCaptcha import ReCaptcha, aioReCaptcha
+from python_rucaptcha.core.enums import ReCaptchaEnm
+from python_rucaptcha.re_captcha import ReCaptcha
 
 # Rucaptcha API Key from your account
 RUCAPTCHA_KEY = "ad9053f111111111111111fa758570"
@@ -24,12 +24,12 @@ print(result)
 
 async def run():
     try:
-        re_captcha = await aioReCaptcha(
+        re_captcha = await ReCaptcha(
             rucaptcha_key=RUCAPTCHA_KEY,
             pageurl=pageurl,
             googlekey=googlekey,
             method=ReCaptchaEnm.USER_RECAPTCHA.value,
-        ).captcha_handler()
+        ).aio_captcha_handler()
         print(re_captcha)
     except Exception as err:
         print(err)
@@ -55,13 +55,13 @@ print(result)
 
 async def run():
     try:
-        re_captcha = await aioReCaptcha(
+        re_captcha = await ReCaptcha(
             rucaptcha_key=RUCAPTCHA_KEY,
             pageurl=pageurl,
             googlekey=googlekey,
             method=ReCaptchaEnm.USER_RECAPTCHA.value,
             invisible=1,
-        ).captcha_handler()
+        ).aio_captcha_handler()
         print(re_captcha)
     except Exception as err:
         print(err)
