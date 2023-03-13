@@ -1,7 +1,7 @@
 import asyncio
 
-from src.python_rucaptcha.enums import HCaptchaEnm
-from src.python_rucaptcha.HCaptcha import HCaptcha, aioHCaptcha
+from src.python_rucaptcha.core.enums import HCaptchaEnm
+from src.python_rucaptcha.hcaptcha import HCaptcha
 
 # Rucaptcha API Key from your account
 RUCAPTCHA_KEY = "ad911111111111ca81755768608fa758570"
@@ -19,9 +19,9 @@ print(result)
 
 async def run():
     try:
-        lemin_captcha = await aioHCaptcha(
+        lemin_captcha = await HCaptcha(
             rucaptcha_key=RUCAPTCHA_KEY, sitekey=sitekey, pageurl=pageurl, method=HCaptchaEnm.HCAPTCHA.value
-        ).captcha_handler()
+        ).aio_captcha_handler()
         print(lemin_captcha)
     except Exception as err:
         print(err)
