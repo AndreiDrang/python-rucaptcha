@@ -11,7 +11,12 @@ Socket API Serializers
 """
 
 
-class CaptchaOptionsSocketSer(BaseModel):
+class MyBaseModel(BaseModel):
+    class Config:
+        validate_assignment = True
+
+
+class CaptchaOptionsSocketSer(MyBaseModel):
     phrase: bool = False
     caseSensitive: bool = False
     numeric: conint(ge=1, le=4) = 0
@@ -21,18 +26,7 @@ class CaptchaOptionsSocketSer(BaseModel):
     lang: str = ""
     hintText: constr(max_length=139) = ""
     hintImg: str = ""
-    softId: str = "1899"
-
-    @validator("hintText")
-    def hint_text_check(cls, value):
-        if len(value) > 140:
-            raise ValueError("Invalid `hintText` param value")
-        return value
-
-    @validator("softId")
-    def soft_id_set(cls, value):
-        value.update({"softId": "1899"})
-        return value
+    softId: str = Field(APP_KEY, const=True)
 
 
 class NormalCaptchaSocketSer(BaseModel):
@@ -82,7 +76,7 @@ HTTP API Serializers
 """
 
 
-class PostRequestSer(BaseModel):
+class PostRequestSer(MyBaseModel):
     key: str
     method: str
     soft_id: str = Field(APP_KEY, const=True)
@@ -150,14 +144,8 @@ class ServiceGetResponseSer(BaseModel):
     user_score: str = ""
 
 
-class ResponseSer(BaseModel):
+class ResponseSer(MyBaseModel):
     captchaSolve: dict = {}
     taskId: Optional[int] = None
     error: bool = False
     errorBody: Optional[str] = None
-
-    @validator("taskId", pre=True, always=True)
-    def dt_check(cls, value):
-        if value:
-            value = int(value)
-        return value
