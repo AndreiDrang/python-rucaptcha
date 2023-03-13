@@ -7,11 +7,17 @@ import pytest
 
 
 @pytest.fixture(scope="function")
-def delay():
+def delay_func():
+    time.sleep(5)
+
+
+@pytest.fixture(scope="class")
+def delay_class():
     time.sleep(10)
 
 
-@pytest.mark.usefixtures("delay")
+@pytest.mark.usefixtures("delay_func")
+@pytest.mark.usefixtures("delay_class")
 class BaseTest:
     RUCAPTCHA_KEY = os.getenv("RUCAPTCHA_KEY", "ad9053f3182ca81755768608fa758570")
     sleep_time = 5
