@@ -8,12 +8,12 @@ import pytest
 
 @pytest.fixture(scope="function")
 def delay_func():
-    time.sleep(5)
+    time.sleep(10)
 
 
 @pytest.fixture(scope="class")
 def delay_class():
-    time.sleep(10)
+    time.sleep(30)
 
 
 @pytest.mark.usefixtures("delay_func")
