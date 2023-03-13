@@ -5,7 +5,8 @@ from urllib3.util.retry import Retry
 from src.tests.conftest import BaseTest
 from python_rucaptcha.core.base import BaseCaptcha
 from python_rucaptcha.core.enums import MyEnum, GeetestEnm
-from python_rucaptcha.core.config import RETRIES, ASYNC_RETRIES, attempts_generator
+from python_rucaptcha.core.config import APP_KEY, RETRIES, ASYNC_RETRIES, attempts_generator
+from python_rucaptcha.core.serializer import PostRequestSer
 
 
 class TestMain(BaseTest):
@@ -89,3 +90,14 @@ class TestConfig(BaseTest):
         for attempt in attempts:
             assert isinstance(attempt, int)
         assert attempt == 4
+
+
+class TestSer(BaseTest):
+    def test_soft_id(self):
+        instance = PostRequestSer(key=self.get_random_string(length=5), method=self.get_random_string(length=5))
+        assert instance.soft_id == APP_KEY
+
+    def test_soft_id_change(self):
+        with pytest.raises(ValueError):
+            instance = PostRequestSer(key=self.get_random_string(length=5), method=self.get_random_string(length=5))
+            instance.soft_id = self.get_random_string(length=5)
