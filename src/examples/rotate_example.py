@@ -1,7 +1,7 @@
 import asyncio
 
-from src.python_rucaptcha.enums import RotateCaptchaEnm
-from src.python_rucaptcha.RotateCaptcha import RotateCaptcha, aioRotateCaptcha
+from python_rucaptcha.core.enums import RotateCaptchaEnm
+from python_rucaptcha.rotate_captcha import RotateCaptcha
 
 # Rucaptcha API Key from your account
 RUCAPTCHA_KEY = "ad911111111111ca81755768608fa758570"
@@ -22,17 +22,17 @@ print(result)
 
 # ASYNC example
 
-rotate_captcha = aioRotateCaptcha(rucaptcha_key=RUCAPTCHA_KEY, method=RotateCaptchaEnm.ROTATECAPTCHA.value)
+rotate_captcha = RotateCaptcha(rucaptcha_key=RUCAPTCHA_KEY, method=RotateCaptchaEnm.ROTATECAPTCHA.value)
 
 
 async def run():
     # file URL
-    result = await rotate_captcha.captcha_handler(captcha_link=captcha_url)
+    result = await rotate_captcha.aio_captcha_handler(captcha_link=captcha_url)
 
     print(result)
 
     # file path
-    result = await rotate_captcha.captcha_handler(captcha_link=captcha_path)
+    result = await rotate_captcha.aio_captcha_handler(captcha_link=captcha_path)
 
     print(result)
 

@@ -1,17 +1,12 @@
-import os
-import uuid
 import base64
 import shutil
 from typing import Optional
-from pathlib import Path
 
 from python_rucaptcha.core.base import BaseCaptcha
 from python_rucaptcha.core.enums import SaveFormatsEnm, ImageCaptchaEnm
 
 
 class ImageCaptcha(BaseCaptcha):
-    NO_CAPTCHA_ERR = "You did not send any file, local link or URL."
-
     def __init__(
         self,
         save_format: str = SaveFormatsEnm.TEMP.value,
@@ -77,27 +72,6 @@ class ImageCaptcha(BaseCaptcha):
         self.save_format = save_format
         self.img_clearing = img_clearing
         self.img_path = img_path
-
-    def _image_const_saver(self, content: bytes, img_path: str):
-        """
-        Method create and save file in folder
-        """
-        Path(img_path).mkdir(parents=True, exist_ok=True)
-
-        # generate image name
-        self._image_name = f"im-{uuid.uuid4()}.png"
-
-        # save image to folder
-        with open(os.path.join(img_path, self._image_name), "wb") as out_image:
-            out_image.write(content)
-
-    @staticmethod
-    def _local_image_captcha(captcha_file: str):
-        """
-        Method get local image, read it and prepare for sending to Captcha solving service
-        """
-        with open(captcha_file, "rb") as file:
-            return file.read()
 
     def captcha_handler(
         self,
@@ -184,11 +158,11 @@ class ImageCaptcha(BaseCaptcha):
             captcha_link: Captcha image URL
             captcha_file: Captcha image file path
             captcha_base64: Captcha image BASE64 info
-            kwargs: additional params for `requests` library
+            kwargs: additional params for `aiohttp` library
 
         Examples:
-            >>> ImageCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             ).captcha_handler(captcha_link="https://rucaptcha.com/dist/web/99581b9d446a509a0a01954438a5e36a.jpg")
+            >>> await ImageCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             ).aio_captcha_handler(captcha_link="https://rucaptcha.com/dist/web/99581b9d446a509a0a01954438a5e36a.jpg")
             {
                 'captchaSolve': 'W9H5K',
                 'taskId': '73043008354',
@@ -196,8 +170,8 @@ class ImageCaptcha(BaseCaptcha):
                 'errorBody': None
             }
 
-            >>> ImageCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             ).captcha_handler(captcha_file="src/examples/088636.png")
+            >>> await ImageCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             ).aio_captcha_handler(captcha_file="src/examples/088636.png")
             {
                 'captchaSolve': '088636',
                 'taskId': '73043008354',

@@ -1,5 +1,8 @@
+import os
 import time
+import uuid
 import asyncio
+from pathlib import Path
 
 import aiohttp
 import requests
@@ -12,6 +15,8 @@ from .result_handler import get_sync_result, get_async_result
 
 
 class BaseCaptcha:
+    NO_CAPTCHA_ERR = "You did not send any file, local link or URL."
+
     def __init__(
         self,
         rucaptcha_key: str,
@@ -145,6 +150,29 @@ class BaseCaptcha:
                     ) as resp:
                         response_json = await resp.json()
                         return ServicePostResponseSer(**response_json)
+
+    # Working with images methods
+
+    @staticmethod
+    def _local_image_captcha(captcha_file: str):
+        """
+        Method get local image, read it and prepare for sending to Captcha solving service
+        """
+        with open(captcha_file, "rb") as file:
+            return file.read()
+
+    def _image_const_saver(self, content: bytes, img_path: str):
+        """
+        Method create and save file in folder
+        """
+        Path(img_path).mkdir(parents=True, exist_ok=True)
+
+        # generate image name
+        self._image_name = f"im-{uuid.uuid4()}.png"
+
+        # save image to folder
+        with open(os.path.join(img_path, self._image_name), "wb") as out_image:
+            out_image.write(content)
 
     def __enter__(self):
         return self
