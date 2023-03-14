@@ -27,7 +27,7 @@ class CapyPuzzle(BaseCaptcha):
                   "challengekey": "Uf....It",
                   "answer": "26x...x9mx"
                },
-               "taskId": "73044748849",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -45,7 +45,7 @@ class CapyPuzzle(BaseCaptcha):
                   "challengekey": "Uf....It",
                   "answer": "26x...x9mx"
                },
-               "taskId": "73044148849",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -63,7 +63,7 @@ class CapyPuzzle(BaseCaptcha):
                   "challengekey": "Uf....It",
                   "answer": "26x...x9mx"
                },
-               "taskId": "73044748849",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -103,7 +103,7 @@ class CapyPuzzle(BaseCaptcha):
                   "challengekey": "Uf....It",
                   "answer": "26x...x9mx"
                },
-               "taskId": "73044748849",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -121,7 +121,7 @@ class CapyPuzzle(BaseCaptcha):
                   "challengekey": "Uf....It",
                   "answer": "26x...x9mx"
                },
-               "taskId": "73044148849",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -130,7 +130,7 @@ class CapyPuzzle(BaseCaptcha):
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_capy
+            Check class docstirng for more info
         """
 
         return self._processing_response(**kwargs)
@@ -153,7 +153,7 @@ class CapyPuzzle(BaseCaptcha):
                   "challengekey": "Uf....It",
                   "answer": "26x...x9mx"
                },
-               "taskId": "73044748849",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -171,7 +171,7 @@ class CapyPuzzle(BaseCaptcha):
                   "challengekey": "Uf....It",
                   "answer": "26x...x9mx"
                },
-               "taskId": "73044148849",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -180,6 +180,6 @@ class CapyPuzzle(BaseCaptcha):
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_capy
+            Check class docstirng for more info
         """
         return await self._aio_processing_response()

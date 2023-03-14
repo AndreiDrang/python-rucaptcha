@@ -1,6 +1,6 @@
 import pytest
 
-from src.tests.conftest import BaseTest
+from tests.conftest import BaseTest
 from python_rucaptcha.core.enums import CapyPuzzleEnm
 from python_rucaptcha.capy_puzzle import CapyPuzzle
 from python_rucaptcha.core.serializer import ResponseSer

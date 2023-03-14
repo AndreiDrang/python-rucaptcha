@@ -22,7 +22,7 @@ class FunCaptcha(BaseCaptcha):
             ...             ).captcha_handler()
             {
                "captchaSolve": "23217....ger",
-               "taskId": "73045070203",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -58,7 +58,7 @@ class FunCaptcha(BaseCaptcha):
             ...             ).captcha_handler()
             {
                "captchaSolve": "23217....ger",
-               "taskId": "73045070203",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -85,7 +85,7 @@ class FunCaptcha(BaseCaptcha):
             ...             ).aio_captcha_handler()
             {
                "captchaSolve": "23217....ger",
-               "taskId": "73045070203",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }

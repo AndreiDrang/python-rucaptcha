@@ -48,7 +48,7 @@ class GeeTest(BaseCaptcha):
                   "geetest_validate": "011309d29dab6e98e8fc3784a95469cc",
                   "geetest_seccode": "011309d29dab6e98e8fc3784a95469cc|jordan"
                },
-               "taskId": "73052314114",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -75,7 +75,7 @@ class GeeTest(BaseCaptcha):
                   "geetest_validate": "011....69cc",
                   "geetest_seccode": "0....c|jordan"
                },
-               "taskId": "73052314114",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -93,7 +93,7 @@ class GeeTest(BaseCaptcha):
                     "gen_time": "1678558017",
                     "captcha_output": "c3rHzKl....TE=",
                 },
-                "taskId": "73052937243",
+               "taskId": 73052314114,
                 "error": False,
                 "errorBody": "None",
             }
@@ -111,7 +111,7 @@ class GeeTest(BaseCaptcha):
                     "gen_time": "1678558017",
                     "captcha_output": "c3r....TE=",
                 },
-                "taskId": "73052937243",
+               "taskId": 73052314114,
                 "error": False,
                 "errorBody": "None",
             }
@@ -158,7 +158,7 @@ class GeeTest(BaseCaptcha):
                   "geetest_validate": "011309d29dab6e98e8fc3784a95469cc",
                   "geetest_seccode": "011309d29dab6e98e8fc3784a95469cc|jordan"
                 },
-               "taskId": "73045070203",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -176,7 +176,7 @@ class GeeTest(BaseCaptcha):
                     "gen_time": "1678558017",
                     "captcha_output": "c3rHzKl....TE=",
                 },
-                "taskId": "73052937243",
+               "taskId": 73052314114,
                 "error": False,
                 "errorBody": "None",
             }
@@ -216,7 +216,7 @@ class GeeTest(BaseCaptcha):
                   "geetest_validate": "011309d29dab6e98e8fc3784a95469cc",
                   "geetest_seccode": "011309d29dab6e98e8fc3784a95469cc|jordan"
                 },
-               "taskId": "73045070203",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -234,7 +234,7 @@ class GeeTest(BaseCaptcha):
                     "gen_time": "1678558017",
                     "captcha_output": "c3rHzKl....TE=",
                 },
-                "taskId": "73052937243",
+               "taskId": 73052314114,
                 "error": False,
                 "errorBody": "None",
             }

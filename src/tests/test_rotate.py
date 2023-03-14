@@ -1,6 +1,6 @@
 import pytest
 
-from src.tests.conftest import BaseTest
+from tests.conftest import BaseTest
 from python_rucaptcha.rotate_captcha import RotateCaptcha
 from python_rucaptcha.core.serializer import ResponseSer
 

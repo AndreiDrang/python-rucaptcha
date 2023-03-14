@@ -36,7 +36,7 @@ class LeminCroppedCaptcha(BaseCaptcha):
                   "answer":"0xc....EUa",
                   "challenge_id":"58.....63a"
                },
-               "taskId": "73052314114",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -53,7 +53,7 @@ class LeminCroppedCaptcha(BaseCaptcha):
                   "answer":"0xc....EUa",
                   "challenge_id":"58.....63a"
                },
-               "taskId": "73052314114",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -92,7 +92,7 @@ class LeminCroppedCaptcha(BaseCaptcha):
                   "answer":"0xc....EUa",
                   "challenge_id":"58.....63a"
                },
-               "taskId": "73052314114",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -122,7 +122,7 @@ class LeminCroppedCaptcha(BaseCaptcha):
                   "answer":"0xc....EUa",
                   "challenge_id":"58.....63a"
                },
-               "taskId": "73052314114",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }

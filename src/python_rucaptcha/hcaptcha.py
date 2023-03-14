@@ -30,7 +30,7 @@ class HCaptcha(BaseCaptcha):
             ...             ).captcha_handler()
             {
                "captchaSolve": "P1_eyJ.....cp_J",
-               "taskId": "73052314114",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -42,7 +42,7 @@ class HCaptcha(BaseCaptcha):
             ...             ).aio_captcha_handler()
             {
                "captchaSolve": "P1_eyJ.....cp_J",
-               "taskId": "73052314114",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -76,7 +76,7 @@ class HCaptcha(BaseCaptcha):
             ...             ).captcha_handler()
             {
                "captchaSolve": "P1_eyJ.....cp_J",
-               "taskId": "73052314114",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }
@@ -102,7 +102,7 @@ class HCaptcha(BaseCaptcha):
             ...             ).aio_captcha_handler()
             {
                "captchaSolve": "P1_eyJ.....cp_J",
-               "taskId": "73052314114",
+               "taskId": 73052314114,
                "error": False,
                "errorBody": None
             }

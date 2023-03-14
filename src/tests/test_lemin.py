@@ -1,6 +1,6 @@
 import pytest
 
-from src.tests.conftest import BaseTest
+from tests.conftest import BaseTest
 from python_rucaptcha.core.enums import LeminCroppedCaptchaEnm
 from python_rucaptcha.core.serializer import ResponseSer
 from python_rucaptcha.lemin_cropped_captcha import LeminCroppedCaptcha

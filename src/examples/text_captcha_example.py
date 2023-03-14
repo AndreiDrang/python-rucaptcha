@@ -1,6 +1,6 @@
 import asyncio
 
-from src.python_rucaptcha.text_captcha import TextCaptcha
+from python_rucaptcha.text_captcha import TextCaptcha
 
 # Rucaptcha API Key from your account
 RUCAPTCHA_KEY = "ad911111111111ca81755768608fa758570"

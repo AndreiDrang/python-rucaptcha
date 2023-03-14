@@ -1,6 +1,6 @@
 import pytest
 
-from src.tests.conftest import BaseTest
+from tests.conftest import BaseTest
 from python_rucaptcha.core.enums import SaveFormatsEnm
 from python_rucaptcha.image_captcha import ImageCaptcha
 from python_rucaptcha.core.serializer import ResponseSer

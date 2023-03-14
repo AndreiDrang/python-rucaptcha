@@ -1,7 +1,7 @@
 import asyncio
 
-from src.python_rucaptcha.enums import YandexSmartCaptchaEnm
-from src.python_rucaptcha.YandexSmartCaptcha import YandexSmartCaptcha, aioYandexSmartCaptcha
+from python_rucaptcha.core.enums import YandexSmartCaptchaEnm
+from python_rucaptcha.YandexSmartCaptcha import YandexSmartCaptcha, aioYandexSmartCaptcha
 
 # Rucaptcha API Key from your account
 RUCAPTCHA_KEY = "ad9053f111111111111111fa758570"

@@ -1,31 +1,32 @@
 import pytest
 
 from tests.conftest import BaseTest
-from python_rucaptcha.hcaptcha import HCaptcha
-from python_rucaptcha.core.enums import HCaptchaEnm
+from python_rucaptcha.turnstile import Turnstile
+from python_rucaptcha.core.enums import TurnstileCaptchaEnm
 from python_rucaptcha.core.serializer import ResponseSer
 
 
-class TestHCaptcha(BaseTest):
-    sitekey = "3ceb8624-1970-4e6b-91d5-70317b70b651"
-    pageurl = "https://rucaptcha.com/demo/hcaptcha"
+class TestTurnstile(BaseTest):
+    pageurl = "https://www.geetest.com/en/demo"
+    sitekey = "0x4AAAAAAAC3DHQFLr1GavRN"
+
     """
     Success tests
     """
 
     def test_methods_exists(self):
-        assert "captcha_handler" in HCaptcha.__dict__.keys()
-        assert "aio_captcha_handler" in HCaptcha.__dict__.keys()
+        assert "captcha_handler" in Turnstile.__dict__.keys()
+        assert "aio_captcha_handler" in Turnstile.__dict__.keys()
 
     def test_basic_data(self):
-        instance = HCaptcha(
+        instance = Turnstile(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            sitekey=self.sitekey,
             pageurl=self.pageurl,
-            method=HCaptchaEnm.HCAPTCHA.value,
+            sitekey=self.sitekey,
+            method=TurnstileCaptchaEnm.TURNSTILE.value,
         )
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == HCaptchaEnm.HCAPTCHA.value
+        assert instance.post_payload["method"] == TurnstileCaptchaEnm.TURNSTILE.value
         assert instance.post_payload["pageurl"] == self.pageurl
         assert instance.post_payload["sitekey"] == self.sitekey
 
@@ -46,14 +47,14 @@ class TestHCaptcha(BaseTest):
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
-        instance = HCaptcha(
+        instance = Turnstile(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            sitekey=self.sitekey,
             pageurl=self.pageurl,
-            method=HCaptchaEnm.HCAPTCHA.value,
+            sitekey=self.sitekey,
+            method=TurnstileCaptchaEnm.TURNSTILE.value,
         )
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == HCaptchaEnm.HCAPTCHA.value
+        assert instance.post_payload["method"] == TurnstileCaptchaEnm.TURNSTILE.value
         assert instance.post_payload["pageurl"] == self.pageurl
         assert instance.post_payload["sitekey"] == self.sitekey
 
@@ -73,27 +74,27 @@ class TestHCaptcha(BaseTest):
         assert result.keys() == ResponseSer().dict().keys()
 
     def test_context_basic_data(self):
-        with HCaptcha(
+        with Turnstile(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            sitekey=self.sitekey,
             pageurl=self.pageurl,
-            method=HCaptchaEnm.HCAPTCHA.value,
+            sitekey=self.sitekey,
+            method=TurnstileCaptchaEnm.TURNSTILE.value,
         ) as instance:
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == HCaptchaEnm.HCAPTCHA.value
+            assert instance.post_payload["method"] == TurnstileCaptchaEnm.TURNSTILE.value
             assert instance.post_payload["pageurl"] == self.pageurl
             assert instance.post_payload["sitekey"] == self.sitekey
 
     @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
-        async with HCaptcha(
+        async with Turnstile(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            sitekey=self.sitekey,
             pageurl=self.pageurl,
-            method=HCaptchaEnm.HCAPTCHA.value,
+            sitekey=self.sitekey,
+            method=TurnstileCaptchaEnm.TURNSTILE.value,
         ) as instance:
             assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == HCaptchaEnm.HCAPTCHA.value
+            assert instance.post_payload["method"] == TurnstileCaptchaEnm.TURNSTILE.value
             assert instance.post_payload["pageurl"] == self.pageurl
             assert instance.post_payload["sitekey"] == self.sitekey
 
@@ -103,9 +104,9 @@ class TestHCaptcha(BaseTest):
 
     def test_wrong_method(self):
         with pytest.raises(ValueError):
-            HCaptcha(
+            Turnstile(
                 rucaptcha_key=self.RUCAPTCHA_KEY,
-                sitekey=self.sitekey,
                 pageurl=self.pageurl,
-                method=self.get_random_string(length=5),
+                sitekey=self.sitekey,
+                method=self.get_random_string(5),
             )

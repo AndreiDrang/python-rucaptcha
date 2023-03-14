@@ -1,7 +1,7 @@
 import asyncio
 
-from src.python_rucaptcha.core.enums import LeminCroppedCaptchaEnm
-from src.python_rucaptcha.lemin_cropped_captcha import LeminCroppedCaptcha
+from python_rucaptcha.core.enums import LeminCroppedCaptchaEnm
+from python_rucaptcha.lemin_cropped_captcha import LeminCroppedCaptcha
 
 # Rucaptcha API Key from your account
 RUCAPTCHA_KEY = "ad9053f111111111111111fa758570"

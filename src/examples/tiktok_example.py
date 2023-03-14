@@ -1,7 +1,7 @@
 import asyncio
 
-from src.python_rucaptcha.enums import TikTokCaptchaEnm
-from src.python_rucaptcha.TikTokCaptcha import TikTokCaptcha, aioTikTokCaptcha
+from python_rucaptcha.core.enums import TikTokCaptchaEnm
+from python_rucaptcha.TikTokCaptcha import TikTokCaptcha, aioTikTokCaptcha
 
 # Rucaptcha API Key from your account
 RUCAPTCHA_KEY = "ad9053f111111111111111fa758570"
