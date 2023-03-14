@@ -61,9 +61,14 @@ class UploadCommand(Command):
 
         logging.info("🤖 Uploaded . . .")
 
-        logging.info("Clean builds . . .")
+        logging.info("Clean dist . . .")
         shutil.rmtree("dist/")
 
+        logging.info("Clean build . . .")
+        shutil.rmtree("build/")
+
+        logging.info("Clean python_rucaptcha.egg-info . . .")
+        shutil.rmtree("python_rucaptcha.egg-info/")
         sys.exit()
 
 
