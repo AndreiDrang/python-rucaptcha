@@ -44,6 +44,13 @@ git clone https://github.com/AndreiDrang/python-rucaptcha.git
 cd python-rucaptcha
 python setup.py install
 ```
+
+## How to test?
+
+1. You need set ``API_KEY`` in your environment(get this value from you account).
+2. Run command ``make tests``, from root directory.
+
+
 ### Changelog
 
 - v.5.1 - Check [releases page](https://github.com/AndreiDrang/python-rucaptcha/releases).
