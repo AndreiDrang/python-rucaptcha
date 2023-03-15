@@ -1,16 +1,16 @@
-name: Test Build
+name: Build
 
 on:
   push:
     branches: [ "master", "release"]
     paths:
-      - '.github/workflows/test_build.yml'
+      - '.github/workflows/build.yml'
       - 'src/**'
       - 'Makefile'
   pull_request:
     branches: [ "master", "release"]
     paths:
-      - '.github/workflows/test_build.yml'
+      - '.github/workflows/build.yml'
       - 'src/**'
       - 'Makefile'
 
