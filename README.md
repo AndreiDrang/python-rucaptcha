@@ -1,7 +1,7 @@
 # python-rucaptcha
 
 
-![](files/RuCaptcha.png)
+![](https://github.com/AndreiDrang/python-rucaptcha/blob/master/files/RuCaptcha.png)
 
 [![PyPI version](https://badge.fury.io/py/python-rucaptcha.svg)](https://badge.fury.io/py/python-rucaptcha)
 [![Python versions](https://img.shields.io/pypi/pyversions/python-rucaptcha.svg?logo=python&logoColor=FBE072)](https://badge.fury.io/py/python-rucaptcha)
@@ -55,4 +55,4 @@ pip install python-rucaptcha
 
 ### Get API Key to work with the library
 1. On the page - https://rucaptcha.com/enterpage
-2. Find it: ![img.png](files/img.png)
+2. Find it: ![img.png](https://github.com/AndreiDrang/python-rucaptcha/blob/master/files/img.png)
