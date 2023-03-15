@@ -17,6 +17,9 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
 
+      - name: Build docs requirements
+        run: pip install -r docs/requirements.txt
+
       - name: Build library requirements
         run: pip install -r src/requirements.txt
 
