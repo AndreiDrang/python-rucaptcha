@@ -6,6 +6,7 @@ class MyEnum(Enum):
     """
     Base class for work with updated Enums
     """
+
     @classmethod
     def list(cls) -> List[Enum]:
         return list(map(lambda c: c, cls))

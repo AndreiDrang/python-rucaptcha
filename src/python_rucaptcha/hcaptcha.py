@@ -3,7 +3,6 @@ from python_rucaptcha.core.enums import HCaptchaEnm
 
 
 class HCaptcha(BaseCaptcha):
-
     def __init__(
         self,
         sitekey: str,
