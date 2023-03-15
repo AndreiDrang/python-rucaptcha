@@ -5,6 +5,9 @@ remove:
 	pip uninstall python_rucaptcha -y
 
 refactor:
+	black docs/
+	isort docs/
+
 	cd src/ && \
 	autoflake --in-place \
 				--recursive \
@@ -32,3 +35,7 @@ tests:
 	coverage report --precision=3 --sort=cover --skip-empty --show-missing && \
 	coverage html --precision=3 --skip-empty -d coverage/html/ && \
 	coverage xml -o coverage/coverage.xml
+
+doc:
+	cd docs/ && \
+	make html -e
