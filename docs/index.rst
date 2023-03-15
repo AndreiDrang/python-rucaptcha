@@ -23,6 +23,8 @@ The library is intended for software developers and is used to work with the `Ru
    :caption: Captcha examples:
 
    modules/h-captcha/example.rst
+   modules/fun-captcha/example.rst
+   modules/gee-test/example.rst
 
 .. toctree::
    :maxdepth: 2

@@ -11,7 +11,11 @@ sys.path.insert(0, os.path.abspath("src/"))
 for x in os.walk("src/python_rucaptcha/"):
     sys.path.insert(0, x[0])
 
-from python_rucaptcha import core, fun_captcha, gee_test, hcaptcha
+from python_rucaptcha import (amazon_waf, capy_puzzle, control, core,
+                              fun_captcha, gee_test, hcaptcha, image_captcha,
+                              key_captcha, lemin_cropped_captcha, re_captcha,
+                              rotate_captcha, text_captcha, turnstile,
+                              yandex_smart_captcha)
 from python_rucaptcha.__version__ import __version__
 
 # -- Project information -----------------------------------------------------
