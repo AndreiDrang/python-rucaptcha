@@ -2,7 +2,7 @@ from python_rucaptcha.core.base import BaseCaptcha
 from python_rucaptcha.core.enums import TikTokCaptchaEnm
 
 
-class BaseTikTokCaptcha(BaseCaptcha):
+class TikTokCaptcha(BaseCaptcha):
     def __init__(
         self,
         pageurl: str,
@@ -13,6 +13,12 @@ class BaseTikTokCaptcha(BaseCaptcha):
         *args,
         **kwargs,
     ):
+        """
+        The class is used to work with TikTokCaptcha.
+        Solve description:
+            https://rucaptcha.com/api-rucaptcha#solving_tiktok
+        """
+        raise DeprecationWarning("This method is temporarily not supported.".upper())
         super().__init__(method=method, *args, **kwargs)
 
         self.post_payload.update(
@@ -28,14 +34,6 @@ class BaseTikTokCaptcha(BaseCaptcha):
         if method not in TikTokCaptchaEnm.list_values():
             raise ValueError(f"Invalid method parameter set, available - {TikTokCaptchaEnm.list_values()}")
 
-
-class TikTokCaptcha(BaseTikTokCaptcha):
-    """
-    The class is used to work with TikTokCaptcha.
-    Solve description:
-        https://rucaptcha.com/api-rucaptcha#solving_tiktok
-    """
-
     def captcha_handler(self, **kwargs):
         """
         The method is responsible for sending data to the server to solve the captcha
@@ -49,15 +47,7 @@ class TikTokCaptcha(BaseTikTokCaptcha):
 
         return self._processing_response(**kwargs)
 
-
-class aioTikTokCaptcha(BaseTikTokCaptcha):
-    """
-    The class is used to async work with TikTokCaptcha.
-    Solve description:
-        https://rucaptcha.com/api-rucaptcha#solving_tiktok
-    """
-
-    async def captcha_handler(self):
+    async def aio_captcha_handler(self):
         """
         The method is responsible for sending data to the server to solve the captcha
         :return: Response to captcha as JSON string with fields:
