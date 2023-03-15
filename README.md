@@ -1,13 +1,14 @@
 # python-rucaptcha
 
 
-![](files/RuCaptcha.png)
+![](https://github.com/AndreiDrang/python-rucaptcha/blob/master/files/RuCaptcha.png)
 
 [![PyPI version](https://badge.fury.io/py/python-rucaptcha.svg)](https://badge.fury.io/py/python-rucaptcha)
 [![Python versions](https://img.shields.io/pypi/pyversions/python-rucaptcha.svg?logo=python&logoColor=FBE072)](https://badge.fury.io/py/python-rucaptcha)
 [![Downloads](https://pepy.tech/badge/python-rucaptcha/month)](https://pepy.tech/project/python-rucaptcha)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/aec93bb04a277cf0dde9/maintainability)](https://codeclimate.com/github/AndreiDrang/python-rucaptcha/maintainability)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b4087362bd024b088b358b3e10e7a62f)](https://www.codacy.com/gh/AndreiDrang/python-rucaptcha/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AndreiDrang/python-rucaptcha&amp;utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/AndreiDrang/python-rucaptcha/branch/master/graph/badge.svg?token=doybTUCfbD)](https://codecov.io/gh/AndreiDrang/python-rucaptcha)
 
 [![Build](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/build.yml)
@@ -40,16 +41,9 @@ Or email python-captcha@pm.me
 pip install python-rucaptcha
 ```
 
-### Source
-```bash
-git clone https://github.com/AndreiDrang/python-rucaptcha.git
-cd python-rucaptcha
-python setup.py install
-```
-
 ## How to test?
 
-1. You need set ``API_KEY`` in your environment(get this value from you account).
+1. You need set ``RUCAPTCHA_KEY`` in your environment(get this value from you account).
 2. Run command ``make tests``, from root directory.
 
 
@@ -62,4 +56,4 @@ python setup.py install
 
 ### Get API Key to work with the library
 1. On the page - https://rucaptcha.com/enterpage
-2. Find it: ![img.png](files/img.png)
+2. Find it: ![img.png](https://github.com/AndreiDrang/python-rucaptcha/blob/master/files/img.png)
