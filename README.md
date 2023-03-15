@@ -10,6 +10,8 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/aec93bb04a277cf0dde9/maintainability)](https://codeclimate.com/github/AndreiDrang/python-rucaptcha/maintainability)
 [![codecov](https://codecov.io/gh/AndreiDrang/python-rucaptcha/branch/master/graph/badge.svg?token=doybTUCfbD)](https://codecov.io/gh/AndreiDrang/python-rucaptcha)
 
+[![Build](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/build.yml)
+[![Installation](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/install.yml/badge.svg?branch=master)](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/install.yml)
 [![Tests](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/test.yml)
 [![Lint](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/lint.yml/badge.svg?branch=master)](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/lint.yml)
 
@@ -44,6 +46,13 @@ git clone https://github.com/AndreiDrang/python-rucaptcha.git
 cd python-rucaptcha
 python setup.py install
 ```
+
+## How to test?
+
+1. You need set ``API_KEY`` in your environment(get this value from you account).
+2. Run command ``make tests``, from root directory.
+
+
 ### Changelog
 
 - v.5.1 - Check [releases page](https://github.com/AndreiDrang/python-rucaptcha/releases).
