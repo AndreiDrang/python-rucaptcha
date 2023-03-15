@@ -46,24 +46,10 @@ python setup.py install
 ```
 ### Changelog
 
-v.4.0 - Rework classes and methods. Adding `TikTok` captcha. Adding inheritance and serializers. The `Callback server` is deprecated.
-
-v.4.2 - Added [Yandex Smart Captcha](https://rucaptcha.com/api-rucaptcha#yandex).
-
-***
-
-## [All examples of working with the library](src/examples)
-
-***
-
-To test various types of captcha, a [special site](https://pythoncaptcha.xyz/) is provided, which contains all available types of captcha, with a convenient system for testing your scripts.
-
-***
-
-### Errors description
-
-1. https://rucaptcha.com/api-rucaptcha#in_errors
-2. https://rucaptcha.docs.apiary.io/#reference/2
+- v.5.1 - Check [releases page](https://github.com/AndreiDrang/python-rucaptcha/releases).
+- v.5.0 - Added AmazonWAF captcha method.
+- v.4.2 - Added [Yandex Smart Captcha](https://rucaptcha.com/api-rucaptcha#yandex).
+- v.4.0 - Rework classes and methods. Adding `TikTok` captcha. Adding inheritance and serializers. The `Callback server` is deprecated.
 
 ### Get API Key to work with the library
 1. On the page - https://rucaptcha.com/enterpage
