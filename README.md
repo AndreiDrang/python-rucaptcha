@@ -40,16 +40,9 @@ Or email python-captcha@pm.me
 pip install python-rucaptcha
 ```
 
-### Source
-```bash
-git clone https://github.com/AndreiDrang/python-rucaptcha.git
-cd python-rucaptcha
-python setup.py install
-```
-
 ## How to test?
 
-1. You need set ``API_KEY`` in your environment(get this value from you account).
+1. You need set ``RUCAPTCHA_KEY`` in your environment(get this value from you account).
 2. Run command ``make tests``, from root directory.
 
 
