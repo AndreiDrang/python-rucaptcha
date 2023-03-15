@@ -3,6 +3,7 @@ from python_rucaptcha.core.enums import HCaptchaEnm
 
 
 class HCaptcha(BaseCaptcha):
+
     def __init__(
         self,
         sitekey: str,
@@ -16,9 +17,8 @@ class HCaptcha(BaseCaptcha):
 
         Args:
             rucaptcha_key: User API key
+            sitekey: The value of the `data-sitekey` parameter found on the site
             pageurl: Full URL of the captcha page
-            gt: The value of the `gt` parameter found on the site
-            captcha_id: The value of the `captcha_id` parameter found on the site
             method: Captcha type
             kwargs: Not required params for task creation request
 
@@ -85,7 +85,7 @@ class HCaptcha(BaseCaptcha):
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_hcaptcha
+            Check class docstirng for more info
         """
 
         return self._processing_response(**kwargs)
@@ -111,6 +111,6 @@ class HCaptcha(BaseCaptcha):
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_hcaptcha
+            Check class docstirng for more info
         """
         return await self._aio_processing_response()
