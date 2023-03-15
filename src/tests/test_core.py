@@ -36,6 +36,17 @@ class TestMain(BaseTest):
     Failed tests
     """
 
+    def test_context_err(self):
+        with pytest.raises(ValueError):
+            with BaseCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY) as instance:
+                raise ValueError
+
+    @pytest.mark.asyncio
+    async def test_aio_context_err(self):
+        with pytest.raises(ValueError):
+            async with BaseCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY) as instance:
+                raise ValueError
+
     @pytest.mark.parametrize("elements", [31, 33])
     def test_context_failed_api_key(self, elements):
         with pytest.raises(ValueError):
