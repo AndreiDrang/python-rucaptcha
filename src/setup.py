@@ -12,7 +12,7 @@ from python_rucaptcha.__version__ import __version__
 # Package meta-data.
 NAME = "python-rucaptcha"
 DESCRIPTION = "Python 3.7+ RuCaptcha library with AIO module."
-URL = "https://github.com/AndreiDrang/python-rucaptcha"
+URL = "https://andreidrang.github.io/python-rucaptcha/"
 EMAIL = "python-captcha@pm.me"
 AUTHOR = "AndreiDrang, redV0ID"
 REQUIRES_PYTHON = ">=3.7.0"
@@ -82,6 +82,12 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     author_email=EMAIL,
+    project_urls={
+        "Documentation": URL,
+        "Source": "https://github.com/AndreiDrang/python-rucaptcha",
+        "Changelog": "https://github.com/AndreiDrang/python-rucaptcha/releases",
+        "Issue tracker": "https://github.com/AndreiDrang/python-rucaptcha/issues",
+    },
     package_dir={"python-rucaptcha": "python_rucaptcha"},
     include_package_data=True,
     py_modules=["python_rucaptcha"],
@@ -115,7 +121,6 @@ setup(
     python_requires=REQUIRES_PYTHON,
     zip_safe=False,
     classifiers=[
-        # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
         "License :: OSI Approved :: MIT License",
         "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
