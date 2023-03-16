@@ -18,5 +18,4 @@ def attempts_generator(amount: int = 7):
     Returns:
         Attempt number
     """
-    for i in range(1, amount):
-        yield i
+    yield from range(1, amount)
