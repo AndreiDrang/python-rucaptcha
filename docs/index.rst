@@ -5,9 +5,9 @@ python-rucaptcha
 .. image:: _static/Captcha300x.png
     :align: center
 
-Python3 library for `RuCaptcha <https://rucaptcha.com/>`_ and `2Captcha <https://2captcha.com/>`_ service API.
+Python3 library for `RuCaptcha <https://rucaptcha.com/?from=4170435>`_ and `2Captcha <https://2captcha.com/?from=4170435>`_ service API.
 
-The library is intended for software developers and is used to work with the `RuCaptcha <https://rucaptcha.com/>`_ and `2Captcha <https://2captcha.com/>`_ service API.
+The library is intended for software developers and is used to work with the `RuCaptcha <https://rucaptcha.com/?from=4170435>`_ and `2Captcha <https://2captcha.com/?from=4170435>`_ service API.
 
 .. toctree::
    :maxdepth: 1
