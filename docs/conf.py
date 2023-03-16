@@ -19,7 +19,7 @@ from python_rucaptcha import (amazon_waf, capy_puzzle, control, core,
 from python_rucaptcha.__version__ import __version__
 
 # -- Project information -----------------------------------------------------
-project = "python_rucaptcha"
+project = "python-rucaptcha"
 copyright = f"2023, AndreiDrang, Release - {__version__}"
 author = "AndreiDrang"
 
