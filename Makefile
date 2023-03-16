@@ -1,5 +1,5 @@
 install:
-	cd src/ && python setup.py install
+	cd src/ && pip install -e .
 
 remove:
 	pip uninstall python_rucaptcha -y
