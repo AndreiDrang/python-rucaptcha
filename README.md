@@ -42,6 +42,11 @@ Or email python-captcha@pm.me
 pip install python-rucaptcha
 ```
 
+
+## How to use?
+
+Is described in the [documentation-website](https://andreidrang.github.io/python-rucaptcha/).
+
 ## How to test?
 
 1. You need set ``RUCAPTCHA_KEY`` in your environment(get this value from you account).
