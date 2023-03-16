@@ -7,7 +7,7 @@ from python_rucaptcha.core.serializer import ResponseSer
 
 
 class TestTurnstile(BaseTest):
-    pageurl = "https://www.geetest.com/en/demo"
+    pageurl = "https://rucaptcha.com/demo/cloudflare-turnstile"
     sitekey = "0x4AAAAAAAC3DHQFLr1GavRN"
 
     """
