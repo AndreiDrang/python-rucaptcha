@@ -1,4 +1,4 @@
-# python-rucaptcha
+# Introduction
 
 
 ![](../../_static/CaptchaSm.png)
