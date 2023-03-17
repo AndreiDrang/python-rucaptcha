@@ -29,5 +29,8 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    - name: Local install checking
+      run: make install
+
     - name: PYPI install checking
       run: pip install python-rucaptcha
