@@ -6,7 +6,7 @@ from python_rucaptcha.core.serializer import ResponseSer
 
 
 class TestRotateCaptcha(BaseTest):
-    captcha_file = "examples/rotate/rotate_ex.png"
+    captcha_file = "src/examples/rotate/rotate_ex.png"
     captcha_url = "https://rucaptcha.com/dist/web/b771cc7c5eb0c1a811fcb91d54e4443a.png"
 
     """
