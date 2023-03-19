@@ -1,0 +1,16 @@
+[run]
+omit =
+        *__init__*
+        */tests/*
+
+include =
+        */python_rucaptcha/*
+
+
+[report]
+omit =
+        *__init__*
+        */tests/*
+
+include =
+        */python_rucaptcha/*
