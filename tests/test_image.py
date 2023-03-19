@@ -7,7 +7,7 @@ from python_rucaptcha.core.serializer import ResponseSer
 
 
 class TestImageCaptcha(BaseTest):
-    captcha_file = "examples/088636.png"
+    captcha_file = "src/examples/088636.png"
     captcha_url = "https://rucaptcha.com/dist/web/99581b9d446a509a0a01954438a5e36a.jpg"
 
     """
