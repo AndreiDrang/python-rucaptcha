@@ -8,5 +8,5 @@ To import this module:
     from python_rucaptcha.fun_captcha import FunCaptcha
 
 
-.. autoclass:: fun_captcha.FunCaptcha
+.. autoclass:: python_rucaptcha.fun_captcha.FunCaptcha
     :members:
