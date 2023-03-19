@@ -1,8 +1,9 @@
 import asyncio
 
 import requests
-from python_rucaptcha.core.enums import GeetestEnm
+
 from python_rucaptcha.gee_test import GeeTest
+from python_rucaptcha.core.enums import GeetestEnm
 
 # Rucaptcha API Key from your account
 RUCAPTCHA_KEY = "ad9053f31111a8171111111111a758570"
