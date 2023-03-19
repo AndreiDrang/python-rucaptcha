@@ -8,22 +8,20 @@ refactor:
 	black docs/
 	isort docs/
 
-	cd src/ && \
 	autoflake --in-place \
 				--recursive \
 				--remove-unused-variables \
 				--remove-duplicate-keys \
 				--remove-all-unused-imports \
 				--ignore-init-module-imports \
-				python_rucaptcha/ tests/ && \
-	black python_rucaptcha/ tests/ && \
-	isort python_rucaptcha/ tests/
+				src/ tests/ && \
+	black src/ tests/ && \
+	isort src/ tests/
 
 lint:
-	cd src/ && \
-	autoflake --in-place --recursive python_rucaptcha/ --check && \
-	black python_rucaptcha/ --check && \
-	isort python_rucaptcha/ --check-only
+	autoflake --in-place --recursive src/ --check && \
+	black src/ --check && \
+	isort src/ --check-only
 
 upload:
 	pip install twine
