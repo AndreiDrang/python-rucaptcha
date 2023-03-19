@@ -1,5 +1,5 @@
-from python_rucaptcha.core.base import BaseCaptcha
-from python_rucaptcha.core.enums import TurnstileCaptchaEnm
+from .core.base import BaseCaptcha
+from .core.enums import TurnstileCaptchaEnm
 
 
 class Turnstile(BaseCaptcha):

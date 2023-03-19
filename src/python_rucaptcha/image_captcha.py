@@ -2,8 +2,8 @@ import base64
 import shutil
 from typing import Optional
 
-from python_rucaptcha.core.base import BaseCaptcha
-from python_rucaptcha.core.enums import SaveFormatsEnm, ImageCaptchaEnm
+from .core.base import BaseCaptcha
+from .core.enums import SaveFormatsEnm, ImageCaptchaEnm
 
 
 class ImageCaptcha(BaseCaptcha):

@@ -1,4 +1,4 @@
-from python_rucaptcha.core.base import BaseCaptcha
+from .core.base import BaseCaptcha
 
 
 class TextCaptcha(BaseCaptcha):
