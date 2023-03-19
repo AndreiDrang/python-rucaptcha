@@ -50,11 +50,8 @@ class UploadCommand(Command):
         pass
 
     def run(self):
-        logging.info("Clean builds . . .")
-        shutil.rmtree("dist/", ignore_errors=True)
-
         logging.info("Building Source and Wheel distribution . . .")
-        os.system("python setup.py bdist_wheel")
+        os.system("python setup.py sdist bdist_wheel")
 
         logging.info("Uploading the package to PyPI via Twin . . .")
         os.system("twine upload dist/* --verbose")
@@ -62,13 +59,13 @@ class UploadCommand(Command):
         logging.info("🤖 Uploaded . . .")
 
         logging.info("Clean dist . . .")
-        shutil.rmtree("dist/")
+        shutil.rmtree("dist/", ignore_errors=True)
 
         logging.info("Clean build . . .")
-        shutil.rmtree("build/")
+        shutil.rmtree("build/", ignore_errors=True)
 
         logging.info("Clean python_rucaptcha.egg-info . . .")
-        shutil.rmtree("python_rucaptcha.egg-info/")
+        shutil.rmtree("python_rucaptcha.egg-info/", ignore_errors=True)
         sys.exit()
 
 
@@ -76,7 +73,7 @@ setup(
     name=NAME,
     version=VERSION,
     author=AUTHOR,
-    packages=["python_rucaptcha"],
+    packages=["python_rucaptcha", "python_rucaptcha.core"],
     install_requires=REQUIRED,
     description=DESCRIPTION,
     long_description=long_description,
