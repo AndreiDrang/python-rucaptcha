@@ -8,5 +8,5 @@ To import this module:
     from python_rucaptcha.gee_test import GeeTest
 
 
-.. autoclass:: gee_test.GeeTest
+.. autoclass:: python_rucaptcha.gee_test.GeeTest
     :members:

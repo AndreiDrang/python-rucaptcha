@@ -8,5 +8,5 @@ To import this module:
     from python_rucaptcha.hcaptcha import HCaptcha
 
 
-.. autoclass:: hcaptcha.HCaptcha
+.. autoclass:: python_rucaptcha.hcaptcha.HCaptcha
     :members:

@@ -13,7 +13,7 @@ def delay_func():
 
 @pytest.fixture(scope="class")
 def delay_class():
-    time.sleep(20)
+    time.sleep(10)
 
 
 @pytest.mark.usefixtures("delay_func")

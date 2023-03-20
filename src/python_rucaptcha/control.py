@@ -1,8 +1,8 @@
 from typing import Optional
 
-from python_rucaptcha.core.base import BaseCaptcha
-from python_rucaptcha.core.enums import ControlEnm
-from python_rucaptcha.core.result_handler import get_sync_result, get_async_result
+from .core.base import BaseCaptcha
+from .core.enums import ControlEnm
+from .core.result_handler import get_sync_result, get_async_result
 
 
 class Control(BaseCaptcha):

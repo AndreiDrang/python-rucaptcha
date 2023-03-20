@@ -1,5 +1,5 @@
-from python_rucaptcha.core.base import BaseCaptcha
-from python_rucaptcha.core.enums import FunCaptchaEnm
+from .core.base import BaseCaptcha
+from .core.enums import FunCaptchaEnm
 
 
 class FunCaptcha(BaseCaptcha):

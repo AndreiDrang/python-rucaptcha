@@ -1,7 +1,7 @@
 import asyncio
 
-from python_rucaptcha.core.enums import HCaptchaEnm
 from python_rucaptcha.hcaptcha import HCaptcha
+from python_rucaptcha.core.enums import HCaptchaEnm
 
 # Rucaptcha API Key from your account
 RUCAPTCHA_KEY = "ad911111111111ca81755768608fa758570"
