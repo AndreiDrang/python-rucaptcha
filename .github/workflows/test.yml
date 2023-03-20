@@ -47,6 +47,6 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: /home/runner/work/python-rucaptcha/python-rucaptcha/src/coverage/coverage.xml
+          files: /home/runner/work/python-rucaptcha/python-rucaptcha/coverage/coverage.xml
           fail_ci_if_error: true
           verbose: true
