@@ -25,6 +25,17 @@ The library is intended for software developers and is used to work with the `Ru
    modules/h-captcha/example.rst
    modules/fun-captcha/example.rst
    modules/gee-test/example.rst
+   modules/capy/example.rst
+   modules/amazon-waf/example.rst
+   modules/key/example.rst
+   modules/lemin/example.rst
+   modules/re-captcha/example.rst
+   modules/rotate/example.rst
+   modules/text/example.rst
+   modules/turnstile/example.rst
+   modules/yandex/example.rst
+   modules/image/example.rst
+   modules/control/example.rst
 
 .. toctree::
    :maxdepth: 2
