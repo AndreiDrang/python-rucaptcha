@@ -8,6 +8,6 @@ To import this module:
     from python_rucaptcha.core import serializer
 
 
-.. autopydantic_model:: core.serializer.ResponseSer
+.. autopydantic_model:: python_rucaptcha.core.serializer.ResponseSer
     :members:
     :undoc-members:
