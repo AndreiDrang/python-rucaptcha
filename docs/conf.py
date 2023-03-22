@@ -24,7 +24,7 @@ from python_rucaptcha.__version__ import __version__
 
 # -- Project information -----------------------------------------------------
 project = "python-rucaptcha"
-copyright = f"2023, AndreiDrang; Release - {__version__}; Last update - {date.today()}"
+copyright = f"{date.today().year}, AndreiDrang; Release - {__version__}; Last update - {date.today()}"
 author = "AndreiDrang"
 
 # -- General configuration ---------------------------------------------------
