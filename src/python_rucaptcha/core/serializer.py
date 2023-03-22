@@ -100,11 +100,6 @@ class CaptchaOptionsSer(BaseModel):
     sleep_time: conint(gt=5) = 10
     service_type: str = enums.ServicesEnm.TWOCAPTCHA.value
 
-    # CaptchaImage
-    # save_format: str = enums.SaveFormatsEnm.TEMP.value
-    # img_clearing: bool = True
-    # img_path: str = "PythonRuCaptchaImages"
-
     url_request: str = ""
     url_response: str = ""
 

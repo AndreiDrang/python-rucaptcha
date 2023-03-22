@@ -8,70 +8,70 @@ To import this module:
     from python_rucaptcha.core import enums
 
 
-.. autoclass:: core.enums.MyEnum
+.. autoclass:: python_rucaptcha.core.enums.MyEnum
     :members:
     :undoc-members:
 
-.. autoclass:: core.enums.ServicesEnm
+.. autoclass:: python_rucaptcha.core.enums.ServicesEnm
     :members:
     :undoc-members:
 
-.. autoclass:: core.enums.SaveFormatsEnm
+.. autoclass:: python_rucaptcha.core.enums.SaveFormatsEnm
     :members:
     :undoc-members:
 
-.. autoclass:: core.enums.GeetestEnm
+.. autoclass:: python_rucaptcha.core.enums.GeetestEnm
     :members:
     :undoc-members:
 
-.. autoclass:: core.enums.ImageCaptchaEnm
+.. autoclass:: python_rucaptcha.core.enums.ImageCaptchaEnm
     :members:
     :undoc-members:
 
-.. autoclass:: core.enums.CapyPuzzleEnm
+.. autoclass:: python_rucaptcha.core.enums.CapyPuzzleEnm
     :members:
     :undoc-members:
 
-.. autoclass:: core.enums.FunCaptchaEnm
+.. autoclass:: python_rucaptcha.core.enums.FunCaptchaEnm
     :members:
     :undoc-members:
 
-.. autoclass:: core.enums.ReCaptchaEnm
+.. autoclass:: python_rucaptcha.core.enums.ReCaptchaEnm
     :members:
     :undoc-members:
 
-.. autoclass:: core.enums.LeminCroppedCaptchaEnm
+.. autoclass:: python_rucaptcha.core.enums.LeminCroppedCaptchaEnm
     :members:
     :undoc-members:
 
-.. autoclass:: core.enums.HCaptchaEnm
+.. autoclass:: python_rucaptcha.core.enums.HCaptchaEnm
     :members:
     :undoc-members:
 
-.. autoclass:: core.enums.KeyCaptchaEnm
+.. autoclass:: python_rucaptcha.core.enums.KeyCaptchaEnm
     :members:
     :undoc-members:
 
-.. autoclass:: core.enums.RotateCaptchaEnm
+.. autoclass:: python_rucaptcha.core.enums.RotateCaptchaEnm
     :members:
     :undoc-members:
 
-.. autoclass:: core.enums.TikTokCaptchaEnm
+.. autoclass:: python_rucaptcha.core.enums.TikTokCaptchaEnm
     :members:
     :undoc-members:
 
-.. autoclass:: core.enums.ControlEnm
+.. autoclass:: python_rucaptcha.core.enums.ControlEnm
     :members:
     :undoc-members:
 
-.. autoclass:: core.enums.YandexSmartCaptchaEnm
+.. autoclass:: python_rucaptcha.core.enums.YandexSmartCaptchaEnm
     :members:
     :undoc-members:
 
-.. autoclass:: core.enums.TurnstileCaptchaEnm
+.. autoclass:: python_rucaptcha.core.enums.TurnstileCaptchaEnm
     :members:
     :undoc-members:
 
-.. autoclass:: core.enums.AmazonWAFCaptchaEnm
+.. autoclass:: python_rucaptcha.core.enums.AmazonWAFCaptchaEnm
     :members:
     :undoc-members:
