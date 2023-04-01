@@ -10,8 +10,8 @@ class AudioCaptcha(BaseCaptcha):
     def __init__(
         self,
         save_format: str = SaveFormatsEnm.TEMP.value,
-        img_clearing: bool = True,
-        img_path: str = "PythonRuCaptchaAudio",
+        audio_clearing: bool = True,
+        audio_path: str = "PythonRuCaptchaAudio",
         lang: str = "en",
         *args,
         **kwargs,
@@ -23,8 +23,8 @@ class AudioCaptcha(BaseCaptcha):
             rucaptcha_key: User API key
             save_format: The format in which the file will be saved, or as a temporary file - 'temp',
                                  or as a regular file to a folder created by the library - 'const'.
-            img_clearing: True - delete file after solution, False - don't delete file after solution
-            img_path: Folder to save captcha audio
+            audio_clearing: True - delete file after solution, False - don't delete file after solution
+            audio_path: Folder to save captcha audio
             lang: Captcha audio lang: `en`, `fr`, `de`, `el`, `pt`, `ru`
 
         Examples:
@@ -57,8 +57,8 @@ class AudioCaptcha(BaseCaptcha):
 
         super().__init__(method=AudioCaptchaEnm.AUDIO.value, *args, **kwargs)
         self.save_format = save_format
-        self.img_clearing = img_clearing
-        self.img_path = img_path
+        self.audio_clearing = audio_clearing
+        self.audio_path = audio_path
 
         self.post_payload.update({"lang": lang})
 
@@ -122,7 +122,7 @@ class AudioCaptcha(BaseCaptcha):
 
             # according to the value of the passed parameter, select the function to save the file
             if self.save_format == SaveFormatsEnm.CONST.value:
-                self._file_const_saver(content, self.img_path, file_extension="mp3")
+                self._file_const_saver(content, self.audio_path, file_extension="mp3")
             self.post_payload.update({"body": base64.b64encode(content).decode("utf-8")})
 
         else:
@@ -192,7 +192,7 @@ class AudioCaptcha(BaseCaptcha):
 
             # according to the value of the passed parameter, select the function to save the file
             if self.save_format == SaveFormatsEnm.CONST.value:
-                self._file_const_saver(content, self.img_path)
+                self._file_const_saver(content, self.audio_path, file_extension="mp3")
             self.post_payload.update({"body": base64.b64encode(content).decode("utf-8")})
 
         else:
@@ -204,5 +204,5 @@ class AudioCaptcha(BaseCaptcha):
         return await self._aio_processing_response()
 
     def __del__(self):
-        if self.save_format == SaveFormatsEnm.CONST.value and self.img_clearing:
-            shutil.rmtree(self.img_path)
+        if self.save_format == SaveFormatsEnm.CONST.value and self.audio_clearing:
+            shutil.rmtree(self.audio_path)
