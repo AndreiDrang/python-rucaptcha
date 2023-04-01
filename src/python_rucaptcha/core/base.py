@@ -154,24 +154,24 @@ class BaseCaptcha:
     # Working with images methods
 
     @staticmethod
-    def _local_image_captcha(captcha_file: str):
+    def _local_file_captcha(captcha_file: str):
         """
-        Method get local image, read it and prepare for sending to Captcha solving service
+        Method get local file, read it and prepare for sending to Captcha solving service
         """
         with open(captcha_file, "rb") as file:
             return file.read()
 
-    def _image_const_saver(self, content: bytes, img_path: str):
+    def _file_const_saver(self, content: bytes, file_path: str, file_extension: str = "png"):
         """
         Method create and save file in folder
         """
-        Path(img_path).mkdir(parents=True, exist_ok=True)
+        Path(file_path).mkdir(parents=True, exist_ok=True)
 
         # generate image name
-        self._image_name = f"im-{uuid.uuid4()}.png"
+        self._file_name = f"file-{uuid.uuid4()}.{file_extension}"
 
         # save image to folder
-        with open(os.path.join(img_path, self._image_name), "wb") as out_image:
+        with open(os.path.join(file_path, self._file_name), "wb") as out_image:
             out_image.write(content)
 
     def __enter__(self):

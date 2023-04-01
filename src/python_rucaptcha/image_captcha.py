@@ -112,13 +112,11 @@ class ImageCaptcha(BaseCaptcha):
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_funcaptcha_new
+            Check class docstirng for more info
         """
         # if a local file link is passed
         if captcha_file:
-            self.post_payload.update(
-                {"body": base64.b64encode(self._local_image_captcha(captcha_file)).decode("utf-8")}
-            )
+            self.post_payload.update({"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")})
         # if the file is transferred in base64 encoding
         elif captcha_base64:
             self.post_payload.update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
@@ -133,7 +131,7 @@ class ImageCaptcha(BaseCaptcha):
 
             # according to the value of the passed parameter, select the function to save the image
             if self.save_format == SaveFormatsEnm.CONST.value:
-                self._image_const_saver(content, self.img_path)
+                self._file_const_saver(content, self.img_path)
             self.post_payload.update({"body": base64.b64encode(content).decode("utf-8")})
 
         else:
@@ -183,13 +181,11 @@ class ImageCaptcha(BaseCaptcha):
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_funcaptcha_new
+            Check class docstirng for more info
         """
         # if a local file link is passed
         if captcha_file:
-            self.post_payload.update(
-                {"body": base64.b64encode(self._local_image_captcha(captcha_file)).decode("utf-8")}
-            )
+            self.post_payload.update({"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")})
         # if the file is transferred in base64 encoding
         elif captcha_base64:
             self.post_payload.update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
@@ -204,7 +200,7 @@ class ImageCaptcha(BaseCaptcha):
 
             # according to the value of the passed parameter, select the function to save the image
             if self.save_format == SaveFormatsEnm.CONST.value:
-                self._image_const_saver(content, self.img_path)
+                self._file_const_saver(content, self.img_path)
             self.post_payload.update({"body": base64.b64encode(content).decode("utf-8")})
 
         else:

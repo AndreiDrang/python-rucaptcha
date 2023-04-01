@@ -32,19 +32,61 @@ class TestMain(BaseTest):
         async with BaseCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, method=GeetestEnm.GEETEST.value) as bc:
             pass
 
+    def test_custom_service(self):
+        bc = BaseCaptcha(
+            rucaptcha_key=self.RUCAPTCHA_KEY,
+            method=GeetestEnm.GEETEST.value,
+            service_type=self.get_random_string(length=10),
+        )
+
+    def test_context_custom_service(self):
+        with BaseCaptcha(
+            rucaptcha_key=self.RUCAPTCHA_KEY,
+            method=GeetestEnm.GEETEST.value,
+            service_type=self.get_random_string(length=10),
+        ) as bc:
+            pass
+
+    @pytest.mark.parametrize("elements", [31, 33])
+    def test_context_custom_service_api_key(self, elements):
+        with BaseCaptcha(
+            rucaptcha_key=self.get_random_string(elements),
+            method=GeetestEnm.GEETEST.value,
+            service_type=self.get_random_string(length=10),
+        ):
+            pass
+
+    @pytest.mark.parametrize("elements", [31, 33])
+    def test_custom_service_api_key(self, elements):
+        BaseCaptcha(
+            rucaptcha_key=self.get_random_string(elements),
+            method=GeetestEnm.GEETEST.value,
+            service_type=self.get_random_string(length=10),
+        )
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("elements", [31, 33])
+    async def test_aio_context_custom_service_api_key(self, elements):
+        async with BaseCaptcha(
+            rucaptcha_key=self.get_random_string(elements),
+            method=GeetestEnm.GEETEST.value,
+            service_type=self.get_random_string(length=10),
+        ):
+            pass
+
     """
     Failed tests
     """
 
     def test_context_err(self):
         with pytest.raises(ValueError):
-            with BaseCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY) as instance:
+            with BaseCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, method="some_method") as instance:
                 raise ValueError
 
     @pytest.mark.asyncio
     async def test_aio_context_err(self):
         with pytest.raises(ValueError):
-            async with BaseCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY) as instance:
+            async with BaseCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, method="some_method") as instance:
                 raise ValueError
 
     @pytest.mark.parametrize("elements", [31, 33])
@@ -63,23 +105,6 @@ class TestMain(BaseTest):
     async def test_aio_context_failed_api_key(self, elements):
         with pytest.raises(ValueError):
             async with BaseCaptcha(rucaptcha_key=self.get_random_string(elements), method=GeetestEnm.GEETEST.value):
-                pass
-
-    def test_failed_service(self):
-        with pytest.raises(ValueError):
-            bc = BaseCaptcha(
-                rucaptcha_key=self.RUCAPTCHA_KEY,
-                method=GeetestEnm.GEETEST.value,
-                service_type=self.get_random_string(length=10),
-            )
-
-    def test_context_failed_service(self):
-        with pytest.raises(ValueError):
-            with BaseCaptcha(
-                rucaptcha_key=self.RUCAPTCHA_KEY,
-                method=GeetestEnm.GEETEST.value,
-                service_type=self.get_random_string(length=10),
-            ) as bc:
                 pass
 
 
