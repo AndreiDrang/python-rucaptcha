@@ -150,11 +150,21 @@ class AudioCaptcha(BaseCaptcha):
             kwargs: additional params for `aiohttp` library
 
         Examples:
-            >>> await TextCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             language=2).aio_captcha_handler(textcaptcha="Our planet name?")
+            >>> await AudioCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             lang='en'
+            ...             ).aio_captcha_handler(captcha_file='examples/mediacaptcha_audio/recaptcha_55914.mp3')
             {
-                'captchaSolve': 'earth',
-                'taskId': '73043008354',
+                'captchaSolve': 'five five nine one four',
+                'taskId': 73243152973,
+                'error': False,
+                'errorBody': None
+            }
+            >>> await AudioCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             lang='en'
+            ...             ).aio_captcha_handler(captcha_link='http://some/link/address/recaptcha_55914.mp3')
+            {
+                'captchaSolve': 'five five nine one four',
+                'taskId': 73243152973,
                 'error': False,
                 'errorBody': None
             }
