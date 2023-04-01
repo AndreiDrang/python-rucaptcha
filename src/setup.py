@@ -94,6 +94,7 @@ setup(
                 captcha 
 				rucaptcha
 				2captcha
+				deathbycaptcha
 				recaptcha
 				geetest
 				hcaptcha

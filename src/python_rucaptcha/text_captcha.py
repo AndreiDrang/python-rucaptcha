@@ -1,10 +1,10 @@
 from .core.base import BaseCaptcha
+from .core.enums import TextCaptchaEnm
 
 
 class TextCaptcha(BaseCaptcha):
     def __init__(
         self,
-        rucaptcha_key: str,
         language: int = 0,
         *args,
         **kwargs,
@@ -45,7 +45,7 @@ class TextCaptcha(BaseCaptcha):
             https://rucaptcha.com/api-rucaptcha#solving_text_captcha
         """
 
-        super().__init__(rucaptcha_key=rucaptcha_key, *args, **kwargs)
+        super().__init__(method=TextCaptchaEnm.TEXT.value, *args, **kwargs)
 
         self.post_payload.update({"language": language})
 

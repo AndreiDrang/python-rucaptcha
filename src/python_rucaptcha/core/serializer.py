@@ -1,3 +1,4 @@
+import logging
 from uuid import uuid4
 from typing import Union, Optional
 
@@ -94,29 +95,53 @@ class GetRequestSer(BaseModel):
 
 
 class CaptchaOptionsSer(BaseModel):
-    rucaptcha_key: constr(min_length=32, max_length=32)
     method: str
     action: str
     sleep_time: conint(gt=5) = 10
-    service_type: str = enums.ServicesEnm.TWOCAPTCHA.value
+    service_type: str = enums.ServiceEnm.TWOCAPTCHA.value
+    rucaptcha_key: constr(min_length=1)
 
-    url_request: str = ""
-    url_response: str = ""
+    url_request: Optional[str] = None  # /in.php
+    url_response: Optional[str] = None  # /res.php
+
+    @validator("rucaptcha_key")
+    def rucaptcha_key_check(cls, value, values, **kwargs):
+        service_type = values.get("service_type")
+        if service_type in (enums.ServiceEnm.RUCAPTCHA, enums.ServiceEnm.TWOCAPTCHA):
+            if len(value) != 32:
+                raise ValueError(f"Invalid `rucaptcha_key` len, it must be - 32, u send - {len(value)}")
+        return value
 
     @validator("service_type")
     def service_type_check(cls, value):
-        if value not in enums.ServicesEnm.list_values():
-            raise ValueError(
-                f"Invalid `service_type`, valid params - {','.join(enums.ServicesEnm.list_values())}, send - {value}"
+        if value not in enums.ServiceEnm.list_values():
+            logging.warning(
+                f"We support only this list of services - '{', '.join(enums.ServiceEnm.list_values())}', u send - '{value}'. "
+                f"All other services you use at your own risk"
             )
         return value
 
     @root_validator
     def urls_set(cls, values):
-        service_type = values.get("service_type")
-        values.update(
-            {"url_request": f"http://{service_type}.com/in.php", "url_response": f"http://{service_type}.com/res.php"}
-        )
+        """
+        Set request \ response URLs if they not set previously
+        """
+        if not values.get("url_request") and not values.get("url_response"):
+            service_type = values.get("service_type")
+            if service_type == enums.ServiceEnm.DEATHBYCAPTCHA:
+                values.update(
+                    {
+                        "url_request": f"http://api.{service_type}.com/2captcha/in.php",
+                        "url_response": f"http://api.{service_type}.com/2captcha/res.php",
+                    }
+                )
+            else:
+                values.update(
+                    {
+                        "url_request": f"http://{service_type}.com/in.php",
+                        "url_response": f"http://{service_type}.com/res.php",
+                    }
+                )
         return values
 
 

@@ -20,10 +20,10 @@ class BaseCaptcha:
     def __init__(
         self,
         rucaptcha_key: str,
-        method: str = "",
+        method: str,
         action: str = "get",
         sleep_time: int = 15,
-        service_type: str = enums.ServicesEnm.TWOCAPTCHA.value,
+        service_type: str = enums.ServiceEnm.TWOCAPTCHA.value,
         **kwargs,
     ):
         """
@@ -36,7 +36,7 @@ class BaseCaptcha:
         :param kwargs: Designed to pass OPTIONAL parameters to the payload for a request to RuCaptcha
         """
         # assign args to validator
-        self.params = CaptchaOptionsSer(**locals())
+        self.params = CaptchaOptionsSer(**locals(), **kwargs)
 
         # prepare POST payload
         self.post_payload = PostRequestSer(key=self.params.rucaptcha_key, method=method).dict(by_alias=True)

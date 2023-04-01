@@ -37,6 +37,31 @@ class Control(BaseCaptcha):
                 'errorBody': None
             }
 
+            Death By Captcha example:
+
+            >>> Control(rucaptcha_key="service_username:service_password",
+            ...         service_type="other-captcha-services",
+            ...         action=ControlEnm.GETBALANCE.value).additional_methods()
+            {
+                'captchaSolve': '0.00',
+                'taskId': None,
+                'error': False,
+                'errorBody': None
+            }
+
+            Death By Captcha example:
+
+            >>> from python_rucaptcha.core.enums import ControlEnm, ServiceEnm
+            >>> Control(rucaptcha_key="service_username:service_password",
+            ...         service_type=ServiceEnm.DEATHBYCAPTCHA,
+            ...         action=ControlEnm.GETBALANCE.value).additional_methods()
+            {
+                'captchaSolve': '0.00',
+                'taskId': None,
+                'error': False,
+                'errorBody': None
+            }
+
         Returns:
             Dict with full server response
 
@@ -46,7 +71,7 @@ class Control(BaseCaptcha):
             https://rucaptcha.com/api-rucaptcha#additional
         """
 
-        super().__init__(action=action, *args, **kwargs)
+        super().__init__(method=ControlEnm.CONTROL.value, action=action, *args, **kwargs)
 
         # check user params
         if action not in ControlEnm.list_values():
