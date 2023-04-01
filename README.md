@@ -55,8 +55,8 @@ Is described in the [documentation-website](https://andreidrang.github.io/python
 
 ### Changelog
 
-- v.5.3 - Added Audio captcha method.
-- v.5.2 - Added support for [Death By Captcha](https://deathbycaptcha.com/) and other services by changing `service_type` and `url_request` \ `url_response` parameters.
+- v.5.3 - Added support for [Death By Captcha](https://deathbycaptcha.com/) and other services by changing `service_type` and `url_request` \ `url_response` parameters.
+- v.5.2 - Added Audio captcha method.
 - v.5.1 - Check [releases page](https://github.com/AndreiDrang/python-rucaptcha/releases).
 - v.5.0 - Added AmazonWAF captcha method.
 - v.4.2 - Added [Yandex Smart Captcha](https://rucaptcha.com/api-rucaptcha#yandex).
