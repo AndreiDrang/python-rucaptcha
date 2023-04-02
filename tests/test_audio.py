@@ -8,6 +8,7 @@ from python_rucaptcha.core.serializer import ResponseSer
 
 class TestAudioCaptcha(BaseTest):
     captcha_file = "src/examples/mediacaptcha_audio/recaptcha_55914.mp3"
+    captcha_link = "https://github.com/AndreiDrang/python-rucaptcha/raw/3631e399f9cfa2e81c3f2920f9d79fdc2fd91f85/src/examples/mediacaptcha_audio/recaptcha_55914.mp3"
 
     """
     Success tests
@@ -17,8 +18,9 @@ class TestAudioCaptcha(BaseTest):
         assert "captcha_handler" in AudioCaptcha.__dict__.keys()
         assert "aio_captcha_handler" in AudioCaptcha.__dict__.keys()
 
-    def test_basic_data_file(self):
-        instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
+    @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
+    def test_basic_data_file(self, save_format):
+        instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
 
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
@@ -36,12 +38,13 @@ class TestAudioCaptcha(BaseTest):
 
         assert result.keys() == ResponseSer().dict().keys()
 
-    def test_basic_data_file_const(self):
-        instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=SaveFormatsEnm.CONST)
+    @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
+    def test_basic_data_link(self, save_format):
+        instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
 
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
-        result = instance.captcha_handler(captcha_file=self.captcha_file)
+        result = instance.captcha_handler(captcha_link=self.captcha_link)
 
         assert isinstance(result, dict) is True
         if result["error"] is False:
@@ -56,8 +59,9 @@ class TestAudioCaptcha(BaseTest):
         assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
-    async def test_aio_basic_data_file(self):
-        instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
+    @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
+    async def test_aio_basic_data_file(self, save_format):
+        instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
 
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
@@ -76,12 +80,13 @@ class TestAudioCaptcha(BaseTest):
         assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
-    async def test_aio_basic_data_file_const(self):
-        instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=SaveFormatsEnm.CONST)
+    @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
+    async def test_aio_basic_data_link(self, save_format):
+        instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
 
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
-        result = await instance.aio_captcha_handler(captcha_file=self.captcha_file)
+        result = await instance.aio_captcha_handler(captcha_link=self.captcha_link)
 
         assert isinstance(result, dict) is True
         if result["error"] is False:
