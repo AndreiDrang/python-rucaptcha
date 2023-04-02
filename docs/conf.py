@@ -54,8 +54,8 @@ html_context = {
         ProjectLink("PyPI Releases", "https://pypi.org/project/python-rucaptcha/"),
         ProjectLink("Source Code", "https://github.com/AndreiDrang/python-rucaptcha"),
         ProjectLink(
-            "Capsolver",
-            "https://dashboard.capsolver.com/passport/register?inviteCode=kQTn-tG07Jb1",
+            "2Captcha/RuCaptcha",
+            "https://rucaptcha.com/?from=4170435",
         ),
     ]
 }
