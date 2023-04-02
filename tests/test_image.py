@@ -18,8 +18,9 @@ class TestImageCaptcha(BaseTest):
         assert "captcha_handler" in ImageCaptcha.__dict__.keys()
         assert "aio_captcha_handler" in ImageCaptcha.__dict__.keys()
 
-    def test_basic_data_link(self):
-        instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
+    @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
+    def test_basic_data_link(self, save_format):
+        instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
 
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
@@ -37,46 +38,9 @@ class TestImageCaptcha(BaseTest):
 
         assert result.keys() == ResponseSer().dict().keys()
 
-    def test_basic_data_link_const(self):
-        instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=SaveFormatsEnm.CONST)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-
-        result = instance.captcha_handler(captcha_link=self.captcha_url)
-
-        assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
-        else:
-            assert result["error"] is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
-
-        assert result.keys() == ResponseSer().dict().keys()
-
-    def test_basic_data_file(self):
-        instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-
-        result = instance.captcha_handler(captcha_file=self.captcha_file)
-
-        assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
-        else:
-            assert result["error"] is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
-
-        assert result.keys() == ResponseSer().dict().keys()
-
-    def test_basic_data_file_const(self):
-        instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=SaveFormatsEnm.CONST)
+    @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
+    def test_basic_data_file(self, save_format):
+        instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
 
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
@@ -95,8 +59,9 @@ class TestImageCaptcha(BaseTest):
         assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
-    async def test_aio_basic_data_link(self):
-        instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
+    @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
+    async def test_aio_basic_data_link(self, save_format):
+        instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
 
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
@@ -115,48 +80,9 @@ class TestImageCaptcha(BaseTest):
         assert result.keys() == ResponseSer().dict().keys()
 
     @pytest.mark.asyncio
-    async def test_aio_basic_data_link_const(self):
-        instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=SaveFormatsEnm.CONST)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-
-        result = await instance.aio_captcha_handler(captcha_link=self.captcha_url)
-
-        assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
-        else:
-            assert result["error"] is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
-
-        assert result.keys() == ResponseSer().dict().keys()
-
-    @pytest.mark.asyncio
-    async def test_aio_basic_data_file(self):
-        instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-
-        result = await instance.aio_captcha_handler(captcha_file=self.captcha_file)
-
-        assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
-        else:
-            assert result["error"] is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
-
-        assert result.keys() == ResponseSer().dict().keys()
-
-    @pytest.mark.asyncio
-    async def test_aio_basic_data_file_const(self):
-        instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=SaveFormatsEnm.CONST)
+    @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
+    async def test_aio_basic_data_file(self, save_format):
+        instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
 
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
