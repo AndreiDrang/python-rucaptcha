@@ -5,7 +5,6 @@ from .core.enums import AmazonWAFCaptchaEnm
 class AmazonWAF(BaseCaptcha):
     def __init__(
         self,
-        rucaptcha_key: str,
         pageurl: str,
         sitekey: str,
         iv: str,
@@ -56,7 +55,7 @@ class AmazonWAF(BaseCaptcha):
         Notes:
             https://rucaptcha.com/api-rucaptcha#amazon-waf
         """
-        super().__init__(rucaptcha_key=rucaptcha_key, method=method, *args, **kwargs)
+        super().__init__(method=method, *args, **kwargs)
 
         self.post_payload.update({"sitekey": sitekey, "pageurl": pageurl, "iv": iv, "context": context})
 

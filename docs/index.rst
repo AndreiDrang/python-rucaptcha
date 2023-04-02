@@ -17,6 +17,7 @@ The library is intended for software developers and is used to work with the `Ru
    modules/other-libs/info.md
    modules/license/info.md
    modules/contacts/info.md
+   modules/other-captcha-services/info.md
 
 .. toctree::
    :maxdepth: 3
@@ -35,6 +36,7 @@ The library is intended for software developers and is used to work with the `Ru
    modules/turnstile/example.rst
    modules/yandex/example.rst
    modules/image/example.rst
+   modules/audio/example.rst
    modules/control/example.rst
 
 .. toctree::

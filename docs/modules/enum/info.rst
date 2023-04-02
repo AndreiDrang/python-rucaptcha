@@ -12,7 +12,7 @@ To import this module:
     :members:
     :undoc-members:
 
-.. autoclass:: python_rucaptcha.core.enums.ServicesEnm
+.. autoclass:: python_rucaptcha.core.enums.ServiceEnm
     :members:
     :undoc-members:
 

@@ -20,9 +20,10 @@ class MyEnum(Enum):
         return list(map(lambda c: c.name, cls))
 
 
-class ServicesEnm(str, MyEnum):
+class ServiceEnm(str, MyEnum):
     TWOCAPTCHA = "2captcha"
     RUCAPTCHA = "rucaptcha"
+    DEATHBYCAPTCHA = "other-captcha-services"
 
 
 class SaveFormatsEnm(str, MyEnum):
@@ -72,6 +73,9 @@ class TikTokCaptchaEnm(str, MyEnum):
 
 
 class ControlEnm(str, MyEnum):
+    # control method
+    CONTROL = "control"
+
     # default
     GET = "get"
     # https://rucaptcha.com/api-rucaptcha#manage_pingback
@@ -98,3 +102,11 @@ class TurnstileCaptchaEnm(str, MyEnum):
 
 class AmazonWAFCaptchaEnm(str, MyEnum):
     AMAZON_WAF = "amazon_waf"
+
+
+class TextCaptchaEnm(str, MyEnum):
+    TEXT = "text"
+
+
+class AudioCaptchaEnm(str, MyEnum):
+    AUDIO = "audio"

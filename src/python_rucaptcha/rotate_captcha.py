@@ -94,9 +94,7 @@ class RotateCaptcha(BaseCaptcha):
 
         # if a local file link is passed
         if captcha_file:
-            self.post_payload.update(
-                {"body": base64.b64encode(self._local_image_captcha(captcha_file)).decode("utf-8")}
-            )
+            self.post_payload.update({"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")})
         # if the file is transferred in base64 encoding
         elif captcha_base64:
             self.post_payload.update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
@@ -152,9 +150,7 @@ class RotateCaptcha(BaseCaptcha):
 
         # if a local file link is passed
         if captcha_file:
-            self.post_payload.update(
-                {"body": base64.b64encode(self._local_image_captcha(captcha_file)).decode("utf-8")}
-            )
+            self.post_payload.update({"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")})
         # if the file is transferred in base64 encoding
         elif captcha_base64:
             self.post_payload.update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
