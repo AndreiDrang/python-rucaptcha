@@ -23,7 +23,7 @@ class MyEnum(Enum):
 class ServiceEnm(str, MyEnum):
     TWOCAPTCHA = "2captcha"
     RUCAPTCHA = "rucaptcha"
-    DEATHBYCAPTCHA = "other-captcha-services"
+    DEATHBYCAPTCHA = "deathbycaptcha"
 
 
 class SaveFormatsEnm(str, MyEnum):
