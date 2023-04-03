@@ -60,7 +60,7 @@ html_context = {
         ProjectLink(
             "Death By Captcha",
             "https://www.deathbycaptcha.com?refid=1237267242",
-        )
+        ),
     ]
 }
 html_sidebars = {
