@@ -8,12 +8,12 @@ import pytest
 
 @pytest.fixture(scope="function")
 def delay_func():
-    time.sleep(5)
+    time.sleep(2)
 
 
 @pytest.fixture(scope="class")
 def delay_class():
-    time.sleep(10)
+    time.sleep(2)
 
 
 @pytest.mark.usefixtures("delay_func")
@@ -35,3 +35,7 @@ class BaseTest:
         letters = string.ascii_lowercase
         result_str = "".join(random.choice(letters) for _ in range(length))
         return result_str
+
+
+class DeathByTest(BaseTest):
+    RUCAPTCHA_KEY = os.getenv("DEATHBYCAPTCHA_KEY", 'drang.andray:x7yCklLDv@2g"t\>Tp$kF#;8aR')
