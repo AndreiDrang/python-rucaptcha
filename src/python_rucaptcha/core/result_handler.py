@@ -74,7 +74,7 @@ async def get_async_result(get_payload: dict, sleep_time: int, url_response: str
             try:
                 # send a request for the result of solving the captcha
                 async with session.get(url_response, params=get_payload, raise_for_status=True) as resp:
-                    captcha_response = await resp.json()
+                    captcha_response = await resp.json(content_type=None)
                     captcha_response = ServiceGetResponseSer(**captcha_response)
 
                     # if the captcha has not been resolved yet, wait
