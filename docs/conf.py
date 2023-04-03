@@ -57,6 +57,10 @@ html_context = {
             "2Captcha/RuCaptcha",
             "https://rucaptcha.com/?from=4170435",
         ),
+        ProjectLink(
+            "Death By Captcha",
+            "https://www.deathbycaptcha.com?refid=1237267242",
+        )
     ]
 }
 html_sidebars = {

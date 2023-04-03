@@ -1,6 +1,6 @@
 # Death By Captcha and other services
 
-Using [Death By Captcha](https://deathbycaptcha.com/) and other services is possible by changing "service_type" and "url_request"\"url_response" parameters.
+Using [Death By Captcha](https://www.deathbycaptcha.com?refid=1237267242) and other services is possible by changing "service_type" and "url_request"\"url_response" parameters.
 
 
 ## Death By Captcha:
