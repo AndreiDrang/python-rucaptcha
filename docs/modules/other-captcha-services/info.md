@@ -1,11 +1,11 @@
-# Death By Captcha and other services
+# DeathByCaptcha and other services
 
 Using [Death By Captcha](https://deathbycaptcha.com?refid=1237267242) and other services is possible by changing "service_type" and "url_request"\"url_response" parameters.
 
 More info about [Death By Captcha](https://deathbycaptcha.com?refid=1237267242) integration u can find in [service docs](https://deathbycaptcha.com/api/2captcha?refid=1237267242).
 
 
-## Death By Captcha:
+## DeathByCaptcha:
 ```python
 
 from python_rucaptcha.control import Control

@@ -62,7 +62,7 @@ class ImageCaptcha(BaseCaptcha):
                 'errorBody': None
             }
 
-            Death By Captcha
+            Death yCaptcha
 
             >>> ImageCaptcha(rucaptcha_key="some_username:some_password",
             ...             service_type="deathbycaptcha"

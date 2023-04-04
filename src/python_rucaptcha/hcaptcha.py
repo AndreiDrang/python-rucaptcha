@@ -46,7 +46,7 @@ class HCaptcha(BaseCaptcha):
                "errorBody": None
             }
 
-            Death By Captcha
+            DeathByCaptcha:
 
             >>> HCaptcha(rucaptcha_key="some_username:some_password",
             ...             service_type="deathbycaptcha",

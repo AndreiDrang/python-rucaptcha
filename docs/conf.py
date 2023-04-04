@@ -58,8 +58,8 @@ html_context = {
             "https://rucaptcha.com/?from=4170435",
         ),
         ProjectLink(
-            "Death By Captcha",
-            "https://www.deathbycaptcha.com?refid=1237267242",
+            "DeathByCaptcha",
+            "https://deathbycaptcha.com?refid=1237267242",
         ),
     ]
 }

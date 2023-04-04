@@ -76,7 +76,7 @@ class ReCaptcha(BaseCaptcha):
                 'errorBody': None
             }
 
-            Death By Captcha
+            DeathByCaptcha:
 
             >>> ReCaptcha(rucaptcha_key="some_username:some_password",
             ...             service_type="deathbycaptcha",
