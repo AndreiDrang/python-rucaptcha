@@ -38,4 +38,4 @@ class BaseTest:
 
 
 class DeathByTest(BaseTest):
-    RUCAPTCHA_KEY = os.getenv("DEATHBYCAPTCHA_KEY", 'drang.andray:x7yCklLDv@2g"t\>Tp$kF#;8aR')
+    RUCAPTCHA_KEY = os.getenv("DEATHBYCAPTCHA_KEY", "some_username:some_password")
