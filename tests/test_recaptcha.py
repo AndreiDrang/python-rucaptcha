@@ -1,6 +1,6 @@
 import pytest
 
-from tests.conftest import BaseTest
+from tests.conftest import BaseTest, DeathByTest
 from python_rucaptcha.core.enums import ServiceEnm, ReCaptchaEnm
 from python_rucaptcha.re_captcha import ReCaptcha
 from python_rucaptcha.core.serializer import ResponseSer
@@ -114,7 +114,7 @@ class TestReCaptcha(BaseReCaptcha):
             )
 
 
-class TestDeathByReCaptcha(BaseReCaptcha):
+class TestDeathByReCaptcha(BaseReCaptcha, DeathByTest):
     """
     Success tests
     """
