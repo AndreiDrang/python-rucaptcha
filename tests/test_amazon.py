@@ -5,7 +5,7 @@ from python_rucaptcha.amazon_waf import AmazonWAF
 from python_rucaptcha.core.enums import AmazonWAFCaptchaEnm
 
 
-class TestYandexSmartCaptcha(BaseTest):
+class TestAmazonCaptcha(BaseTest):
     pageurl = "https://captcha-api.yandex.ru/demo"
     sitekey = "FEXfAbHQsToo97VidNVk3j4dC74nGW1DgdxjtNB9"
     iv = "some-iv-value"
