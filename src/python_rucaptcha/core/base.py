@@ -148,7 +148,7 @@ class BaseCaptcha:
                     async with session.post(
                         self.params.url_request, data=self.post_payload, raise_for_status=True
                     ) as resp:
-                        response_json = await resp.json()
+                        response_json = await resp.json(content_type=None)
                         return ServicePostResponseSer(**response_json)
 
     # Working with images methods

@@ -46,6 +46,34 @@ class HCaptcha(BaseCaptcha):
                "errorBody": None
             }
 
+            DeathByCaptcha:
+
+            >>> HCaptcha(rucaptcha_key="some_username:some_password",
+            ...             service_type="deathbycaptcha",
+            ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
+            ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
+            ...             method=HCaptchaEnm.HCAPTCHA.value
+            ...             ).captcha_handler()
+            {
+                'captchaSolve': '03A....8h',
+                'taskId': '73043008354',
+                'error': False,
+                'errorBody': None
+            }
+
+            >>> await HCaptcha(rucaptcha_key="some_username:some_password",
+            ...             service_type="deathbycaptcha",
+            ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
+            ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
+            ...             method=HCaptchaEnm.HCAPTCHA.value
+            ...             ).aio_captcha_handler()
+            {
+                'captchaSolve': '03A....8h',
+                'taskId': '73043008354',
+                'error': False,
+                'errorBody': None
+            }
+
         Returns:
             Dict with full server response
 

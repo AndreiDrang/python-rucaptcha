@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RUCAPTCHA_KEY: ${{ secrets.RUCAPTCHA_KEY }}
+      DEATHBYCAPTCHA_KEY: ${{ secrets.DEATHBYCAPTCHA_KEY }}
     strategy:
       fail-fast: false
       matrix:

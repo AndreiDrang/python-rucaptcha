@@ -23,6 +23,7 @@ Tested on UNIX based OS.
 
 The library is intended for software developers and is used to work with the [RuCaptcha](https://rucaptcha.com/) and [2Captcha](https://2captcha.com/) service API.
 
+Support of the service [Death By Captcha](https://deathbycaptcha.com?refid=1237267242) is integrated into this library, more information in the library documentation or in the [service docs](https://deathbycaptcha.com/api/2captcha?refid=1237267242).
 ***
 
 Application in [RuCaptcha software](https://rucaptcha.com/software/python-rucaptcha) and [2Captcha software](https://2captcha.com/software/python-rucaptcha).
@@ -55,7 +56,7 @@ Is described in the [documentation-website](https://andreidrang.github.io/python
 
 ### Changelog
 
-- v.5.3 - Added support for [Death By Captcha](https://deathbycaptcha.com/) and other services by changing `service_type` and `url_request` \ `url_response` parameters.
+- v.5.3 - Added support for [Death By Captcha](https://www.deathbycaptcha.com?refid=1237267242) and other services by changing `service_type` and `url_request` \ `url_response` parameters.
 - v.5.2 - Added Audio captcha method.
 - v.5.1 - Check [releases page](https://github.com/AndreiDrang/python-rucaptcha/releases).
 - v.5.0 - Added AmazonWAF captcha method.

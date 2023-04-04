@@ -13,13 +13,13 @@ def delay_func():
 
 @pytest.fixture(scope="class")
 def delay_class():
-    time.sleep(10)
+    time.sleep(20)
 
 
 @pytest.mark.usefixtures("delay_func")
 @pytest.mark.usefixtures("delay_class")
 class BaseTest:
-    RUCAPTCHA_KEY = os.getenv("RUCAPTCHA_KEY", "ad9053f3182ca81755768608fa758570")
+    RUCAPTCHA_KEY = os.environ["RUCAPTCHA_KEY"]
     sleep_time = 5
 
     proxyAddress = "0.0.0.0"
@@ -35,3 +35,7 @@ class BaseTest:
         letters = string.ascii_lowercase
         result_str = "".join(random.choice(letters) for _ in range(length))
         return result_str
+
+
+class DeathByTest(BaseTest):
+    RUCAPTCHA_KEY = os.environ["DEATHBYCAPTCHA_KEY"]

@@ -37,7 +37,7 @@ class Control(BaseCaptcha):
                 'errorBody': None
             }
 
-            Death By Captcha example:
+            DeathByCaptcha:
 
             >>> Control(rucaptcha_key="service_username:service_password",
             ...         service_type="other-captcha-services",
@@ -49,7 +49,7 @@ class Control(BaseCaptcha):
                 'errorBody': None
             }
 
-            Death By Captcha example:
+            DeathByCaptcha:
 
             >>> from python_rucaptcha.core.enums import ControlEnm, ServiceEnm
             >>> Control(rucaptcha_key="service_username:service_password",
