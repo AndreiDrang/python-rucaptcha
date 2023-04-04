@@ -114,7 +114,7 @@ class TestImageCaptcha(BaseImageCaptcha):
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
         with open(self.captcha_file, "rb") as f:
-            result = instance.captcha_handler(captcha_base64=f.read())
+            result = await instance.aio_captcha_handler(captcha_base64=f.read())
         assert isinstance(result, dict) is True
         if result["error"] is False:
             assert result["error"] is False
