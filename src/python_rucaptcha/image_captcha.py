@@ -62,6 +62,29 @@ class ImageCaptcha(BaseCaptcha):
                 'errorBody': None
             }
 
+            Death By Captcha
+
+            >>> ImageCaptcha(rucaptcha_key="some_username:some_password",
+            ...             service_type="deathbycaptcha"
+            ...             ).captcha_handler(captcha_file="src/examples/088636.jpg")
+            {
+                'captchaSolve': '03A....8h',
+                'taskId': '73043008354',
+                'error': False,
+                'errorBody': None
+            }
+
+            >>> await ImageCaptcha(rucaptcha_key="some_username:some_password",
+            ...             service_type="deathbycaptcha"
+            ...             ).aio_captcha_handler(captcha_link="https://rucaptcha.com/dist/web/99581b9d446a509a0a01954438a5e36a.jpg")
+            {
+                'captchaSolve': '03A....8h',
+                'taskId': '73043008354',
+                'error': False,
+                'errorBody': None
+            }
+
+
         Returns:
             Dict with full server response
 

@@ -76,6 +76,34 @@ class ReCaptcha(BaseCaptcha):
                 'errorBody': None
             }
 
+            Death By Captcha
+
+            >>> ReCaptcha(rucaptcha_key="some_username:some_password",
+            ...             service_type="deathbycaptcha",
+            ...             pageurl="https://rucaptcha.com/demo/recaptcha-v2",
+            ...             googlekey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
+            ...             method=ReCaptchaEnm.USER_RECAPTCHA.value
+            ...             ).captcha_handler()
+            {
+                'captchaSolve': '03A....8h',
+                'taskId': '73043008354',
+                'error': False,
+                'errorBody': None
+            }
+
+            >>> await ReCaptcha(rucaptcha_key="some_username:some_password",
+            ...             service_type="deathbycaptcha",
+            ...             pageurl="https://rucaptcha.com/demo/recaptcha-v2",
+            ...             googlekey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
+            ...             method=ReCaptchaEnm.USER_RECAPTCHA.value
+            ...             ).aio_captcha_handler()
+            {
+                'captchaSolve': '03A....8h',
+                'taskId': '73043008354',
+                'error': False,
+                'errorBody': None
+            }
+
         Returns:
             Dict with full server response
 
