@@ -38,9 +38,31 @@ class AudioCaptcha(BaseCaptcha):
                 'errorBody': None
             }
 
+            >>> with open("src/examples/mediacaptcha_audio/recaptcha_55914.mp3", "rb") as f:
+            ...     file_data = f.read()
+            >>> AudioCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122"
+            ...             ).captcha_handler(captcha_base64=file_data)
+            {
+                'captchaSolve': 'five five nine one four',
+                'taskId': 73243152973,
+                'error': False,
+                'errorBody': None
+            }
+
             >>> await AudioCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             lang='en'
             ...             ).aio_captcha_handler(captcha_file='examples/mediacaptcha_audio/recaptcha_55914.mp3')
+            {
+                'captchaSolve': 'five five nine one four',
+                'taskId': 73243152973,
+                'error': False,
+                'errorBody': None
+            }
+
+            >>> with open("src/examples/mediacaptcha_audio/recaptcha_55914.mp3", "rb") as f:
+            ...     file_data = f.read()
+            >>> await AudioCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122"
+            ...             ).aio_captcha_handler(captcha_base64=file_data)
             {
                 'captchaSolve': 'five five nine one four',
                 'taskId': 73243152973,

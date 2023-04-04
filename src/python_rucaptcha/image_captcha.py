@@ -44,6 +44,17 @@ class ImageCaptcha(BaseCaptcha):
                 'errorBody': None
             }
 
+            >>> with open("src/examples/088636.png", "rb") as f:
+            ...     file_data = f.read()
+            >>> ImageCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122"
+            ...             ).captcha_handler(captcha_base64=file_data)
+            {
+                'captchaSolve': 'W9H5K',
+                'taskId': 73243152973,
+                'error': False,
+                'errorBody': None
+            }
+
             >>> await ImageCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             ).aio_captcha_handler(captcha_link="https://rucaptcha.com/dist/web/99581b9d446a509a0a01954438a5e36a.jpg")
             {
@@ -84,6 +95,16 @@ class ImageCaptcha(BaseCaptcha):
                 'errorBody': None
             }
 
+            >>> with open("src/examples/088636.png", "rb") as f:
+            ...     file_data = f.read()
+            >>> await ImageCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122"
+            ...             ).aio_captcha_handler(captcha_base64=file_data)
+            {
+                'captchaSolve': 'W9H5K',
+                'taskId': 73243152973,
+                'error': False,
+                'errorBody': None
+            }
 
         Returns:
             Dict with full server response
