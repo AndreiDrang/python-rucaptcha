@@ -29,6 +29,17 @@ class RotateCaptcha(BaseCaptcha):
                 'errorBody': None
             }
 
+            >>> with open("src/examples/rotate/rotate_ex.png", "rb") as f:
+            ...     file_data = f.read()
+            >>> RotateCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122"
+            ...             ).captcha_handler(captcha_base64=file_data)
+            {
+                'captchaSolve': '160',
+                'taskId': 73243152973,
+                'error': False,
+                'errorBody': None
+            }
+
             >>> await RotateCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             ).aio_captcha_handler(captcha_file="examples/rotate/rotate_ex.png")
             {
@@ -46,6 +57,18 @@ class RotateCaptcha(BaseCaptcha):
                 'error': False,
                 'errorBody': None
             }
+
+            >>> with open("src/examples/rotate/rotate_ex.png", "rb") as f:
+            ...     file_data = f.read()
+            >>> await RotateCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122"
+            ...             ).aio_captcha_handler(captcha_base64=file_data)
+            {
+                'captchaSolve': '160',
+                'taskId': 73243152973,
+                'error': False,
+                'errorBody': None
+            }
+
 
         Returns:
             Dict with full server response
