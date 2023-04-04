@@ -1,6 +1,6 @@
 import pytest
 
-from tests.conftest import BaseTest
+from tests.conftest import BaseTest, DeathByTest
 from python_rucaptcha.hcaptcha import HCaptcha
 from python_rucaptcha.core.enums import ServiceEnm, HCaptchaEnm
 from python_rucaptcha.core.serializer import ResponseSer
@@ -114,7 +114,7 @@ class TestHCaptcha(BaseHCaptcha):
             )
 
 
-class TestDeathByHCaptcha(BaseHCaptcha):
+class TestDeathByHCaptcha(BaseHCaptcha, DeathByTest):
     """
     Success tests
     """
