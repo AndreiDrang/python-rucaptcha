@@ -19,7 +19,7 @@ def delay_class():
 @pytest.mark.usefixtures("delay_func")
 @pytest.mark.usefixtures("delay_class")
 class BaseTest:
-    RUCAPTCHA_KEY = os.getenv("RUCAPTCHA_KEY", "ad9053f3182ca81755768608fa758570")
+    RUCAPTCHA_KEY = os.environ["RUCAPTCHA_KEY"]
     sleep_time = 5
 
     proxyAddress = "0.0.0.0"
@@ -38,4 +38,4 @@ class BaseTest:
 
 
 class DeathByTest(BaseTest):
-    RUCAPTCHA_KEY = os.getenv("DEATHBYCAPTCHA_KEY", "some_username:some_password")
+    RUCAPTCHA_KEY = os.environ["DEATHBYCAPTCHA_KEY"]
