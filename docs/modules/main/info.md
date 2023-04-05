@@ -46,12 +46,10 @@ pip install python-rucaptcha
 ## How to test?
 
 1. You need set ``RUCAPTCHA_KEY`` in your environment(get this value from you account).
-2. Run command ``make tests``, from root directory.
+2. You need set ``DEATHBYCAPTCHA_KEY`` in your environment(get this value from you account).
+3. Run command ``make tests``, from root directory.
 
 
 ### Changelog
 
-- v.5.1 - Check [releases page](https://github.com/AndreiDrang/python-rucaptcha/releases).
-- v.5.0 - Added AmazonWAF captcha method.
-- v.4.2 - Added [Yandex Smart Captcha](https://rucaptcha.com/api-rucaptcha#yandex).
-- v.4.0 - Rework classes and methods. Adding `TikTok` captcha. Adding inheritance and serializers. The `Callback server` is deprecated.
+Check [releases page](https://github.com/AndreiDrang/python-rucaptcha/releases).
