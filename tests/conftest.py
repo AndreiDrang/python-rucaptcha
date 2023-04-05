@@ -2,6 +2,7 @@ import os
 import time
 import random
 import string
+import logging
 
 import pytest
 
@@ -38,4 +39,6 @@ class BaseTest:
 
 
 class DeathByTest(BaseTest):
-    RUCAPTCHA_KEY = os.environ["DEATHBYCAPTCHA_KEY"]
+    RUCAPTCHA_KEY = os.getenv("DEATHBYCAPTCHA_KEY")
+    if not RUCAPTCHA_KEY:
+        logging.warning("U do not set `DEATHBYCAPTCHA_KEY` ENV")
