@@ -1,6 +1,6 @@
 import logging
 from uuid import uuid4
-from typing import Union, Optional
+from typing import Optional
 
 from pydantic import Field, BaseModel, conint, constr, validator, root_validator
 
@@ -84,14 +84,16 @@ class PostRequestSer(MyBaseModel):
     field_json: int = Field(1, alias="json")
 
 
-class GetRequestSer(BaseModel):
-    key: str
-    action: str = "get"
-    field_json: int = Field(1, alias="json")
+class TaskSer(MyBaseModel):
+    type: str
 
-    # Control keys
-    ids: str = None
-    id: str = None
+
+class CreateTaskBaseSer(MyBaseModel):
+    clientKey: str
+    task: TaskSer = None
+    languagePool: str = "en"
+    callbackUrl: str = None
+    softId: str = Field(APP_KEY, const=True)
 
 
 class CaptchaOptionsSer(BaseModel):
@@ -135,6 +137,13 @@ class CaptchaOptionsSer(BaseModel):
                         "url_response": f"http://api.{service_type}.com/2captcha/res.php",
                     }
                 )
+            elif service_type in (enums.ServiceEnm.TWOCAPTCHA_V2, enums.ServiceEnm.RUCAPTCHA_V2):
+                values.update(
+                    {
+                        "url_request": f"https://api.{service_type}.com/createTask",
+                        "url_response": f"https://api.{service_type}.com/getTaskResult",
+                    }
+                )
             else:
                 values.update(
                     {
@@ -150,22 +159,32 @@ HTTP API Response
 """
 
 
-class ServicePostResponseSer(MyBaseModel):
-    status: int
-    request: str
+class CreateTaskResponseSer(MyBaseModel):
+    errorId: int
+    taskId: int = None
 
 
-class ServiceGetResponseSer(BaseModel):
-    status: int
-    request: Union[str, dict]
-
-    # ReCaptcha V3 params
-    user_check: str = ""
-    user_score: str = ""
+class GetTaskResultRequestSer(BaseModel):
+    clientKey: str
+    taskId: int = None
 
 
-class ResponseSer(MyBaseModel):
-    captchaSolve: Union[dict, str] = {}
-    taskId: Optional[int] = None
-    error: bool = False
-    errorBody: Optional[str] = None
+class GetTaskResultResponseSer(BaseModel):
+    errorId: int = 0
+    status: str = None
+    solution: dict = None
+    cost: float = None
+    ip: str = None
+    createTime: int = None
+    endTime: int = None
+    solveCount: int = None
+
+
+"""
+Captcha tasks serializers
+"""
+
+
+class TextCaptchaTaskSer(TaskSer):
+    type: str = "TextCaptchaTask"
+    comment: str = "Если завтра суббота, то какой сегодня день?"

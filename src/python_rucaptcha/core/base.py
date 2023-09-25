@@ -2,6 +2,7 @@ import os
 import time
 import uuid
 import asyncio
+from typing import Union
 from pathlib import Path
 
 import aiohttp
@@ -10,7 +11,7 @@ from requests.adapters import HTTPAdapter
 
 from . import enums
 from .config import RETRIES, ASYNC_RETRIES
-from .serializer import ResponseSer, GetRequestSer, PostRequestSer, CaptchaOptionsSer, ServicePostResponseSer
+from .serializer import CaptchaOptionsSer, CreateTaskBaseSer, CreateTaskResponseSer, GetTaskResultRequestSer
 from .result_handler import get_sync_result, get_async_result
 
 
@@ -38,57 +39,43 @@ class BaseCaptcha:
         # assign args to validator
         self.params = CaptchaOptionsSer(**locals(), **kwargs)
 
-        # prepare POST payload
-        self.post_payload = PostRequestSer(key=self.params.rucaptcha_key, method=method).dict(by_alias=True)
-        # prepare GET payload
-        self.get_payload = GetRequestSer(key=self.params.rucaptcha_key, action=action).dict(
-            by_alias=True, exclude_none=True
+        # prepare create task payload
+        self.create_task_payload = CreateTaskBaseSer(clientKey=self.params.rucaptcha_key, **locals()).dict(
+            by_alias=True
         )
-        # prepare result payload
-        self.result = ResponseSer()
+        # prepare get task result data payload
+        self.get_task_payload = GetTaskResultRequestSer(clientKey=self.params.rucaptcha_key)
 
         for key in kwargs:
-            self.post_payload.update({key: kwargs[key]})
+            self.create_task_payload.update({key: kwargs[key]})
 
         # prepare session
         self.session = requests.Session()
         self.session.mount("http://", HTTPAdapter(max_retries=RETRIES))
         self.session.mount("https://", HTTPAdapter(max_retries=RETRIES))
 
-    def _processing_response(self, **kwargs: dict) -> dict:
+    def _processing_response(self, **kwargs: dict) -> Union[dict, Exception]:
         """
         Method processing captcha solving task creation result
         :param kwargs: additional params for Requests library
         """
         try:
-            response = ServicePostResponseSer(
-                **self.session.post(self.params.url_request, data=self.post_payload, **kwargs).json()
+            response = CreateTaskResponseSer(
+                **self.session.post(self.params.url_request, json=self.create_task_payload, **kwargs).json()
             )
             # check response status
-            if response.status == 1:
-                self.result.taskId = response.request
+            if response.errorId == 0:
+                self.get_task_payload.taskId = response.taskId
             else:
-                self.result.error = True
-                self.result.errorBody = response.request
+                return response.dict()
         except Exception as error:
-            self.result.error = True
-            self.result.errorBody = str(error)
-
-        # check for errors while make request to server
-        if self.result.error:
-            return self.result.dict()
-
-        # if all is ok - send captcha to service and wait solution
-        # update payload - add captcha taskId
-        self.get_payload.update({"id": self.result.taskId})
+            return error
 
         # wait captcha solving
         time.sleep(self.params.sleep_time)
+
         return get_sync_result(
-            get_payload=self.get_payload,
-            sleep_time=self.params.sleep_time,
-            url_response=self.params.url_response,
-            result=self.result,
+            get_payload=self.get_task_payload, sleep_time=self.params.sleep_time, url_response=self.params.url_response
         )
 
     def url_open(self, url: str, **kwargs):
@@ -130,7 +117,7 @@ class BaseCaptcha:
 
         # if all is ok - send captcha to service and wait solution
         # update payload - add captcha taskId
-        self.get_payload.update({"id": self.result.taskId})
+        self.get_payload.taskId = self.result.taskId
 
         # wait captcha solving
         await asyncio.sleep(self.params.sleep_time)
@@ -141,7 +128,7 @@ class BaseCaptcha:
             result=self.result,
         )
 
-    async def __aio_make_post_request(self) -> ServicePostResponseSer:
+    async def __aio_make_post_request(self):
         async with aiohttp.ClientSession() as session:
             async for attempt in ASYNC_RETRIES:
                 with attempt:
@@ -149,7 +136,7 @@ class BaseCaptcha:
                         self.params.url_request, data=self.post_payload, raise_for_status=True
                     ) as resp:
                         response_json = await resp.json(content_type=None)
-                        return ServicePostResponseSer(**response_json)
+                        return GetTaskResultSer(**response_json)
 
     # Working with images methods
 

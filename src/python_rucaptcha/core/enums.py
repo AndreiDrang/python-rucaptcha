@@ -23,6 +23,8 @@ class MyEnum(Enum):
 class ServiceEnm(str, MyEnum):
     TWOCAPTCHA = "2captcha"
     RUCAPTCHA = "rucaptcha"
+    TWOCAPTCHA_V2 = "2captcha"
+    RUCAPTCHA_V2 = "rucaptcha"
     DEATHBYCAPTCHA = "deathbycaptcha"
 
 
@@ -106,6 +108,7 @@ class AmazonWAFCaptchaEnm(str, MyEnum):
 
 class TextCaptchaEnm(str, MyEnum):
     TEXT = "text"
+    TextCaptchaTask = "TextCaptchaTask"
 
 
 class AudioCaptchaEnm(str, MyEnum):
