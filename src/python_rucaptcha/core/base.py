@@ -94,49 +94,38 @@ class BaseCaptcha:
                     async with session.get(url=url, **kwargs) as resp:
                         return await resp.content.read()
 
-    async def _aio_processing_response(self) -> dict:
+    async def _aio_processing_response(self) -> Union[dict, Exception]:
         """
         Method processing async captcha solving task creation result
         """
         try:
             # make async or sync request
-            response = await self.__aio_make_post_request()
+            response = await self.__aio_create_task()
             # check response status
-            if response.status == 1:
-                self.result.taskId = response.request
+            if response.errorId == 0:
+                self.get_task_payload.taskId = response.taskId
             else:
-                self.result.error = True
-                self.result.errorBody = response.request
+                return response.dict()
         except Exception as error:
-            self.result.error = True
-            self.result.errorBody = str(error)
-
-        # check for errors while make request to server
-        if self.result.error:
-            return self.result.dict()
-
-        # if all is ok - send captcha to service and wait solution
-        # update payload - add captcha taskId
-        self.get_payload.taskId = self.result.taskId
+            return error
 
         # wait captcha solving
         await asyncio.sleep(self.params.sleep_time)
         return await get_async_result(
-            get_payload=self.get_payload,
+            get_payload=self.get_task_payload,
             sleep_time=self.params.sleep_time,
             url_response=self.params.url_response,
-            result=self.result,
         )
 
-    async def __aio_make_post_request(self):
+    async def __aio_create_task(self) -> CreateTaskResponseSer:
         async with aiohttp.ClientSession() as session:
             async for attempt in ASYNC_RETRIES:
                 with attempt:
                     async with session.post(
-                        self.params.url_request, data=self.post_payload, raise_for_status=True
+                        self.params.url_request, data=self.create_task_payload, raise_for_status=True
                     ) as resp:
                         response_json = await resp.json(content_type=None)
-                        return GetTaskResultSer(**response_json)
+                        return CreateTaskResponseSer(**response_json)
 
     # Working with images methods
 
