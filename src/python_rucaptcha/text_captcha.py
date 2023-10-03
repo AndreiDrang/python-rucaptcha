@@ -94,7 +94,6 @@ class TextCaptcha(BaseCaptcha):
             Check class docstirng for more info
         """
         self.create_task_payload.update({"task": TextCaptchaTaskSer(comment=textcaptcha).dict()})
-
         return self._processing_response(**kwargs)
 
     async def aio_captcha_handler(self, textcaptcha: str) -> dict:

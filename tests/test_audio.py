@@ -3,7 +3,7 @@ import pytest
 from tests.conftest import BaseTest
 from python_rucaptcha.core.enums import SaveFormatsEnm
 from python_rucaptcha.audio_captcha import AudioCaptcha
-from python_rucaptcha.core.serializer import ResponseSer
+from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 
 
 class TestAudioCaptcha(BaseTest):
@@ -36,7 +36,7 @@ class TestAudioCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
     def test_basic_data_link(self, save_format):
@@ -56,7 +56,7 @@ class TestAudioCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
     def test_basic_data_base64(self, save_format):
@@ -77,7 +77,7 @@ class TestAudioCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
@@ -98,7 +98,7 @@ class TestAudioCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
@@ -119,7 +119,7 @@ class TestAudioCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
@@ -141,7 +141,7 @@ class TestAudioCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     """
     Fail tests
@@ -160,7 +160,7 @@ class TestAudioCaptcha(BaseTest):
         assert result["errorBody"] == AudioCaptcha.NO_CAPTCHA_ERR
         assert result["captchaSolve"] == {}
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_no_captcha(self):
@@ -175,7 +175,7 @@ class TestAudioCaptcha(BaseTest):
         assert result["taskId"] is None
         assert result["errorBody"] == AudioCaptcha.NO_CAPTCHA_ERR
         assert result["captchaSolve"] == {}
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_wrong_link(self):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
@@ -188,7 +188,7 @@ class TestAudioCaptcha(BaseTest):
         assert result["error"] is True
         assert result["taskId"] is None
         assert result["captchaSolve"] == {}
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_wrong_path(self):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
@@ -202,7 +202,7 @@ class TestAudioCaptcha(BaseTest):
             assert result["error"] is True
             assert result["taskId"] is None
             assert result["captchaSolve"] == {}
-            assert result.keys() == ResponseSer().dict().keys()
+            assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_wrong_base64(self):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
@@ -212,7 +212,7 @@ class TestAudioCaptcha(BaseTest):
         assert result["error"] is True
         assert result["taskId"] is None
         assert result["captchaSolve"] == {}
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_wrong_link(self):
@@ -226,7 +226,7 @@ class TestAudioCaptcha(BaseTest):
         assert result["error"] is True
         assert result["taskId"] is None
         assert result["captchaSolve"] == {}
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_wrong_path(self):
@@ -241,7 +241,7 @@ class TestAudioCaptcha(BaseTest):
             assert result["error"] is True
             assert result["taskId"] is None
             assert result["captchaSolve"] == {}
-            assert result.keys() == ResponseSer().dict().keys()
+            assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_wrong_base64(self):
@@ -254,4 +254,4 @@ class TestAudioCaptcha(BaseTest):
         assert result["error"] is True
         assert result["taskId"] is None
         assert result["captchaSolve"] == {}
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()

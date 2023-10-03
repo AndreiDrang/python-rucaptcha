@@ -3,7 +3,7 @@ import pytest
 from tests.conftest import BaseTest
 from python_rucaptcha.turnstile import Turnstile
 from python_rucaptcha.core.enums import TurnstileCaptchaEnm
-from python_rucaptcha.core.serializer import ResponseSer
+from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 
 
 class TestTurnstile(BaseTest):
@@ -43,7 +43,7 @@ class TestTurnstile(BaseTest):
             assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
@@ -71,7 +71,7 @@ class TestTurnstile(BaseTest):
             assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_context_basic_data(self):
         with Turnstile(

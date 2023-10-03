@@ -3,7 +3,7 @@ import pytest
 from tests.conftest import BaseTest
 from python_rucaptcha.gee_test import GeeTest
 from python_rucaptcha.core.enums import GeetestEnm
-from python_rucaptcha.core.serializer import ResponseSer
+from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 
 
 class TestGeeTestBase(BaseTest):
@@ -56,7 +56,7 @@ class TestGeeTest(TestGeeTestBase):
         assert isinstance(result["taskId"], int) is True
         assert isinstance(result["errorBody"], str) is True
         assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
@@ -82,7 +82,7 @@ class TestGeeTest(TestGeeTestBase):
         assert isinstance(result["taskId"], int) is True
         assert isinstance(result["errorBody"], str) is True
         assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_context_basic_data(self):
         with GeeTest(
@@ -186,7 +186,7 @@ class TestGeeTestV4(TestGeeTestBase):
         assert isinstance(result["taskId"], int) is True
         assert isinstance(result["errorBody"], str) is True
         assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
@@ -212,7 +212,7 @@ class TestGeeTestV4(TestGeeTestBase):
         assert isinstance(result["taskId"], int) is True
         assert isinstance(result["errorBody"], str) is True
         assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_context_basic_data(self):
         with GeeTest(

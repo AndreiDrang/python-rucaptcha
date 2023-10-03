@@ -2,7 +2,7 @@ import pytest
 
 from tests.conftest import BaseTest
 from python_rucaptcha.core.enums import YandexSmartCaptchaEnm
-from python_rucaptcha.core.serializer import ResponseSer
+from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 from python_rucaptcha.yandex_smart_captcha import YandexSmartCaptcha
 
 
@@ -43,7 +43,7 @@ class TestYandexSmartCaptcha(BaseTest):
             assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
@@ -71,7 +71,7 @@ class TestYandexSmartCaptcha(BaseTest):
             assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_context_basic_data(self):
         with YandexSmartCaptcha(

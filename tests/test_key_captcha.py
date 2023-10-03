@@ -3,7 +3,7 @@ import pytest
 from tests.conftest import BaseTest
 from python_rucaptcha.core.enums import KeyCaptchaEnm
 from python_rucaptcha.key_captcha import KeyCaptcha
-from python_rucaptcha.core.serializer import ResponseSer
+from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 
 
 class TestKeyCaptcha(BaseTest):
@@ -51,7 +51,7 @@ class TestKeyCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
@@ -84,7 +84,7 @@ class TestKeyCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_context_basic_data(self):
         with KeyCaptcha(

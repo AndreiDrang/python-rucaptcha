@@ -2,6 +2,7 @@ import os
 import time
 import uuid
 import asyncio
+import logging
 from typing import Union
 from pathlib import Path
 
@@ -101,6 +102,7 @@ class BaseCaptcha:
         try:
             # make async or sync request
             response = await self.__aio_create_task()
+            logging.warning(f"{response = }")
             # check response status
             if response.errorId == 0:
                 self.get_task_payload.taskId = response.taskId
@@ -109,6 +111,7 @@ class BaseCaptcha:
         except Exception as error:
             return error
 
+        logging.warning(f"{self.get_task_payload = }")
         # wait captcha solving
         await asyncio.sleep(self.params.sleep_time)
         return await get_async_result(
@@ -122,7 +125,7 @@ class BaseCaptcha:
             async for attempt in ASYNC_RETRIES:
                 with attempt:
                     async with session.post(
-                        self.params.url_request, data=self.create_task_payload, raise_for_status=True
+                        self.params.url_request, json=self.create_task_payload, raise_for_status=True
                     ) as resp:
                         response_json = await resp.json(content_type=None)
                         return CreateTaskResponseSer(**response_json)

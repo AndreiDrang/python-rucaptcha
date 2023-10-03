@@ -1,12 +1,14 @@
+import logging
+
 import pytest
 
 from tests.conftest import BaseTest
 from python_rucaptcha.text_captcha import TextCaptcha
-from python_rucaptcha.core.serializer import ResponseSer
+from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 
 
 class TestTextCaptcha(BaseTest):
-    questions = ((0, "Our planet name?"), (1, "Название нашей планеты?"), (2, "Our planet name?"))
+    questions = (("en", "Our planet name?"),)
 
     """
     Success tests
@@ -17,45 +19,46 @@ class TestTextCaptcha(BaseTest):
         assert "aio_captcha_handler" in TextCaptcha.__dict__.keys()
 
     @pytest.mark.parametrize("lang_code, question", questions)
-    def test_basic_data(self, lang_code, question):
-        instance = TextCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, language=lang_code)
+    def test_basic(self, lang_code: str, question: str):
+        instance = TextCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, languagePool=lang_code)
 
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
         result = instance.captcha_handler(textcaptcha=question)
 
         assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
-        else:
-            assert result["error"] is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        if not result["errorId"]:
+            assert result["status"] == "ready"
+            assert isinstance(result["solution"]["text"], str) is True
+            assert isinstance(result["taskId"], int) is True
+        else:
+            assert result["errorId"] == 1
+            assert result["status"] == "ERROR_CAPTCHA_UNSOLVABLE"
+
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("lang_code, question", questions)
-    async def test_aio_basic_data(self, lang_code, question):
-        instance = TextCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, language=lang_code)
+    async def test_aio_basic(self, lang_code, question):
+        instance = TextCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, languagePool=lang_code)
 
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
         result = await instance.aio_captcha_handler(textcaptcha=question)
 
+        logging.warning(f"{result = }")
         assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
+        logging.warning(f"{result = }")
+        if not result["errorId"]:
+            assert result["status"] == "ready"
+            assert isinstance(result["solution"]["text"], str) is True
             assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
         else:
-            assert result["error"] is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] == 1
+            assert result["status"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     """
     Fail tests

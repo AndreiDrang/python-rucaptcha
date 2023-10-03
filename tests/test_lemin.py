@@ -2,7 +2,7 @@ import pytest
 
 from tests.conftest import BaseTest
 from python_rucaptcha.core.enums import LeminCroppedCaptchaEnm
-from python_rucaptcha.core.serializer import ResponseSer
+from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 from python_rucaptcha.lemin_cropped_captcha import LeminCroppedCaptcha
 
 
@@ -48,7 +48,7 @@ class TestLeminCroppedCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
@@ -79,7 +79,7 @@ class TestLeminCroppedCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_context_basic_data(self):
         with LeminCroppedCaptcha(

@@ -23,8 +23,6 @@ class MyEnum(Enum):
 class ServiceEnm(str, MyEnum):
     TWOCAPTCHA = "2captcha"
     RUCAPTCHA = "rucaptcha"
-    TWOCAPTCHA_V2 = "2captcha"
-    RUCAPTCHA_V2 = "rucaptcha"
     DEATHBYCAPTCHA = "deathbycaptcha"
 
 

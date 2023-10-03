@@ -3,7 +3,7 @@ import pytest
 from tests.conftest import BaseTest, DeathByTest
 from python_rucaptcha.core.enums import ServiceEnm, ReCaptchaEnm
 from python_rucaptcha.re_captcha import ReCaptcha
-from python_rucaptcha.core.serializer import ResponseSer
+from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 
 
 class BaseReCaptcha(BaseTest):
@@ -45,7 +45,7 @@ class TestReCaptcha(BaseReCaptcha):
             assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
@@ -73,7 +73,7 @@ class TestReCaptcha(BaseReCaptcha):
             assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_context_basic_data(self):
         with ReCaptcha(
@@ -146,7 +146,7 @@ class TestDeathByReCaptcha(BaseReCaptcha, DeathByTest):
             assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
@@ -176,7 +176,7 @@ class TestDeathByReCaptcha(BaseReCaptcha, DeathByTest):
             assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_context_basic_data(self):
         with ReCaptcha(

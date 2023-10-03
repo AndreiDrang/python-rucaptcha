@@ -3,7 +3,7 @@ import pytest
 from tests.conftest import BaseTest
 from python_rucaptcha.control import Control
 from python_rucaptcha.core.enums import ControlEnm
-from python_rucaptcha.core.serializer import ResponseSer
+from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 
 
 class TestControl(BaseTest):
@@ -32,7 +32,7 @@ class TestControl(BaseTest):
         assert result["errorBody"] is None
         assert isinstance(result["captchaSolve"], str) is True
         assert float(result["captchaSolve"]) > 1
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_context_get_balance(self):
         with Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.GETBALANCE.value) as instance:
@@ -53,7 +53,7 @@ class TestControl(BaseTest):
         assert result["errorBody"] is None
         assert isinstance(result["captchaSolve"], str) is True
         assert float(result["captchaSolve"]) > 1
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_context_get_balance(self):
@@ -74,7 +74,7 @@ class TestControl(BaseTest):
         assert result["errorBody"] is None
         assert isinstance(result["captchaSolve"], str) is True
         assert result["captchaSolve"] == "ERROR_NO_SUCH_CAPCHA_ID"
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_context_get_solution(self):
         with Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.GET.value) as instance:
@@ -95,7 +95,7 @@ class TestControl(BaseTest):
         assert result["errorBody"] is None
         assert isinstance(result["captchaSolve"], str) is True
         assert result["captchaSolve"] == "ERROR_NO_SUCH_CAPCHA_ID"
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_context_get_solution(self):
@@ -116,7 +116,7 @@ class TestControl(BaseTest):
         assert result["errorBody"] is None
         assert isinstance(result["captchaSolve"], str) is True
         assert result["captchaSolve"] == "ERROR_NO_SUCH_CAPCHA_ID|ERROR_NO_SUCH_CAPCHA_ID"
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_context_get_cost(self):
         with Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.GET2.value) as instance:
@@ -137,7 +137,7 @@ class TestControl(BaseTest):
         assert result["errorBody"] is None
         assert isinstance(result["captchaSolve"], str) is True
         assert result["captchaSolve"] == "ERROR_NO_SUCH_CAPCHA_ID|ERROR_NO_SUCH_CAPCHA_ID"
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_context_get_cost(self):
@@ -157,7 +157,7 @@ class TestControl(BaseTest):
         assert result["taskId"] is None
         assert result["errorBody"] is None
         assert result["captchaSolve"] == "OK"
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_context_domains_clean(self):
         with Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.DEL_PINGBACK.value) as instance:
@@ -177,7 +177,7 @@ class TestControl(BaseTest):
         assert result["taskId"] is None
         assert result["errorBody"] is None
         assert result["captchaSolve"] == "OK"
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_context_domains_clean(self):
@@ -221,7 +221,7 @@ class TestControl(BaseTest):
         assert result["taskId"] is None
         assert result["errorBody"] == "ERROR_WRONG_CAPTCHA_ID"
         assert isinstance(result["captchaSolve"], dict) is True
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_context_report_bad(self):
         with Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.REPORTBAD.value) as instance:
@@ -241,7 +241,7 @@ class TestControl(BaseTest):
         assert result["taskId"] is None
         assert result["errorBody"] == "ERROR_WRONG_CAPTCHA_ID"
         assert isinstance(result["captchaSolve"], dict) is True
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_context_report_bad(self):
@@ -261,7 +261,7 @@ class TestControl(BaseTest):
         assert result["taskId"] is None
         assert result["errorBody"] == "ERROR_WRONG_CAPTCHA_ID"
         assert isinstance(result["captchaSolve"], dict) is True
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_context_report_good(self):
         with Control(rucaptcha_key=self.RUCAPTCHA_KEY, action=ControlEnm.REPORTGOOD.value) as instance:
@@ -281,7 +281,7 @@ class TestControl(BaseTest):
         assert result["taskId"] is None
         assert result["errorBody"] == "ERROR_WRONG_CAPTCHA_ID"
         assert isinstance(result["captchaSolve"], dict) is True
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_context_report_good(self):

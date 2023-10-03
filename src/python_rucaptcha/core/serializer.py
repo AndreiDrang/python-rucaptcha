@@ -2,7 +2,7 @@ import logging
 from uuid import uuid4
 from typing import Optional
 
-from pydantic import Field, BaseModel, conint, constr, validator, root_validator
+from pydantic.v1 import Field, BaseModel, conint, constr, validator, root_validator
 
 from . import enums
 from .config import APP_KEY
@@ -137,18 +137,11 @@ class CaptchaOptionsSer(BaseModel):
                         "url_response": f"http://api.{service_type}.com/2captcha/res.php",
                     }
                 )
-            elif service_type in (enums.ServiceEnm.TWOCAPTCHA_V2, enums.ServiceEnm.RUCAPTCHA_V2):
+            else:
                 values.update(
                     {
                         "url_request": f"https://api.{service_type}.com/createTask",
                         "url_response": f"https://api.{service_type}.com/getTaskResult",
-                    }
-                )
-            else:
-                values.update(
-                    {
-                        "url_request": f"http://{service_type}.com/in.php",
-                        "url_response": f"http://{service_type}.com/res.php",
                     }
                 )
         return values
@@ -178,6 +171,7 @@ class GetTaskResultResponseSer(BaseModel):
     createTime: int = None
     endTime: int = None
     solveCount: int = None
+    taskId: int = None
 
 
 """
