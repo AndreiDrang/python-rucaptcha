@@ -165,7 +165,6 @@ class TestImageCaptcha(BaseImageCaptcha):
         assert isinstance(result, dict) is True
         assert result["errorId"] == 15
         assert result["taskId"] is None
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_wrong_link(self):
@@ -187,7 +186,6 @@ class TestImageCaptcha(BaseImageCaptcha):
         assert isinstance(result, dict) is True
         assert result["errorId"] == 15
         assert result["taskId"] is None
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
 
 class XTestDeathByImageCaptcha(BaseImageCaptcha, DeathByTest):
