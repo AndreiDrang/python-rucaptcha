@@ -3,7 +3,7 @@ import pytest
 from tests.conftest import BaseTest, DeathByTest
 from python_rucaptcha.core.enums import ServiceEnm, SaveFormatsEnm
 from python_rucaptcha.image_captcha import ImageCaptcha
-from python_rucaptcha.core.serializer import GetTaskResultRequestSer
+from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 
 
 class BaseImageCaptcha(BaseTest):
@@ -41,6 +41,7 @@ class TestImageCaptcha(BaseImageCaptcha):
         instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
         assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
         result = instance.captcha_handler(captcha_file=self.captcha_file)
+
         assert isinstance(result, dict) is True
 
         if not result["errorId"]:
@@ -69,7 +70,7 @@ class TestImageCaptcha(BaseImageCaptcha):
         else:
             assert result["errorId"] == 1
             assert result["status"] == "ERROR_CAPTCHA_UNSOLVABLE"
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
@@ -86,7 +87,7 @@ class TestImageCaptcha(BaseImageCaptcha):
         else:
             assert result["errorId"] == 1
             assert result["status"] == "ERROR_CAPTCHA_UNSOLVABLE"
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
@@ -103,7 +104,7 @@ class TestImageCaptcha(BaseImageCaptcha):
         else:
             assert result["errorId"] == 1
             assert result["status"] == "ERROR_CAPTCHA_UNSOLVABLE"
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
@@ -123,7 +124,7 @@ class TestImageCaptcha(BaseImageCaptcha):
         else:
             assert result["errorId"] == 1
             assert result["status"] == "ERROR_CAPTCHA_UNSOLVABLE"
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     """
     Fail tests
@@ -136,7 +137,7 @@ class TestImageCaptcha(BaseImageCaptcha):
         assert isinstance(result, dict) is True
         assert result["errorId"] == 12
         assert isinstance(result["solution"]["text"], str) is True
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_no_captcha(self):
@@ -146,7 +147,7 @@ class TestImageCaptcha(BaseImageCaptcha):
         assert isinstance(result, dict) is True
         assert result["errorId"] == 12
         assert isinstance(result["solution"]["text"], str) is True
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_wrong_link(self):
         instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
@@ -155,7 +156,7 @@ class TestImageCaptcha(BaseImageCaptcha):
         assert isinstance(result, dict) is True
         assert result["errorId"] == 12
         assert isinstance(result["solution"]["text"], str) is True
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_wrong_base64(self):
         instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
@@ -164,7 +165,7 @@ class TestImageCaptcha(BaseImageCaptcha):
         assert isinstance(result, dict) is True
         assert result["errorId"] == 15
         assert result["taskId"] is None
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_wrong_link(self):
@@ -174,7 +175,7 @@ class TestImageCaptcha(BaseImageCaptcha):
         assert isinstance(result, dict) is True
         assert result["errorId"] == 12
         assert isinstance(result["solution"]["text"], str) is True
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_wrong_base64(self):
@@ -186,7 +187,7 @@ class TestImageCaptcha(BaseImageCaptcha):
         assert isinstance(result, dict) is True
         assert result["errorId"] == 15
         assert result["taskId"] is None
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
 
 class XTestDeathByImageCaptcha(BaseImageCaptcha, DeathByTest):
@@ -215,7 +216,7 @@ class XTestDeathByImageCaptcha(BaseImageCaptcha, DeathByTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_NO_SLOT_AVAILABLE"
 
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
     def test_basic_data_file(self, save_format):
@@ -238,7 +239,7 @@ class XTestDeathByImageCaptcha(BaseImageCaptcha, DeathByTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_NO_SLOT_AVAILABLE"
 
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
@@ -262,7 +263,7 @@ class XTestDeathByImageCaptcha(BaseImageCaptcha, DeathByTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_NO_SLOT_AVAILABLE"
 
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
@@ -286,7 +287,7 @@ class XTestDeathByImageCaptcha(BaseImageCaptcha, DeathByTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_NO_SLOT_AVAILABLE"
 
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     """
     Fail tests
@@ -306,7 +307,7 @@ class XTestDeathByImageCaptcha(BaseImageCaptcha, DeathByTest):
         assert result["errorBody"] == ImageCaptcha.NO_CAPTCHA_ERR
         assert result["captchaSolve"] == {}
 
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_no_captcha(self):
@@ -322,7 +323,7 @@ class XTestDeathByImageCaptcha(BaseImageCaptcha, DeathByTest):
         assert result["taskId"] is None
         assert result["errorBody"] == ImageCaptcha.NO_CAPTCHA_ERR
         assert result["captchaSolve"] == {}
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     def test_wrong_link(self):
         instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, service_type="deathbycaptcha")
@@ -336,7 +337,7 @@ class XTestDeathByImageCaptcha(BaseImageCaptcha, DeathByTest):
         assert result["error"] is True
         assert result["taskId"] is None
         assert result["captchaSolve"] == {}
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_wrong_link(self):
@@ -351,4 +352,4 @@ class XTestDeathByImageCaptcha(BaseImageCaptcha, DeathByTest):
         assert result["error"] is True
         assert result["taskId"] is None
         assert result["captchaSolve"] == {}
-        assert result.keys() == GetTaskResultRequestSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().dict().keys()
