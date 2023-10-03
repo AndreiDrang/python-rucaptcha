@@ -37,7 +37,7 @@ class GeetestEnm(str, MyEnum):
 
 
 class ImageCaptchaEnm(str, MyEnum):
-    BASE64 = "base64"
+    ImageToTextTask = "ImageToTextTask"
 
 
 class CapyPuzzleEnm(str, MyEnum):
@@ -105,7 +105,6 @@ class AmazonWAFCaptchaEnm(str, MyEnum):
 
 
 class TextCaptchaEnm(str, MyEnum):
-    TEXT = "text"
     TextCaptchaTask = "TextCaptchaTask"
 
 
