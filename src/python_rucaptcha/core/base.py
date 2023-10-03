@@ -12,7 +12,7 @@ from requests.adapters import HTTPAdapter
 
 from . import enums
 from .config import RETRIES, ASYNC_RETRIES
-from .serializer import CaptchaOptionsSer, CreateTaskBaseSer, CreateTaskResponseSer, GetTaskResultRequestSer
+from .serializer import TaskSer, CaptchaOptionsSer, CreateTaskBaseSer, CreateTaskResponseSer, GetTaskResultRequestSer
 from .result_handler import get_sync_result, get_async_result
 
 
@@ -41,14 +41,14 @@ class BaseCaptcha:
         self.params = CaptchaOptionsSer(**locals(), **kwargs)
 
         # prepare create task payload
-        self.create_task_payload = CreateTaskBaseSer(clientKey=self.params.rucaptcha_key, **locals()).dict(
-            by_alias=True
-        )
+        self.create_task_payload = CreateTaskBaseSer(
+            clientKey=self.params.rucaptcha_key, task=TaskSer(type=method), **locals()
+        ).dict(by_alias=True)
         # prepare get task result data payload
         self.get_task_payload = GetTaskResultRequestSer(clientKey=self.params.rucaptcha_key)
 
         for key in kwargs:
-            self.create_task_payload.update({key: kwargs[key]})
+            self.create_task_payload["task"].update({key: kwargs[key]})
 
         # prepare session
         self.session = requests.Session()
@@ -60,6 +60,7 @@ class BaseCaptcha:
         Method processing captcha solving task creation result
         :param kwargs: additional params for Requests library
         """
+        logging.warning(f"{self.create_task_payload = }")
         try:
             response = CreateTaskResponseSer(
                 **self.session.post(self.params.url_request, json=self.create_task_payload, **kwargs).json()
