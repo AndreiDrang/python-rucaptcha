@@ -101,7 +101,8 @@ class TurnstileCaptchaEnm(str, MyEnum):
 
 
 class AmazonWAFCaptchaEnm(str, MyEnum):
-    AMAZON_WAF = "amazon_waf"
+    AmazonTask = "AmazonTask"
+    AmazonTaskProxyless = "AmazonTaskProxyless"
 
 
 class TextCaptchaEnm(str, MyEnum):
