@@ -90,7 +90,7 @@ class TaskSer(MyBaseModel):
 
 class CreateTaskBaseSer(MyBaseModel):
     clientKey: str
-    task: TaskSer = None
+    task: TaskSer = {}
     languagePool: str = "en"
     callbackUrl: str = None
     softId: str = Field(APP_KEY, const=True)
@@ -181,4 +181,4 @@ Captcha tasks serializers
 
 class TextCaptchaTaskSer(TaskSer):
     type: str = "TextCaptchaTask"
-    comment: str = "Если завтра суббота, то какой сегодня день?"
+    comment: str
