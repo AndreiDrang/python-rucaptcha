@@ -1,5 +1,3 @@
-import logging
-
 import pytest
 
 from tests.conftest import BaseTest
@@ -8,7 +6,7 @@ from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 
 
 class TestTextCaptcha(BaseTest):
-    questions = (("en", "Our planet name?"),)
+    questions = (("en", "Our planet name?"), ("rn", "Название нашей планеты?"))
 
     """
     Success tests
@@ -47,9 +45,8 @@ class TestTextCaptcha(BaseTest):
 
         result = await instance.aio_captcha_handler(textcaptcha=question)
 
-        logging.warning(f"{result = }")
         assert isinstance(result, dict) is True
-        logging.warning(f"{result = }")
+
         if not result["errorId"]:
             assert result["status"] == "ready"
             assert isinstance(result["solution"]["text"], str) is True
