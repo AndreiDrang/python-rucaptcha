@@ -4,6 +4,7 @@ from typing import Optional
 
 from .core.base import BaseCaptcha
 from .core.enums import SaveFormatsEnm, ImageCaptchaEnm
+from .core.serializer import GetTaskResultResponseSer
 
 
 class ImageCaptcha(BaseCaptcha):
@@ -112,10 +113,12 @@ class ImageCaptcha(BaseCaptcha):
         Notes:
             https://rucaptcha.com/api-rucaptcha#solving_normal_captcha
         """
-        super().__init__(method=ImageCaptchaEnm.BASE64.value, *args, **kwargs)
+        super().__init__(method=ImageCaptchaEnm.ImageToTextTask.value, *args, **kwargs)
+
         self.save_format = save_format
         self.img_clearing = img_clearing
         self.img_path = img_path
+        self.result = GetTaskResultResponseSer()
 
     def captcha_handler(
         self,
@@ -160,28 +163,30 @@ class ImageCaptcha(BaseCaptcha):
         """
         # if a local file link is passed
         if captcha_file:
-            self.post_payload.update({"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")})
+            self.create_task_payload["task"].update(
+                {"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")}
+            )
         # if the file is transferred in base64 encoding
         elif captcha_base64:
-            self.post_payload.update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
+            self.create_task_payload["task"].update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
         # if a URL is passed
         elif captcha_link:
             try:
                 content = self.url_open(url=captcha_link, **kwargs).content
             except Exception as error:
-                self.result.error = True
-                self.result.errorBody = str(error)
+                self.result.errorId = 12
+                self.result.solution = {"text": str(error)}
                 return self.result.dict()
 
             # according to the value of the passed parameter, select the function to save the image
             if self.save_format == SaveFormatsEnm.CONST.value:
                 self._file_const_saver(content, self.img_path)
-            self.post_payload.update({"body": base64.b64encode(content).decode("utf-8")})
+            self.create_task_payload["task"].update({"body": base64.b64encode(content).decode("utf-8")})
 
         else:
             # if none of the parameters are passed
-            self.result.error = True
-            self.result.errorBody = self.NO_CAPTCHA_ERR
+            self.result.errorId = 12
+            self.result.solution = {"text": "No captcha send"}
             return self.result.dict()
 
         return self._processing_response(**kwargs)
@@ -229,28 +234,30 @@ class ImageCaptcha(BaseCaptcha):
         """
         # if a local file link is passed
         if captcha_file:
-            self.post_payload.update({"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")})
+            self.create_task_payload["task"].update(
+                {"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")}
+            )
         # if the file is transferred in base64 encoding
         elif captcha_base64:
-            self.post_payload.update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
+            self.create_task_payload["task"].update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
         # if a URL is passed
         elif captcha_link:
             try:
                 content = await self.aio_url_read(url=captcha_link, **kwargs)
             except Exception as error:
-                self.result.error = True
-                self.result.errorBody = str(error)
+                self.result.errorId = 12
+                self.result.solution = {"text": str(error)}
                 return self.result.dict()
 
             # according to the value of the passed parameter, select the function to save the image
             if self.save_format == SaveFormatsEnm.CONST.value:
                 self._file_const_saver(content, self.img_path)
-            self.post_payload.update({"body": base64.b64encode(content).decode("utf-8")})
+            self.create_task_payload["task"].update({"body": base64.b64encode(content).decode("utf-8")})
 
         else:
             # if none of the parameters are passed
-            self.result.error = True
-            self.result.errorBody = self.NO_CAPTCHA_ERR
+            self.result.errorId = 12
+            self.result.solution = {"text": "No captcha send"}
             return self.result.dict()
 
         return await self._aio_processing_response()
