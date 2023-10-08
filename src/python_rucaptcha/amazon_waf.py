@@ -5,11 +5,11 @@ from .core.enums import AmazonWAFCaptchaEnm
 class AmazonWAF(BaseCaptcha):
     def __init__(
         self,
-        pageurl: str,
-        sitekey: str,
+        websiteURL: str,
+        websiteKey: str,
         iv: str,
         context: str,
-        method: str = AmazonWAFCaptchaEnm.AMAZON_WAF.value,
+        method: str = AmazonWAFCaptchaEnm.AmazonTaskProxyless.value,
         *args,
         **kwargs,
     ):
@@ -56,8 +56,6 @@ class AmazonWAF(BaseCaptcha):
             https://rucaptcha.com/api-rucaptcha#amazon-waf
         """
         super().__init__(method=method, *args, **kwargs)
-
-        self.post_payload.update({"sitekey": sitekey, "pageurl": pageurl, "iv": iv, "context": context})
 
         # check user params
         if method not in AmazonWAFCaptchaEnm.list_values():

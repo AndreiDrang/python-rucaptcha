@@ -16,10 +16,10 @@ class TextCaptcha(BaseCaptcha):
         Args:
             rucaptcha_key: User API key
             languagePool: Used to choose the workers for solving the captcha by their language.
-                            Applicable to image-based and text-based captchas.
-                            Default: en.
-                            en - English-speaking workers
-                            rn - Russian-speaking workers.
+                            Applicable to image-based and text-based captchas.\n
+                            `en` - English-speaking workers\n
+                            `rn` - Russian-speaking workers.
+            kwargs: Additional not required params for this captcha type
 
         Examples:
             >>> TextCaptcha(rucaptcha_key="aa90...51122",
@@ -35,7 +35,8 @@ class TextCaptcha(BaseCaptcha):
                "ip":"46.53.241.91",
                "createTime":1695617910,
                "endTime":1695617965,
-               "solveCount":2
+               "solveCount":2,
+               "taskId":5423543
             }
 
             >>> TextCaptcha(rucaptcha_key="aa90...51122",
@@ -50,7 +51,8 @@ class TextCaptcha(BaseCaptcha):
                "ip":"46.53.241.91",
                "createTime":1695617910,
                "endTime":1695617965,
-               "solveCount":2
+               "solveCount":2,
+               "taskId":5423543
             }
 
             >>> await TextCaptcha(rucaptcha_key="aa90...51122",
@@ -65,15 +67,17 @@ class TextCaptcha(BaseCaptcha):
                "ip":"46.53.241.91",
                "createTime":1695617910,
                "endTime":1695617965,
-               "solveCount":2
+               "solveCount":2,
+               "taskId":5423543
             }
 
         Returns:
             Dict with full server response
 
         Notes:
-            https://2captcha.com/api-docs/get-task-result
-            https://rucaptcha.com/api-docs/get-task-result
+            https://2captcha.com/api-docs/text
+
+            https://rucaptcha.com/api-docs/text
         """
 
         super().__init__(method=TextCaptchaEnm.TextCaptchaTask.value, *args, **kwargs)
@@ -93,7 +97,7 @@ class TextCaptcha(BaseCaptcha):
         Notes:
             Check class docstirng for more info
         """
-        self.create_task_payload.update({"task": TextCaptchaTaskSer(comment=textcaptcha).dict()})
+        self.create_task_payload.update({"task": TextCaptchaTaskSer(comment=textcaptcha).model_dump()})
         return self._processing_response(**kwargs)
 
     async def aio_captcha_handler(self, textcaptcha: str) -> dict:
@@ -109,5 +113,5 @@ class TextCaptcha(BaseCaptcha):
         Notes:
             Check class docstirng for more info
         """
-        self.create_task_payload.update({"task": TextCaptchaTaskSer(comment=textcaptcha).dict()})
+        self.create_task_payload.update({"task": TextCaptchaTaskSer(comment=textcaptcha).model_dump()})
         return await self._aio_processing_response()

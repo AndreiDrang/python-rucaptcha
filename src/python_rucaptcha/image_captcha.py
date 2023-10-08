@@ -25,24 +25,39 @@ class ImageCaptcha(BaseCaptcha):
                                  or as a regular image to a folder created by the library - 'const'.
             img_clearing: True - delete file after solution, False - don't delete file after solution
             img_path: Folder to save captcha images
+            kwargs: Additional not required params for this captcha type
 
         Examples:
             >>> ImageCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             ).captcha_handler(captcha_link="https://rucaptcha.com/dist/web/99581b9d446a509a0a01954438a5e36a.jpg")
             {
-                'captchaSolve': 'W9H5K',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "text":"w9h5k"
+               },
+               "cost":0.033,
+               "ip":"46.53.241.91",
+               "createTime":1696730723,
+               "endTime":1696730723,
+               "solveCount":1,
+               "taskId":74708110322
             }
 
             >>> ImageCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             ).captcha_handler(captcha_file="src/examples/088636.png")
             {
-                'captchaSolve': '088636',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "text":"w9h5k"
+               },
+               "cost":0.033,
+               "ip":"46.53.241.91",
+               "createTime":1696730723,
+               "endTime":1696730723,
+               "solveCount":1,
+               "taskId":74708110322
             }
 
             >>> with open("src/examples/088636.png", "rb") as f:
@@ -50,50 +65,85 @@ class ImageCaptcha(BaseCaptcha):
             >>> ImageCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122"
             ...             ).captcha_handler(captcha_base64=file_data)
             {
-                'captchaSolve': 'W9H5K',
-                'taskId': 73243152973,
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "text":"w9h5k"
+               },
+               "cost":0.033,
+               "ip":"46.53.241.91",
+               "createTime":1696730723,
+               "endTime":1696730723,
+               "solveCount":1,
+               "taskId":74708110322
             }
 
             >>> await ImageCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             ).aio_captcha_handler(captcha_link="https://rucaptcha.com/dist/web/99581b9d446a509a0a01954438a5e36a.jpg")
             {
-                'captchaSolve': 'W9H5K',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "text":"w9h5k"
+               },
+               "cost":0.033,
+               "ip":"46.53.241.91",
+               "createTime":1696730723,
+               "endTime":1696730723,
+               "solveCount":1,
+               "taskId":74708110322
             }
 
             >>> await ImageCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             ).aio_captcha_handler(captcha_file="src/examples/088636.png")
             {
-                'captchaSolve': '088636',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "text":"w9h5k"
+               },
+               "cost":0.033,
+               "ip":"46.53.241.91",
+               "createTime":1696730723,
+               "endTime":1696730723,
+               "solveCount":1,
+               "taskId":74708110322
             }
 
-            Death yCaptcha
+            Death Captcha
 
             >>> ImageCaptcha(rucaptcha_key="some_username:some_password",
             ...             service_type="deathbycaptcha"
             ...             ).captcha_handler(captcha_file="src/examples/088636.jpg")
             {
-                'captchaSolve': '03A....8h',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "text":"w9h5k"
+               },
+               "cost":0.033,
+               "ip":"46.53.241.91",
+               "createTime":1696730723,
+               "endTime":1696730723,
+               "solveCount":1,
+               "taskId":74708110322
             }
 
             >>> await ImageCaptcha(rucaptcha_key="some_username:some_password",
             ...             service_type="deathbycaptcha"
             ...             ).aio_captcha_handler(captcha_link="https://rucaptcha.com/dist/web/99581b9d446a509a0a01954438a5e36a.jpg")
             {
-                'captchaSolve': '03A....8h',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "text":"w9h5k"
+               },
+               "cost":0.033,
+               "ip":"46.53.241.91",
+               "createTime":1696730723,
+               "endTime":1696730723,
+               "solveCount":1,
+               "taskId":74708110322
             }
 
             >>> with open("src/examples/088636.png", "rb") as f:
@@ -101,17 +151,26 @@ class ImageCaptcha(BaseCaptcha):
             >>> await ImageCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122"
             ...             ).aio_captcha_handler(captcha_base64=file_data)
             {
-                'captchaSolve': 'W9H5K',
-                'taskId': 73243152973,
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "text":"w9h5k"
+               },
+               "cost":0.033,
+               "ip":"46.53.241.91",
+               "createTime":1696730723,
+               "endTime":1696730723,
+               "solveCount":1,
+               "taskId":74708110322
             }
 
         Returns:
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_normal_captcha
+            https://2captcha.com/api-docs/normal-captcha
+
+            https://rucaptcha.com/api-docs/normal-captcha
         """
         super().__init__(method=ImageCaptchaEnm.ImageToTextTask.value, *args, **kwargs)
 
@@ -136,25 +195,6 @@ class ImageCaptcha(BaseCaptcha):
             captcha_base64: Captcha image BASE64 info
             kwargs: additional params for `requests` library
 
-        Examples:
-            >>> ImageCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             ).captcha_handler(captcha_link="https://rucaptcha.com/dist/web/99581b9d446a509a0a01954438a5e36a.jpg")
-            {
-                'captchaSolve': 'W9H5K',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
-            }
-
-            >>> ImageCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             ).captcha_handler(captcha_file="src/examples/088636.png")
-            {
-                'captchaSolve': '088636',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
-            }
-
         Returns:
             Dict with full server response
 
@@ -176,7 +216,7 @@ class ImageCaptcha(BaseCaptcha):
             except Exception as error:
                 self.result.errorId = 12
                 self.result.solution = {"text": str(error)}
-                return self.result.dict()
+                return self.result.model_dump()
 
             # according to the value of the passed parameter, select the function to save the image
             if self.save_format == SaveFormatsEnm.CONST.value:
@@ -187,7 +227,7 @@ class ImageCaptcha(BaseCaptcha):
             # if none of the parameters are passed
             self.result.errorId = 12
             self.result.solution = {"text": "No captcha send"}
-            return self.result.dict()
+            return self.result.model_dump()
 
         return self._processing_response(**kwargs)
 
@@ -206,25 +246,6 @@ class ImageCaptcha(BaseCaptcha):
             captcha_file: Captcha image file path
             captcha_base64: Captcha image BASE64 info
             kwargs: additional params for `aiohttp` library
-
-        Examples:
-            >>> await ImageCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             ).aio_captcha_handler(captcha_link="https://rucaptcha.com/dist/web/99581b9d446a509a0a01954438a5e36a.jpg")
-            {
-                'captchaSolve': 'W9H5K',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
-            }
-
-            >>> await ImageCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             ).aio_captcha_handler(captcha_file="src/examples/088636.png")
-            {
-                'captchaSolve': '088636',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
-            }
 
         Returns:
             Dict with full server response
@@ -247,7 +268,7 @@ class ImageCaptcha(BaseCaptcha):
             except Exception as error:
                 self.result.errorId = 12
                 self.result.solution = {"text": str(error)}
-                return self.result.dict()
+                return self.result.model_dump()
 
             # according to the value of the passed parameter, select the function to save the image
             if self.save_format == SaveFormatsEnm.CONST.value:
@@ -258,7 +279,7 @@ class ImageCaptcha(BaseCaptcha):
             # if none of the parameters are passed
             self.result.errorId = 12
             self.result.solution = {"text": "No captcha send"}
-            return self.result.dict()
+            return self.result.model_dump()
 
         return await self._aio_processing_response()
 

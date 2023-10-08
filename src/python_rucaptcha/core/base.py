@@ -69,7 +69,7 @@ class BaseCaptcha:
             if response.errorId == 0:
                 self.get_task_payload.taskId = response.taskId
             else:
-                return response.dict()
+                return response.model_dump()
         except Exception as error:
             return error
 
@@ -108,7 +108,7 @@ class BaseCaptcha:
             if response.errorId == 0:
                 self.get_task_payload.taskId = response.taskId
             else:
-                return response.dict()
+                return response.model_dump()
         except Exception as error:
             return error
 

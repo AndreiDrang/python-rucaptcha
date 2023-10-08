@@ -1,8 +1,8 @@
 import logging
 from uuid import uuid4
-from typing import Optional
+from typing import Literal, Optional
 
-from pydantic.v1 import Field, BaseModel, conint, constr, validator, root_validator
+from pydantic import Field, BaseModel, ConfigDict, conint, constr, field_validator, model_validator
 
 from . import enums
 from .config import APP_KEY
@@ -13,8 +13,7 @@ Socket API Serializers
 
 
 class MyBaseModel(BaseModel):
-    class Config:
-        validate_assignment = True
+    model_config = ConfigDict(validate_assignment=True)
 
 
 class CaptchaOptionsSocketSer(MyBaseModel):
@@ -27,7 +26,7 @@ class CaptchaOptionsSocketSer(MyBaseModel):
     lang: str = ""
     hintText: constr(max_length=139) = ""
     hintImg: str = ""
-    softId: str = Field(APP_KEY, const=True)
+    soft_id: Literal[APP_KEY] = APP_KEY
 
 
 class NormalCaptchaSocketSer(BaseModel):
@@ -80,7 +79,7 @@ HTTP API Serializers
 class PostRequestSer(MyBaseModel):
     key: str
     method: str
-    soft_id: str = Field(APP_KEY, const=True)
+    soft_id: Literal[APP_KEY] = APP_KEY
     field_json: int = Field(1, alias="json")
 
 
@@ -93,7 +92,7 @@ class CreateTaskBaseSer(MyBaseModel):
     task: TaskSer = {}
     languagePool: str = "en"
     callbackUrl: str = None
-    softId: str = Field(APP_KEY, const=True)
+    soft_id: Literal[APP_KEY] = APP_KEY
 
 
 class CaptchaOptionsSer(BaseModel):
@@ -106,15 +105,7 @@ class CaptchaOptionsSer(BaseModel):
     url_request: Optional[str] = None  # /in.php
     url_response: Optional[str] = None  # /res.php
 
-    @validator("rucaptcha_key")
-    def rucaptcha_key_check(cls, value, values, **kwargs):
-        service_type = values.get("service_type")
-        if service_type in (enums.ServiceEnm.RUCAPTCHA, enums.ServiceEnm.TWOCAPTCHA):
-            if len(value) != 32:
-                raise ValueError(f"Invalid `rucaptcha_key` len, it must be - 32, u send - {len(value)}")
-        return value
-
-    @validator("service_type")
+    @field_validator("service_type")
     def service_type_check(cls, value):
         if value not in enums.ServiceEnm.list_values():
             logging.warning(
@@ -123,7 +114,7 @@ class CaptchaOptionsSer(BaseModel):
             )
         return value
 
-    @root_validator
+    @model_validator(mode="before")
     def urls_set(cls, values):
         """
         Set request \ response URLs if they not set previously

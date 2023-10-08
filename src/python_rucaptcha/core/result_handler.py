@@ -25,7 +25,7 @@ def get_sync_result(get_payload: GetTaskResultRequestSer, sleep_time: int, url_r
             if captcha_response.status == "processing":
                 time.sleep(sleep_time)
             else:
-                return captcha_response.dict()
+                return captcha_response.model_dump()
 
         except Exception as error:
             return error
@@ -45,7 +45,7 @@ async def get_async_result(
                 logging.warning(f"{get_payload = }")
                 logging.warning(f"{url_response = }")
                 # send a request for the result of solving the captcha
-                async with session.post(url_response, json=get_payload.dict(), raise_for_status=True) as resp:
+                async with session.post(url_response, json=get_payload.model_dump(), raise_for_status=True) as resp:
                     logging.warning(f"{resp.status = }")
                     captcha_response = await resp.json(content_type=None)
                     logging.warning(f"{captcha_response = }")
@@ -56,7 +56,7 @@ async def get_async_result(
                     if captcha_response.status == "processing":
                         time.sleep(sleep_time)
                     else:
-                        return captcha_response.dict()
+                        return captcha_response.model_dump()
             except Exception as error:
                 logging.warning(f"{error = }")
                 return error

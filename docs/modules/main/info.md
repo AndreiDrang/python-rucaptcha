@@ -1,7 +1,7 @@
 # Introduction
 
 
-![](../../_static/CaptchaSm.png)
+![](../../_static/RuCaptchaMedium.png)
 
 <a href="https://dashboard.capsolver.com/passport/register?inviteCode=kQTn-tG07Jb1">
     <img src="https://cdn.discordapp.com/attachments/1105172394655625306/1105180101802471575/20221207-160749.gif" alt="Capsolver's Banner">

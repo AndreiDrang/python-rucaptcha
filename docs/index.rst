@@ -2,7 +2,7 @@
 
 python-rucaptcha
 ================
-.. image:: _static/Captcha300x.png
+.. image:: _static/RuCaptchaMedium.png
     :align: center
 
 Python3 library for `RuCaptcha <https://rucaptcha.com/?from=4170435>`_ and `2Captcha <https://2captcha.com/?from=4170435>`_ service API.
