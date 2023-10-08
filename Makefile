@@ -1,8 +1,8 @@
 install:
-	cd src/ && pip install -e .
+	cd src/ && pip3 install -e .
 
 remove:
-	pip uninstall python_rucaptcha -y
+	pip3 uninstall python_rucaptcha -y
 
 refactor:
 	black docs/
@@ -24,7 +24,7 @@ lint:
 	isort src/ --check-only
 
 upload:
-	pip install twine
+	pip3 install twine
 	cd src/ && python setup.py upload
 
 tests: install
