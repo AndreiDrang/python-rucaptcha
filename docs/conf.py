@@ -61,6 +61,7 @@ html_context = {
             "DeathByCaptcha",
             "https://deathbycaptcha.com?refid=1237267242",
         ),
+        ProjectLink("RedPandaDev", "https://red-panda-dev.xyz/"),
     ]
 }
 html_sidebars = {
