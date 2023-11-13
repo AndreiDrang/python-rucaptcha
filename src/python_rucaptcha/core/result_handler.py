@@ -14,21 +14,23 @@ def get_sync_result(get_payload: GetTaskResultRequestSer, sleep_time: int, url_r
     Function periodically send the SYNC request to service and wait for captcha solving result
     """
     # generator for repeated attempts to connect to the server
-    attempts = attempts_generator()
+    attempts = attempts_generator(amount=10)
     for _ in attempts:
         try:
             # send a request for the result of solving the captcha
             captcha_response = GetTaskResultResponseSer(
                 **requests.post(url_response, json=get_payload.dict()).json(), taskId=get_payload.taskId
             )
+            logging.warning(f'{captcha_response = }')
             # if the captcha has not been resolved yet, wait
             if captcha_response.status == "processing":
                 time.sleep(sleep_time)
-            else:
+                continue
+            elif captcha_response.errorId!=0:
                 return captcha_response.model_dump()
-
         except Exception as error:
             return error
+    return captcha_response.model_dump()
 
 
 async def get_async_result(
