@@ -1,3 +1,5 @@
+import logging
+
 from .core.base import BaseCaptcha
 from .core.enums import TurnstileCaptchaEnm
 
@@ -46,6 +48,7 @@ class Turnstile(BaseCaptcha):
         Notes:
             https://rucaptcha.com/api-rucaptcha#turnstile
         """
+
         super().__init__(method=method, *args, **kwargs)
 
         self.create_task_payload['task'].update({"websiteKey": sitekey, "websiteURL": pageurl, "userAgent": userAgent})
