@@ -23,7 +23,6 @@ class BaseCaptcha:
         self,
         rucaptcha_key: str,
         method: str,
-        action: str = "get",
         sleep_time: int = 15,
         service_type: str = enums.ServiceEnm.TWOCAPTCHA.value,
         **kwargs,
@@ -31,7 +30,6 @@ class BaseCaptcha:
         """
         :param rucaptcha_key: User API key
         :param method: Captcha type
-        :param action: Server action
         :param sleep_time: Time to wait for captcha solution
         :param service_type: URL with which the program will work, "2captcha" option is possible (standard)
                               and "rucaptcha"
