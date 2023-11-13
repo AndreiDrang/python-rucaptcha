@@ -8,7 +8,7 @@ APP_KEY = "1899"
 
 
 # Connection retry generator
-def attempts_generator(amount: int = 2):
+def attempts_generator(amount: int = 5):
     """
     Function generates a generator of length equal to `amount`
 
