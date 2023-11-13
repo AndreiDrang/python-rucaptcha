@@ -146,6 +146,8 @@ HTTP API Response
 class CreateTaskResponseSer(MyBaseModel):
     errorId: int
     taskId: int = None
+    errorCode: str = None
+    errorDescription: str = None
 
 
 class GetTaskResultRequestSer(BaseModel):
