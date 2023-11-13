@@ -98,7 +98,8 @@ class YandexSmartCaptchaEnm(str, MyEnum):
 
 class TurnstileCaptchaEnm(str, MyEnum):
     TURNSTILE = "turnstile"
-
+    TurnstileTaskProxyless='TurnstileTaskProxyless'
+    TurnstileTask='TurnstileTask'
 
 class AmazonWAFCaptchaEnm(str, MyEnum):
     AmazonTask = "AmazonTask"
