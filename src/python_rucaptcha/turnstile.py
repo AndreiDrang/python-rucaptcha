@@ -1,11 +1,17 @@
-import logging
-
 from .core.base import BaseCaptcha
 from .core.enums import TurnstileCaptchaEnm
 
 
 class Turnstile(BaseCaptcha):
-    def __init__(self, pageurl: str, sitekey: str, userAgent: str, method: str = TurnstileCaptchaEnm.TurnstileTaskProxyless.value, *args, **kwargs):
+    def __init__(
+        self,
+        pageurl: str,
+        sitekey: str,
+        userAgent: str,
+        method: str = TurnstileCaptchaEnm.TurnstileTaskProxyless.value,
+        *args,
+        **kwargs,
+    ):
         """
         The class is used to work with Cloudflare Turnstile.
 
@@ -51,7 +57,7 @@ class Turnstile(BaseCaptcha):
 
         super().__init__(method=method, *args, **kwargs)
 
-        self.create_task_payload['task'].update({"websiteKey": sitekey, "websiteURL": pageurl, "userAgent": userAgent})
+        self.create_task_payload["task"].update({"websiteKey": sitekey, "websiteURL": pageurl, "userAgent": userAgent})
 
         # check user params
         if method not in TurnstileCaptchaEnm.list_values():
