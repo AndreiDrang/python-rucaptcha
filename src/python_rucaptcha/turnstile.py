@@ -3,7 +3,7 @@ from .core.enums import TurnstileCaptchaEnm
 
 
 class Turnstile(BaseCaptcha):
-    def __init__(self, pageurl: str, sitekey: str, method: str = TurnstileCaptchaEnm.TURNSTILE.value, *args, **kwargs):
+    def __init__(self, pageurl: str, sitekey: str, userAgent: str, method: str = TurnstileCaptchaEnm.TurnstileTaskProxyless.value, *args, **kwargs):
         """
         The class is used to work with Cloudflare Turnstile.
 
@@ -11,6 +11,7 @@ class Turnstile(BaseCaptcha):
             rucaptcha_key: User API key
             pageurl: Full URL of the captcha page
             sitekey: The value of the `sitekey` parameter found on the site
+            userAgent: Your browser UserAgent
             method: Captcha type
             kwargs: Not required params for task creation request
 
@@ -18,7 +19,7 @@ class Turnstile(BaseCaptcha):
             >>> Turnstile(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             pageurl="https://www.geetest.com/en/demo",
             ...             sitekey="0x4AAAAAAAC3DHQFLr1GavRN",
-            ...             method=TurnstileCaptchaEnm.TURNSTILE.value,
+            ...             method=TurnstileCaptchaEnm.TurnstileTaskProxyless.value,
             ...             ).captcha_handler()
             {
                "captchaSolve": "0._VMG....Pv",
@@ -30,7 +31,7 @@ class Turnstile(BaseCaptcha):
             >>> await Turnstile(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             pageurl="https://www.geetest.com/en/demo",
             ...             sitekey="0x4AAAAAAAC3DHQFLr1GavRN",
-            ...             method=TurnstileCaptchaEnm.TURNSTILE.value,
+            ...             method=TurnstileCaptchaEnm.TurnstileTaskProxyless.value,
             ...             ).aio_captcha_handler()
             {
                "captchaSolve": "0._VMG....Pv",
@@ -47,7 +48,7 @@ class Turnstile(BaseCaptcha):
         """
         super().__init__(method=method, *args, **kwargs)
 
-        self.post_payload.update({"sitekey": sitekey, "pageurl": pageurl})
+        self.create_task_payload['task'].update({"websiteKey": sitekey, "websiteURL": pageurl, "userAgent": userAgent})
 
         # check user params
         if method not in TurnstileCaptchaEnm.list_values():
@@ -64,7 +65,7 @@ class Turnstile(BaseCaptcha):
             >>> Turnstile(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             pageurl="https://www.geetest.com/en/demo",
             ...             sitekey="0x4AAAAAAAC3DHQFLr1GavRN",
-            ...             method=TurnstileCaptchaEnm.TURNSTILE.value,
+            ...             method=TurnstileCaptchaEnm.TurnstileTaskProxyless.value,
             ...             ).captcha_handler()
             {
                "captchaSolve": "0._VMG....Pv",
@@ -89,7 +90,7 @@ class Turnstile(BaseCaptcha):
             >>> await Turnstile(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             pageurl="https://www.geetest.com/en/demo",
             ...             sitekey="0x4AAAAAAAC3DHQFLr1GavRN",
-            ...             method=TurnstileCaptchaEnm.TURNSTILE.value,
+            ...             method=TurnstileCaptchaEnm.TurnstileTaskProxyless.value,
             ...             ).aio_captcha_handler()
             {
                "captchaSolve": "0._VMG....Pv",
