@@ -26,7 +26,7 @@ def get_sync_result(get_payload: GetTaskResultRequestSer, sleep_time: int, url_r
             if captcha_response.status == "processing":
                 time.sleep(sleep_time)
                 continue
-            elif captcha_response.errorId!=0:
+            elif captcha_response.errorId != 0:
                 return captcha_response.model_dump()
         except Exception as error:
             return error
