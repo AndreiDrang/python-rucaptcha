@@ -1,5 +1,5 @@
 requests>=2.21.0
-aiohttp>=3.7.4
+aiohttp>=3.9.0
 pydantic>=2.4.0
 tenacity==8.*
 # websockets==11.*
