@@ -22,34 +22,32 @@ class TestAmazonCaptcha(BaseTest):
     def test_basic_data(self):
         instance = AmazonWAF(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            pageurl=self.pageurl,
-            sitekey=self.sitekey,
+            websiteURL=self.pageurl,
+            websiteKey=self.sitekey,
             iv=self.iv,
             context=self.context,
-            method=AmazonWAFCaptchaEnm.AMAZON_WAF.value,
+            method=AmazonWAFCaptchaEnm.AmazonTaskProxyless.value,
         )
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == AmazonWAFCaptchaEnm.AMAZON_WAF.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["sitekey"] == self.sitekey
-        assert instance.post_payload["iv"] == self.iv
-        assert instance.post_payload["context"] == self.context
+        assert instance.create_task_payload["method"] == AmazonWAFCaptchaEnm.AmazonTaskProxyless.value
+        assert instance.create_task_payload["pageurl"] == self.pageurl
+        assert instance.create_task_payload["sitekey"] == self.sitekey
+        assert instance.create_task_payload["iv"] == self.iv
+        assert instance.create_task_payload["context"] == self.context
 
     def test_context_basic_data(self):
         with AmazonWAF(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            pageurl=self.pageurl,
-            sitekey=self.sitekey,
+            websiteURL=self.pageurl,
+            websiteKey=self.sitekey,
             iv=self.iv,
             context=self.context,
-            method=AmazonWAFCaptchaEnm.AMAZON_WAF.value,
+            method=AmazonWAFCaptchaEnm.AmazonTaskProxyless.value,
         ) as instance:
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == AmazonWAFCaptchaEnm.AMAZON_WAF.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["sitekey"] == self.sitekey
-            assert instance.post_payload["iv"] == self.iv
-            assert instance.post_payload["context"] == self.context
+            assert instance.create_task_payload["method"] == AmazonWAFCaptchaEnm.AmazonTaskProxyless.value
+            assert instance.create_task_payload["pageurl"] == self.pageurl
+            assert instance.create_task_payload["sitekey"] == self.sitekey
+            assert instance.create_task_payload["iv"] == self.iv
+            assert instance.create_task_payload["context"] == self.context
 
     """
     Fail tests
@@ -59,8 +57,8 @@ class TestAmazonCaptcha(BaseTest):
         with pytest.raises(ValueError):
             AmazonWAF(
                 rucaptcha_key=self.RUCAPTCHA_KEY,
-                pageurl=self.pageurl,
-                sitekey=self.sitekey,
+                websiteURL=self.pageurl,
+                websiteKey=self.sitekey,
                 iv=self.iv,
                 context=self.context,
                 method=self.get_random_string(5),

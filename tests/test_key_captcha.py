@@ -29,15 +29,15 @@ class TestKeyCaptcha(BaseTest):
             s_s_c_session_id=self.s_s_c_session_id,
             s_s_c_web_server_sign=self.s_s_c_web_server_sign,
             s_s_c_web_server_sign2=self.s_s_c_web_server_sign2,
-            method=KeyCaptchaEnm.KEYCAPTCHA.value,
+            method=KeyCaptchaEnm.KeyCaptchaTaskProxyless.value,
         )
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == KeyCaptchaEnm.KEYCAPTCHA.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["s_s_c_user_id"] == self.s_s_c_user_id
-        assert instance.post_payload["s_s_c_session_id"] == self.s_s_c_session_id
-        assert instance.post_payload["s_s_c_web_server_sign"] == self.s_s_c_web_server_sign
-        assert instance.post_payload["s_s_c_web_server_sign2"] == self.s_s_c_web_server_sign2
+
+        assert instance.create_task_payload["method"] == KeyCaptchaEnm.KeyCaptchaTaskProxyless.value
+        assert instance.create_task_payload["pageurl"] == self.pageurl
+        assert instance.create_task_payload["s_s_c_user_id"] == self.s_s_c_user_id
+        assert instance.create_task_payload["s_s_c_session_id"] == self.s_s_c_session_id
+        assert instance.create_task_payload["s_s_c_web_server_sign"] == self.s_s_c_web_server_sign
+        assert instance.create_task_payload["s_s_c_web_server_sign2"] == self.s_s_c_web_server_sign2
 
         result = instance.captcha_handler()
 
@@ -51,7 +51,7 @@ class TestKeyCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
@@ -62,15 +62,15 @@ class TestKeyCaptcha(BaseTest):
             s_s_c_session_id=self.s_s_c_session_id,
             s_s_c_web_server_sign=self.s_s_c_web_server_sign,
             s_s_c_web_server_sign2=self.s_s_c_web_server_sign2,
-            method=KeyCaptchaEnm.KEYCAPTCHA.value,
+            method=KeyCaptchaEnm.KeyCaptchaTaskProxyless.value,
         )
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == KeyCaptchaEnm.KEYCAPTCHA.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["s_s_c_user_id"] == self.s_s_c_user_id
-        assert instance.post_payload["s_s_c_session_id"] == self.s_s_c_session_id
-        assert instance.post_payload["s_s_c_web_server_sign"] == self.s_s_c_web_server_sign
-        assert instance.post_payload["s_s_c_web_server_sign2"] == self.s_s_c_web_server_sign2
+
+        assert instance.create_task_payload["method"] == KeyCaptchaEnm.KeyCaptchaTaskProxyless.value
+        assert instance.create_task_payload["pageurl"] == self.pageurl
+        assert instance.create_task_payload["s_s_c_user_id"] == self.s_s_c_user_id
+        assert instance.create_task_payload["s_s_c_session_id"] == self.s_s_c_session_id
+        assert instance.create_task_payload["s_s_c_web_server_sign"] == self.s_s_c_web_server_sign
+        assert instance.create_task_payload["s_s_c_web_server_sign2"] == self.s_s_c_web_server_sign2
 
         result = await instance.aio_captcha_handler()
 
@@ -84,7 +84,7 @@ class TestKeyCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_context_basic_data(self):
         with KeyCaptcha(
@@ -94,15 +94,14 @@ class TestKeyCaptcha(BaseTest):
             s_s_c_session_id=self.s_s_c_session_id,
             s_s_c_web_server_sign=self.s_s_c_web_server_sign,
             s_s_c_web_server_sign2=self.s_s_c_web_server_sign2,
-            method=KeyCaptchaEnm.KEYCAPTCHA.value,
+            method=KeyCaptchaEnm.KeyCaptchaTaskProxyless.value,
         ) as instance:
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == KeyCaptchaEnm.KEYCAPTCHA.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["s_s_c_user_id"] == self.s_s_c_user_id
-            assert instance.post_payload["s_s_c_session_id"] == self.s_s_c_session_id
-            assert instance.post_payload["s_s_c_web_server_sign"] == self.s_s_c_web_server_sign
-            assert instance.post_payload["s_s_c_web_server_sign2"] == self.s_s_c_web_server_sign2
+            assert instance.create_task_payload["method"] == KeyCaptchaEnm.KeyCaptchaTaskProxyless.value
+            assert instance.create_task_payload["pageurl"] == self.pageurl
+            assert instance.create_task_payload["s_s_c_user_id"] == self.s_s_c_user_id
+            assert instance.create_task_payload["s_s_c_session_id"] == self.s_s_c_session_id
+            assert instance.create_task_payload["s_s_c_web_server_sign"] == self.s_s_c_web_server_sign
+            assert instance.create_task_payload["s_s_c_web_server_sign2"] == self.s_s_c_web_server_sign2
 
     @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
@@ -113,15 +112,14 @@ class TestKeyCaptcha(BaseTest):
             s_s_c_session_id=self.s_s_c_session_id,
             s_s_c_web_server_sign=self.s_s_c_web_server_sign,
             s_s_c_web_server_sign2=self.s_s_c_web_server_sign2,
-            method=KeyCaptchaEnm.KEYCAPTCHA.value,
+            method=KeyCaptchaEnm.KeyCaptchaTaskProxyless.value,
         ) as instance:
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == KeyCaptchaEnm.KEYCAPTCHA.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["s_s_c_user_id"] == self.s_s_c_user_id
-            assert instance.post_payload["s_s_c_session_id"] == self.s_s_c_session_id
-            assert instance.post_payload["s_s_c_web_server_sign"] == self.s_s_c_web_server_sign
-            assert instance.post_payload["s_s_c_web_server_sign2"] == self.s_s_c_web_server_sign2
+            assert instance.create_task_payload["method"] == KeyCaptchaEnm.KeyCaptchaTaskProxyless.value
+            assert instance.create_task_payload["pageurl"] == self.pageurl
+            assert instance.create_task_payload["s_s_c_user_id"] == self.s_s_c_user_id
+            assert instance.create_task_payload["s_s_c_session_id"] == self.s_s_c_session_id
+            assert instance.create_task_payload["s_s_c_web_server_sign"] == self.s_s_c_web_server_sign
+            assert instance.create_task_payload["s_s_c_web_server_sign2"] == self.s_s_c_web_server_sign2
 
     """
     Fail tests
@@ -147,7 +145,7 @@ class TestKeyCaptcha(BaseTest):
                 s_s_c_session_id=self.s_s_c_session_id,
                 s_s_c_web_server_sign=self.s_s_c_web_server_sign,
                 s_s_c_web_server_sign2=self.s_s_c_web_server_sign2,
-                method=KeyCaptchaEnm.KEYCAPTCHA.value,
+                method=KeyCaptchaEnm.KeyCaptchaTaskProxyless.value,
             )
 
     def test_no_s_s_c_user_id(self):
@@ -158,7 +156,7 @@ class TestKeyCaptcha(BaseTest):
                 s_s_c_session_id=self.s_s_c_session_id,
                 s_s_c_web_server_sign=self.s_s_c_web_server_sign,
                 s_s_c_web_server_sign2=self.s_s_c_web_server_sign2,
-                method=KeyCaptchaEnm.KEYCAPTCHA.value,
+                method=KeyCaptchaEnm.KeyCaptchaTaskProxyless.value,
             )
 
     def test_no_s_s_c_web_server_sign(self):
@@ -169,7 +167,7 @@ class TestKeyCaptcha(BaseTest):
                 s_s_c_user_id=self.s_s_c_user_id,
                 s_s_c_session_id=self.s_s_c_session_id,
                 s_s_c_web_server_sign2=self.s_s_c_web_server_sign2,
-                method=KeyCaptchaEnm.KEYCAPTCHA.value,
+                method=KeyCaptchaEnm.KeyCaptchaTaskProxyless.value,
             )
 
     def test_no_s_s_c_web_server_sign2(self):
@@ -180,5 +178,5 @@ class TestKeyCaptcha(BaseTest):
                 s_s_c_user_id=self.s_s_c_user_id,
                 s_s_c_session_id=self.s_s_c_session_id,
                 s_s_c_web_server_sign=self.s_s_c_web_server_sign,
-                method=KeyCaptchaEnm.KEYCAPTCHA.value,
+                method=KeyCaptchaEnm.KeyCaptchaTaskProxyless.value,
             )

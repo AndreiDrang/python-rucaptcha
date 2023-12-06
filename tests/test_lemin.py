@@ -27,14 +27,14 @@ class TestLeminCroppedCaptcha(BaseTest):
             captcha_id=self.captcha_id,
             div_id=self.div_id,
             api_server=self.api_server,
-            method=LeminCroppedCaptchaEnm.LEMIN.value,
+            method=LeminCroppedCaptchaEnm.LeminTaskProxyless.value,
         )
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == LeminCroppedCaptchaEnm.LEMIN.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["captcha_id"] == self.captcha_id
-        assert instance.post_payload["div_id"] == self.div_id
-        assert instance.post_payload["api_server"] == self.api_server
+
+        assert instance.create_task_payload["method"] == LeminCroppedCaptchaEnm.LeminTaskProxyless.value
+        assert instance.create_task_payload["pageurl"] == self.pageurl
+        assert instance.create_task_payload["captcha_id"] == self.captcha_id
+        assert instance.create_task_payload["div_id"] == self.div_id
+        assert instance.create_task_payload["api_server"] == self.api_server
 
         result = instance.captcha_handler()
 
@@ -48,7 +48,7 @@ class TestLeminCroppedCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
@@ -58,14 +58,14 @@ class TestLeminCroppedCaptcha(BaseTest):
             captcha_id=self.captcha_id,
             div_id=self.div_id,
             api_server=self.api_server,
-            method=LeminCroppedCaptchaEnm.LEMIN.value,
+            method=LeminCroppedCaptchaEnm.LeminTaskProxyless.value,
         )
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == LeminCroppedCaptchaEnm.LEMIN.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["captcha_id"] == self.captcha_id
-        assert instance.post_payload["div_id"] == self.div_id
-        assert instance.post_payload["api_server"] == self.api_server
+
+        assert instance.create_task_payload["method"] == LeminCroppedCaptchaEnm.LeminTaskProxyless.value
+        assert instance.create_task_payload["pageurl"] == self.pageurl
+        assert instance.create_task_payload["captcha_id"] == self.captcha_id
+        assert instance.create_task_payload["div_id"] == self.div_id
+        assert instance.create_task_payload["api_server"] == self.api_server
 
         result = await instance.aio_captcha_handler()
 
@@ -79,7 +79,7 @@ class TestLeminCroppedCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_context_basic_data(self):
         with LeminCroppedCaptcha(
@@ -87,13 +87,12 @@ class TestLeminCroppedCaptcha(BaseTest):
             pageurl=self.pageurl,
             captcha_id=self.captcha_id,
             div_id=self.div_id,
-            method=LeminCroppedCaptchaEnm.LEMIN.value,
+            method=LeminCroppedCaptchaEnm.LeminTaskProxyless.value,
         ) as instance:
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == LeminCroppedCaptchaEnm.LEMIN.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["captcha_id"] == self.captcha_id
-            assert instance.post_payload["div_id"] == self.div_id
+            assert instance.create_task_payload["method"] == LeminCroppedCaptchaEnm.LeminTaskProxyless.value
+            assert instance.create_task_payload["pageurl"] == self.pageurl
+            assert instance.create_task_payload["captcha_id"] == self.captcha_id
+            assert instance.create_task_payload["div_id"] == self.div_id
 
     @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
@@ -102,13 +101,12 @@ class TestLeminCroppedCaptcha(BaseTest):
             pageurl=self.pageurl,
             captcha_id=self.captcha_id,
             div_id=self.div_id,
-            method=LeminCroppedCaptchaEnm.LEMIN.value,
+            method=LeminCroppedCaptchaEnm.LeminTaskProxyless.value,
         ) as instance:
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == LeminCroppedCaptchaEnm.LEMIN.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["captcha_id"] == self.captcha_id
-            assert instance.post_payload["div_id"] == self.div_id
+            assert instance.create_task_payload["method"] == LeminCroppedCaptchaEnm.LeminTaskProxyless.value
+            assert instance.create_task_payload["pageurl"] == self.pageurl
+            assert instance.create_task_payload["captcha_id"] == self.captcha_id
+            assert instance.create_task_payload["div_id"] == self.div_id
 
     """
     Fail tests

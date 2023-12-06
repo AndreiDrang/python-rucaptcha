@@ -23,12 +23,12 @@ class TestTurnstile(BaseTest):
             rucaptcha_key=self.RUCAPTCHA_KEY,
             pageurl=self.pageurl,
             sitekey=self.sitekey,
-            method=TurnstileCaptchaEnm.TURNSTILE.value,
+            method=TurnstileCaptchaEnm.TurnstileTaskProxyless.value,
         )
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == TurnstileCaptchaEnm.TURNSTILE.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["sitekey"] == self.sitekey
+
+        assert instance.create_task_payload["method"] == TurnstileCaptchaEnm.TurnstileTaskProxyless.value
+        assert instance.create_task_payload["pageurl"] == self.pageurl
+        assert instance.create_task_payload["sitekey"] == self.sitekey
 
         result = instance.captcha_handler()
 
@@ -43,7 +43,7 @@ class TestTurnstile(BaseTest):
             assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
@@ -51,12 +51,12 @@ class TestTurnstile(BaseTest):
             rucaptcha_key=self.RUCAPTCHA_KEY,
             pageurl=self.pageurl,
             sitekey=self.sitekey,
-            method=TurnstileCaptchaEnm.TURNSTILE.value,
+            method=TurnstileCaptchaEnm.TurnstileTaskProxyless.value,
         )
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == TurnstileCaptchaEnm.TURNSTILE.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["sitekey"] == self.sitekey
+
+        assert instance.create_task_payload["method"] == TurnstileCaptchaEnm.TurnstileTaskProxyless.value
+        assert instance.create_task_payload["pageurl"] == self.pageurl
+        assert instance.create_task_payload["sitekey"] == self.sitekey
 
         result = await instance.aio_captcha_handler()
 
@@ -71,19 +71,18 @@ class TestTurnstile(BaseTest):
             assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_context_basic_data(self):
         with Turnstile(
             rucaptcha_key=self.RUCAPTCHA_KEY,
             pageurl=self.pageurl,
             sitekey=self.sitekey,
-            method=TurnstileCaptchaEnm.TURNSTILE.value,
+            method=TurnstileCaptchaEnm.TurnstileTaskProxyless.value,
         ) as instance:
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == TurnstileCaptchaEnm.TURNSTILE.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["sitekey"] == self.sitekey
+            assert instance.create_task_payload["method"] == TurnstileCaptchaEnm.TurnstileTaskProxyless.value
+            assert instance.create_task_payload["pageurl"] == self.pageurl
+            assert instance.create_task_payload["sitekey"] == self.sitekey
 
     @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
@@ -91,12 +90,11 @@ class TestTurnstile(BaseTest):
             rucaptcha_key=self.RUCAPTCHA_KEY,
             pageurl=self.pageurl,
             sitekey=self.sitekey,
-            method=TurnstileCaptchaEnm.TURNSTILE.value,
+            method=TurnstileCaptchaEnm.TurnstileTaskProxyless.value,
         ) as instance:
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == TurnstileCaptchaEnm.TURNSTILE.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["sitekey"] == self.sitekey
+            assert instance.create_task_payload["method"] == TurnstileCaptchaEnm.TurnstileTaskProxyless.value
+            assert instance.create_task_payload["pageurl"] == self.pageurl
+            assert instance.create_task_payload["sitekey"] == self.sitekey
 
     """
     Fail tests

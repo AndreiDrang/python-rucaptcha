@@ -25,12 +25,12 @@ class TestReCaptcha(BaseReCaptcha):
             rucaptcha_key=self.RUCAPTCHA_KEY,
             pageurl=self.pageurl,
             googlekey=self.googlekey,
-            method=ReCaptchaEnm.USER_RECAPTCHA.value,
+            method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value,
         )
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == ReCaptchaEnm.USER_RECAPTCHA.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["googlekey"] == self.googlekey
+
+        assert instance.create_task_payload["method"] == ReCaptchaEnm.RecaptchaV2TaskProxyless.value
+        assert instance.create_task_payload["pageurl"] == self.pageurl
+        assert instance.create_task_payload["googlekey"] == self.googlekey
 
         result = instance.captcha_handler()
 
@@ -45,7 +45,7 @@ class TestReCaptcha(BaseReCaptcha):
             assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
@@ -53,12 +53,12 @@ class TestReCaptcha(BaseReCaptcha):
             rucaptcha_key=self.RUCAPTCHA_KEY,
             pageurl=self.pageurl,
             googlekey=self.googlekey,
-            method=ReCaptchaEnm.USER_RECAPTCHA.value,
+            method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value,
         )
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == ReCaptchaEnm.USER_RECAPTCHA.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["googlekey"] == self.googlekey
+
+        assert instance.create_task_payload["method"] == ReCaptchaEnm.RecaptchaV2TaskProxyless.value
+        assert instance.create_task_payload["pageurl"] == self.pageurl
+        assert instance.create_task_payload["googlekey"] == self.googlekey
 
         result = await instance.aio_captcha_handler()
 
@@ -73,19 +73,18 @@ class TestReCaptcha(BaseReCaptcha):
             assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_context_basic_data(self):
         with ReCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,
             pageurl=self.pageurl,
             googlekey=self.googlekey,
-            method=ReCaptchaEnm.USER_RECAPTCHA.value,
+            method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value,
         ) as instance:
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == ReCaptchaEnm.USER_RECAPTCHA.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["googlekey"] == self.googlekey
+            assert instance.create_task_payload["method"] == ReCaptchaEnm.RecaptchaV2TaskProxyless.value
+            assert instance.create_task_payload["pageurl"] == self.pageurl
+            assert instance.create_task_payload["googlekey"] == self.googlekey
 
     @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
@@ -93,12 +92,11 @@ class TestReCaptcha(BaseReCaptcha):
             rucaptcha_key=self.RUCAPTCHA_KEY,
             pageurl=self.pageurl,
             googlekey=self.googlekey,
-            method=ReCaptchaEnm.USER_RECAPTCHA.value,
+            method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value,
         ) as instance:
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == ReCaptchaEnm.USER_RECAPTCHA.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["googlekey"] == self.googlekey
+            assert instance.create_task_payload["method"] == ReCaptchaEnm.RecaptchaV2TaskProxyless.value
+            assert instance.create_task_payload["pageurl"] == self.pageurl
+            assert instance.create_task_payload["googlekey"] == self.googlekey
 
     """
     Fail tests
@@ -125,13 +123,13 @@ class TestDeathByReCaptcha(BaseReCaptcha, DeathByTest):
             service_type="deathbycaptcha",
             pageurl=self.pageurl,
             googlekey=self.googlekey,
-            method=ReCaptchaEnm.USER_RECAPTCHA.value,
+            method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value,
         )
         assert instance.params.service_type == ServiceEnm.DEATHBYCAPTCHA
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == ReCaptchaEnm.USER_RECAPTCHA.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["googlekey"] == self.googlekey
+
+        assert instance.create_task_payload["method"] == ReCaptchaEnm.RecaptchaV2TaskProxyless.value
+        assert instance.create_task_payload["pageurl"] == self.pageurl
+        assert instance.create_task_payload["googlekey"] == self.googlekey
 
         result = instance.captcha_handler()
 
@@ -146,7 +144,7 @@ class TestDeathByReCaptcha(BaseReCaptcha, DeathByTest):
             assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
@@ -155,13 +153,13 @@ class TestDeathByReCaptcha(BaseReCaptcha, DeathByTest):
             service_type="deathbycaptcha",
             pageurl=self.pageurl,
             googlekey=self.googlekey,
-            method=ReCaptchaEnm.USER_RECAPTCHA.value,
+            method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value,
         )
         assert instance.params.service_type == ServiceEnm.DEATHBYCAPTCHA
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == ReCaptchaEnm.USER_RECAPTCHA.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["googlekey"] == self.googlekey
+
+        assert instance.create_task_payload["method"] == ReCaptchaEnm.RecaptchaV2TaskProxyless.value
+        assert instance.create_task_payload["pageurl"] == self.pageurl
+        assert instance.create_task_payload["googlekey"] == self.googlekey
 
         result = await instance.aio_captcha_handler()
 
@@ -176,7 +174,7 @@ class TestDeathByReCaptcha(BaseReCaptcha, DeathByTest):
             assert isinstance(result["taskId"], int) is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_context_basic_data(self):
         with ReCaptcha(
@@ -184,13 +182,13 @@ class TestDeathByReCaptcha(BaseReCaptcha, DeathByTest):
             service_type="deathbycaptcha",
             pageurl=self.pageurl,
             googlekey=self.googlekey,
-            method=ReCaptchaEnm.USER_RECAPTCHA.value,
+            method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value,
         ) as instance:
             assert instance.params.service_type == ServiceEnm.DEATHBYCAPTCHA
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == ReCaptchaEnm.USER_RECAPTCHA.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["googlekey"] == self.googlekey
+
+            assert instance.create_task_payload["method"] == ReCaptchaEnm.RecaptchaV2TaskProxyless.value
+            assert instance.create_task_payload["pageurl"] == self.pageurl
+            assert instance.create_task_payload["googlekey"] == self.googlekey
 
     @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
@@ -199,10 +197,10 @@ class TestDeathByReCaptcha(BaseReCaptcha, DeathByTest):
             service_type="deathbycaptcha",
             pageurl=self.pageurl,
             googlekey=self.googlekey,
-            method=ReCaptchaEnm.USER_RECAPTCHA.value,
+            method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value,
         ) as instance:
             assert instance.params.service_type == ServiceEnm.DEATHBYCAPTCHA
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == ReCaptchaEnm.USER_RECAPTCHA.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["googlekey"] == self.googlekey
+
+            assert instance.create_task_payload["method"] == ReCaptchaEnm.RecaptchaV2TaskProxyless.value
+            assert instance.create_task_payload["pageurl"] == self.pageurl
+            assert instance.create_task_payload["googlekey"] == self.googlekey

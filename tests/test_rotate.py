@@ -20,8 +20,6 @@ class TestRotateCaptcha(BaseTest):
     def test_basic_data_link(self):
         instance = RotateCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
 
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-
         result = instance.captcha_handler(captcha_link=self.captcha_url)
 
         assert isinstance(result, dict) is True
@@ -34,12 +32,10 @@ class TestRotateCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_basic_data_file(self):
         instance = RotateCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
         result = instance.captcha_handler(captcha_file=self.captcha_file)
 
@@ -53,12 +49,10 @@ class TestRotateCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_basic_data_base64(self):
         instance = RotateCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
         with open(self.captcha_file, "rb") as f:
             result = instance.captcha_handler(captcha_base64=f.read())
@@ -73,13 +67,11 @@ class TestRotateCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data_link(self):
         instance = RotateCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
         result = await instance.aio_captcha_handler(captcha_link=self.captcha_url)
 
@@ -93,13 +85,11 @@ class TestRotateCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data_file(self):
         instance = RotateCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
         result = await instance.aio_captcha_handler(captcha_file=self.captcha_file)
 
@@ -113,13 +103,11 @@ class TestRotateCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data_base64(self):
         instance = RotateCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
         with open(self.captcha_file, "rb") as f:
             result = await instance.aio_captcha_handler(captcha_base64=f.read())
@@ -134,7 +122,7 @@ class TestRotateCaptcha(BaseTest):
             assert result["error"] is True
             assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     """
     Fail tests
@@ -147,8 +135,6 @@ class TestRotateCaptcha(BaseTest):
     def test_no_captcha(self):
         instance = RotateCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
 
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-
         result = instance.captcha_handler()
 
         assert isinstance(result, dict) is True
@@ -157,13 +143,11 @@ class TestRotateCaptcha(BaseTest):
         assert result["errorBody"] == RotateCaptcha.NO_CAPTCHA_ERR
         assert result["captchaSolve"] == {}
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_no_captcha(self):
         instance = RotateCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
         result = await instance.aio_captcha_handler()
 
@@ -172,12 +156,10 @@ class TestRotateCaptcha(BaseTest):
         assert result["taskId"] is None
         assert result["errorBody"] == RotateCaptcha.NO_CAPTCHA_ERR
         assert result["captchaSolve"] == {}
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_wrong_link(self):
         instance = RotateCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
         result = instance.captcha_handler(captcha_link=self.get_random_string(length=50))
 
@@ -185,12 +167,10 @@ class TestRotateCaptcha(BaseTest):
         assert result["error"] is True
         assert result["taskId"] is None
         assert result["captchaSolve"] == {}
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_wrong_base64(self):
         instance = RotateCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
         result = instance.captcha_handler(captcha_base64=self.get_random_string(length=50).encode(encoding="UTF-8"))
 
@@ -198,13 +178,11 @@ class TestRotateCaptcha(BaseTest):
         assert result["error"] is True
         assert result["taskId"] is None
         assert result["captchaSolve"] == {}
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_wrong_link(self):
         instance = RotateCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
         result = await instance.aio_captcha_handler(captcha_link=self.get_random_string(length=50))
 
@@ -212,13 +190,11 @@ class TestRotateCaptcha(BaseTest):
         assert result["error"] is True
         assert result["taskId"] is None
         assert result["captchaSolve"] == {}
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_wrong_base64(self):
         instance = RotateCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
         result = await instance.aio_captcha_handler(
             captcha_base64=self.get_random_string(length=50).encode(encoding="UTF-8")
@@ -228,4 +204,4 @@ class TestRotateCaptcha(BaseTest):
         assert result["error"] is True
         assert result["taskId"] is None
         assert result["captchaSolve"] == {}
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()

@@ -27,28 +27,26 @@ class TestFunCaptcha(BaseTest):
             pageurl=self.pageurl,
             publickey=self.publickey,
             surl=self.surl,
-            method=FunCaptchaEnm.FUNCAPTCHA.value,
+            method=FunCaptchaEnm.FunCaptchaTaskProxyless.value,
         )
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == FunCaptchaEnm.FUNCAPTCHA.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["publickey"] == self.publickey
-        assert instance.post_payload["surl"] == self.surl
+
+        assert instance.create_task_payload["method"] == FunCaptchaEnm.FunCaptchaTaskProxyless.value
+        assert instance.create_task_payload["pageurl"] == self.pageurl
+        assert instance.create_task_payload["publickey"] == self.publickey
+        assert instance.create_task_payload["surl"] == self.surl
 
         result = instance.captcha_handler()
 
         assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
+        if not result["errorId"]:
+            assert result["status"] == "ready"
+            assert isinstance(result["solution"]["text"], str) is True
             assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
         else:
-            assert result["error"] is True
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
@@ -57,28 +55,26 @@ class TestFunCaptcha(BaseTest):
             pageurl=self.pageurl,
             publickey=self.publickey,
             surl=self.surl,
-            method=FunCaptchaEnm.FUNCAPTCHA.value,
+            method=FunCaptchaEnm.FunCaptchaTaskProxyless.value,
         )
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == FunCaptchaEnm.FUNCAPTCHA.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["publickey"] == self.publickey
-        assert instance.post_payload["surl"] == self.surl
+
+        assert instance.create_task_payload["method"] == FunCaptchaEnm.FunCaptchaTaskProxyless.value
+        assert instance.create_task_payload["pageurl"] == self.pageurl
+        assert instance.create_task_payload["publickey"] == self.publickey
+        assert instance.create_task_payload["surl"] == self.surl
 
         result = await instance.aio_captcha_handler()
 
         assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
+        if not result["errorId"]:
+            assert result["status"] == "ready"
+            assert isinstance(result["solution"]["text"], str) is True
             assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
         else:
-            assert result["error"] is True
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_context_basic_data(self):
         with FunCaptcha(
@@ -86,13 +82,12 @@ class TestFunCaptcha(BaseTest):
             pageurl=self.pageurl,
             publickey=self.publickey,
             surl=self.surl,
-            method=FunCaptchaEnm.FUNCAPTCHA.value,
+            method=FunCaptchaEnm.FunCaptchaTaskProxyless.value,
         ) as instance:
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == FunCaptchaEnm.FUNCAPTCHA.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["publickey"] == self.publickey
-            assert instance.post_payload["surl"] == self.surl
+            assert instance.create_task_payload["method"] == FunCaptchaEnm.FunCaptchaTaskProxyless.value
+            assert instance.create_task_payload["pageurl"] == self.pageurl
+            assert instance.create_task_payload["publickey"] == self.publickey
+            assert instance.create_task_payload["surl"] == self.surl
 
     @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
@@ -101,13 +96,12 @@ class TestFunCaptcha(BaseTest):
             pageurl=self.pageurl,
             publickey=self.publickey,
             surl=self.surl,
-            method=FunCaptchaEnm.FUNCAPTCHA.value,
+            method=FunCaptchaEnm.FunCaptchaTaskProxyless.value,
         ) as instance:
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == FunCaptchaEnm.FUNCAPTCHA.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["publickey"] == self.publickey
-            assert instance.post_payload["surl"] == self.surl
+            assert instance.create_task_payload["method"] == FunCaptchaEnm.FunCaptchaTaskProxyless.value
+            assert instance.create_task_payload["pageurl"] == self.pageurl
+            assert instance.create_task_payload["publickey"] == self.publickey
+            assert instance.create_task_payload["surl"] == self.surl
 
     """
     Fail tests

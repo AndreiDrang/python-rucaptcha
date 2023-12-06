@@ -37,17 +37,17 @@ class TestGeeTest(TestGeeTestBase):
         instance = GeeTest(
             rucaptcha_key=self.RUCAPTCHA_KEY,
             gt=self.gt,
-            method=GeetestEnm.GEETEST.value,
-            pageurl=self.pageurl,
+            method=GeetestEnm.GeeTestTaskProxyless.value,
+            websiteURL=self.pageurl,
             api_server=self.api_server,
             new_captcha=1,
         )
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == GeetestEnm.GEETEST.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["api_server"] == self.api_server
-        assert instance.post_payload["gt"] == self.gt
-        assert instance.post_payload["new_captcha"] == 1
+
+        assert instance.create_task_payload["method"] == GeetestEnm.GeeTestTaskProxyless.value
+        assert instance.create_task_payload["pageurl"] == self.pageurl
+        assert instance.create_task_payload["api_server"] == self.api_server
+        assert instance.create_task_payload["gt"] == self.gt
+        assert instance.create_task_payload["new_captcha"] == 1
 
         result = instance.captcha_handler(challenge=self.challenge)
 
@@ -56,24 +56,24 @@ class TestGeeTest(TestGeeTestBase):
         assert isinstance(result["taskId"], int) is True
         assert isinstance(result["errorBody"], str) is True
         assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
         instance = GeeTest(
             rucaptcha_key=self.RUCAPTCHA_KEY,
             gt=self.gt,
-            method=GeetestEnm.GEETEST.value,
-            pageurl=self.pageurl,
+            method=GeetestEnm.GeeTestTaskProxyless.value,
+            websiteURL=self.pageurl,
             api_server=self.api_server,
             new_captcha=1,
         )
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == GeetestEnm.GEETEST.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["api_server"] == self.api_server
-        assert instance.post_payload["gt"] == self.gt
-        assert instance.post_payload["new_captcha"] == 1
+
+        assert instance.create_task_payload["method"] == GeetestEnm.GeeTestTaskProxyless.value
+        assert instance.create_task_payload["pageurl"] == self.pageurl
+        assert instance.create_task_payload["api_server"] == self.api_server
+        assert instance.create_task_payload["gt"] == self.gt
+        assert instance.create_task_payload["new_captcha"] == 1
 
         result = await instance.aio_captcha_handler(challenge=self.challenge)
 
@@ -82,40 +82,38 @@ class TestGeeTest(TestGeeTestBase):
         assert isinstance(result["taskId"], int) is True
         assert isinstance(result["errorBody"], str) is True
         assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_context_basic_data(self):
         with GeeTest(
             rucaptcha_key=self.RUCAPTCHA_KEY,
             gt=self.gt,
-            method=GeetestEnm.GEETEST.value,
-            pageurl=self.pageurl,
+            method=GeetestEnm.GeeTestTaskProxyless.value,
+            websiteURL=self.pageurl,
             api_server=self.api_server,
             new_captcha=1,
         ) as instance:
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == GeetestEnm.GEETEST.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["api_server"] == self.api_server
-            assert instance.post_payload["gt"] == self.gt
-            assert instance.post_payload["new_captcha"] == 1
+            assert instance.create_task_payload["method"] == GeetestEnm.GeeTestTaskProxyless.value
+            assert instance.create_task_payload["pageurl"] == self.pageurl
+            assert instance.create_task_payload["api_server"] == self.api_server
+            assert instance.create_task_payload["gt"] == self.gt
+            assert instance.create_task_payload["new_captcha"] == 1
 
     @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
         async with GeeTest(
             rucaptcha_key=self.RUCAPTCHA_KEY,
             gt=self.gt,
-            method=GeetestEnm.GEETEST.value,
-            pageurl=self.pageurl,
+            method=GeetestEnm.GeeTestTaskProxyless.value,
+            websiteURL=self.pageurl,
             api_server=self.api_server,
             new_captcha=1,
         ) as instance:
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == GeetestEnm.GEETEST.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["api_server"] == self.api_server
-            assert instance.post_payload["gt"] == self.gt
-            assert instance.post_payload["new_captcha"] == 1
+            assert instance.create_task_payload["method"] == GeetestEnm.GeeTestTaskProxyless.value
+            assert instance.create_task_payload["pageurl"] == self.pageurl
+            assert instance.create_task_payload["api_server"] == self.api_server
+            assert instance.create_task_payload["gt"] == self.gt
+            assert instance.create_task_payload["new_captcha"] == 1
 
     """
     Fail tests
@@ -126,7 +124,7 @@ class TestGeeTest(TestGeeTestBase):
             GeeTest(
                 rucaptcha_key=self.RUCAPTCHA_KEY,
                 gt=self.gt,
-                pageurl=self.pageurl,
+                websiteURL=self.pageurl,
                 api_server=self.api_server,
                 method=self.get_random_string(length=5),
             )
@@ -135,9 +133,9 @@ class TestGeeTest(TestGeeTestBase):
         with pytest.raises(ValueError):
             GeeTest(
                 rucaptcha_key=self.RUCAPTCHA_KEY,
-                pageurl=self.pageurl,
+                websiteURL=self.pageurl,
                 api_server=self.api_server,
-                method=GeetestEnm.GEETEST.value,
+                method=GeetestEnm.GeeTestTaskProxyless.value,
             )
 
     def test_empty_challenge(self):
@@ -145,9 +143,9 @@ class TestGeeTest(TestGeeTestBase):
             GeeTest(
                 rucaptcha_key=self.RUCAPTCHA_KEY,
                 gt=self.gt,
-                pageurl=self.pageurl,
+                websiteURL=self.pageurl,
                 api_server=self.api_server,
-                method=GeetestEnm.GEETEST.value,
+                method=GeetestEnm.GeeTestTaskProxyless.value,
             ).captcha_handler()
 
     @pytest.mark.asyncio
@@ -156,9 +154,9 @@ class TestGeeTest(TestGeeTestBase):
             await GeeTest(
                 rucaptcha_key=self.RUCAPTCHA_KEY,
                 gt=self.gt,
-                pageurl=self.pageurl,
+                websiteURL=self.pageurl,
                 api_server=self.api_server,
-                method=GeetestEnm.GEETEST.value,
+                method=GeetestEnm.GeeTestTaskProxyless.value,
             ).aio_captcha_handler()
 
 
@@ -167,17 +165,17 @@ class TestGeeTestV4(TestGeeTestBase):
         instance = GeeTest(
             rucaptcha_key=self.RUCAPTCHA_KEY,
             gt=self.gt,
-            method=GeetestEnm.GEETEST.value,
-            pageurl=self.pageurl,
+            method=GeetestEnm.GeeTestTaskProxyless.value,
+            websiteURL=self.pageurl,
             api_server=self.api_server,
             new_captcha=1,
         )
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == GeetestEnm.GEETEST.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["api_server"] == self.api_server
-        assert instance.post_payload["gt"] == self.gt
-        assert instance.post_payload["new_captcha"] == 1
+
+        assert instance.create_task_payload["method"] == GeetestEnm.GeeTestTaskProxyless.value
+        assert instance.create_task_payload["pageurl"] == self.pageurl
+        assert instance.create_task_payload["api_server"] == self.api_server
+        assert instance.create_task_payload["gt"] == self.gt
+        assert instance.create_task_payload["new_captcha"] == 1
 
         result = instance.captcha_handler(challenge=self.challenge)
 
@@ -186,24 +184,24 @@ class TestGeeTestV4(TestGeeTestBase):
         assert isinstance(result["taskId"], int) is True
         assert isinstance(result["errorBody"], str) is True
         assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
         instance = GeeTest(
             rucaptcha_key=self.RUCAPTCHA_KEY,
             gt=self.gt,
-            method=GeetestEnm.GEETEST.value,
-            pageurl=self.pageurl,
+            method=GeetestEnm.GeeTestTaskProxyless.value,
+            websiteURL=self.pageurl,
             api_server=self.api_server,
             new_captcha=1,
         )
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == GeetestEnm.GEETEST.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["api_server"] == self.api_server
-        assert instance.post_payload["gt"] == self.gt
-        assert instance.post_payload["new_captcha"] == 1
+
+        assert instance.create_task_payload["method"] == GeetestEnm.GeeTestTaskProxyless.value
+        assert instance.create_task_payload["pageurl"] == self.pageurl
+        assert instance.create_task_payload["api_server"] == self.api_server
+        assert instance.create_task_payload["gt"] == self.gt
+        assert instance.create_task_payload["new_captcha"] == 1
 
         result = await instance.aio_captcha_handler(challenge=self.challenge)
 
@@ -212,40 +210,38 @@ class TestGeeTestV4(TestGeeTestBase):
         assert isinstance(result["taskId"], int) is True
         assert isinstance(result["errorBody"], str) is True
         assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_context_basic_data(self):
         with GeeTest(
             rucaptcha_key=self.RUCAPTCHA_KEY,
             gt=self.gt,
-            method=GeetestEnm.GEETEST.value,
-            pageurl=self.pageurl,
+            method=GeetestEnm.GeeTestTaskProxyless.value,
+            websiteURL=self.pageurl,
             api_server=self.api_server,
             new_captcha=1,
         ) as instance:
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == GeetestEnm.GEETEST.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["api_server"] == self.api_server
-            assert instance.post_payload["gt"] == self.gt
-            assert instance.post_payload["new_captcha"] == 1
+            assert instance.create_task_payload["method"] == GeetestEnm.GeeTestTaskProxyless.value
+            assert instance.create_task_payload["pageurl"] == self.pageurl
+            assert instance.create_task_payload["api_server"] == self.api_server
+            assert instance.create_task_payload["gt"] == self.gt
+            assert instance.create_task_payload["new_captcha"] == 1
 
     @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
         async with GeeTest(
             rucaptcha_key=self.RUCAPTCHA_KEY,
             gt=self.gt,
-            method=GeetestEnm.GEETEST.value,
-            pageurl=self.pageurl,
+            method=GeetestEnm.GeeTestTaskProxyless.value,
+            websiteURL=self.pageurl,
             api_server=self.api_server,
             new_captcha=1,
         ) as instance:
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == GeetestEnm.GEETEST.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["api_server"] == self.api_server
-            assert instance.post_payload["gt"] == self.gt
-            assert instance.post_payload["new_captcha"] == 1
+            assert instance.create_task_payload["method"] == GeetestEnm.GeeTestTaskProxyless.value
+            assert instance.create_task_payload["pageurl"] == self.pageurl
+            assert instance.create_task_payload["api_server"] == self.api_server
+            assert instance.create_task_payload["gt"] == self.gt
+            assert instance.create_task_payload["new_captcha"] == 1
 
     """
     Fail tests
@@ -256,7 +252,7 @@ class TestGeeTestV4(TestGeeTestBase):
             GeeTest(
                 rucaptcha_key=self.RUCAPTCHA_KEY,
                 captcha_id=self.get_random_string(length=5),
-                pageurl=self.pageurl,
+                websiteURL=self.pageurl,
                 api_server=self.api_server,
                 method=self.get_random_string(length=5),
             )
@@ -265,7 +261,7 @@ class TestGeeTestV4(TestGeeTestBase):
         with pytest.raises(ValueError):
             GeeTest(
                 rucaptcha_key=self.RUCAPTCHA_KEY,
-                pageurl=self.pageurl,
+                websiteURL=self.pageurl,
                 api_server=self.api_server,
-                method=GeetestEnm.GEETEST_V4.value,
+                method=GeetestEnm.GeeTestTaskProxyless.value,
             )

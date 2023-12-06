@@ -130,8 +130,8 @@ class TestImageCaptcha(BaseImageCaptcha):
 
         with open(self.captcha_file, "rb") as f:
             result = await instance.aio_captcha_handler(captcha_base64=f.read())
-        assert isinstance(result, dict) is True
 
+        assert isinstance(result, dict) is True
         if not result["errorId"]:
             assert result["status"] == "ready"
             assert isinstance(result["solution"]["text"], str) is True
