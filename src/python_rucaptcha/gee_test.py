@@ -1,4 +1,4 @@
-from typing import Union, Optional
+from typing import Union
 
 from .core.base import BaseCaptcha
 from .core.enums import GeetestEnm
@@ -180,7 +180,7 @@ class GeeTest(BaseCaptcha):
             }
         )
 
-    def captcha_handler(self, challenge: Optional[str] = None, **kwargs) -> dict:
+    def captcha_handler(self, challenge: str, **kwargs) -> dict:
         """
         Sync solving method
 
@@ -202,7 +202,7 @@ class GeeTest(BaseCaptcha):
 
         return self._processing_response(**kwargs)
 
-    async def aio_captcha_handler(self, challenge: Optional[str] = None) -> dict:
+    async def aio_captcha_handler(self, challenge: str) -> dict:
         """
         Async solving method
 
