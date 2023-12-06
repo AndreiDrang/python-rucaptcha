@@ -141,9 +141,6 @@ class GeeTest(BaseCaptcha):
             }
         )
 
-        if method not in GeetestEnm.list_values():
-            raise ValueError(f"Invalid method parameter set, available - {GeetestEnm.list_values()}")
-
     def captcha_handler(self, challenge: Optional[str] = None, **kwargs) -> dict:
         """
         Sync solving method
