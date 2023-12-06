@@ -32,8 +32,8 @@ class SaveFormatsEnm(str, MyEnum):
 
 
 class GeetestEnm(str, MyEnum):
-    GEETEST = "geetest"
-    GEETEST_V4 = "geetest_v4"
+    GeeTestTask = "GeeTestTask"
+    GeeTestTaskProxyless = "GeeTestTaskProxyless"
 
 
 class ImageCaptchaEnm(str, MyEnum):
@@ -41,31 +41,42 @@ class ImageCaptchaEnm(str, MyEnum):
 
 
 class CapyPuzzleEnm(str, MyEnum):
-    CAPY = "capy"
+    CapyTask = "CapyTask"
+    CapyTaskProxyless = "CapyTaskProxyless"
 
 
 class FunCaptchaEnm(str, MyEnum):
-    FUNCAPTCHA = "funcaptcha"
+    FunCaptchaTaskProxyless = "FunCaptchaTaskProxyless"
+    FunCaptchaTask = "FunCaptchaTask"
 
 
 class ReCaptchaEnm(str, MyEnum):
-    USER_RECAPTCHA = "userrecaptcha"
+    RecaptchaV2TaskProxyless = "RecaptchaV2TaskProxyless"
+    RecaptchaV2Task = "RecaptchaV2Task"
+
+    RecaptchaV2EnterpriseTaskProxyless = "RecaptchaV2EnterpriseTaskProxyless"
+    RecaptchaV2EnterpriseTask = "RecaptchaV2EnterpriseTask"
+
+    RecaptchaV3TaskProxyless = "RecaptchaV3TaskProxyless"
 
 
 class LeminCroppedCaptchaEnm(str, MyEnum):
-    LEMIN = "lemin"
+    LeminTaskProxyless = "LeminTaskProxyless"
+    LeminTask = "LeminTask"
 
 
 class HCaptchaEnm(str, MyEnum):
-    HCAPTCHA = "hcaptcha"
+    HCaptchaTask = "HCaptchaTask"
+    HCaptchaTaskProxyless = "HCaptchaTaskProxyless"
 
 
 class KeyCaptchaEnm(str, MyEnum):
-    KEYCAPTCHA = "keycaptcha"
+    KeyCaptchaTask = "KeyCaptchaTask"
+    KeyCaptchaTaskProxyless = "KeyCaptchaTaskProxyless"
 
 
 class RotateCaptchaEnm(str, MyEnum):
-    ROTATECAPTCHA = "rotatecaptcha"
+    RotateTask = "RotateTask"
 
 
 class TikTokCaptchaEnm(str, MyEnum):
@@ -82,12 +93,7 @@ class ControlEnm(str, MyEnum):
     reportIncorrect = "reportIncorrect"
 
 
-class YandexSmartCaptchaEnm(str, MyEnum):
-    YANDEX = "yandex"
-
-
 class TurnstileCaptchaEnm(str, MyEnum):
-    TURNSTILE = "turnstile"
     TurnstileTaskProxyless = "TurnstileTaskProxyless"
     TurnstileTask = "TurnstileTask"
 
