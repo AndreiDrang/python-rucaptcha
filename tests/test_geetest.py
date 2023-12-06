@@ -154,7 +154,7 @@ class TestGeeTest(TestGeeTestBase):
             )
 
     def test_empty_challenge(self):
-        with pytest.raises(ValueError):
+        with pytest.raises(TypeError):
             GeeTest(
                 rucaptcha_key=self.RUCAPTCHA_KEY,
                 gt=self.gt,
@@ -163,8 +163,8 @@ class TestGeeTest(TestGeeTestBase):
                 method=GeetestEnm.GeeTestTaskProxyless.value,
             ).captcha_handler()
 
-    async def test_empty_challenge_aio(self):
-        with pytest.raises(ValueError):
+    async def test_aio_empty_challenge(self):
+        with pytest.raises(TypeError):
             await GeeTest(
                 rucaptcha_key=self.RUCAPTCHA_KEY,
                 gt=self.gt,
