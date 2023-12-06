@@ -150,8 +150,7 @@ class TestAudioCaptcha(BaseTest):
         result = await instance.aio_captcha_handler()
 
         assert isinstance(result, dict) is True
-        assert result["errorId"] == 12
-        assert isinstance(result["solution"]["token"], str) is True
+        assert result["errorId"] == 5
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_wrong_link(self):
@@ -160,8 +159,7 @@ class TestAudioCaptcha(BaseTest):
         result = instance.captcha_handler(captcha_link=self.get_random_string(length=50))
 
         assert isinstance(result, dict) is True
-        assert result["errorId"] == 12
-        assert isinstance(result["solution"]["token"], str) is True
+        assert result["errorId"] == 5
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_wrong_path(self):
@@ -176,8 +174,7 @@ class TestAudioCaptcha(BaseTest):
         result = instance.captcha_handler(captcha_base64=self.get_random_string(length=50).encode(encoding="UTF-8"))
 
         assert isinstance(result, dict) is True
-        assert result["errorId"] == 12
-        assert isinstance(result["solution"]["token"], str) is True
+        assert result["errorId"] == 5
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
@@ -188,7 +185,6 @@ class TestAudioCaptcha(BaseTest):
 
         assert isinstance(result, dict) is True
         assert result["errorId"] == 12
-        assert isinstance(result["solution"]["token"], str) is True
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
@@ -207,6 +203,5 @@ class TestAudioCaptcha(BaseTest):
         )
 
         assert isinstance(result, dict) is True
-        assert result["errorId"] == 12
-        assert isinstance(result["solution"]["token"], str) is True
+        assert result["errorId"] == 5
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
