@@ -60,10 +60,21 @@ class GeeTest(BaseCaptcha):
             >>> resp_data = requests.get("https://www.geetest.com/demo/gt/register-enFullpage-official").json()
             >>> print(resp_data)
             {
-                'success': 1,
-                'challenge': '1ad03db8aff920037fb8117827eab171',
-                'gt': '022397c99c9f646f6477822485f30404',
-                'new_captcha': True
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "captcha_id":"e392e1d7fd421dc63325744d5a2b9c73",
+                  "lot_number":"e6c3bed2854f41f880662c48afff5dcb",
+                  "pass_token":"fad5eb52fc83bf7617402fcccfb211a21e0aa1d1044",
+                  "gen_time":"1693924478",
+                  "captcha_output":"fN36ufW6cQN4SQ-JRDQC70nSq9UcQBg=="
+               },
+               "cost":"0.00299",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId":75190409731
             }
             >>> await GeeTest(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             gt=resp_data["gt"],
@@ -73,14 +84,21 @@ class GeeTest(BaseCaptcha):
             ...             new_captcha=1,
             ...             ).aio_captcha_handler(challenge=resp_data["challenge"])
             {
-               "captchaSolve": {
-                  "geetest_challenge": "1ad0....b171gu",
-                  "geetest_validate": "011....69cc",
-                  "geetest_seccode": "0....c|jordan"
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "captcha_id":"e392e1d7fd421dc63325744d5a2b9c73",
+                  "lot_number":"e6c3bed2854f41f880662c48afff5dcb",
+                  "pass_token":"fad5eb52fc83bf7617402fcccfb211a21e0aa1d1044",
+                  "gen_time":"1693924478",
+                  "captcha_output":"fN36ufW6cQN4SQ-JRDQC70nSq9UcQBg=="
                },
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
+               "cost":"0.00299",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId":75190409731
             }
 
             >>> GeeTest(rucaptcha_key="aa9011f31111181111168611f1151122",
@@ -89,16 +107,21 @@ class GeeTest(BaseCaptcha):
             ...             method=GeetestEnm.GeeTestTaskProxyless.value,
             ...             ).captcha_handler()
             {
-                "captchaSolve": {
-                    "captcha_id": "e39....73",
-                    "lot_number": "1b....bd2",
-                    "pass_token": "f3b....de7f",
-                    "gen_time": "1678558017",
-                    "captcha_output": "c3rHzKl....TE=",
-                },
-               "taskId": 73052314114,
-                "error": False,
-                "errorBody": "None",
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "captcha_id":"e392e1d7fd421dc63325744d5a2b9c73",
+                  "lot_number":"e6c3bed2854f41f880662c48afff5dcb",
+                  "pass_token":"fad5eb52fc83bf7617402fcccfb211a21e0aa1d1044",
+                  "gen_time":"1693924478",
+                  "captcha_output":"fN36ufW6cQN4SQ-JRDQC70nSq9UcQBg=="
+               },
+               "cost":"0.00299",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId":75190409731
             }
 
             >>> await GeeTest(rucaptcha_key="aa9011f31111181111168611f1151122",
@@ -107,16 +130,21 @@ class GeeTest(BaseCaptcha):
             ...             method=GeetestEnm.GeeTestTaskProxyless.value,
             ...             ).aio_captcha_handler()
             {
-                "captchaSolve": {
-                    "captcha_id": "e39....73",
-                    "lot_number": "1b....bd2",
-                    "pass_token": "f3b....de7f",
-                    "gen_time": "1678558017",
-                    "captcha_output": "c3r....TE=",
-                },
-               "taskId": 73052314114,
-                "error": False,
-                "errorBody": "None",
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "captcha_id":"e392e1d7fd421dc63325744d5a2b9c73",
+                  "lot_number":"e6c3bed2854f41f880662c48afff5dcb",
+                  "pass_token":"fad5eb52fc83bf7617402fcccfb211a21e0aa1d1044",
+                  "gen_time":"1693924478",
+                  "captcha_output":"fN36ufW6cQN4SQ-JRDQC70nSq9UcQBg=="
+               },
+               "cost":"0.00299",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId":75190409731
             }
 
         Returns:
