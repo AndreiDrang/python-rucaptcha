@@ -73,23 +73,13 @@ class TikTokCaptchaEnm(str, MyEnum):
 
 
 class ControlEnm(str, MyEnum):
-    # control method
-    CONTROL = "control"
-
-    # default
-    GET = "get"
-    # https://rucaptcha.com/api-rucaptcha#manage_pingback
-    ADD_PINGBACK = "add_pingback"
-    GET_PINGBACK = "get_pingback"
-    DEL_PINGBACK = "del_pingback"
-
-    # https://rucaptcha.com/api-rucaptcha#additional
-    GETBALANCE = "getbalance"
-    GET2 = "get2"
-
-    # https://rucaptcha.com/api-rucaptcha#complain
-    REPORTGOOD = "reportgood"
-    REPORTBAD = "reportbad"
+    control = "control"
+    # https://rucaptcha.com/api-docs/get-balance
+    getBalance = "getBalance"
+    # https://rucaptcha.com/api-docs/report-correct
+    reportCorrect = "reportCorrect"
+    # https://rucaptcha.com/api-docs/report-incorrect
+    reportIncorrect = "reportIncorrect"
 
 
 class YandexSmartCaptchaEnm(str, MyEnum):
