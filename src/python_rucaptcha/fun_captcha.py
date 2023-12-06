@@ -3,7 +3,9 @@ from .core.enums import FunCaptchaEnm
 
 
 class FunCaptcha(BaseCaptcha):
-    def __init__(self, pageurl: str, publickey: str, method: str = FunCaptchaEnm.FUNCAPTCHA.value, *args, **kwargs):
+    def __init__(
+        self, pageurl: str, publickey: str, method: str = FunCaptchaEnm.FunCaptchaTaskProxyless.value, *args, **kwargs
+    ):
         """
         The class is used to work with Arkose Labs FunCaptcha.
 
@@ -18,7 +20,7 @@ class FunCaptcha(BaseCaptcha):
             ...             pageurl="https://api.funcaptcha.com/tile-game-lite-mode/fc/api/nojs/?pkey=69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC&lang=en",
             ...             publickey="69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC",
             ...             surl="https://client-api.arkoselabs.com",
-            ...             method=FunCaptchaEnm.FUNCAPTCHA.value
+            ...             method=FunCaptchaEnm.FunCaptchaTaskProxyless.value
             ...             ).captcha_handler()
             {
                "captchaSolve": "23217....ger",
@@ -48,21 +50,6 @@ class FunCaptcha(BaseCaptcha):
         Args:
             kwargs: additional params for `requests` library
 
-        Examples:
-            >>> FunCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             pageurl="https://api.funcaptcha.com/tile-game-lite-mode/fc/api/nojs/?pkey=69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC&lang=en",
-            ...             publickey="69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC",
-            ...             method=FunCaptchaEnm.FUNCAPTCHA.value,
-            ...             surl="https://client-api.arkoselabs.com",
-            ...             userAgent="some-user-agent"
-            ...             ).captcha_handler()
-            {
-               "captchaSolve": "23217....ger",
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
-            }
-
         Returns:
             Dict with full server response
 
@@ -74,21 +61,6 @@ class FunCaptcha(BaseCaptcha):
     async def aio_captcha_handler(self):
         """
         Async solving method
-
-        Examples:
-            >>> await FunCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             pageurl="https://api.funcaptcha.com/tile-game-lite-mode/fc/api/nojs/?pkey=69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC&lang=en",
-            ...             publickey="69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC",
-            ...             method=FunCaptchaEnm.FUNCAPTCHA.value,
-            ...             surl="https://client-api.arkoselabs.com",
-            ...             userAgent="some-user-agent"
-            ...             ).aio_captcha_handler()
-            {
-               "captchaSolve": "23217....ger",
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
-            }
 
         Returns:
             Dict with full server response
