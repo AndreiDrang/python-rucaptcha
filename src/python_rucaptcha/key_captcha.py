@@ -10,7 +10,7 @@ class KeyCaptcha(BaseCaptcha):
         s_s_c_session_id: str,
         s_s_c_web_server_sign: str,
         s_s_c_web_server_sign2: str,
-        method: str = KeyCaptchaEnm.KEYCAPTCHA.value,
+        method: str = KeyCaptchaEnm.KeyCaptchaTaskProxyless.value,
         *args,
         **kwargs,
     ):
@@ -34,7 +34,7 @@ class KeyCaptcha(BaseCaptcha):
             ...             s_s_c_session_id="0917788cad24ad3a69813c4fcd556061",
             ...             s_s_c_web_server_sign="02f7f9669f1269595c4c69bcd4a3c52e",
             ...             s_s_c_web_server_sign2="d888700f6f324ec0f32b44c32c50bde1",
-            ...             method=KeyCaptchaEnm.KEYCAPTCHA.value
+            ...             method=KeyCaptchaEnm.KeyCaptchaTaskProxyless.value
             ...             ).captcha_handler()
             {
                "captchaSolve": "d58....61|1",
@@ -49,7 +49,7 @@ class KeyCaptcha(BaseCaptcha):
             ...             s_s_c_session_id="0917788cad24ad3a69813c4fcd556061",
             ...             s_s_c_web_server_sign="02f7f9669f1269595c4c69bcd4a3c52e",
             ...             s_s_c_web_server_sign2="d888700f6f324ec0f32b44c32c50bde1",
-            ...             method=KeyCaptchaEnm.KEYCAPTCHA.value
+            ...             method=KeyCaptchaEnm.KeyCaptchaTaskProxyless.value
             ...             ).aio_captcha_handler()
             {
                "captchaSolve": "P1_eyJ.....cp_J",
@@ -91,7 +91,7 @@ class KeyCaptcha(BaseCaptcha):
             >>> KeyCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
             ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
-            ...             method=KeyCaptchaEnm.KEYCAPTCHA.value
+            ...             method=KeyCaptchaEnm.KeyCaptchaTaskProxyless.value
             ...             ).captcha_handler()
             {
                "captchaSolve": "P1_eyJ.....cp_J",
@@ -104,7 +104,7 @@ class KeyCaptcha(BaseCaptcha):
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_hcaptcha
+            Check class docstirng for more info
         """
 
         return self._processing_response(**kwargs)
@@ -117,7 +117,7 @@ class KeyCaptcha(BaseCaptcha):
             >>> KeyCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
             ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
-            ...             method=KeyCaptchaEnm.KEYCAPTCHA.value
+            ...             method=KeyCaptchaEnm.KeyCaptchaTaskProxyless.value
             ...             ).captcha_handler()
             {
                "captchaSolve": "P1_eyJ.....cp_J",
@@ -130,6 +130,6 @@ class KeyCaptcha(BaseCaptcha):
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_hcaptcha
+            Check class docstirng for more info
         """
         return await self._aio_processing_response()

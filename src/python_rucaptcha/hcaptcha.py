@@ -7,7 +7,7 @@ class HCaptcha(BaseCaptcha):
         self,
         sitekey: str,
         pageurl: str,
-        method: str = HCaptchaEnm.HCAPTCHA.value,
+        method: str = HCaptchaEnm.HCaptchaTaskProxyless.value,
         *args,
         **kwargs,
     ):
@@ -25,7 +25,7 @@ class HCaptcha(BaseCaptcha):
             >>> HCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
             ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
-            ...             method=HCaptchaEnm.HCAPTCHA.value
+            ...             method=HCaptchaEnm.HCaptchaTaskProxyless.value
             ...             ).captcha_handler()
             {
                "captchaSolve": "P1_eyJ.....cp_J",
@@ -37,7 +37,7 @@ class HCaptcha(BaseCaptcha):
             >>> await HCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
             ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
-            ...             method=HCaptchaEnm.HCAPTCHA.value
+            ...             method=HCaptchaEnm.HCaptchaTaskProxyless.value
             ...             ).aio_captcha_handler()
             {
                "captchaSolve": "P1_eyJ.....cp_J",
@@ -52,7 +52,7 @@ class HCaptcha(BaseCaptcha):
             ...             service_type="deathbycaptcha",
             ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
             ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
-            ...             method=HCaptchaEnm.HCAPTCHA.value
+            ...             method=HCaptchaEnm.HCaptchaTaskProxyless.value
             ...             ).captcha_handler()
             {
                 'captchaSolve': '03A....8h',
@@ -65,7 +65,7 @@ class HCaptcha(BaseCaptcha):
             ...             service_type="deathbycaptcha",
             ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
             ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
-            ...             method=HCaptchaEnm.HCAPTCHA.value
+            ...             method=HCaptchaEnm.HCaptchaTaskProxyless.value
             ...             ).aio_captcha_handler()
             {
                 'captchaSolve': '03A....8h',
@@ -95,19 +95,6 @@ class HCaptcha(BaseCaptcha):
         Args:
             kwargs: Parameters for the `requests` library
 
-        Examples:
-            >>> HCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
-            ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
-            ...             method=HCaptchaEnm.HCAPTCHA.value
-            ...             ).captcha_handler()
-            {
-               "captchaSolve": "P1_eyJ.....cp_J",
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
-            }
-
         Returns:
             Dict with full server response
 
@@ -120,19 +107,6 @@ class HCaptcha(BaseCaptcha):
     async def aio_captcha_handler(self):
         """
         Async solving method
-
-        Examples:
-            >>> await HCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
-            ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
-            ...             method=HCaptchaEnm.HCAPTCHA.value
-            ...             ).aio_captcha_handler()
-            {
-               "captchaSolve": "P1_eyJ.....cp_J",
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
-            }
 
         Returns:
             Dict with full server response

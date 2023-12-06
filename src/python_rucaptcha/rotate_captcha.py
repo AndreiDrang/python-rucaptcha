@@ -12,7 +12,7 @@ class RotateCaptcha(BaseCaptcha):
     Solve description:
     """
 
-    def __init__(self, method: str = RotateCaptchaEnm.ROTATECAPTCHA.value, *args, **kwargs):
+    def __init__(self, method: str = RotateCaptchaEnm.RotateTask.value, *args, **kwargs):
         """
         The class is used to work with Rotate Captcha.
 
@@ -100,21 +100,11 @@ class RotateCaptcha(BaseCaptcha):
             captcha_base64: Captcha image BASE64 info
             kwargs: additional params for `requests` library
 
-        Examples:
-            >>> RotateCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...                 angle=45).captcha_handler(captcha_file="examples/rotate/rotate_ex.png")
-            {
-                'captchaSolve': '125',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
-            }
-
         Returns:
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_funcaptcha_new
+            Check class docstirng for more info
         """
 
         # if a local file link is passed
@@ -158,21 +148,11 @@ class RotateCaptcha(BaseCaptcha):
             captcha_base64: Captcha image BASE64 info
             kwargs: additional params for `aiohttp` library
 
-        Examples:
-            >>> await RotateCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...                     angle=45).aio_captcha_handler(captcha_file="examples/rotate/rotate_ex.png")
-            {
-                'captchaSolve': '125',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
-            }
-
         Returns:
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_funcaptcha_new
+            Check class docstirng for more info
         """
 
         # if a local file link is passed

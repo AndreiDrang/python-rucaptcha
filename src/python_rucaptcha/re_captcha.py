@@ -10,7 +10,7 @@ class ReCaptcha(BaseCaptcha):
         pageurl: str,
         googlekey: str,
         version: Optional[str] = None,
-        method: str = ReCaptchaEnm.USER_RECAPTCHA.value,
+        method: str = ReCaptchaEnm.RecaptchaV2TaskProxyless.value,
         *args,
         **kwargs,
     ):
@@ -28,7 +28,7 @@ class ReCaptcha(BaseCaptcha):
             >>> ReCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             pageurl="https://rucaptcha.com/demo/recaptcha-v2",
             ...             googlekey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
-            ...             method=ReCaptchaEnm.USER_RECAPTCHA.value
+            ...             method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value
             ...             ).captcha_handler()
             {
                 'captchaSolve': '03A....8h',
@@ -67,7 +67,7 @@ class ReCaptcha(BaseCaptcha):
             >>> await ReCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             pageurl="https://rucaptcha.com/demo/recaptcha-v2",
             ...             googlekey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
-            ...             method=ReCaptchaEnm.USER_RECAPTCHA.value
+            ...             method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value
             ...             ).aio_captcha_handler()
             {
                 'captchaSolve': '03A....8h',
@@ -82,7 +82,7 @@ class ReCaptcha(BaseCaptcha):
             ...             service_type="deathbycaptcha",
             ...             pageurl="https://rucaptcha.com/demo/recaptcha-v2",
             ...             googlekey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
-            ...             method=ReCaptchaEnm.USER_RECAPTCHA.value
+            ...             method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value
             ...             ).captcha_handler()
             {
                 'captchaSolve': '03A....8h',
@@ -95,7 +95,7 @@ class ReCaptcha(BaseCaptcha):
             ...             service_type="deathbycaptcha",
             ...             pageurl="https://rucaptcha.com/demo/recaptcha-v2",
             ...             googlekey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
-            ...             method=ReCaptchaEnm.USER_RECAPTCHA.value
+            ...             method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value
             ...             ).aio_captcha_handler()
             {
                 'captchaSolve': '03A....8h',
@@ -128,24 +128,11 @@ class ReCaptcha(BaseCaptcha):
         Args:
             kwargs: additional params for `requests` library
 
-        Examples:
-            >>> ReCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             pageurl="https://rucaptcha.com/demo/recaptcha-v2",
-            ...             googlekey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
-            ...             method=ReCaptchaEnm.USER_RECAPTCHA.value
-            ...             ).captcha_handler()
-            {
-                'captchaSolve': '03A....8h',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
-            }
-
         Returns:
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_funcaptcha_new
+            Check class docstirng for more info
         """
         return self._processing_response(**kwargs)
 
@@ -153,23 +140,10 @@ class ReCaptcha(BaseCaptcha):
         """
         Async solving method
 
-        Examples:
-            >>> await ReCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             pageurl="https://rucaptcha.com/demo/recaptcha-v2",
-            ...             googlekey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
-            ...             method=ReCaptchaEnm.USER_RECAPTCHA.value
-            ...             ).aio_captcha_handler()
-            {
-                'captchaSolve': '03A....8h',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
-            }
-
         Returns:
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_funcaptcha_new
+            Check class docstirng for more info
         """
         return await self._aio_processing_response()

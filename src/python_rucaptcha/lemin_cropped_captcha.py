@@ -8,7 +8,7 @@ class LeminCroppedCaptcha(BaseCaptcha):
         pageurl: str,
         captcha_id: str,
         div_id: str,
-        method: str = LeminCroppedCaptchaEnm.LEMIN.value,
+        method: str = LeminCroppedCaptchaEnm.LeminTaskProxyless.value,
         *args,
         **kwargs,
     ):
@@ -28,7 +28,7 @@ class LeminCroppedCaptcha(BaseCaptcha):
             ...                     pageurl="https://dashboard.leminnow.com/auth/signup",
             ...                     captcha_id="CROPPED_099216d_8ba061383fa24ef498115023aa7189d4",
             ...                     div_id="lemin-cropped-captcha",
-            ...                     method=LeminCroppedCaptchaEnm.LEMIN.value,
+            ...                     method=LeminCroppedCaptchaEnm.LeminTaskProxyless.value,
             ...                     api_server="api.leminnow.com"
             ...                     ).captcha_handler()
             {
@@ -45,7 +45,7 @@ class LeminCroppedCaptcha(BaseCaptcha):
             ...                     pageurl="https://dashboard.leminnow.com/auth/signup",
             ...                     captcha_id="CROPPED_099216d_8ba061383fa24ef498115023aa7189d4",
             ...                     div_id="lemin-cropped-captcha",
-            ...                     method=LeminCroppedCaptchaEnm.LEMIN.value,
+            ...                     method=LeminCroppedCaptchaEnm.LeminTaskProxyless.value,
             ...                     api_server="api.leminnow.com"
             ...                     ).aio_captcha_handler()
             {
@@ -79,29 +79,11 @@ class LeminCroppedCaptcha(BaseCaptcha):
         Args:
             kwargs: Parameters for the `requests` library
 
-        Examples:
-            >>> LeminCroppedCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...                     pageurl="https://dashboard.leminnow.com/auth/signup",
-            ...                     captcha_id="CROPPED_099216d_8ba061383fa24ef498115023aa7189d4",
-            ...                     div_id="lemin-cropped-captcha",
-            ...                     method=LeminCroppedCaptchaEnm.LEMIN.value,
-            ...                     api_server="api.leminnow.com"
-            ...                     ).captcha_handler()
-            {
-               "captchaSolve": {
-                  "answer":"0xc....EUa",
-                  "challenge_id":"58.....63a"
-               },
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
-            }
-
         Returns:
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#lemin
+            Check class docstirng for more info
         """
         return self._processing_response(**kwargs)
 
@@ -109,28 +91,10 @@ class LeminCroppedCaptcha(BaseCaptcha):
         """
         Async solving method
 
-        Examples:
-            >>> LeminCroppedCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...                     pageurl="https://dashboard.leminnow.com/auth/signup",
-            ...                     captcha_id="CROPPED_099216d_8ba061383fa24ef498115023aa7189d4",
-            ...                     div_id="lemin-cropped-captcha",
-            ...                     method=LeminCroppedCaptchaEnm.LEMIN.value,
-            ...                     api_server="api.leminnow.com"
-            ...                     ).captcha_handler()
-            {
-               "captchaSolve": {
-                  "answer":"0xc....EUa",
-                  "challenge_id":"58.....63a"
-               },
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
-            }
-
         Returns:
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#lemin
+            Check class docstirng for more info
         """
         return await self._aio_processing_response()
