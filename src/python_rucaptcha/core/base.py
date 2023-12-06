@@ -36,14 +36,15 @@ class BaseCaptcha:
         :param kwargs: Designed to pass OPTIONAL parameters to the payload for a request to RuCaptcha
         """
         # assign args to validator
-        self.params = CaptchaOptionsSer(**locals(), **kwargs)
+        self.params = CaptchaOptionsSer(sleep_time=sleep_time, service_type=service_type, **kwargs)
+        self.params.urls_set()
 
         # prepare create task payload
         self.create_task_payload = CreateTaskBaseSer(
-            clientKey=self.params.rucaptcha_key, task=TaskSer(type=method), **locals()
-        ).dict(by_alias=True)
+            clientKey=rucaptcha_key, task=TaskSer(type=method), **kwargs
+        ).to_dict()
         # prepare get task result data payload
-        self.get_task_payload = GetTaskResultRequestSer(clientKey=self.params.rucaptcha_key)
+        self.get_task_payload = GetTaskResultRequestSer(clientKey=rucaptcha_key)
 
         for key in kwargs:
             self.create_task_payload["task"].update({key: kwargs[key]})
@@ -67,7 +68,7 @@ class BaseCaptcha:
             if response.errorId == 0:
                 self.get_task_payload.taskId = response.taskId
             else:
-                return response.model_dump()
+                return response.to_dict()
         except Exception as error:
             return error
 
@@ -106,7 +107,7 @@ class BaseCaptcha:
             if response.errorId == 0:
                 self.get_task_payload.taskId = response.taskId
             else:
-                return response.model_dump()
+                return response.to_dict()
         except Exception as error:
             return error
 
