@@ -102,4 +102,4 @@ class TextCaptchaEnm(str, MyEnum):
 
 
 class AudioCaptchaEnm(str, MyEnum):
-    AUDIO = "audio"
+    AudioTask = "AudioTask"
