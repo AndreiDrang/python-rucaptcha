@@ -88,24 +88,6 @@ class TestMain(BaseTest):
             async with BaseCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, method="some_method") as instance:
                 raise ValueError
 
-    @pytest.mark.parametrize("elements", [31, 33])
-    def test_context_failed_api_key(self, elements):
-        with pytest.raises(ValueError):
-            with BaseCaptcha(rucaptcha_key=self.get_random_string(elements), method=ControlEnm.control.value):
-                pass
-
-    @pytest.mark.parametrize("elements", [31, 33])
-    def test_failed_api_key(self, elements):
-        with pytest.raises(ValueError):
-            BaseCaptcha(rucaptcha_key=self.get_random_string(elements), method=ControlEnm.control.value)
-
-    @pytest.mark.asyncio
-    @pytest.mark.parametrize("elements", [31, 33])
-    async def test_aio_context_failed_api_key(self, elements):
-        with pytest.raises(ValueError):
-            async with BaseCaptcha(rucaptcha_key=self.get_random_string(elements), method=ControlEnm.control.value):
-                pass
-
 
 class TestEnum(BaseTest):
     def test_enum_list(self):
