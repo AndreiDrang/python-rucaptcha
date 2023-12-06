@@ -22,6 +22,7 @@ HTTP API Serializers
 class TaskSer(MyBaseModel):
     type: str
 
+
 class ErrorFieldsSer(Struct):
     errorCode: str = None
     errorDescription: str = None
