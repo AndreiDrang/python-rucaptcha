@@ -2,7 +2,6 @@ import logging
 
 from .core.base import BaseCaptcha
 from .core.enums import TextCaptchaEnm
-from .core.serializer import TextCaptchaTaskSer
 
 
 class TextCaptcha(BaseCaptcha):
@@ -100,7 +99,7 @@ class TextCaptcha(BaseCaptcha):
         Notes:
             Check class docstirng for more info
         """
-        self.create_task_payload.update({"task": TextCaptchaTaskSer(comment=textcaptcha).to_dict()})
+        self.create_task_payload["task"].update({"comment": textcaptcha})
         return self._processing_response(**kwargs)
 
     async def aio_captcha_handler(self, textcaptcha: str) -> dict:
@@ -116,5 +115,5 @@ class TextCaptcha(BaseCaptcha):
         Notes:
             Check class docstirng for more info
         """
-        self.create_task_payload.update({"task": TextCaptchaTaskSer(comment=textcaptcha).to_dict()})
+        self.create_task_payload["task"].update({"comment": textcaptcha})
         return await self._aio_processing_response()
