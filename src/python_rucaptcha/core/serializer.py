@@ -6,7 +6,7 @@ from . import enums
 from .config import APP_KEY
 
 PositiveInt = Annotated[int, Meta(ge=5)]
-MinLenStr = Annotated[int, Meta(min_length=10)]
+MinLenStr = Annotated[int, Meta(min_length=32, max_length=32)]
 
 
 class MyBaseModel(Struct):
