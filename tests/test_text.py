@@ -16,11 +16,15 @@ class TestTextCaptcha(BaseTest):
         assert "captcha_handler" in TextCaptcha.__dict__.keys()
         assert "aio_captcha_handler" in TextCaptcha.__dict__.keys()
 
+    def test_args(self):
+        instance = TextCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
+        assert instance.create_task_payload["clientKey"] == self.RUCAPTCHA_KEY
+
     @pytest.mark.parametrize("lang_code, question", questions)
     def test_basic(self, lang_code: str, question: str):
         instance = TextCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, languagePool=lang_code)
 
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
+        assert instance.create_task_payload["clientKey"] == self.RUCAPTCHA_KEY
 
         result = instance.captcha_handler(textcaptcha=question)
 
@@ -34,14 +38,12 @@ class TestTextCaptcha(BaseTest):
             assert result["errorId"] == 1
             assert result["status"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("lang_code, question", questions)
     async def test_aio_basic(self, lang_code, question):
         instance = TextCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, languagePool=lang_code)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
         result = await instance.aio_captcha_handler(textcaptcha=question)
 
@@ -55,7 +57,7 @@ class TestTextCaptcha(BaseTest):
             assert result["errorId"] == 1
             assert result["status"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == GetTaskResultResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     """
     Fail tests
