@@ -47,7 +47,6 @@ class TestImageCaptcha(BaseImageCaptcha):
         result = instance.captcha_handler(captcha_link=self.captcha_url)
 
         assert isinstance(result, dict) is True
-
         if not result["errorId"]:
             assert result["status"] == "ready"
             assert isinstance(result["solution"]["text"], str) is True
