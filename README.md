@@ -65,7 +65,7 @@ Is described in the [documentation-website](https://andreidrang.github.io/python
 
 For full changelog info check - [Releases page](https://github.com/AndreiDrang/python-rucaptcha/releases).
 
-- v.6.0 - Library refactoring. Stop using `pydantic`, start using `msgspec`. Move to API v2. More details at [Releases page](https://github.com/AndreiDrang/python-rucaptcha/releases). 
+- v.6.0 - Library refactoring. Stop using `pydantic`, start using `msgspec`. Move to API v2. Drop Python 3.8 support. More details at [Releases page](https://github.com/AndreiDrang/python-rucaptcha/releases). 
 - v.5.3 - Added support for [Death By Captcha](https://www.deathbycaptcha.com?refid=1237267242) and other services by changing `service_type` and `url_request` \ `url_response` parameters.
 - v.5.2 - Added Audio captcha method.
 - v.5.1 - Check [releases page](https://github.com/AndreiDrang/python-rucaptcha/releases).
