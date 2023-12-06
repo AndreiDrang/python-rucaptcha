@@ -150,7 +150,7 @@ class TestImageCaptcha(BaseImageCaptcha):
         result = instance.captcha_handler()
         assert isinstance(result, dict) is True
         assert result["errorId"] == 12
-        assert isinstance(result["solution"]["text"], str) is True
+        assert isinstance(result["errorCode"], str) is True
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
@@ -159,7 +159,7 @@ class TestImageCaptcha(BaseImageCaptcha):
         result = await instance.aio_captcha_handler()
         assert isinstance(result, dict) is True
         assert result["errorId"] == 12
-        assert isinstance(result["solution"]["text"], str) is True
+        assert isinstance(result["errorCode"], str) is True
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_wrong_link(self):
@@ -167,7 +167,7 @@ class TestImageCaptcha(BaseImageCaptcha):
         result = instance.captcha_handler(captcha_link=self.get_random_string(length=50))
         assert isinstance(result, dict) is True
         assert result["errorId"] == 12
-        assert isinstance(result["solution"]["text"], str) is True
+        assert isinstance(result["errorCode"], str) is True
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_wrong_base64(self):
@@ -183,7 +183,7 @@ class TestImageCaptcha(BaseImageCaptcha):
         result = await instance.aio_captcha_handler(captcha_link=self.get_random_string(length=50))
         assert isinstance(result, dict) is True
         assert result["errorId"] == 12
-        assert isinstance(result["solution"]["text"], str) is True
+        assert isinstance(result["errorCode"], str) is True
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio

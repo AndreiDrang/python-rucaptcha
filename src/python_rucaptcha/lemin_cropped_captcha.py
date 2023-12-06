@@ -66,7 +66,7 @@ class LeminCroppedCaptcha(BaseCaptcha):
         """
         super().__init__(method=method, *args, **kwargs)
 
-        self.post_payload.update({"pageurl": pageurl, "captcha_id": captcha_id, "div_id": div_id})
+        self.create_task_payload["task"].update({"pageurl": pageurl, "captcha_id": captcha_id, "div_id": div_id})
 
         # check user params
         if method not in LeminCroppedCaptchaEnm.list_values():

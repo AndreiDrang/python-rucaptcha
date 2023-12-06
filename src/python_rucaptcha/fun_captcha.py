@@ -35,7 +35,7 @@ class FunCaptcha(BaseCaptcha):
         """
         super().__init__(method=method, *args, **kwargs)
 
-        self.post_payload.update({"publickey": publickey, "pageurl": pageurl})
+        self.create_task_payload["task"].update({"publickey": publickey, "pageurl": pageurl})
 
         # check user params
         if method not in FunCaptchaEnm.list_values():

@@ -21,7 +21,7 @@ class TikTokCaptcha(BaseCaptcha):
         raise DeprecationWarning("This method is temporarily not supported.".upper())
         super().__init__(method=method, *args, **kwargs)
 
-        self.post_payload.update(
+        self.create_task_payload["task"].update(
             {
                 "pageurl": pageurl,
                 "cookies": cookies,

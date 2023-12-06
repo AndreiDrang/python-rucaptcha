@@ -215,7 +215,8 @@ class ImageCaptcha(BaseCaptcha):
                 content = self.url_open(url=captcha_link, **kwargs).content
             except Exception as error:
                 self.result.errorId = 12
-                self.result.solution = {"text": str(error)}
+                self.result.errorCode = self.NO_CAPTCHA_ERR
+                self.result.errorDescription = str(error)
                 return self.result.to_dict()
 
             # according to the value of the passed parameter, select the function to save the image
@@ -226,7 +227,7 @@ class ImageCaptcha(BaseCaptcha):
         else:
             # if none of the parameters are passed
             self.result.errorId = 12
-            self.result.solution = {"text": "No captcha send"}
+            self.result.errorCode = self.NO_CAPTCHA_ERR
             return self.result.to_dict()
 
         return self._processing_response(**kwargs)
@@ -267,7 +268,8 @@ class ImageCaptcha(BaseCaptcha):
                 content = await self.aio_url_read(url=captcha_link, **kwargs)
             except Exception as error:
                 self.result.errorId = 12
-                self.result.solution = {"text": str(error)}
+                self.result.errorCode = self.NO_CAPTCHA_ERR
+                self.result.errorDescription = str(error)
                 return self.result.to_dict()
 
             # according to the value of the passed parameter, select the function to save the image
@@ -276,9 +278,8 @@ class ImageCaptcha(BaseCaptcha):
             self.create_task_payload["task"].update({"body": base64.b64encode(content).decode("utf-8")})
 
         else:
-            # if none of the parameters are passed
             self.result.errorId = 12
-            self.result.solution = {"text": "No captcha send"}
+            self.result.errorCode = self.NO_CAPTCHA_ERR
             return self.result.to_dict()
 
         return await self._aio_processing_response()

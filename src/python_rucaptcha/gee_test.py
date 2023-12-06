@@ -130,7 +130,7 @@ class GeeTest(BaseCaptcha):
             raise ValueError(f"Invalid method parameter set, available - {GeetestEnm.list_values()}")
 
         # insert `gt` param to payload
-        self.post_payload.update({"gt": gt, "pageurl": pageurl, "captcha_id": captcha_id})
+        self.create_task_payload["task"].update({"gt": gt, "pageurl": pageurl, "captcha_id": captcha_id})
 
         if self.method == GeetestEnm.GEETEST_V4.value and captcha_id is None:
             raise ValueError(f"For {self.method} captcha_id is required")
@@ -190,7 +190,7 @@ class GeeTest(BaseCaptcha):
         """
         if self.method == GeetestEnm.GEETEST.value:
             if challenge is not None:
-                self.post_payload.update({"challenge": challenge})
+                self.create_task_payload["task"].update({"challenge": challenge})
             else:
                 raise ValueError(f"For {self.method} challenge is required")
 
@@ -248,7 +248,7 @@ class GeeTest(BaseCaptcha):
         """
         if self.method == GeetestEnm.GEETEST.value:
             if challenge is not None:
-                self.post_payload.update({"challenge": challenge})
+                self.create_task_payload["task"].update({"challenge": challenge})
             else:
                 raise ValueError(f"For {self.method} challenge is required")
 

@@ -82,7 +82,7 @@ class HCaptcha(BaseCaptcha):
         """
         super().__init__(method=method, *args, **kwargs)
 
-        self.post_payload.update({"pageurl": pageurl, "sitekey": sitekey})
+        self.create_task_payload["task"].update({"pageurl": pageurl, "sitekey": sitekey})
 
         # check user params
         if method not in HCaptchaEnm.list_values():

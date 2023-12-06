@@ -66,7 +66,7 @@ class KeyCaptcha(BaseCaptcha):
         """
         super().__init__(method=method, *args, **kwargs)
 
-        self.post_payload.update(
+        self.create_task_payload["task"].update(
             {
                 "pageurl": pageurl,
                 "s_s_c_user_id": s_s_c_user_id,

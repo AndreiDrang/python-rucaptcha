@@ -121,9 +121,10 @@ class AudioCaptcha(BaseCaptcha):
             try:
                 content = self.url_open(url=captcha_link, **kwargs).content
             except Exception as error:
-                self.result.error = True
-                self.result.errorBody = str(error)
-                return self.result.dict()
+                self.result.errorId = 12
+                self.result.errorCode = self.NO_CAPTCHA_ERR
+                self.result.errorDescription = str(error)
+                return self.result.to_dict()
 
             # according to the value of the passed parameter, select the function to save the file
             if self.save_format == SaveFormatsEnm.CONST.value:
@@ -131,10 +132,9 @@ class AudioCaptcha(BaseCaptcha):
             self.create_task_payload["task"].update({"body": base64.b64encode(content).decode("utf-8")})
 
         else:
-            # if none of the parameters are passed
-            self.result.error = True
-            self.result.errorBody = self.NO_CAPTCHA_ERR
-            return self.result.dict()
+            self.result.errorId = 12
+            self.result.errorCode = self.NO_CAPTCHA_ERR
+            return self.result.to_dict()
 
         return self._processing_response(**kwargs)
 
@@ -173,9 +173,10 @@ class AudioCaptcha(BaseCaptcha):
             try:
                 content = await self.aio_url_read(url=captcha_link, **kwargs)
             except Exception as error:
-                self.result.error = True
-                self.result.errorBody = str(error)
-                return self.result.dict()
+                self.result.errorId = 12
+                self.result.errorCode = self.NO_CAPTCHA_ERR
+                self.result.errorDescription = str(error)
+                return self.result.to_dict()
 
             # according to the value of the passed parameter, select the function to save the file
             if self.save_format == SaveFormatsEnm.CONST.value:
@@ -183,10 +184,9 @@ class AudioCaptcha(BaseCaptcha):
             self.create_task_payload["task"].update({"body": base64.b64encode(content).decode("utf-8")})
 
         else:
-            # if none of the parameters are passed
-            self.result.error = True
-            self.result.errorBody = self.NO_CAPTCHA_ERR
-            return self.result.dict()
+            self.result.errorId = 12
+            self.result.errorCode = self.NO_CAPTCHA_ERR
+            return self.result.to_dict()
 
         return await self._aio_processing_response()
 

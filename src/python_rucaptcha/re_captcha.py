@@ -115,7 +115,7 @@ class ReCaptcha(BaseCaptcha):
         """
         super().__init__(method=method, *args, **kwargs)
 
-        self.post_payload.update({"googlekey": googlekey, "pageurl": pageurl, "version": version})
+        self.create_task_payload["task"].update({"googlekey": googlekey, "pageurl": pageurl, "version": version})
 
         # check user params
         if method not in ReCaptchaEnm.list_values():

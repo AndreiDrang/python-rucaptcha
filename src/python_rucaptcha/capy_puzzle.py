@@ -76,7 +76,7 @@ class CapyPuzzle(BaseCaptcha):
         """
         super().__init__(method=method, *args, **kwargs)
 
-        self.post_payload.update({"captchakey": captchakey, "pageurl": pageurl})
+        self.create_task_payload["task"].update({"captchakey": captchakey, "pageurl": pageurl})
 
         # check user params
         if method not in CapyPuzzleEnm.list_values():

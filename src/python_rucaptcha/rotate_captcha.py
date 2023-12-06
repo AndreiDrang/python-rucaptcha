@@ -3,6 +3,7 @@ from typing import Optional
 
 from .core.base import BaseCaptcha
 from .core.enums import RotateCaptchaEnm
+from .core.serializer import GetTaskResultResponseSer
 
 
 class RotateCaptcha(BaseCaptcha):
@@ -78,6 +79,7 @@ class RotateCaptcha(BaseCaptcha):
         """
         super().__init__(method=method, *args, **kwargs)
 
+        self.result = GetTaskResultResponseSer()
         # check user params
         if method not in RotateCaptchaEnm.list_values():
             raise ValueError(f"Invalid method parameter set, available - {RotateCaptchaEnm.list_values()}")
@@ -117,25 +119,27 @@ class RotateCaptcha(BaseCaptcha):
 
         # if a local file link is passed
         if captcha_file:
-            self.post_payload.update({"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")})
+            self.create_task_payload["task"].update(
+                {"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")}
+            )
         # if the file is transferred in base64 encoding
         elif captcha_base64:
-            self.post_payload.update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
+            self.create_task_payload["task"].update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
         # if a URL is passed
         elif captcha_link:
             try:
                 content = self.url_open(url=captcha_link, **kwargs).content
-                self.post_payload.update({"body": base64.b64encode(content).decode("utf-8")})
+                self.create_task_payload["task"].update({"body": base64.b64encode(content).decode("utf-8")})
             except Exception as error:
                 self.result.error = True
                 self.result.errorBody = str(error)
-                return self.result.dict()
+                return self.result.to_dict()
 
         else:
             # if none of the parameters are passed
             self.result.error = True
             self.result.errorBody = self.NO_CAPTCHA_ERR
-            return self.result.dict()
+            return self.result.to_dict()
         return self._processing_response(**kwargs)
 
     async def aio_captcha_handler(
@@ -173,24 +177,26 @@ class RotateCaptcha(BaseCaptcha):
 
         # if a local file link is passed
         if captcha_file:
-            self.post_payload.update({"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")})
+            self.create_task_payload["task"].update(
+                {"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")}
+            )
         # if the file is transferred in base64 encoding
         elif captcha_base64:
-            self.post_payload.update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
+            self.create_task_payload["task"].update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
         # if a URL is passed
         elif captcha_link:
             try:
                 content = await self.aio_url_read(url=captcha_link, **kwargs)
-                self.post_payload.update({"body": base64.b64encode(content).decode("utf-8")})
+                self.create_task_payload["task"].update({"body": base64.b64encode(content).decode("utf-8")})
             except Exception as error:
                 self.result.error = True
                 self.result.errorBody = str(error)
-                return self.result.dict()
+                return self.result.to_dict()
 
         else:
             # if none of the parameters are passed
             self.result.error = True
             self.result.errorBody = self.NO_CAPTCHA_ERR
-            return self.result.dict()
+            return self.result.to_dict()
 
         return await self._aio_processing_response()

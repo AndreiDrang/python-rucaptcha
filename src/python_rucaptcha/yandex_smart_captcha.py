@@ -69,7 +69,7 @@ class YandexSmartCaptcha(BaseCaptcha):
         """
         super().__init__(method=method, *args, **kwargs)
 
-        self.post_payload.update({"sitekey": sitekey, "pageurl": pageurl})
+        self.create_task_payload["task"].update({"sitekey": sitekey, "pageurl": pageurl})
 
         # check user params
         if method not in YandexSmartCaptchaEnm.list_values():
