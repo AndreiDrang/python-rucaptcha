@@ -15,7 +15,7 @@ def get_sync_result(get_payload: GetTaskResultRequestSer, sleep_time: int, url_r
     Function periodically send the SYNC request to service and wait for captcha solving result
     """
     # generator for repeated attempts to connect to the server
-    attempts = attempts_generator(amount=10)
+    attempts = attempts_generator()
     for _ in attempts:
         try:
             # send a request for the result of solving the captcha
