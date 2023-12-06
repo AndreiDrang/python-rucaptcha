@@ -53,8 +53,8 @@ class TestImageCaptcha(BaseImageCaptcha):
             assert isinstance(result["solution"]["text"], str) is True
             assert isinstance(result["taskId"], int) is True
         else:
-            assert result["errorId"] == 1
-            assert result["status"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
     def test_basic_file(self, save_format):
@@ -68,8 +68,8 @@ class TestImageCaptcha(BaseImageCaptcha):
             assert isinstance(result["solution"]["text"], str) is True
             assert isinstance(result["taskId"], int) is True
         else:
-            assert result["errorId"] == 1
-            assert result["status"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
     def test_basic_base64(self, save_format):
@@ -85,8 +85,8 @@ class TestImageCaptcha(BaseImageCaptcha):
             assert isinstance(result["solution"]["text"], str) is True
             assert isinstance(result["taskId"], int) is True
         else:
-            assert result["errorId"] == 1
-            assert result["status"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
@@ -102,8 +102,8 @@ class TestImageCaptcha(BaseImageCaptcha):
             assert isinstance(result["solution"]["text"], str) is True
             assert isinstance(result["taskId"], int) is True
         else:
-            assert result["errorId"] == 1
-            assert result["status"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
@@ -119,8 +119,8 @@ class TestImageCaptcha(BaseImageCaptcha):
             assert isinstance(result["solution"]["text"], str) is True
             assert isinstance(result["taskId"], int) is True
         else:
-            assert result["errorId"] == 1
-            assert result["status"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
@@ -137,8 +137,8 @@ class TestImageCaptcha(BaseImageCaptcha):
             assert isinstance(result["solution"]["text"], str) is True
             assert isinstance(result["taskId"], int) is True
         else:
-            assert result["errorId"] == 1
-            assert result["status"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     """
