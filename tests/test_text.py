@@ -36,7 +36,7 @@ class TestTextCaptcha(BaseTest):
             assert isinstance(result["taskId"], int) is True
         else:
             assert result["errorId"] in (1, 12)
-            assert result["status"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
@@ -55,7 +55,7 @@ class TestTextCaptcha(BaseTest):
             assert isinstance(result["taskId"], int) is True
         else:
             assert result["errorId"] in (1, 12)
-            assert result["status"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
