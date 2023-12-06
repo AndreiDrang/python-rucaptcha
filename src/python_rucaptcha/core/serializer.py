@@ -1,12 +1,9 @@
-from typing import Literal, Optional, Annotated
+from typing import Literal, Optional
 
-from msgspec import Meta, Struct
+from msgspec import Struct
 
 from . import enums
 from .config import APP_KEY
-
-PositiveInt = Annotated[int, Meta(ge=5)]
-MinLenStr = Annotated[int, Meta(min_length=32, max_length=32)]
 
 
 class MyBaseModel(Struct):
@@ -42,7 +39,7 @@ class GetTaskResultRequestSer(MyBaseModel):
 
 
 class CaptchaOptionsSer(MyBaseModel):
-    sleep_time: PositiveInt = 10
+    sleep_time: int = 10
     service_type: enums.ServiceEnm = enums.ServiceEnm.TWOCAPTCHA.value
 
     url_request: Optional[str] = None
