@@ -63,12 +63,14 @@ Is described in the [documentation-website](https://andreidrang.github.io/python
 
 ### Changelog
 
+For full changelog info check - [Releases page](https://github.com/AndreiDrang/python-rucaptcha/releases).
+
+- v.6.0 - Library refactoring. Stop using `pydantic`, start using `msgspec`. Move to API v2. More details at [Releases page](https://github.com/AndreiDrang/python-rucaptcha/releases). 
 - v.5.3 - Added support for [Death By Captcha](https://www.deathbycaptcha.com?refid=1237267242) and other services by changing `service_type` and `url_request` \ `url_response` parameters.
 - v.5.2 - Added Audio captcha method.
 - v.5.1 - Check [releases page](https://github.com/AndreiDrang/python-rucaptcha/releases).
 - v.5.0 - Added AmazonWAF captcha method.
 - v.4.2 - Added [Yandex Smart Captcha](https://rucaptcha.com/api-rucaptcha#yandex).
-- v.4.0 - Rework classes and methods. Adding `TikTok` captcha. Adding inheritance and serializers. The `Callback server` is deprecated.
 
 ### Get API Key to work with the library
 1. On the page - https://rucaptcha.com/enterpage
