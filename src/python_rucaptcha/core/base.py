@@ -36,12 +36,12 @@ class BaseCaptcha:
         :param kwargs: Designed to pass OPTIONAL parameters to the payload for a request to RuCaptcha
         """
         # assign args to validator
-        self.params = CaptchaOptionsSer(sleep_time=sleep_time, service_type=service_type, **kwargs)
+        self.params = CaptchaOptionsSer(sleep_time=sleep_time, service_type=service_type)
         self.params.urls_set()
 
         # prepare create task payload
         self.create_task_payload = CreateTaskBaseSer(
-            clientKey=rucaptcha_key, task=TaskSer(type=method), **kwargs
+            clientKey=rucaptcha_key, task=TaskSer(type=method).to_dict()
         ).to_dict()
         # prepare get task result data payload
         self.get_task_payload = GetTaskResultRequestSer(clientKey=rucaptcha_key)
