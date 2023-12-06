@@ -53,7 +53,7 @@ class AmazonWAF(BaseCaptcha):
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#amazon-waf
+            https://rucaptcha.com/api-docs/amazon-aws-waf-captcha
         """
         super().__init__(method=method, *args, **kwargs)
 
