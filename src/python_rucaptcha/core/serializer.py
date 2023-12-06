@@ -82,13 +82,3 @@ class GetTaskResultResponseSer(MyBaseModel, ErrorFieldsSer):
     taskId: int = None
     # control method params
     balance: float = None
-
-
-"""
-Captcha tasks serializers
-"""
-
-
-class TextCaptchaTaskSer(TaskSer):
-    comment: str = None
-    type: str = "TextCaptchaTask"
