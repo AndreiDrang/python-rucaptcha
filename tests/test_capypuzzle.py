@@ -12,6 +12,21 @@ class TestCapyPuzzle(BaseTest):
     api_server = "https://jp.api.capy.me/"
     versions = ["puzzle", "avatar"]
 
+    @pytest.mark.parametrize("method", CapyPuzzleEnm.list_values())
+    def test_args(self, method: str):
+        instance = CapyPuzzle(
+            websiteURL=self.pageurl,
+            websiteKey=self.captchakey,
+            method=method,
+            rucaptcha_key=self.RUCAPTCHA_KEY,
+            api_server=self.api_server,
+            version=self.versions[0],
+        )
+        assert instance.create_task_payload["clientKey"] == self.RUCAPTCHA_KEY
+        assert instance.create_task_payload["task"]["websiteURL"] == self.pageurl
+        assert instance.create_task_payload["task"]["websiteKey"] == self.captchakey
+        assert instance.create_task_payload["task"]["type"] == method
+
     """
     Success tests
     """
@@ -22,24 +37,20 @@ class TestCapyPuzzle(BaseTest):
 
     def test_basic_data(self):
         instance = CapyPuzzle(
-            pageurl=self.pageurl,
-            captchakey=self.captchakey,
+            websiteURL=self.pageurl,
+            websiteKey=self.captchakey,
             method=CapyPuzzleEnm.CapyTaskProxyless.value,
             rucaptcha_key=self.RUCAPTCHA_KEY,
             api_server=self.api_server,
             version=self.versions[0],
         )
-        assert instance.create_task_payload["method"] == CapyPuzzleEnm.CapyTaskProxyless.value
-        assert instance.create_task_payload["pageurl"] == self.pageurl
-        assert instance.create_task_payload["api_server"] == self.api_server
-        assert instance.create_task_payload["version"] == self.versions[0]
 
         result = instance.captcha_handler()
 
         assert isinstance(result, dict) is True
         if not result["errorId"]:
             assert result["status"] == "ready"
-            assert isinstance(result["solution"]["text"], str) is True
+            assert isinstance(result["solution"], dict) is True
             assert isinstance(result["taskId"], int) is True
         else:
             assert result["errorId"] in (1, 12)
@@ -50,24 +61,20 @@ class TestCapyPuzzle(BaseTest):
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
         instance = CapyPuzzle(
-            pageurl=self.pageurl,
-            captchakey=self.captchakey,
+            websiteURL=self.pageurl,
+            websiteKey=self.captchakey,
             method=CapyPuzzleEnm.CapyTaskProxyless.value,
             rucaptcha_key=self.RUCAPTCHA_KEY,
             api_server=self.api_server,
             version=self.versions[0],
         )
-        assert instance.create_task_payload["method"] == CapyPuzzleEnm.CapyTaskProxyless.value
-        assert instance.create_task_payload["pageurl"] == self.pageurl
-        assert instance.create_task_payload["api_server"] == self.api_server
-        assert instance.create_task_payload["version"] == self.versions[0]
 
         result = await instance.aio_captcha_handler()
 
         assert isinstance(result, dict) is True
         if not result["errorId"]:
             assert result["status"] == "ready"
-            assert isinstance(result["solution"]["text"], str) is True
+            assert isinstance(result["solution"], dict) is True
             assert isinstance(result["taskId"], int) is True
         else:
             assert result["errorId"] in (1, 12)
@@ -77,32 +84,46 @@ class TestCapyPuzzle(BaseTest):
 
     def test_context_basic_data(self):
         with CapyPuzzle(
-            pageurl=self.pageurl,
-            captchakey=self.captchakey,
+            websiteURL=self.pageurl,
+            websiteKey=self.captchakey,
             method=CapyPuzzleEnm.CapyTaskProxyless.value,
             rucaptcha_key=self.RUCAPTCHA_KEY,
             api_server=self.api_server,
             version=self.versions[0],
         ) as instance:
-            assert instance.create_task_payload["method"] == CapyPuzzleEnm.CapyTaskProxyless.value
-            assert instance.create_task_payload["pageurl"] == self.pageurl
-            assert instance.create_task_payload["api_server"] == self.api_server
-            assert instance.create_task_payload["version"] == self.versions[0]
+            result = instance.captcha_handler()
+            assert isinstance(result, dict) is True
+            if not result["errorId"]:
+                assert result["status"] == "ready"
+                assert isinstance(result["solution"], dict) is True
+                assert isinstance(result["taskId"], int) is True
+            else:
+                assert result["errorId"] in (1, 12)
+                assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
+
+            assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
         async with CapyPuzzle(
-            pageurl=self.pageurl,
-            captchakey=self.captchakey,
+            websiteURL=self.pageurl,
+            websiteKey=self.captchakey,
             method=CapyPuzzleEnm.CapyTaskProxyless.value,
             rucaptcha_key=self.RUCAPTCHA_KEY,
             api_server=self.api_server,
             version=self.versions[0],
         ) as instance:
-            assert instance.create_task_payload["method"] == CapyPuzzleEnm.CapyTaskProxyless.value
-            assert instance.create_task_payload["pageurl"] == self.pageurl
-            assert instance.create_task_payload["api_server"] == self.api_server
-            assert instance.create_task_payload["version"] == self.versions[0]
+            result = await instance.aio_captcha_handler()
+            assert isinstance(result, dict) is True
+            if not result["errorId"]:
+                assert result["status"] == "ready"
+                assert isinstance(result["solution"], dict) is True
+                assert isinstance(result["taskId"], int) is True
+            else:
+                assert result["errorId"] in (1, 12)
+                assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
+
+            assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     """
     Fail tests
@@ -111,8 +132,8 @@ class TestCapyPuzzle(BaseTest):
     def test_wrong_method(self):
         with pytest.raises(ValueError):
             CapyPuzzle(
-                pageurl=self.pageurl,
-                captchakey=self.captchakey,
+                websiteURL=self.pageurl,
+                websiteKey=self.captchakey,
                 method=self.get_random_string(length=5),
                 rucaptcha_key=self.RUCAPTCHA_KEY,
             )
