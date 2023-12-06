@@ -15,7 +15,7 @@ DESCRIPTION = "Python 3.7+ RuCaptcha library with AIO module."
 URL = "https://andreidrang.github.io/python-rucaptcha/"
 EMAIL = "python-captcha@pm.me"
 AUTHOR = "AndreiDrang, redV0ID"
-REQUIRES_PYTHON = ">=3.7.0"
+REQUIRES_PYTHON = ">=3.9.0"
 VERSION = __version__
 with open("requirements.txt", "rt") as requirements_txt:
     REQUIRED = [str(requirement) for requirement in parse_requirements(requirements_txt)]
@@ -125,7 +125,6 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
