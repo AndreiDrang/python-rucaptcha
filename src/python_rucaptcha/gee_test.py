@@ -40,25 +40,9 @@ class GeeTest(BaseCaptcha):
             }
             >>> GeeTest(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             gt=resp_data["gt"],
-            ...             pageurl="https://www.geetest.com/en/demo",
-            ...             method=GeetestEnm.GeeTestTaskProxyless.value,
-            ...             api_server="api.geetest.com",
-            ...             new_captcha=1,
+            ...             websiteURL="https://www.geetest.com/en/demo",
+            ...             method=GeetestEnm.GeeTestTaskProxyless.value
             ...             ).captcha_handler(challenge=resp_data["challenge"])
-            {
-               "captchaSolve": {
-                  "geetest_challenge": "1ad03db8aff920037fb8117827eab171gu",
-                  "geetest_validate": "011309d29dab6e98e8fc3784a95469cc",
-                  "geetest_seccode": "011309d29dab6e98e8fc3784a95469cc|jordan"
-               },
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
-            }
-
-            >>> import requests
-            >>> resp_data = requests.get("https://www.geetest.com/demo/gt/register-enFullpage-official").json()
-            >>> print(resp_data)
             {
                "errorId":0,
                "status":"ready",
@@ -76,12 +60,11 @@ class GeeTest(BaseCaptcha):
                "solveCount":1,
                "taskId":75190409731
             }
+
             >>> await GeeTest(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             gt=resp_data["gt"],
-            ...             pageurl="https://www.geetest.com/en/demo",
-            ...             method=GeetestEnm.GeeTestTaskProxyless.value,
-            ...             api_server="api.geetest.com",
-            ...             new_captcha=1,
+            ...             websiteURL="https://www.geetest.com/en/demo",
+            ...             method=GeetestEnm.GeeTestTaskProxyless.value
             ...             ).aio_captcha_handler(challenge=resp_data["challenge"])
             {
                "errorId":0,
@@ -102,10 +85,11 @@ class GeeTest(BaseCaptcha):
             }
 
             >>> GeeTest(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             captcha_id="e392e1d7fd421dc63325744d5a2b9c73",
-            ...             pageurl="https://rucaptcha.com/demo/geetest-v4",
+            ...             websiteURL="https://rucaptcha.com/demo/geetest-v4",
             ...             method=GeetestEnm.GeeTestTaskProxyless.value,
-            ...             ).captcha_handler()
+            ...             version=4,
+            ...             initParameters={"captcha_id": "e392e1d7fd421dc63325744d5a2b9c73"},
+            ...             ).captcha_handler(challenge=resp_data["challenge"])
             {
                "errorId":0,
                "status":"ready",
@@ -125,10 +109,11 @@ class GeeTest(BaseCaptcha):
             }
 
             >>> await GeeTest(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             captcha_id="e392e1d7fd421dc63325744d5a2b9c73",
-            ...             pageurl="https://rucaptcha.com/demo/geetest-v4",
+            ...             websiteURL="https://rucaptcha.com/demo/geetest-v4",
             ...             method=GeetestEnm.GeeTestTaskProxyless.value,
-            ...             ).aio_captcha_handler()
+            ...             version=4,
+            ...             initParameters={"captcha_id": "e392e1d7fd421dc63325744d5a2b9c73"},
+            ...             ).aio_captcha_handler(challenge=resp_data["challenge"])
             {
                "errorId":0,
                "status":"ready",
@@ -147,6 +132,32 @@ class GeeTest(BaseCaptcha):
                "taskId":75190409731
             }
 
+            >>> GeeTest(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             gt=resp_data["gt"],
+            ...             websiteURL="https://www.geetest.com/en/demo",
+            ...             method=GeetestEnm.GeeTestTaskProxyless.value,
+            ...             userAgent="Some specific user agent",
+            ...             proxyType="socks5",
+            ...             proxyAddress="0.0.0.0",
+            ...             proxyPort=443,
+            ...             ).captcha_handler(challenge=resp_data["challenge"])
+            {
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "captcha_id":"e392e1d7fd421dc63325744d5a2b9c73",
+                  "lot_number":"e6c3bed2854f41f880662c48afff5dcb",
+                  "pass_token":"fad5eb52fc83bf7617402fcccfb211a21e0aa1d1044",
+                  "gen_time":"1693924478",
+                  "captcha_output":"fN36ufW6cQN4SQ-JRDQC70nSq9UcQBg=="
+               },
+               "cost":"0.00299",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId":75190409731
+            }
         Returns:
             Dict with full server response
 
