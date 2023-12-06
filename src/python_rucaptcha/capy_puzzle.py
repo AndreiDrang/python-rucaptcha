@@ -3,7 +3,9 @@ from .core.enums import CapyPuzzleEnm
 
 
 class CapyPuzzle(BaseCaptcha):
-    def __init__(self, pageurl: str, captchakey: str, method: str = CapyPuzzleEnm.CAPY.value, *args, **kwargs):
+    def __init__(
+        self, pageurl: str, captchakey: str, method: str = CapyPuzzleEnm.CapyTaskProxyless.value, *args, **kwargs
+    ):
         """
         The class is used to work with CapyPuzzle.
 
@@ -17,7 +19,7 @@ class CapyPuzzle(BaseCaptcha):
             >>> CapyPuzzle(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             captchakey="PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w",
             ...             pageurl="https://www.capy.me/account/register/",
-            ...             method=CapyPuzzleEnm.CAPY.value,
+            ...             method=CapyPuzzleEnm.CapyTaskProxyless.value,
             ...             api_server="https://jp.api.capy.me/",
             ...             version="puzzle",
             ...             ).captcha_handler()
@@ -35,7 +37,7 @@ class CapyPuzzle(BaseCaptcha):
             >>> CapyPuzzle(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             captchakey="AVATAR_Cme4hZLjuZRMYC3uh14C52D3uNms5w",
             ...             pageurl="https://www.capy.me/account/register/",
-            ...             method=CapyPuzzleEnm.CAPY.value,
+            ...             method=CapyPuzzleEnm.CapyTaskProxyless.value,
             ...             api_server="https://jp.api.capy.me/",
             ...             version="avatar",
             ...             ).captcha_handler()
@@ -53,7 +55,7 @@ class CapyPuzzle(BaseCaptcha):
             >>> CapyPuzzle(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             captchakey="PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w",
             ...             pageurl="https://www.capy.me/account/register/",
-            ...             method="capy",
+            ...             method="CapyTaskProxyless",
             ...             api_server="https://jp.api.capy.me/",
             ...             version="puzzle",
             ...             ).captcha_handler()
@@ -93,7 +95,7 @@ class CapyPuzzle(BaseCaptcha):
             >>> CapyPuzzle(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             captchakey="PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w",
             ...             pageurl="https://www.capy.me/account/register/",
-            ...             method=CapyPuzzleEnm.CAPY.value,
+            ...             method=CapyPuzzleEnm.CapyTaskProxyless.value,
             ...             api_server="https://jp.api.capy.me/",
             ...             version="puzzle",
             ...             ).captcha_handler()
@@ -111,7 +113,7 @@ class CapyPuzzle(BaseCaptcha):
             >>> CapyPuzzle(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             captchakey="PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w",
             ...             pageurl="https://www.capy.me/account/register/",
-            ...             method=CapyPuzzleEnm.CAPY.value,
+            ...             method=CapyPuzzleEnm.CapyTaskProxyless.value,
             ...             api_server="https://jp.api.capy.me/",
             ...             version="avatar",
             ...             ).captcha_handler()
@@ -143,7 +145,7 @@ class CapyPuzzle(BaseCaptcha):
             >>> await CapyPuzzle(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             captchakey="PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w",
             ...             pageurl="https://www.capy.me/account/register/",
-            ...             method=CapyPuzzleEnm.CAPY.value,
+            ...             method=CapyPuzzleEnm.CapyTaskProxyless.value,
             ...             api_server="https://jp.api.capy.me/",
             ...             version="puzzle",
             ...             ).aio_captcha_handler()
@@ -161,7 +163,7 @@ class CapyPuzzle(BaseCaptcha):
             >>> await CapyPuzzle(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             captchakey="PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w",
             ...             pageurl="https://www.capy.me/account/register/",
-            ...             method=CapyPuzzleEnm.CAPY.value,
+            ...             method=CapyPuzzleEnm.CapyTaskProxyless.value,
             ...             api_server="https://jp.api.capy.me/",
             ...             version="avatar",
             ...             ).aio_captcha_handler()
