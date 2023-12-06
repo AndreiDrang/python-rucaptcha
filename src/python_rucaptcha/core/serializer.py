@@ -1,74 +1,17 @@
-import logging
-from uuid import uuid4
-from typing import Literal, Optional
+from typing import Literal, Optional, Annotated
 
-from pydantic import Field, BaseModel, ConfigDict, conint, constr, field_validator, model_validator
+from msgspec import Meta, Struct
 
 from . import enums
 from .config import APP_KEY
 
-"""
-Socket API Serializers
-"""
+PositiveInt = Annotated[int, Meta(ge=5)]
+MinLenStr = Annotated[int, Meta(min_length=10)]
 
 
-class MyBaseModel(BaseModel):
-    model_config = ConfigDict(validate_assignment=True)
-
-
-class CaptchaOptionsSocketSer(MyBaseModel):
-    phrase: bool = False
-    caseSensitive: bool = False
-    numeric: conint(ge=1, le=4) = 0
-    calc: bool = False
-    minLen: conint(ge=0, le=20) = 0
-    maxLen: conint(ge=0, le=20) = 0
-    lang: str = ""
-    hintText: constr(max_length=139) = ""
-    hintImg: str = ""
-    soft_id: Literal[APP_KEY] = APP_KEY
-
-
-class NormalCaptchaSocketSer(BaseModel):
-    method: str = "normal"
-    requestId: str = Field(default_factory=lambda: str(uuid4()))
-    body: str = str()
-    options: "CaptchaOptionsSocketSer" = CaptchaOptionsSocketSer()
-
-
-class TextCaptchaSocketSer(BaseModel):
-    method: str = "text"
-    requestId: str = Field(default_factory=lambda: str(uuid4()))
-    body: str = str()
-    options: "CaptchaOptionsSocketSer" = CaptchaOptionsSocketSer()
-
-
-class ControlCaptchaSocketSer(BaseModel):
-    method: str
-    requestId: str = Field(default_factory=lambda: str(uuid4()))
-    success: str = None
-    captchaId: int = None
-
-
-class SocketResponse(BaseModel):
-    method: str = None
-    success: bool = None
-    code: str = None
-    # captcha task ID at RuCaptcha service
-    captchaId: int = None
-    # manually generated requestID
-    requestId: str = Field(default_factory=lambda: str(uuid4()))
-    error: str = None
-    # specific fields for balance request response
-    balance: float = None
-    valute: str = None
-
-
-class SockAuthSer(BaseModel):
-    method: str = "auth"
-    requestId: str = Field(default_factory=lambda: str(uuid4()))
-    key: str
-    options: dict
+class MyBaseModel(Struct):
+    def to_dict(self):
+        return {f: getattr(self, f) for f in self.__struct_fields__}
 
 
 """
@@ -76,15 +19,12 @@ HTTP API Serializers
 """
 
 
-class PostRequestSer(MyBaseModel):
-    key: str
-    method: str
-    soft_id: Literal[APP_KEY] = APP_KEY
-    field_json: int = Field(1, alias="json")
-
-
 class TaskSer(MyBaseModel):
     type: str
+
+class ErrorFieldsSer(Struct):
+    errorCode: str = None
+    errorDescription: str = None
 
 
 class CreateTaskBaseSer(MyBaseModel):
@@ -95,47 +35,28 @@ class CreateTaskBaseSer(MyBaseModel):
     soft_id: Literal[APP_KEY] = APP_KEY
 
 
-class CaptchaOptionsSer(BaseModel):
-    method: str
-    action: str
-    sleep_time: conint(gt=5) = 10
-    service_type: str = enums.ServiceEnm.TWOCAPTCHA.value
-    rucaptcha_key: constr(min_length=1)
+class GetTaskResultRequestSer(MyBaseModel):
+    clientKey: str
+    taskId: int = None
 
-    url_request: Optional[str] = None  # /in.php
-    url_response: Optional[str] = None  # /res.php
 
-    @field_validator("service_type")
-    def service_type_check(cls, value):
-        if value not in enums.ServiceEnm.list_values():
-            logging.warning(
-                f"We support only this list of services - '{', '.join(enums.ServiceEnm.list_values())}', u send - '{value}'. "
-                f"All other services you use at your own risk"
-            )
-        return value
+class CaptchaOptionsSer(MyBaseModel):
+    sleep_time: PositiveInt = 10
+    service_type: enums.ServiceEnm = enums.ServiceEnm.TWOCAPTCHA.value
 
-    @model_validator(mode="before")
-    def urls_set(cls, values):
+    url_request: Optional[str] = None
+    url_response: Optional[str] = None
+
+    def urls_set(self):
         """
-        Set request \ response URLs if they not set previously
+        Set request/response URLs if they not set previously
         """
-        if not values.get("url_request") and not values.get("url_response"):
-            service_type = values.get("service_type")
-            if service_type == enums.ServiceEnm.DEATHBYCAPTCHA:
-                values.update(
-                    {
-                        "url_request": f"http://api.{service_type}.com/2captcha/in.php",
-                        "url_response": f"http://api.{service_type}.com/2captcha/res.php",
-                    }
-                )
-            else:
-                values.update(
-                    {
-                        "url_request": f"https://api.{service_type}.com/createTask",
-                        "url_response": f"https://api.{service_type}.com/getTaskResult",
-                    }
-                )
-        return values
+        if self.service_type == enums.ServiceEnm.DEATHBYCAPTCHA:
+            self.url_request = f"http://api.{self.service_type}.com/2captcha/in.php"
+            self.url_response = f"http://api.{self.service_type}.com/2captcha/res.php"
+        else:
+            self.url_request = f"https://api.{self.service_type}.com/createTask"
+            self.url_response = f"https://api.{self.service_type}.com/getTaskResult"
 
 
 """
@@ -143,21 +64,14 @@ HTTP API Response
 """
 
 
-class CreateTaskResponseSer(MyBaseModel):
+class CreateTaskResponseSer(MyBaseModel, ErrorFieldsSer, kw_only=True):
     errorId: int
     taskId: int = None
-    errorCode: str = None
-    errorDescription: str = None
 
 
-class GetTaskResultRequestSer(BaseModel):
-    clientKey: str
-    taskId: int = None
-
-
-class GetTaskResultResponseSer(BaseModel):
+class GetTaskResultResponseSer(MyBaseModel, ErrorFieldsSer):
     errorId: int = 0
-    status: str = None
+    status: str = "ready"
     solution: dict = None
     cost: float = None
     ip: str = None
@@ -165,6 +79,8 @@ class GetTaskResultResponseSer(BaseModel):
     endTime: int = None
     solveCount: int = None
     taskId: int = None
+    # control method params
+    balance: float = None
 
 
 """
@@ -173,5 +89,5 @@ Captcha tasks serializers
 
 
 class TextCaptchaTaskSer(TaskSer):
+    comment: str = None
     type: str = "TextCaptchaTask"
-    comment: str
