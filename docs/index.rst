@@ -36,7 +36,6 @@ Support of the service `Death By Captcha <https://deathbycaptcha.com?refid=12372
    modules/rotate/example.rst
    modules/text/example.rst
    modules/turnstile/example.rst
-   modules/yandex/example.rst
    modules/image/example.rst
    modules/audio/example.rst
    modules/control/example.rst
