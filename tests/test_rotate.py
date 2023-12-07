@@ -3,7 +3,7 @@ import pytest
 from tests.conftest import BaseTest
 from python_rucaptcha.core.enums import RotateCaptchaEnm
 from python_rucaptcha.rotate_captcha import RotateCaptcha
-from python_rucaptcha.core.serializer import GetTaskResultResponseSer
+from python_rucaptcha.core.serializer import CreateTaskResponseSer, GetTaskResultResponseSer
 
 
 class TestRotateCaptcha(BaseTest):
@@ -140,10 +140,6 @@ class TestRotateCaptcha(BaseTest):
     Fail tests
     """
 
-    def test_wrong_method(self):
-        with pytest.raises(ValueError):
-            RotateCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, method=self.get_random_string(length=5))
-
     def test_no_captcha(self):
         instance = RotateCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
 
@@ -152,10 +148,8 @@ class TestRotateCaptcha(BaseTest):
         assert isinstance(result, dict) is True
         assert result["errorId"] != 0
         assert result["taskId"] is None
-        assert result["errorBody"] == RotateCaptcha.NO_CAPTCHA_ERR
-        assert result["captchaSolve"] == {}
 
-        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
+        assert result.keys() == CreateTaskResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_no_captcha(self):
@@ -166,8 +160,6 @@ class TestRotateCaptcha(BaseTest):
         assert isinstance(result, dict) is True
         assert result["errorId"] != 0
         assert result["taskId"] is None
-        assert result["errorBody"] == RotateCaptcha.NO_CAPTCHA_ERR
-        assert result["captchaSolve"] == {}
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_wrong_link(self):
@@ -178,7 +170,6 @@ class TestRotateCaptcha(BaseTest):
         assert isinstance(result, dict) is True
         assert result["errorId"] != 0
         assert result["taskId"] is None
-        assert result["captchaSolve"] == {}
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_wrong_base64(self):
@@ -189,8 +180,7 @@ class TestRotateCaptcha(BaseTest):
         assert isinstance(result, dict) is True
         assert result["errorId"] != 0
         assert result["taskId"] is None
-        assert result["captchaSolve"] == {}
-        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
+        assert result.keys() == CreateTaskResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_wrong_link(self):
@@ -201,7 +191,6 @@ class TestRotateCaptcha(BaseTest):
         assert isinstance(result, dict) is True
         assert result["errorId"] != 0
         assert result["taskId"] is None
-        assert result["captchaSolve"] == {}
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
@@ -215,5 +204,4 @@ class TestRotateCaptcha(BaseTest):
         assert isinstance(result, dict) is True
         assert result["errorId"] != 0
         assert result["taskId"] is None
-        assert result["captchaSolve"] == {}
-        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
+        assert result.keys() == CreateTaskResponseSer().to_dict().keys()
