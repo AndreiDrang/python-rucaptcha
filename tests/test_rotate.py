@@ -150,7 +150,7 @@ class TestRotateCaptcha(BaseTest):
         result = instance.captcha_handler()
 
         assert isinstance(result, dict) is True
-        assert result["error"] is True
+        assert result["errorId"] is True
         assert result["taskId"] is None
         assert result["errorBody"] == RotateCaptcha.NO_CAPTCHA_ERR
         assert result["captchaSolve"] == {}
@@ -164,7 +164,7 @@ class TestRotateCaptcha(BaseTest):
         result = await instance.aio_captcha_handler()
 
         assert isinstance(result, dict) is True
-        assert result["error"] is True
+        assert result["errorId"] is True
         assert result["taskId"] is None
         assert result["errorBody"] == RotateCaptcha.NO_CAPTCHA_ERR
         assert result["captchaSolve"] == {}
@@ -176,7 +176,7 @@ class TestRotateCaptcha(BaseTest):
         result = instance.captcha_handler(captcha_link=self.get_random_string(length=50))
 
         assert isinstance(result, dict) is True
-        assert result["error"] is True
+        assert result["errorId"] is True
         assert result["taskId"] is None
         assert result["captchaSolve"] == {}
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
@@ -187,7 +187,7 @@ class TestRotateCaptcha(BaseTest):
         result = instance.captcha_handler(captcha_base64=self.get_random_string(length=50).encode(encoding="UTF-8"))
 
         assert isinstance(result, dict) is True
-        assert result["error"] is True
+        assert result["errorId"] is True
         assert result["taskId"] is None
         assert result["captchaSolve"] == {}
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
@@ -199,7 +199,7 @@ class TestRotateCaptcha(BaseTest):
         result = await instance.aio_captcha_handler(captcha_link=self.get_random_string(length=50))
 
         assert isinstance(result, dict) is True
-        assert result["error"] is True
+        assert result["errorId"] is True
         assert result["taskId"] is None
         assert result["captchaSolve"] == {}
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
@@ -213,7 +213,7 @@ class TestRotateCaptcha(BaseTest):
         )
 
         assert isinstance(result, dict) is True
-        assert result["error"] is True
+        assert result["errorId"] is True
         assert result["taskId"] is None
         assert result["captchaSolve"] == {}
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
