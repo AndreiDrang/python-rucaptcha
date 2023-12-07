@@ -62,11 +62,6 @@ HTTP API Response
 """
 
 
-class CreateTaskResponseSer(MyBaseModel, ErrorFieldsSer, kw_only=True):
-    errorId: int
-    taskId: int = None
-
-
 class GetTaskResultResponseSer(MyBaseModel, ErrorFieldsSer):
     errorId: int = 0
     status: str = "ready"
