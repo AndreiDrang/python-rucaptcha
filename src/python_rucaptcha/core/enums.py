@@ -60,7 +60,7 @@ class ReCaptchaEnm(str, MyEnum):
     RecaptchaV3TaskProxyless = "RecaptchaV3TaskProxyless"
 
 
-class LeminCroppedCaptchaEnm(str, MyEnum):
+class LeminCaptchaEnm(str, MyEnum):
     LeminTaskProxyless = "LeminTaskProxyless"
     LeminTask = "LeminTask"
 
