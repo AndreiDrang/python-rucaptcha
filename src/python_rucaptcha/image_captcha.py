@@ -1,10 +1,8 @@
-import base64
 import shutil
 from typing import Optional
 
 from .core.base import BaseCaptcha
 from .core.enums import SaveFormatsEnm, ImageCaptchaEnm
-from .core.serializer import GetTaskResultResponseSer
 
 
 class ImageCaptcha(BaseCaptcha):
@@ -177,7 +175,6 @@ class ImageCaptcha(BaseCaptcha):
         self.save_format = save_format
         self.img_clearing = img_clearing
         self.img_path = img_path
-        self.result = GetTaskResultResponseSer()
 
     def captcha_handler(
         self,
@@ -201,36 +198,12 @@ class ImageCaptcha(BaseCaptcha):
         Notes:
             Check class docstirng for more info
         """
-        # if a local file link is passed
-        if captcha_file:
-            self.create_task_payload["task"].update(
-                {"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")}
-            )
-        # if the file is transferred in base64 encoding
-        elif captcha_base64:
-            self.create_task_payload["task"].update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
-        # if a URL is passed
-        elif captcha_link:
-            try:
-                content = self.url_open(url=captcha_link, **kwargs).content
-            except Exception as error:
-                self.result.errorId = 12
-                self.result.errorCode = self.NO_CAPTCHA_ERR
-                self.result.errorDescription = str(error)
-                return self.result.to_dict()
-
-            # according to the value of the passed parameter, select the function to save the image
-            if self.save_format == SaveFormatsEnm.CONST.value:
-                self._file_const_saver(content, self.img_path)
-            self.create_task_payload["task"].update({"body": base64.b64encode(content).decode("utf-8")})
-
-        else:
-            # if none of the parameters are passed
-            self.result.errorId = 12
-            self.result.errorCode = self.NO_CAPTCHA_ERR
-            return self.result.to_dict()
-
-        return self._processing_response(**kwargs)
+        self._body_file_processing(
+            captcha_link=captcha_link, captcha_file=captcha_file, captcha_base64=captcha_base64, **kwargs
+        )
+        if not self.result.errorId:
+            return self._processing_response(**kwargs)
+        return self.result.to_dict()
 
     async def aio_captcha_handler(
         self,
@@ -254,35 +227,12 @@ class ImageCaptcha(BaseCaptcha):
         Notes:
             Check class docstirng for more info
         """
-        # if a local file link is passed
-        if captcha_file:
-            self.create_task_payload["task"].update(
-                {"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")}
-            )
-        # if the file is transferred in base64 encoding
-        elif captcha_base64:
-            self.create_task_payload["task"].update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
-        # if a URL is passed
-        elif captcha_link:
-            try:
-                content = await self.aio_url_read(url=captcha_link, **kwargs)
-            except Exception as error:
-                self.result.errorId = 12
-                self.result.errorCode = self.NO_CAPTCHA_ERR
-                self.result.errorDescription = str(error)
-                return self.result.to_dict()
-
-            # according to the value of the passed parameter, select the function to save the image
-            if self.save_format == SaveFormatsEnm.CONST.value:
-                self._file_const_saver(content, self.img_path)
-            self.create_task_payload["task"].update({"body": base64.b64encode(content).decode("utf-8")})
-
-        else:
-            self.result.errorId = 12
-            self.result.errorCode = self.NO_CAPTCHA_ERR
-            return self.result.to_dict()
-
-        return await self._aio_processing_response()
+        await self._aio_body_file_processing(
+            captcha_link=captcha_link, captcha_file=captcha_file, captcha_base64=captcha_base64, **kwargs
+        )
+        if not self.result.errorId:
+            return await self._aio_processing_response()
+        return self.result.to_dict()
 
     def __del__(self):
         if self.save_format == SaveFormatsEnm.CONST.value and self.img_clearing:
