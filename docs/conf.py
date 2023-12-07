@@ -16,8 +16,8 @@ from python_rucaptcha import (
     key_captcha,
     text_captcha,
     image_captcha,
+    lemin_captcha,
     rotate_captcha,
-    lemin_cropped_captcha,
 )
 from python_rucaptcha.__version__ import __version__
 
