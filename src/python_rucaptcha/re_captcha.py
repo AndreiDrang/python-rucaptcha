@@ -18,14 +18,14 @@ class ReCaptcha(BaseCaptcha):
         Args:
             rucaptcha_key: User API key
             websiteURL: Full URL of the captcha page
-            websiteKey: The value of the `googlekey` parameter you found in the page code
+            websiteKey: The value of the `data-sitekey` parameter you found in the page code
             version: `v3` - indicates that this is reCAPTCHA V3
             method: Captcha type
 
         Examples:
             >>> ReCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             pageurl="https://rucaptcha.com/demo/recaptcha-v2",
-            ...             googlekey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
+            ...             websiteURL="https://rucaptcha.com/demo/recaptcha-v2",
+            ...             websiteKey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
             ...             method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value
             ...             ).captcha_handler()
             {
@@ -44,10 +44,8 @@ class ReCaptcha(BaseCaptcha):
             }
 
             >>> ReCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             pageurl="https://rucaptcha.com/demo/recaptcha-v2",
-            ...             googlekey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
-            ...             domain="google.com",
-            ...             invisible=1,
+            ...             websiteURL="https://rucaptcha.com/demo/recaptcha-v2",
+            ...             websiteKey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH"
             ...             ).captcha_handler()
             {
                "errorId":0,
@@ -65,11 +63,29 @@ class ReCaptcha(BaseCaptcha):
             }
 
             >>> ReCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             pageurl="https://rucaptcha.com/demo/recaptcha-v2",
-            ...             googlekey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
-            ...             version="v3",
-            ...             action="verify",
-            ...             min_score=0.2,
+            ...             websiteURL="https://rucaptcha.com/demo/recaptcha-v2",
+            ...             websiteKey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
+            ...             ).captcha_handler()
+            {
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "gRecaptchaResponse":"03ADUVZw...UWxTAe6ncIa",
+                  "token":"03ADUVZw...UWxTAe6ncIa"
+               },
+               "cost":"0.00299",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId": 73043008354
+            }
+
+            >>> ReCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             websiteURL="https://rucaptcha.com/demo/recaptcha-v2",
+            ...             websiteKey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
+            ...             method=ReCaptchaEnm.RecaptchaV3TaskProxyless.value,
+            ...             min_score=0.3,
             ...             ).captcha_handler()
             {
                "errorId":0,
@@ -87,8 +103,8 @@ class ReCaptcha(BaseCaptcha):
             }
 
             >>> await ReCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             pageurl="https://rucaptcha.com/demo/recaptcha-v2",
-            ...             googlekey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
+            ...             websiteURL="https://rucaptcha.com/demo/recaptcha-v2",
+            ...             websiteKey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
             ...             method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value
             ...             ).aio_captcha_handler()
             {
