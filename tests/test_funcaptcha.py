@@ -35,6 +35,7 @@ class TestFunCaptcha(BaseTest):
         assert instance.create_task_payload["clientKey"] == self.RUCAPTCHA_KEY
         assert instance.create_task_payload["task"]["type"] == method
         assert instance.create_task_payload["task"]["websiteURL"] == self.pageurl
+        assert instance.create_task_payload["task"]["websitePublicKey"] == self.publickey
 
     def test_kwargs(self):
         instance = FunCaptcha(
