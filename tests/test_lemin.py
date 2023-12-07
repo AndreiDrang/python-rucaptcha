@@ -1,9 +1,9 @@
 import pytest
 
 from tests.conftest import BaseTest
-from python_rucaptcha.core.enums import LeminCroppedCaptchaEnm
+from python_rucaptcha.core.enums import LeminCaptchaEnm
+from python_rucaptcha.lemin_captcha import LeminCaptcha
 from python_rucaptcha.core.serializer import GetTaskResultResponseSer
-from python_rucaptcha.lemin_cropped_captcha import LeminCroppedCaptcha
 
 
 class TestLeminCroppedCaptcha(BaseTest):
@@ -11,102 +11,114 @@ class TestLeminCroppedCaptcha(BaseTest):
     api_server = "api.leminnow.com"
     div_id = "lemin-cropped-captcha"
     captcha_id = "CROPPED_099216d_8ba061383fa24ef498115023aa7189d4"
+    kwargs_params = {
+        "leminApiServerSubdomain": "https://api.leminnow.com/",
+        "userAgent": "Some specific user agent",
+        "proxyType": "socks5",
+        "proxyAddress": BaseTest.proxyAddress,
+        "proxyPort": BaseTest.proxyPort,
+    }
+
+    def test_methods_exists(self):
+        assert "captcha_handler" in LeminCaptcha.__dict__.keys()
+        assert "aio_captcha_handler" in LeminCaptcha.__dict__.keys()
+
+    @pytest.mark.parametrize("method", LeminCaptchaEnm.list_values())
+    def test_args(self, method: str):
+        instance = LeminCaptcha(
+            rucaptcha_key=self.RUCAPTCHA_KEY,
+            websiteURL=self.pageurl,
+            captchaId=self.captcha_id,
+            div_id=self.div_id,
+            method=method,
+        )
+        assert instance.create_task_payload["clientKey"] == self.RUCAPTCHA_KEY
+        assert instance.create_task_payload["task"]["type"] == method
+        assert instance.create_task_payload["task"]["websiteURL"] == self.pageurl
+
+    def test_kwargs(self):
+        instance = LeminCaptcha(
+            rucaptcha_key=self.RUCAPTCHA_KEY,
+            websiteURL=self.pageurl,
+            captchaId=self.captcha_id,
+            div_id=self.div_id,
+            method=LeminCaptchaEnm.LeminTaskProxyless,
+            **self.kwargs_params,
+        )
+        assert set(self.kwargs_params.keys()).issubset(set(instance.create_task_payload["task"].keys()))
+        assert set(self.kwargs_params.values()).issubset(set(instance.create_task_payload["task"].values()))
 
     """
     Success tests
     """
 
-    def test_methods_exists(self):
-        assert "captcha_handler" in LeminCroppedCaptcha.__dict__.keys()
-        assert "aio_captcha_handler" in LeminCroppedCaptcha.__dict__.keys()
-
     def test_basic_data(self):
-        instance = LeminCroppedCaptcha(
+        instance = LeminCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            pageurl=self.pageurl,
-            captcha_id=self.captcha_id,
+            websiteURL=self.pageurl,
+            captchaId=self.captcha_id,
             div_id=self.div_id,
             api_server=self.api_server,
-            method=LeminCroppedCaptchaEnm.LeminTaskProxyless.value,
+            method=LeminCaptchaEnm.LeminTaskProxyless.value,
         )
-
-        assert instance.create_task_payload["method"] == LeminCroppedCaptchaEnm.LeminTaskProxyless.value
-        assert instance.create_task_payload["pageurl"] == self.pageurl
-        assert instance.create_task_payload["captcha_id"] == self.captcha_id
-        assert instance.create_task_payload["div_id"] == self.div_id
-        assert instance.create_task_payload["api_server"] == self.api_server
 
         result = instance.captcha_handler()
 
         assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
+        if not result["errorId"]:
+            assert result["status"] == "ready"
+            assert isinstance(result["solution"], dict) is True
             assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], dict) is True
         else:
-            assert result["error"] is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.asyncio
     async def test_aio_basic_data(self):
-        instance = LeminCroppedCaptcha(
+        instance = LeminCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            pageurl=self.pageurl,
-            captcha_id=self.captcha_id,
+            websiteURL=self.pageurl,
+            captchaId=self.captcha_id,
             div_id=self.div_id,
             api_server=self.api_server,
-            method=LeminCroppedCaptchaEnm.LeminTaskProxyless.value,
+            method=LeminCaptchaEnm.LeminTaskProxyless.value,
         )
-
-        assert instance.create_task_payload["method"] == LeminCroppedCaptchaEnm.LeminTaskProxyless.value
-        assert instance.create_task_payload["pageurl"] == self.pageurl
-        assert instance.create_task_payload["captcha_id"] == self.captcha_id
-        assert instance.create_task_payload["div_id"] == self.div_id
-        assert instance.create_task_payload["api_server"] == self.api_server
 
         result = await instance.aio_captcha_handler()
 
         assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
+        if not result["errorId"]:
+            assert result["status"] == "ready"
+            assert isinstance(result["solution"], dict) is True
             assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], dict) is True
         else:
-            assert result["error"] is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_context_basic_data(self):
-        with LeminCroppedCaptcha(
+        with LeminCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            pageurl=self.pageurl,
-            captcha_id=self.captcha_id,
+            websiteURL=self.pageurl,
+            captchaId=self.captcha_id,
             div_id=self.div_id,
-            method=LeminCroppedCaptchaEnm.LeminTaskProxyless.value,
+            method=LeminCaptchaEnm.LeminTaskProxyless.value,
         ) as instance:
-            assert instance.create_task_payload["method"] == LeminCroppedCaptchaEnm.LeminTaskProxyless.value
-            assert instance.create_task_payload["pageurl"] == self.pageurl
-            assert instance.create_task_payload["captcha_id"] == self.captcha_id
-            assert instance.create_task_payload["div_id"] == self.div_id
+            assert instance.captcha_handler()
 
     @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
-        async with LeminCroppedCaptcha(
+        async with LeminCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            pageurl=self.pageurl,
-            captcha_id=self.captcha_id,
+            websiteURL=self.pageurl,
+            captchaId=self.captcha_id,
             div_id=self.div_id,
-            method=LeminCroppedCaptchaEnm.LeminTaskProxyless.value,
+            method=LeminCaptchaEnm.LeminTaskProxyless.value,
         ) as instance:
-            assert instance.create_task_payload["method"] == LeminCroppedCaptchaEnm.LeminTaskProxyless.value
-            assert instance.create_task_payload["pageurl"] == self.pageurl
-            assert instance.create_task_payload["captcha_id"] == self.captcha_id
-            assert instance.create_task_payload["div_id"] == self.div_id
+            assert await instance.aio_captcha_handler()
 
     """
     Fail tests
@@ -114,38 +126,38 @@ class TestLeminCroppedCaptcha(BaseTest):
 
     def test_wrong_method(self):
         with pytest.raises(ValueError):
-            LeminCroppedCaptcha(
+            LeminCaptcha(
                 rucaptcha_key=self.RUCAPTCHA_KEY,
-                pageurl=self.pageurl,
-                captcha_id=self.captcha_id,
+                websiteURL=self.pageurl,
+                captchaId=self.captcha_id,
                 div_id=self.div_id,
                 api_server=self.api_server,
                 method=self.get_random_string(length=5),
             )
 
-    def test_no_pageurl(self):
+    def test_no_websiteURL(self):
         with pytest.raises(TypeError):
-            LeminCroppedCaptcha(
+            LeminCaptcha(
                 rucaptcha_key=self.RUCAPTCHA_KEY,
-                captcha_id=self.captcha_id,
+                captchaId=self.captcha_id,
                 div_id=self.div_id,
                 method=self.get_random_string(length=5),
             )
 
     def test_no_div_id(self):
         with pytest.raises(TypeError):
-            LeminCroppedCaptcha(
+            LeminCaptcha(
                 rucaptcha_key=self.RUCAPTCHA_KEY,
-                pageurl=self.pageurl,
-                captcha_id=self.captcha_id,
+                websiteURL=self.pageurl,
+                captchaId=self.captcha_id,
                 method=self.get_random_string(length=5),
             )
 
-    def test_no_captcha_id(self):
+    def test_no_captchaId(self):
         with pytest.raises(TypeError):
-            LeminCroppedCaptcha(
+            LeminCaptcha(
                 rucaptcha_key=self.RUCAPTCHA_KEY,
-                pageurl=self.pageurl,
+                websiteURL=self.pageurl,
                 div_id=self.div_id,
                 method=self.get_random_string(length=5),
             )
