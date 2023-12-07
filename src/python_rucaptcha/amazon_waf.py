@@ -18,8 +18,8 @@ class AmazonWAF(BaseCaptcha):
 
         Args:
             rucaptcha_key: User API key
-            pageurl: Full URL of the captcha page
-            sitekey: Key value from the page
+            websiteURL: Full URL of the captcha page
+            websiteKey: Key value from the page
             iv: Value iv from the page
             context: Value of context from page
             method: Captcha type
@@ -31,10 +31,18 @@ class AmazonWAF(BaseCaptcha):
             ...           iv="some-iv-value",
             ...           context="some-context-value").captcha_handler()
             {
-                'captchaSolve': 'eyJ0e......jNuSFqtyP4Ho',
-                'taskId': '7111111984',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "captcha_voucher":"eyJ0eXAiO...oQjTnJlBvAW4",
+                  "existing_token":"f8ab5749-f916-...5D8yAA39JtKVbw="
+               },
+               "cost":"0.00145",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":0,
+               "taskId": 73243152973,
             }
 
             >>> AmazonWAF(rucaptcha_key="aa9011f31111181111168611f1151122",
@@ -43,10 +51,18 @@ class AmazonWAF(BaseCaptcha):
             ...           iv="some-iv-value",
             ...           context="some-context-value").aio_captcha_handler()
             {
-                'captchaSolve': 'eyJ0e......jNuSFqtyP4Ho',
-                'taskId': '7111111984',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "captcha_voucher":"eyJ0eXAiO...oQjTnJlBvAW4",
+                  "existing_token":"f8ab5749-f916-...5D8yAA39JtKVbw="
+               },
+               "cost":"0.00145",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":0,
+               "taskId": 73243152973,
             }
 
         Returns:
