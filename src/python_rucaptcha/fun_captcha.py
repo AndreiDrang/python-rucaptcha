@@ -22,16 +22,41 @@ class FunCaptcha(BaseCaptcha):
 
         Examples:
             >>> FunCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             pageurl="https://api.funcaptcha.com/tile-game-lite-mode/fc/api/nojs/?pkey=69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC&lang=en",
-            ...             publickey="69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC",
-            ...             surl="https://client-api.arkoselabs.com",
+            ...             websiteURL="https://api.funcaptcha.com/tile-game-lite-mode/fc/api/nojs/?pkey=69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC&lang=en",
+            ...             websitePublicKey="69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC",
             ...             method=FunCaptchaEnm.FunCaptchaTaskProxyless.value
             ...             ).captcha_handler()
             {
-               "captchaSolve": "23217....ger",
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "token":"142000f.....er"
+               },
+               "cost":"0.002",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":0,
+               "taskId": 73243152973,
+            }
+
+            >>> await FunCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             websiteURL="https://api.funcaptcha.com/tile-game-lite-mode/fc/api/nojs/?pkey=69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC&lang=en",
+            ...             websitePublicKey="69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC",
+            ...             method=FunCaptchaEnm.FunCaptchaTaskProxyless.value
+            ...             ).aio_captcha_handler()
+            {
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "token":"142000f.....er"
+               },
+               "cost":"0.002",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":0,
+               "taskId": 73243152973,
             }
 
         Returns:
