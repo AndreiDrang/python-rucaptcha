@@ -9,7 +9,7 @@ import pytest
 
 @pytest.fixture(scope="function")
 def delay_func():
-    time.sleep(1)
+    time.sleep(0.5)
 
 
 @pytest.fixture(scope="class")
