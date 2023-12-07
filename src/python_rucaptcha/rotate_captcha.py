@@ -7,11 +7,6 @@ from .core.serializer import GetTaskResultResponseSer
 
 
 class RotateCaptcha(BaseCaptcha):
-    """
-    The class is used to work with RotateCaptcha
-    Solve description:
-    """
-
     def __init__(self, method: str = RotateCaptchaEnm.RotateTask.value, *args, **kwargs):
         """
         The class is used to work with Rotate Captcha.
@@ -24,10 +19,17 @@ class RotateCaptcha(BaseCaptcha):
             >>> RotateCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             ).captcha_handler(captcha_file="examples/rotate/rotate_ex.png")
             {
-                'captchaSolve': '160',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "rotate":180
+               },
+               "cost":"0.0005",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId": 73043008354
             }
 
             >>> with open("src/examples/rotate/rotate_ex.png", "rb") as f:
@@ -35,28 +37,49 @@ class RotateCaptcha(BaseCaptcha):
             >>> RotateCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122"
             ...             ).captcha_handler(captcha_base64=file_data)
             {
-                'captchaSolve': '160',
-                'taskId': 73243152973,
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "rotate":180
+               },
+               "cost":"0.0005",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId": 73043008354
             }
 
             >>> await RotateCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             ).aio_captcha_handler(captcha_file="examples/rotate/rotate_ex.png")
             {
-                'captchaSolve': '160',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "rotate":180
+               },
+               "cost":"0.0005",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId": 73043008354
             }
 
             >>> await RotateCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...                     angle=45).aio_captcha_handler(captcha_file="examples/rotate/rotate_ex.png")
             {
-                'captchaSolve': '125',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "rotate":90
+               },
+               "cost":"0.0005",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId": 73043008354
             }
 
             >>> with open("src/examples/rotate/rotate_ex.png", "rb") as f:
@@ -64,18 +87,24 @@ class RotateCaptcha(BaseCaptcha):
             >>> await RotateCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122"
             ...             ).aio_captcha_handler(captcha_base64=file_data)
             {
-                'captchaSolve': '160',
-                'taskId': 73243152973,
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "rotate":180
+               },
+               "cost":"0.0005",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId": 73043008354
             }
-
 
         Returns:
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_rotatecaptcha
+            https://rucaptcha.com/api-docs/rotate
         """
         super().__init__(method=method, *args, **kwargs)
 
