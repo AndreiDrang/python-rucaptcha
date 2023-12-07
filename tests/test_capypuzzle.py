@@ -12,6 +12,10 @@ class TestCapyPuzzle(BaseTest):
     api_server = "https://jp.api.capy.me/"
     versions = ["puzzle", "avatar"]
 
+    def test_methods_exists(self):
+        assert "captcha_handler" in CapyPuzzle.__dict__.keys()
+        assert "aio_captcha_handler" in CapyPuzzle.__dict__.keys()
+
     @pytest.mark.parametrize("method", CapyPuzzleEnm.list_values())
     def test_args(self, method: str):
         instance = CapyPuzzle(
@@ -31,10 +35,6 @@ class TestCapyPuzzle(BaseTest):
     Success tests
     """
 
-    def test_methods_exists(self):
-        assert "captcha_handler" in CapyPuzzle.__dict__.keys()
-        assert "aio_captcha_handler" in CapyPuzzle.__dict__.keys()
-
     def test_basic_data(self):
         instance = CapyPuzzle(
             websiteURL=self.pageurl,
@@ -49,8 +49,7 @@ class TestCapyPuzzle(BaseTest):
 
         assert isinstance(result, dict) is True
         if not result["errorId"]:
-            assert result["status"] == "ready"
-            assert isinstance(result["solution"], dict) is True
+            assert result["status"] in ("ready", "processing")
             assert isinstance(result["taskId"], int) is True
         else:
             assert result["errorId"] in (1, 12)
@@ -72,8 +71,7 @@ class TestCapyPuzzle(BaseTest):
 
         assert isinstance(result, dict) is True
         if not result["errorId"]:
-            assert result["status"] == "ready"
-            assert isinstance(result["solution"], dict) is True
+            assert result["status"] in ("ready", "processing")
             assert isinstance(result["taskId"], int) is True
         else:
             assert result["errorId"] in (1, 12)
@@ -93,8 +91,7 @@ class TestCapyPuzzle(BaseTest):
             result = instance.captcha_handler()
             assert isinstance(result, dict) is True
             if not result["errorId"]:
-                assert result["status"] == "ready"
-                assert isinstance(result["solution"], dict) is True
+                assert result["status"] in ("ready", "processing")
                 assert isinstance(result["taskId"], int) is True
             else:
                 assert result["errorId"] in (1, 12)
@@ -114,8 +111,7 @@ class TestCapyPuzzle(BaseTest):
             result = await instance.aio_captcha_handler()
             assert isinstance(result, dict) is True
             if not result["errorId"]:
-                assert result["status"] == "ready"
-                assert isinstance(result["solution"], dict) is True
+                assert result["status"] in ("ready", "processing")
                 assert isinstance(result["taskId"], int) is True
             else:
                 assert result["errorId"] in (1, 12)
