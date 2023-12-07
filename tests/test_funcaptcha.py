@@ -19,9 +19,6 @@ class TestFunCaptcha(BaseTest):
         "proxyAddress": BaseTest.proxyAddress,
         "proxyPort": BaseTest.proxyPort,
     }
-    """
-    Success tests
-    """
 
     def test_methods_exists(self):
         assert "captcha_handler" in FunCaptcha.__dict__.keys()
@@ -49,6 +46,10 @@ class TestFunCaptcha(BaseTest):
         )
         assert set(self.kwargs_params.keys()).issubset(set(instance.create_task_payload["task"].keys()))
         assert set(self.kwargs_params.values()).issubset(set(instance.create_task_payload["task"].values()))
+
+    """
+    Success tests
+    """
 
     def test_basic_data(self):
         instance = FunCaptcha(
