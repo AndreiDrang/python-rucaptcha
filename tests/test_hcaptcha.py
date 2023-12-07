@@ -1,49 +1,72 @@
 import pytest
 
-from tests.conftest import BaseTest, DeathByTest
+from tests.conftest import BaseTest
 from python_rucaptcha.hcaptcha import HCaptcha
-from python_rucaptcha.core.enums import ServiceEnm, HCaptchaEnm
+from python_rucaptcha.core.enums import HCaptchaEnm
 from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 
 
-class BaseHCaptcha(BaseTest):
+class TestHCaptcha(BaseTest):
     sitekey = "3ceb8624-1970-4e6b-91d5-70317b70b651"
     pageurl = "https://rucaptcha.com/demo/hcaptcha"
-
-
-class TestHCaptcha(BaseHCaptcha):
-    """
-    Success tests
-    """
+    kwargs_params = {
+        "isInvisible": False,
+        "userAgent": "Some specific user agent",
+        "proxyType": "socks5",
+        "proxyAddress": BaseTest.proxyAddress,
+        "proxyPort": BaseTest.proxyPort,
+    }
 
     def test_methods_exists(self):
         assert "captcha_handler" in HCaptcha.__dict__.keys()
         assert "aio_captcha_handler" in HCaptcha.__dict__.keys()
 
+    @pytest.mark.parametrize("method", HCaptchaEnm.list_values())
+    def test_args(self, method: str):
+        instance = HCaptcha(
+            rucaptcha_key=self.RUCAPTCHA_KEY,
+            websiteURL=self.pageurl,
+            websiteKey=self.sitekey,
+            method=method,
+        )
+        assert instance.create_task_payload["clientKey"] == self.RUCAPTCHA_KEY
+        assert instance.create_task_payload["task"]["type"] == method
+        assert instance.create_task_payload["task"]["websiteURL"] == self.pageurl
+        assert instance.create_task_payload["task"]["websiteKey"] == self.sitekey
+
+    def test_kwargs(self):
+        instance = HCaptcha(
+            rucaptcha_key=self.RUCAPTCHA_KEY,
+            websiteURL=self.pageurl,
+            websiteKey=self.sitekey,
+            method=HCaptchaEnm.HCaptchaTaskProxyless,
+            **self.kwargs_params,
+        )
+        assert set(self.kwargs_params.keys()).issubset(set(instance.create_task_payload["task"].keys()))
+        assert set(self.kwargs_params.values()).issubset(set(instance.create_task_payload["task"].values()))
+
+    """
+    Success tests
+    """
+
     def test_basic_data(self):
         instance = HCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            sitekey=self.sitekey,
-            pageurl=self.pageurl,
+            websiteURL=self.pageurl,
+            websiteKey=self.sitekey,
             method=HCaptchaEnm.HCaptchaTaskProxyless.value,
         )
-
-        assert instance.create_task_payload["method"] == HCaptchaEnm.HCaptchaTaskProxyless.value
-        assert instance.create_task_payload["pageurl"] == self.pageurl
-        assert instance.create_task_payload["sitekey"] == self.sitekey
 
         result = instance.captcha_handler()
 
         assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
+        if not result["errorId"]:
+            assert result["status"] == "ready"
+            assert isinstance(result["solution"], dict) is True
             assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
         else:
-            assert result["error"] is True
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
@@ -51,52 +74,42 @@ class TestHCaptcha(BaseHCaptcha):
     async def test_aio_basic_data(self):
         instance = HCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            sitekey=self.sitekey,
-            pageurl=self.pageurl,
+            websiteURL=self.pageurl,
+            websiteKey=self.sitekey,
             method=HCaptchaEnm.HCaptchaTaskProxyless.value,
         )
-
-        assert instance.create_task_payload["method"] == HCaptchaEnm.HCaptchaTaskProxyless.value
-        assert instance.create_task_payload["pageurl"] == self.pageurl
-        assert instance.create_task_payload["sitekey"] == self.sitekey
 
         result = await instance.aio_captcha_handler()
 
         assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
+        if not result["errorId"]:
+            assert result["status"] == "ready"
+            assert isinstance(result["solution"], dict) is True
             assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
         else:
-            assert result["error"] is True
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_context_basic_data(self):
         with HCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            sitekey=self.sitekey,
-            pageurl=self.pageurl,
+            websiteURL=self.pageurl,
+            websiteKey=self.sitekey,
             method=HCaptchaEnm.HCaptchaTaskProxyless.value,
         ) as instance:
-            assert instance.create_task_payload["method"] == HCaptchaEnm.HCaptchaTaskProxyless.value
-            assert instance.create_task_payload["pageurl"] == self.pageurl
-            assert instance.create_task_payload["sitekey"] == self.sitekey
+            assert instance.captcha_handler()
 
     @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
         async with HCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            sitekey=self.sitekey,
-            pageurl=self.pageurl,
+            websiteURL=self.pageurl,
+            websiteKey=self.sitekey,
             method=HCaptchaEnm.HCaptchaTaskProxyless.value,
         ) as instance:
-            assert instance.create_task_payload["method"] == HCaptchaEnm.HCaptchaTaskProxyless.value
-            assert instance.create_task_payload["pageurl"] == self.pageurl
-            assert instance.create_task_payload["sitekey"] == self.sitekey
+            assert await instance.aio_captcha_handler()
 
     """
     Fail tests
@@ -106,101 +119,7 @@ class TestHCaptcha(BaseHCaptcha):
         with pytest.raises(ValueError):
             HCaptcha(
                 rucaptcha_key=self.RUCAPTCHA_KEY,
-                sitekey=self.sitekey,
-                pageurl=self.pageurl,
+                websiteURL=self.pageurl,
+                websiteKey=self.sitekey,
                 method=self.get_random_string(length=5),
             )
-
-
-class TestDeathByHCaptcha(BaseHCaptcha, DeathByTest):
-    """
-    Success tests
-    """
-
-    def test_basic_data(self):
-        instance = HCaptcha(
-            rucaptcha_key=self.RUCAPTCHA_KEY,
-            service_type="deathbycaptcha",
-            sitekey=self.sitekey,
-            pageurl=self.pageurl,
-            method=HCaptchaEnm.HCaptchaTaskProxyless.value,
-        )
-        assert instance.params.service_type == ServiceEnm.DEATHBYCAPTCHA
-
-        assert instance.create_task_payload["method"] == HCaptchaEnm.HCaptchaTaskProxyless.value
-        assert instance.create_task_payload["pageurl"] == self.pageurl
-        assert instance.create_task_payload["sitekey"] == self.sitekey
-
-        result = instance.captcha_handler()
-
-        assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
-        else:
-            assert result["error"] is True
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
-
-        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
-
-    @pytest.mark.asyncio
-    async def test_aio_basic_data(self):
-        instance = HCaptcha(
-            rucaptcha_key=self.RUCAPTCHA_KEY,
-            service_type="deathbycaptcha",
-            sitekey=self.sitekey,
-            pageurl=self.pageurl,
-            method=HCaptchaEnm.HCaptchaTaskProxyless.value,
-        )
-        assert instance.params.service_type == ServiceEnm.DEATHBYCAPTCHA
-
-        assert instance.create_task_payload["method"] == HCaptchaEnm.HCaptchaTaskProxyless.value
-        assert instance.create_task_payload["pageurl"] == self.pageurl
-        assert instance.create_task_payload["sitekey"] == self.sitekey
-
-        result = await instance.aio_captcha_handler()
-
-        assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
-        else:
-            assert result["error"] is True
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
-
-        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
-
-    def test_context_basic_data(self):
-        with HCaptcha(
-            rucaptcha_key=self.RUCAPTCHA_KEY,
-            service_type="deathbycaptcha",
-            sitekey=self.sitekey,
-            pageurl=self.pageurl,
-            method=HCaptchaEnm.HCaptchaTaskProxyless.value,
-        ) as instance:
-            assert instance.params.service_type == ServiceEnm.DEATHBYCAPTCHA
-
-            assert instance.create_task_payload["method"] == HCaptchaEnm.HCaptchaTaskProxyless.value
-            assert instance.create_task_payload["pageurl"] == self.pageurl
-            assert instance.create_task_payload["sitekey"] == self.sitekey
-
-    @pytest.mark.asyncio
-    async def test_context_aio_basic_data(self):
-        async with HCaptcha(
-            rucaptcha_key=self.RUCAPTCHA_KEY,
-            service_type="deathbycaptcha",
-            sitekey=self.sitekey,
-            pageurl=self.pageurl,
-            method=HCaptchaEnm.HCaptchaTaskProxyless.value,
-        ) as instance:
-            assert instance.params.service_type == ServiceEnm.DEATHBYCAPTCHA
-
-            assert instance.create_task_payload["method"] == HCaptchaEnm.HCaptchaTaskProxyless.value
-            assert instance.create_task_payload["pageurl"] == self.pageurl
-            assert instance.create_task_payload["sitekey"] == self.sitekey
