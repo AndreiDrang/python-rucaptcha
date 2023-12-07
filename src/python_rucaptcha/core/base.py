@@ -1,9 +1,10 @@
 import os
 import time
 import uuid
+import base64
 import asyncio
 import logging
-from typing import Union
+from typing import Union, Optional
 from pathlib import Path
 
 import aiohttp
@@ -12,7 +13,14 @@ from requests.adapters import HTTPAdapter
 
 from . import enums
 from .config import RETRIES, ASYNC_RETRIES
-from .serializer import TaskSer, CaptchaOptionsSer, CreateTaskBaseSer, CreateTaskResponseSer, GetTaskResultRequestSer
+from .serializer import (
+    TaskSer,
+    CaptchaOptionsSer,
+    CreateTaskBaseSer,
+    CreateTaskResponseSer,
+    GetTaskResultRequestSer,
+    GetTaskResultResponseSer,
+)
 from .result_handler import get_sync_result, get_async_result
 
 
@@ -35,6 +43,7 @@ class BaseCaptcha:
                               and "rucaptcha"
         :param kwargs: Designed to pass OPTIONAL parameters to the payload for a request to RuCaptcha
         """
+        self.result = GetTaskResultResponseSer()
         # assign args to validator
         self.params = CaptchaOptionsSer(sleep_time=sleep_time, service_type=service_type)
         self.params.urls_set()
@@ -152,6 +161,64 @@ class BaseCaptcha:
         # save image to folder
         with open(os.path.join(file_path, self._file_name), "wb") as out_image:
             out_image.write(content)
+
+    def _body_file_processing(
+        self,
+        captcha_link: Optional[str] = None,
+        captcha_file: Optional[str] = None,
+        captcha_base64: Optional[bytes] = None,
+        **kwargs,
+    ):
+        # if a local file link is passed
+        if captcha_file:
+            self.create_task_payload["task"].update(
+                {"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")}
+            )
+        # if the file is transferred in base64 encoding
+        elif captcha_base64:
+            self.create_task_payload["task"].update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
+        # if a URL is passed
+        elif captcha_link:
+            try:
+                content = self.url_open(url=captcha_link, **kwargs).content
+                self.create_task_payload["task"].update({"body": base64.b64encode(content).decode("utf-8")})
+            except Exception as error:
+                self.result.errorId = 12
+                self.result.errorCode = self.NO_CAPTCHA_ERR
+                self.result.errorDescription = str(error)
+
+        else:
+            self.result.errorId = 12
+            self.result.errorCode = self.NO_CAPTCHA_ERR
+
+    async def _aio_body_file_processing(
+        self,
+        captcha_link: Optional[str] = None,
+        captcha_file: Optional[str] = None,
+        captcha_base64: Optional[bytes] = None,
+        **kwargs,
+    ):
+        # if a local file link is passed
+        if captcha_file:
+            self.create_task_payload["task"].update(
+                {"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")}
+            )
+        # if the file is transferred in base64 encoding
+        elif captcha_base64:
+            self.create_task_payload["task"].update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
+        # if a URL is passed
+        elif captcha_link:
+            try:
+                content = await self.aio_url_read(url=captcha_link, **kwargs)
+                self.create_task_payload["task"].update({"body": base64.b64encode(content).decode("utf-8")})
+            except Exception as error:
+                self.result.errorId = 12
+                self.result.errorCode = self.NO_CAPTCHA_ERR
+                self.result.errorDescription = str(error)
+
+        else:
+            self.result.errorId = 12
+            self.result.errorCode = self.NO_CAPTCHA_ERR
 
     def __enter__(self):
         return self
