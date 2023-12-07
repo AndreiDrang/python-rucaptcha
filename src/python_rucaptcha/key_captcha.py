@@ -5,7 +5,7 @@ from .core.enums import KeyCaptchaEnm
 class KeyCaptcha(BaseCaptcha):
     def __init__(
         self,
-        pageurl: str,
+        websiteURL: str,
         s_s_c_user_id: str,
         s_s_c_session_id: str,
         s_s_c_web_server_sign: str,
@@ -19,7 +19,7 @@ class KeyCaptcha(BaseCaptcha):
 
         Args:
             rucaptcha_key: User API key
-            pageurl: Full URL of the captcha page
+            websiteURL: Full URL of the captcha page
             s_s_c_user_id: Value of `s_s_c_user_id` parameter found on the page
             s_s_c_session_id: Value of `s_s_c_session_id` parameter found on the page
             s_s_c_web_server_sign: Value of `s_s_c_web_server_sign` parameter found on the page
@@ -68,7 +68,7 @@ class KeyCaptcha(BaseCaptcha):
 
         self.create_task_payload["task"].update(
             {
-                "pageurl": pageurl,
+                "websiteURL": websiteURL,
                 "s_s_c_user_id": s_s_c_user_id,
                 "s_s_c_session_id": s_s_c_session_id,
                 "s_s_c_web_server_sign": s_s_c_web_server_sign,
@@ -87,19 +87,6 @@ class KeyCaptcha(BaseCaptcha):
         Args:
             kwargs: Parameters for the `requests` library
 
-        Examples:
-            >>> KeyCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
-            ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
-            ...             method=KeyCaptchaEnm.KeyCaptchaTaskProxyless.value
-            ...             ).captcha_handler()
-            {
-               "captchaSolve": "P1_eyJ.....cp_J",
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
-            }
-
         Returns:
             Dict with full server response
 
@@ -112,19 +99,6 @@ class KeyCaptcha(BaseCaptcha):
     async def aio_captcha_handler(self):
         """
         Async solving method
-
-        Examples:
-            >>> KeyCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
-            ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
-            ...             method=KeyCaptchaEnm.KeyCaptchaTaskProxyless.value
-            ...             ).captcha_handler()
-            {
-               "captchaSolve": "P1_eyJ.....cp_J",
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
-            }
 
         Returns:
             Dict with full server response
