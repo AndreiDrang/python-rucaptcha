@@ -1,5 +1,3 @@
-from typing import Optional
-
 from .core.base import BaseCaptcha
 from .core.enums import ReCaptchaEnm
 
@@ -7,9 +5,9 @@ from .core.enums import ReCaptchaEnm
 class ReCaptcha(BaseCaptcha):
     def __init__(
         self,
-        pageurl: str,
-        googlekey: str,
-        version: Optional[str] = None,
+        websiteURL: str,
+        websiteKey: str,
+        minScore: float = 0.3,
         method: str = ReCaptchaEnm.RecaptchaV2TaskProxyless.value,
         *args,
         **kwargs,
@@ -19,8 +17,8 @@ class ReCaptcha(BaseCaptcha):
 
         Args:
             rucaptcha_key: User API key
-            pageurl: Full URL of the captcha page
-            googlekey: The value of the `googlekey` parameter you found in the page code
+            websiteURL: Full URL of the captcha page
+            websiteKey: The value of the `googlekey` parameter you found in the page code
             version: `v3` - indicates that this is reCAPTCHA V3
             method: Captcha type
 
@@ -31,10 +29,18 @@ class ReCaptcha(BaseCaptcha):
             ...             method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value
             ...             ).captcha_handler()
             {
-                'captchaSolve': '03A....8h',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "gRecaptchaResponse":"03ADUVZw...UWxTAe6ncIa",
+                  "token":"03ADUVZw...UWxTAe6ncIa"
+               },
+               "cost":"0.00299",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId": 73043008354
             }
 
             >>> ReCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
@@ -44,10 +50,18 @@ class ReCaptcha(BaseCaptcha):
             ...             invisible=1,
             ...             ).captcha_handler()
             {
-                'captchaSolve': '03A....8h',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "gRecaptchaResponse":"03ADUVZw...UWxTAe6ncIa",
+                  "token":"03ADUVZw...UWxTAe6ncIa"
+               },
+               "cost":"0.00299",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId": 73043008354
             }
 
             >>> ReCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
@@ -58,10 +72,18 @@ class ReCaptcha(BaseCaptcha):
             ...             min_score=0.2,
             ...             ).captcha_handler()
             {
-                'captchaSolve': '03A....8h',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "gRecaptchaResponse":"03ADUVZw...UWxTAe6ncIa",
+                  "token":"03ADUVZw...UWxTAe6ncIa"
+               },
+               "cost":"0.00299",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId": 73043008354
             }
 
             >>> await ReCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
@@ -70,52 +92,33 @@ class ReCaptcha(BaseCaptcha):
             ...             method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value
             ...             ).aio_captcha_handler()
             {
-                'captchaSolve': '03A....8h',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
-            }
-
-            DeathByCaptcha:
-
-            >>> ReCaptcha(rucaptcha_key="some_username:some_password",
-            ...             service_type="deathbycaptcha",
-            ...             pageurl="https://rucaptcha.com/demo/recaptcha-v2",
-            ...             googlekey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
-            ...             method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value
-            ...             ).captcha_handler()
-            {
-                'captchaSolve': '03A....8h',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
-            }
-
-            >>> await ReCaptcha(rucaptcha_key="some_username:some_password",
-            ...             service_type="deathbycaptcha",
-            ...             pageurl="https://rucaptcha.com/demo/recaptcha-v2",
-            ...             googlekey="6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH",
-            ...             method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value
-            ...             ).aio_captcha_handler()
-            {
-                'captchaSolve': '03A....8h',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "gRecaptchaResponse":"03ADUVZw...UWxTAe6ncIa",
+                  "token":"03ADUVZw...UWxTAe6ncIa"
+               },
+               "cost":"0.00299",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId": 73043008354
             }
 
         Returns:
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_recaptchav2_new
-            https://rucaptcha.com/api-rucaptcha#invisible
-            https://rucaptcha.com/api-rucaptcha#solving_recaptchav3
-            https://rucaptcha.com/api-rucaptcha#solving_recaptcha_enterprise
+            https://rucaptcha.com/api-docs/recaptcha-v2
+            https://rucaptcha.com/api-docs/recaptcha-v3
+            https://rucaptcha.com/api-docs/recaptcha-v2-enterprise
         """
         super().__init__(method=method, *args, **kwargs)
 
-        self.create_task_payload["task"].update({"googlekey": googlekey, "pageurl": pageurl, "version": version})
+        self.create_task_payload["task"].update(
+            {"websiteURL": websiteURL, "websiteKey": websiteKey, "minScore": minScore}
+        )
 
         # check user params
         if method not in ReCaptchaEnm.list_values():
