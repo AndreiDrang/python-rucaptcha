@@ -1,12 +1,19 @@
-import logging
+import shutil
 from typing import Optional
 
 from .core.base import BaseCaptcha
-from .core.enums import RotateCaptchaEnm
+from .core.enums import SaveFormatsEnm, RotateCaptchaEnm
 
 
 class RotateCaptcha(BaseCaptcha):
-    def __init__(self, method: str = RotateCaptchaEnm.RotateTask.value, *args, **kwargs):
+    def __init__(
+        self,
+        save_format: str = SaveFormatsEnm.TEMP.value,
+        img_clearing: bool = True,
+        img_path: str = "PythonRotateCaptchaFiles",
+        *args,
+        **kwargs,
+    ):
         """
         The class is used to work with Rotate Captcha.
 
@@ -105,11 +112,11 @@ class RotateCaptcha(BaseCaptcha):
         Notes:
             https://rucaptcha.com/api-docs/rotate
         """
-        super().__init__(method=method, *args, **kwargs)
+        super().__init__(method=RotateCaptchaEnm.RotateTask, *args, **kwargs)
 
-        # check user params
-        if method not in RotateCaptchaEnm.list_values():
-            raise ValueError(f"Invalid method parameter set, available - {RotateCaptchaEnm.list_values()}")
+        self.save_format = save_format
+        self.img_clearing = img_clearing
+        self.img_path = img_path
 
     def captcha_handler(
         self,
@@ -169,3 +176,7 @@ class RotateCaptcha(BaseCaptcha):
         if not self.result.errorId:
             return await self._aio_processing_response()
         return self.result.to_dict()
+
+    def __del__(self):
+        if self.save_format == SaveFormatsEnm.CONST.value and self.img_clearing:
+            shutil.rmtree(self.img_path)
