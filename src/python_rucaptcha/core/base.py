@@ -3,7 +3,6 @@ import time
 import uuid
 import base64
 import asyncio
-import logging
 from typing import Union, Optional
 from pathlib import Path
 
@@ -14,14 +13,7 @@ from requests.adapters import HTTPAdapter
 from . import enums
 from .enums import SaveFormatsEnm
 from .config import RETRIES, ASYNC_RETRIES
-from .serializer import (
-    TaskSer,
-    CaptchaOptionsSer,
-    CreateTaskBaseSer,
-    CreateTaskResponseSer,
-    GetTaskResultRequestSer,
-    GetTaskResultResponseSer,
-)
+from .serializer import TaskSer, CaptchaOptionsSer, CreateTaskBaseSer, GetTaskResultRequestSer, GetTaskResultResponseSer
 from .result_handler import get_sync_result, get_async_result
 
 
@@ -69,9 +61,8 @@ class BaseCaptcha:
         Method processing captcha solving task creation result
         :param kwargs: additional params for Requests library
         """
-        logging.warning(f"{self.create_task_payload = }")
         try:
-            response = CreateTaskResponseSer(
+            response = GetTaskResultResponseSer(
                 **self.session.post(self.params.url_request, json=self.create_task_payload, **kwargs).json()
             )
             # check response status
@@ -112,7 +103,6 @@ class BaseCaptcha:
         try:
             # make async or sync request
             response = await self.__aio_create_task()
-            logging.warning(f"{response = }")
             # check response status
             if response.errorId == 0:
                 self.get_task_payload.taskId = response.taskId
@@ -121,7 +111,6 @@ class BaseCaptcha:
         except Exception as error:
             return error
 
-        logging.warning(f"{self.get_task_payload = }")
         # wait captcha solving
         await asyncio.sleep(self.params.sleep_time)
         return await get_async_result(
@@ -130,7 +119,7 @@ class BaseCaptcha:
             url_response=self.params.url_response,
         )
 
-    async def __aio_create_task(self) -> CreateTaskResponseSer:
+    async def __aio_create_task(self) -> GetTaskResultResponseSer:
         async with aiohttp.ClientSession() as session:
             async for attempt in ASYNC_RETRIES:
                 with attempt:
@@ -138,7 +127,7 @@ class BaseCaptcha:
                         self.params.url_request, json=self.create_task_payload, raise_for_status=True
                     ) as resp:
                         response_json = await resp.json(content_type=None)
-                        return CreateTaskResponseSer(**response_json)
+                        return GetTaskResultResponseSer(**response_json)
 
     # Working with images methods
 
