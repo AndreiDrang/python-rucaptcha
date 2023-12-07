@@ -12,6 +12,7 @@ import requests
 from requests.adapters import HTTPAdapter
 
 from . import enums
+from .enums import SaveFormatsEnm
 from .config import RETRIES, ASYNC_RETRIES
 from .serializer import (
     TaskSer,
@@ -31,7 +32,7 @@ class BaseCaptcha:
         self,
         rucaptcha_key: str,
         method: str,
-        sleep_time: int = 15,
+        sleep_time: int = 6,
         service_type: str = enums.ServiceEnm.TWOCAPTCHA.value,
         **kwargs,
     ):
@@ -164,6 +165,9 @@ class BaseCaptcha:
 
     def _body_file_processing(
         self,
+        save_format: SaveFormatsEnm,
+        file_path: str,
+        file_extension: str = "png",
         captcha_link: Optional[str] = None,
         captcha_file: Optional[str] = None,
         captcha_base64: Optional[bytes] = None,
@@ -181,6 +185,9 @@ class BaseCaptcha:
         elif captcha_link:
             try:
                 content = self.url_open(url=captcha_link, **kwargs).content
+                # according to the value of the passed parameter, select the function to save the image
+                if save_format == SaveFormatsEnm.CONST.value:
+                    self._file_const_saver(content, file_path, file_extension=file_extension)
                 self.create_task_payload["task"].update({"body": base64.b64encode(content).decode("utf-8")})
             except Exception as error:
                 self.result.errorId = 12
@@ -193,6 +200,9 @@ class BaseCaptcha:
 
     async def _aio_body_file_processing(
         self,
+        save_format: SaveFormatsEnm,
+        file_path: str,
+        file_extension: str = "png",
         captcha_link: Optional[str] = None,
         captcha_file: Optional[str] = None,
         captcha_base64: Optional[bytes] = None,
@@ -210,6 +220,9 @@ class BaseCaptcha:
         elif captcha_link:
             try:
                 content = await self.aio_url_read(url=captcha_link, **kwargs)
+                # according to the value of the passed parameter, select the function to save the image
+                if save_format == SaveFormatsEnm.CONST.value:
+                    self._file_const_saver(content, file_path, file_extension=file_extension)
                 self.create_task_payload["task"].update({"body": base64.b64encode(content).decode("utf-8")})
             except Exception as error:
                 self.result.errorId = 12
