@@ -74,7 +74,6 @@ class TestAudioCaptcha(BaseTest):
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
     async def test_aio_basic_data_file(self, save_format):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
@@ -92,7 +91,6 @@ class TestAudioCaptcha(BaseTest):
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
     async def test_aio_basic_data_link(self, save_format):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
@@ -110,7 +108,6 @@ class TestAudioCaptcha(BaseTest):
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
     async def test_aio_basic_data_base64(self, save_format):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
@@ -141,7 +138,6 @@ class TestAudioCaptcha(BaseTest):
         assert isinstance(result, dict) is True
         assert result["errorId"] in (12, 5)
 
-    @pytest.mark.asyncio
     async def test_aio_no_captcha(self):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
 
@@ -174,7 +170,6 @@ class TestAudioCaptcha(BaseTest):
         assert isinstance(result, dict) is True
         assert result["errorId"] in (12, 5)
 
-    @pytest.mark.asyncio
     async def test_aio_wrong_link(self):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
 
@@ -183,14 +178,12 @@ class TestAudioCaptcha(BaseTest):
         assert isinstance(result, dict) is True
         assert result["errorId"] in (12, 5)
 
-    @pytest.mark.asyncio
     async def test_aio_wrong_path(self):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
 
         with pytest.raises(FileNotFoundError):
             await instance.aio_captcha_handler(captcha_file=self.get_random_string(length=50))
 
-    @pytest.mark.asyncio
     async def test_aio_wrong_base64(self):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
 

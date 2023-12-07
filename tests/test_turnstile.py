@@ -73,7 +73,6 @@ class TestTurnstile(BaseTest):
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
     async def test_aio_basic_data(self):
         instance = Turnstile(
             rucaptcha_key=self.RUCAPTCHA_KEY,
@@ -106,7 +105,6 @@ class TestTurnstile(BaseTest):
         ) as instance:
             assert instance.captcha_handler()
 
-    @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
         async with Turnstile(
             rucaptcha_key=self.RUCAPTCHA_KEY,

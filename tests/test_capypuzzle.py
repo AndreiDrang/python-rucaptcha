@@ -58,7 +58,6 @@ class TestCapyPuzzle(BaseTest):
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
     async def test_aio_basic_data(self):
         instance = CapyPuzzle(
             websiteURL=self.pageurl,
@@ -103,7 +102,6 @@ class TestCapyPuzzle(BaseTest):
 
             assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
         async with CapyPuzzle(
             websiteURL=self.pageurl,

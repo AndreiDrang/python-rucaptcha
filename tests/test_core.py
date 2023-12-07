@@ -26,7 +26,6 @@ class TestMain(BaseTest):
     def test_class_create(self):
         bc = BaseCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, method=ControlEnm.control.value)
 
-    @pytest.mark.asyncio
     async def test_aio_context_class_create(self):
         async with BaseCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, method=ControlEnm.control.value) as bc:
             pass
@@ -63,7 +62,6 @@ class TestMain(BaseTest):
             service_type=self.get_random_string(length=10),
         )
 
-    @pytest.mark.asyncio
     @pytest.mark.parametrize("elements", [31, 33])
     async def test_aio_context_custom_service_api_key(self, elements):
         async with BaseCaptcha(
@@ -82,7 +80,6 @@ class TestMain(BaseTest):
             with BaseCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, method="some_method") as instance:
                 raise ValueError
 
-    @pytest.mark.asyncio
     async def test_aio_context_err(self):
         with pytest.raises(ValueError):
             async with BaseCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, method="some_method") as instance:

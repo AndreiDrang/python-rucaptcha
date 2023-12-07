@@ -75,7 +75,6 @@ class TestLeminCroppedCaptcha(BaseTest):
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
     async def test_aio_basic_data(self):
         instance = LeminCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,
@@ -109,7 +108,6 @@ class TestLeminCroppedCaptcha(BaseTest):
         ) as instance:
             assert instance.captcha_handler()
 
-    @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
         async with LeminCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,

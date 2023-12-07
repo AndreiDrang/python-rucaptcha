@@ -70,7 +70,6 @@ class TestHCaptcha(BaseTest):
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
     async def test_aio_basic_data(self):
         instance = HCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,
@@ -101,7 +100,6 @@ class TestHCaptcha(BaseTest):
         ) as instance:
             assert instance.captcha_handler()
 
-    @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
         async with HCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,

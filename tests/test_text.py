@@ -40,7 +40,6 @@ class TestTextCaptcha(BaseTest):
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
     @pytest.mark.parametrize("lang_code, question", questions)
     async def test_aio_basic(self, lang_code, question):
         instance = TextCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, languagePool=lang_code)

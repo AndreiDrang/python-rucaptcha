@@ -41,7 +41,7 @@ class TestImageCaptcha(BaseImageCaptcha):
         assert set(self.kwargs_params.keys()).issubset(set(instance.create_task_payload["task"].keys()))
         assert set(self.kwargs_params.values()).issubset(set(instance.create_task_payload["task"].values()))
 
-    @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
+    @pytest.mark.parametrize("save_format", SaveFormatsEnm.list_values())
     def test_basic_link(self, save_format):
         instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
         result = instance.captcha_handler(captcha_link=self.captcha_url)
@@ -55,7 +55,7 @@ class TestImageCaptcha(BaseImageCaptcha):
             assert result["errorId"] in (1, 12)
             assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-    @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
+    @pytest.mark.parametrize("save_format", SaveFormatsEnm.list_values())
     def test_basic_file(self, save_format):
         instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
         result = instance.captcha_handler(captcha_file=self.captcha_file)
@@ -70,7 +70,7 @@ class TestImageCaptcha(BaseImageCaptcha):
             assert result["errorId"] in (1, 12)
             assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-    @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
+    @pytest.mark.parametrize("save_format", SaveFormatsEnm.list_values())
     def test_basic_base64(self, save_format):
         instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
 
@@ -88,8 +88,7 @@ class TestImageCaptcha(BaseImageCaptcha):
             assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
-    @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
+    @pytest.mark.parametrize("save_format", SaveFormatsEnm.list_values())
     async def test_aio_basic_link(self, save_format):
         instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
 
@@ -105,8 +104,7 @@ class TestImageCaptcha(BaseImageCaptcha):
             assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
-    @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
+    @pytest.mark.parametrize("save_format", SaveFormatsEnm.list_values())
     async def test_aio_basic_file(self, save_format):
         instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
 
@@ -122,8 +120,7 @@ class TestImageCaptcha(BaseImageCaptcha):
             assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
-    @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
+    @pytest.mark.parametrize("save_format", SaveFormatsEnm.list_values())
     async def test_aio_basic_base64(self, save_format):
         instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
 
@@ -152,7 +149,6 @@ class TestImageCaptcha(BaseImageCaptcha):
         assert isinstance(result["errorCode"], str) is True
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
     async def test_aio_no_captcha(self):
         instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
         result = await instance.aio_captcha_handler()
@@ -176,7 +172,6 @@ class TestImageCaptcha(BaseImageCaptcha):
         assert result["errorId"] == 15
         assert result["taskId"] is None
 
-    @pytest.mark.asyncio
     async def test_aio_wrong_link(self):
         instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
         result = await instance.aio_captcha_handler(captcha_link=self.get_random_string(length=50))
@@ -185,7 +180,6 @@ class TestImageCaptcha(BaseImageCaptcha):
         assert isinstance(result["errorCode"], str) is True
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
     async def test_aio_wrong_base64(self):
         instance = ImageCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
         result = await instance.aio_captcha_handler(

@@ -73,7 +73,6 @@ class TestFunCaptcha(BaseTest):
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
     async def test_aio_basic_data(self):
         instance = FunCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,
@@ -104,7 +103,6 @@ class TestFunCaptcha(BaseTest):
         ) as instance:
             assert instance.captcha_handler()
 
-    @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
         async with FunCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,

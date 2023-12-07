@@ -196,7 +196,6 @@ class TestGeeTestV4(TestGeeTestBase):
             assert result["errorId"] in (1, 12)
             assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-    @pytest.mark.asyncio
     async def test_aio_basic_data(self):
         instance = GeeTest(
             rucaptcha_key=self.RUCAPTCHA_KEY,
@@ -230,7 +229,6 @@ class TestGeeTestV4(TestGeeTestBase):
         ) as instance:
             assert instance.captcha_handler(challenge=self.challenge)
 
-    @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
         async with GeeTest(
             rucaptcha_key=self.RUCAPTCHA_KEY,
