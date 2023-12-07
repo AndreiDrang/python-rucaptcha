@@ -34,7 +34,7 @@ class TestGeeTestCore(TestGeeTestBase):
         assert "captcha_handler" in GeeTest.__dict__.keys()
         assert "aio_captcha_handler" in GeeTest.__dict__.keys()
 
-    @pytest.mark.parametrize("method", GeetestEnm.GeeTestTaskProxyless.list_values())
+    @pytest.mark.parametrize("method", GeetestEnm.list_values())
     def test_args(self, method: str):
         instance = GeeTest(
             rucaptcha_key=self.RUCAPTCHA_KEY,
