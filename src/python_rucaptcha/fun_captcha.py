@@ -4,15 +4,20 @@ from .core.enums import FunCaptchaEnm
 
 class FunCaptcha(BaseCaptcha):
     def __init__(
-        self, pageurl: str, publickey: str, method: str = FunCaptchaEnm.FunCaptchaTaskProxyless.value, *args, **kwargs
+        self,
+        websiteURL: str,
+        websitePublicKey: str,
+        method: str = FunCaptchaEnm.FunCaptchaTaskProxyless.value,
+        *args,
+        **kwargs,
     ):
         """
         The class is used to work with Arkose Labs FunCaptcha.
 
         Args:
             rucaptcha_key: User API key
-            pageurl: Full URL of the captcha page
-            publickey: The value of the `pk` or `data-pkey` parameter you found in the page code
+            websiteURL: Full URL of the captcha page
+            websitePublicKey: The value of the `pk` or `data-pkey` parameter you found in the page code
             method: Captcha type
 
         Examples:
@@ -33,11 +38,11 @@ class FunCaptcha(BaseCaptcha):
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_funcaptcha_new
+            https://rucaptcha.com/api-docs/arkoselabs-funcaptcha
         """
         super().__init__(method=method, *args, **kwargs)
 
-        self.create_task_payload["task"].update({"publickey": publickey, "pageurl": pageurl})
+        self.create_task_payload["task"].update({"websiteURL": websiteURL, "websitePublicKey": websitePublicKey})
 
         # check user params
         if method not in FunCaptchaEnm.list_values():
@@ -54,7 +59,7 @@ class FunCaptcha(BaseCaptcha):
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_funcaptcha_new
+            Check class docstirng for more info
         """
         return self._processing_response(**kwargs)
 
@@ -66,6 +71,6 @@ class FunCaptcha(BaseCaptcha):
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_funcaptcha_new
+            Check class docstirng for more info
         """
         return await self._aio_processing_response()
