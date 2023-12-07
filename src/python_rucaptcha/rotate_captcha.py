@@ -1,5 +1,5 @@
-import logging
 import shutil
+import logging
 from typing import Union, Optional
 
 from .core.base import BaseCaptcha
@@ -149,9 +149,10 @@ class RotateCaptcha(BaseCaptcha):
             captcha_base64=captcha_base64,
             **kwargs,
         )
-        logging.warning(f'{self.result = }')
+        logging.warning(f"{self.result = }")
         if not self.result.errorId:
             return self._processing_response(**kwargs)
+        logging.warning("ERROR ID IS EXISTS")
         return self.result.to_dict()
 
     async def aio_captcha_handler(
@@ -185,7 +186,7 @@ class RotateCaptcha(BaseCaptcha):
             captcha_base64=captcha_base64,
             **kwargs,
         )
-        logging.warning(f'{self.result = }')
+        logging.warning(f"{self.result = }")
         if not self.result.errorId:
             return await self._aio_processing_response()
         return self.result.to_dict()
