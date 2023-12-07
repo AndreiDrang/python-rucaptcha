@@ -1,12 +1,12 @@
-LeminCroppedCaptcha
-===================
+LeminCaptcha
+============
 
 To import this module:
 
 .. code-block:: python
 
-    from python_rucaptcha.lemin_cropped_captcha import LeminCroppedCaptcha
+    from python_rucaptcha.lemin_cropped_captcha import LeminCaptcha
 
 
-.. autoclass:: python_rucaptcha.lemin_cropped_captcha.LeminCroppedCaptcha
+.. autoclass:: python_rucaptcha.lemin_cropped_captcha.LeminCaptcha
     :members:
