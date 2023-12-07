@@ -5,8 +5,8 @@ from .core.enums import TurnstileCaptchaEnm
 class Turnstile(BaseCaptcha):
     def __init__(
         self,
-        pageurl: str,
-        sitekey: str,
+        websiteURL: str,
+        websiteKey: str,
         userAgent: str,
         method: str = TurnstileCaptchaEnm.TurnstileTaskProxyless.value,
         *args,
@@ -17,47 +17,65 @@ class Turnstile(BaseCaptcha):
 
         Args:
             rucaptcha_key: User API key
-            pageurl: Full URL of the captcha page
-            sitekey: The value of the `sitekey` parameter found on the site
+            websiteURL: Full URL of the captcha page
+            websiteKey: The value of the `sitekey` parameter found on the site
             userAgent: Your browser UserAgent
             method: Captcha type
             kwargs: Not required params for task creation request
 
         Examples:
             >>> Turnstile(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             pageurl="https://www.geetest.com/en/demo",
-            ...             sitekey="0x4AAAAAAAC3DHQFLr1GavRN",
+            ...             websiteURL="https://www.geetest.com/en/demo",
+            ...             websiteKey="0x4AAAAAAAC3DHQFLr1GavRN",
             ...             method=TurnstileCaptchaEnm.TurnstileTaskProxyless.value,
             ...             ).captcha_handler()
             {
-               "captchaSolve": "0._VMG....Pv",
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "token":"0.zrSnRHO7h0HwSjSCU8oyzbjEtD8p.d62306d4ee00c77dda697f959ebbd7bd97",
+                  "userAgent":"Mozilla/5.0 (....."
+               },
+               "cost":"0.00145",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId": 73243152973,
             }
 
             >>> await Turnstile(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             pageurl="https://www.geetest.com/en/demo",
-            ...             sitekey="0x4AAAAAAAC3DHQFLr1GavRN",
+            ...             websiteURL="https://www.geetest.com/en/demo",
+            ...             websiteKey="0x4AAAAAAAC3DHQFLr1GavRN",
             ...             method=TurnstileCaptchaEnm.TurnstileTaskProxyless.value,
             ...             ).aio_captcha_handler()
             {
-               "captchaSolve": "0._VMG....Pv",
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "token":"0.zrSnRHO7h0HwSjSCU8oyzbjEtD8p.d62306d4ee00c77dda697f959ebbd7bd97",
+                  "userAgent":"Mozilla/5.0 (....."
+               },
+               "cost":"0.00145",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId": 73243152973,
             }
 
         Returns:
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#turnstile
+            https://rucaptcha.com/api-docs/cloudflare-turnstile
         """
 
         super().__init__(method=method, *args, **kwargs)
 
-        self.create_task_payload["task"].update({"websiteKey": sitekey, "websiteURL": pageurl, "userAgent": userAgent})
+        self.create_task_payload["task"].update(
+            {"websiteURL": websiteURL, "websiteKey": websiteKey, "userAgent": userAgent}
+        )
 
         # check user params
         if method not in TurnstileCaptchaEnm.list_values():
@@ -70,19 +88,6 @@ class Turnstile(BaseCaptcha):
         Args:
             kwargs: Parameters for the `requests` library
 
-        Examples:
-            >>> Turnstile(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             pageurl="https://www.geetest.com/en/demo",
-            ...             sitekey="0x4AAAAAAAC3DHQFLr1GavRN",
-            ...             method=TurnstileCaptchaEnm.TurnstileTaskProxyless.value,
-            ...             ).captcha_handler()
-            {
-               "captchaSolve": "0._VMG....Pv",
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
-            }
-
         Returns:
             Dict with full server response
 
@@ -94,19 +99,6 @@ class Turnstile(BaseCaptcha):
     async def aio_captcha_handler(self):
         """
         Async solving method
-
-        Examples:
-            >>> await Turnstile(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             pageurl="https://www.geetest.com/en/demo",
-            ...             sitekey="0x4AAAAAAAC3DHQFLr1GavRN",
-            ...             method=TurnstileCaptchaEnm.TurnstileTaskProxyless.value,
-            ...             ).aio_captcha_handler()
-            {
-               "captchaSolve": "0._VMG....Pv",
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
-            }
 
         Returns:
             Dict with full server response
