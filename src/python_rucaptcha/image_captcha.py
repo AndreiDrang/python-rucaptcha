@@ -1,5 +1,5 @@
 import shutil
-from typing import Optional
+from typing import Union, Optional
 
 from .core.base import BaseCaptcha
 from .core.enums import SaveFormatsEnm, ImageCaptchaEnm
@@ -8,7 +8,7 @@ from .core.enums import SaveFormatsEnm, ImageCaptchaEnm
 class ImageCaptcha(BaseCaptcha):
     def __init__(
         self,
-        save_format: str = SaveFormatsEnm.TEMP.value,
+        save_format: Union[str, SaveFormatsEnm] = SaveFormatsEnm.TEMP,
         img_clearing: bool = True,
         img_path: str = "PythonRuCaptchaImages",
         *args,
@@ -199,7 +199,12 @@ class ImageCaptcha(BaseCaptcha):
             Check class docstirng for more info
         """
         self._body_file_processing(
-            captcha_link=captcha_link, captcha_file=captcha_file, captcha_base64=captcha_base64, **kwargs
+            save_format=self.save_format,
+            file_path=self.img_path,
+            captcha_link=captcha_link,
+            captcha_file=captcha_file,
+            captcha_base64=captcha_base64,
+            **kwargs,
         )
         if not self.result.errorId:
             return self._processing_response(**kwargs)
@@ -228,7 +233,12 @@ class ImageCaptcha(BaseCaptcha):
             Check class docstirng for more info
         """
         await self._aio_body_file_processing(
-            captcha_link=captcha_link, captcha_file=captcha_file, captcha_base64=captcha_base64, **kwargs
+            save_format=self.save_format,
+            file_path=self.img_path,
+            captcha_link=captcha_link,
+            captcha_file=captcha_file,
+            captcha_base64=captcha_base64,
+            **kwargs,
         )
         if not self.result.errorId:
             return await self._aio_processing_response()
