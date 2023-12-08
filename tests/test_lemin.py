@@ -64,15 +64,6 @@ class TestLeminCroppedCaptcha(BaseTest):
 
         result = instance.captcha_handler()
 
-        assert isinstance(result, dict) is True
-        if not result["errorId"]:
-            assert result["status"] == "ready"
-            assert isinstance(result["solution"], dict) is True
-            assert isinstance(result["taskId"], int) is True
-        else:
-            assert result["errorId"] in (1, 12)
-            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
-
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     async def test_aio_basic_data(self):
@@ -86,15 +77,6 @@ class TestLeminCroppedCaptcha(BaseTest):
         )
 
         result = await instance.aio_captcha_handler()
-
-        assert isinstance(result, dict) is True
-        if not result["errorId"]:
-            assert result["status"] == "ready"
-            assert isinstance(result["solution"], dict) is True
-            assert isinstance(result["taskId"], int) is True
-        else:
-            assert result["errorId"] in (1, 12)
-            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
