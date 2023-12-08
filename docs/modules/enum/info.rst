@@ -40,7 +40,7 @@ To import this module:
     :members:
     :undoc-members:
 
-.. autoclass:: python_rucaptcha.core.enums.LeminCroppedCaptchaEnm
+.. autoclass:: python_rucaptcha.core.enums.LeminCaptchaEnm
     :members:
     :undoc-members:
 
