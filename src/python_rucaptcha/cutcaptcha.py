@@ -15,7 +15,7 @@ class CutCaptcha(BaseCaptcha):
         **kwargs,
     ):
         """
-        The class is used to work with HCaptcha.
+        The class is used to work with CutCaptcha.
 
         Args:
             rucaptcha_key: User API key
@@ -28,7 +28,7 @@ class CutCaptcha(BaseCaptcha):
 
         Examples:
             >>> CutCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             websiteURL="https://rucaptcha.com/demo/hcaptcha",
+            ...             websiteURL="https://example.cc/foo/bar.html",
             ...             miseryKey="a1488b66da00bf332a1488993a5443c79047e752",
             ...             apiKey="SAb83IIB",
             ...             method=CutCaptchaEnm.CutCaptchaTaskProxyless
@@ -51,7 +51,7 @@ class CutCaptcha(BaseCaptcha):
             }
 
             >>> await CutCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             websiteURL="https://rucaptcha.com/demo/hcaptcha",
+            ...             websiteURL="https://example.cc/foo/bar.html",
             ...             miseryKey="a1488b66da00bf332a1488993a5443c79047e752",
             ...             apiKey="SAb83IIB",
             ...             method=CutCaptchaEnm.CutCaptchaTaskProxyless
@@ -77,7 +77,7 @@ class CutCaptcha(BaseCaptcha):
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-docs/hcaptcha
+            https://2captcha.com/api-docs/cutcaptcha
         """
         super().__init__(method=method, *args, **kwargs)
 

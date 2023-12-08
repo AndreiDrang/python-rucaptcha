@@ -6,9 +6,9 @@ from python_rucaptcha.cutcaptcha import CutCaptcha
 from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 
 
-class TestHCaptcha(BaseTest):
+class TestCutCaptcha(BaseTest):
     miseryKey = "a1488b66da00bf332a1488993a5443c79047e752"
-    pageurl = "https://rucaptcha.com/demo/hcaptcha"
+    pageurl = "https://example.cc/foo/bar.html"
     apiKey = "SAb83IIB"
 
     kwargs_params = {
