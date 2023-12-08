@@ -10,8 +10,7 @@ import aiohttp
 import requests
 from requests.adapters import HTTPAdapter
 
-from . import enums
-from .enums import SaveFormatsEnm
+from .enums import ServiceEnm, SaveFormatsEnm
 from .config import RETRIES, ASYNC_RETRIES
 from .serializer import TaskSer, CaptchaOptionsSer, CreateTaskBaseSer, GetTaskResultRequestSer, GetTaskResultResponseSer
 from .result_handler import get_sync_result, get_async_result
@@ -25,7 +24,7 @@ class BaseCaptcha:
         rucaptcha_key: str,
         method: str,
         sleep_time: int = 10,
-        service_type: str = enums.ServiceEnm.TWOCAPTCHA.value,
+        service_type: str = ServiceEnm.TWOCAPTCHA,
         **kwargs,
     ):
         """
