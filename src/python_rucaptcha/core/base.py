@@ -24,7 +24,7 @@ class BaseCaptcha:
         self,
         rucaptcha_key: str,
         method: str,
-        sleep_time: int = 6,
+        sleep_time: int = 10,
         service_type: str = enums.ServiceEnm.TWOCAPTCHA.value,
         **kwargs,
     ):
