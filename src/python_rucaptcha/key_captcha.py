@@ -1,3 +1,5 @@
+from typing import Union
+
 from .core.base import BaseCaptcha
 from .core.enums import KeyCaptchaEnm
 
@@ -10,7 +12,7 @@ class KeyCaptcha(BaseCaptcha):
         s_s_c_session_id: str,
         s_s_c_web_server_sign: str,
         s_s_c_web_server_sign2: str,
-        method: str = KeyCaptchaEnm.KeyCaptchaTaskProxyless.value,
+        method: Union[str, KeyCaptchaEnm] = KeyCaptchaEnm.KeyCaptchaTaskProxyless,
         *args,
         **kwargs,
     ):
@@ -62,7 +64,7 @@ class KeyCaptcha(BaseCaptcha):
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_keycaptcha
+            https://rucaptcha.com/api-docs/keycaptcha
         """
         super().__init__(method=method, *args, **kwargs)
 
@@ -80,7 +82,7 @@ class KeyCaptcha(BaseCaptcha):
         if method not in KeyCaptchaEnm.list_values():
             raise ValueError(f"Invalid method parameter set, available - {KeyCaptchaEnm.list_values()}")
 
-    def captcha_handler(self, **kwargs):
+    def captcha_handler(self, **kwargs) -> dict:
         """
         Sync solving method
 
@@ -96,7 +98,7 @@ class KeyCaptcha(BaseCaptcha):
 
         return self._processing_response(**kwargs)
 
-    async def aio_captcha_handler(self):
+    async def aio_captcha_handler(self) -> dict:
         """
         Async solving method
 

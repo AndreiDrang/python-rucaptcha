@@ -1,3 +1,5 @@
+from typing import Union
+
 from .core.base import BaseCaptcha
 from .core.enums import TurnstileCaptchaEnm
 
@@ -8,7 +10,7 @@ class Turnstile(BaseCaptcha):
         websiteURL: str,
         websiteKey: str,
         userAgent: str,
-        method: str = TurnstileCaptchaEnm.TurnstileTaskProxyless.value,
+        method: Union[str, TurnstileCaptchaEnm] = TurnstileCaptchaEnm.TurnstileTaskProxyless,
         *args,
         **kwargs,
     ):
@@ -81,7 +83,7 @@ class Turnstile(BaseCaptcha):
         if method not in TurnstileCaptchaEnm.list_values():
             raise ValueError(f"Invalid method parameter set, available - {TurnstileCaptchaEnm.list_values()}")
 
-    def captcha_handler(self, **kwargs):
+    def captcha_handler(self, **kwargs) -> dict:
         """
         Sync solving method
 
@@ -96,7 +98,7 @@ class Turnstile(BaseCaptcha):
         """
         return self._processing_response(**kwargs)
 
-    async def aio_captcha_handler(self):
+    async def aio_captcha_handler(self) -> dict:
         """
         Async solving method
 

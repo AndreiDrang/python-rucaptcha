@@ -1,3 +1,5 @@
+from typing import Union
+
 from .core.base import BaseCaptcha
 from .core.enums import HCaptchaEnm
 
@@ -7,7 +9,7 @@ class HCaptcha(BaseCaptcha):
         self,
         websiteURL: str,
         websiteKey: str,
-        method: str = HCaptchaEnm.HCaptchaTaskProxyless.value,
+        method: Union[str, HCaptchaEnm] = HCaptchaEnm.HCaptchaTaskProxyless,
         *args,
         **kwargs,
     ):
@@ -33,7 +35,7 @@ class HCaptcha(BaseCaptcha):
                "solution":{
                   "token":"P1_eyJ0eXAiOiJKV...1LDq89KyJ5A",
                   "respKey":"E0_eyJ0eXAiOiJK...y2w5_YbP8PGuJBBo",
-                  "userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.5614.0 Safari/537.36",
+                  "userAgent":"Mozilla/5.0 (.......",
                   "gRecaptchaResponse":"P1_eyJ0eXAiOiJKV...1LDq89KyJ5A"
                },
                "cost":"0.00299",
@@ -55,7 +57,7 @@ class HCaptcha(BaseCaptcha):
                "solution":{
                   "token":"P1_eyJ0eXAiOiJKV...1LDq89KyJ5A",
                   "respKey":"E0_eyJ0eXAiOiJK...y2w5_YbP8PGuJBBo",
-                  "userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.5614.0 Safari/537.36",
+                  "userAgent":"Mozilla/5.0 (........",
                   "gRecaptchaResponse":"P1_eyJ0eXAiOiJKV...1LDq89KyJ5A"
                },
                "cost":"0.00299",
@@ -80,7 +82,7 @@ class HCaptcha(BaseCaptcha):
         if method not in HCaptchaEnm.list_values():
             raise ValueError(f"Invalid method parameter set, available - {HCaptchaEnm.list_values()}")
 
-    def captcha_handler(self, **kwargs):
+    def captcha_handler(self, **kwargs) -> dict:
         """
         Sync solving method
 
@@ -96,7 +98,7 @@ class HCaptcha(BaseCaptcha):
 
         return self._processing_response(**kwargs)
 
-    async def aio_captcha_handler(self):
+    async def aio_captcha_handler(self) -> dict:
         """
         Async solving method
 

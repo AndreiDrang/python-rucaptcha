@@ -1,10 +1,17 @@
+from typing import Union
+
 from .core.base import BaseCaptcha
 from .core.enums import CapyPuzzleEnm
 
 
 class CapyPuzzle(BaseCaptcha):
     def __init__(
-        self, websiteURL: str, websiteKey: str, method: str = CapyPuzzleEnm.CapyTaskProxyless.value, *args, **kwargs
+        self,
+        websiteURL: str,
+        websiteKey: str,
+        method: Union[str, CapyPuzzleEnm] = CapyPuzzleEnm.CapyTaskProxyless,
+        *args,
+        **kwargs,
     ):
         """
         The class is used to work with CapyPuzzle.
@@ -102,7 +109,7 @@ class CapyPuzzle(BaseCaptcha):
         if method not in CapyPuzzleEnm.list_values():
             raise ValueError(f"Invalid method parameter set, available - {CapyPuzzleEnm.list_values()}")
 
-    def captcha_handler(self, **kwargs):
+    def captcha_handler(self, **kwargs) -> dict:
         """
         Sync solving method
 
@@ -118,7 +125,7 @@ class CapyPuzzle(BaseCaptcha):
 
         return self._processing_response(**kwargs)
 
-    async def aio_captcha_handler(self):
+    async def aio_captcha_handler(self) -> dict:
         """
         Async solving method
 

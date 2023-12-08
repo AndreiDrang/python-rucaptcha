@@ -1,3 +1,5 @@
+from typing import Union
+
 from .core.base import BaseCaptcha
 from .core.enums import LeminCaptchaEnm
 
@@ -8,7 +10,7 @@ class LeminCaptcha(BaseCaptcha):
         websiteURL: str,
         captchaId: str,
         div_id: str,
-        method: str = LeminCaptchaEnm.LeminTaskProxyless.value,
+        method: Union[str, LeminCaptchaEnm] = LeminCaptchaEnm.LeminTaskProxyless,
         *args,
         **kwargs,
     ):
@@ -82,7 +84,7 @@ class LeminCaptcha(BaseCaptcha):
         if method not in LeminCaptchaEnm.list_values():
             raise ValueError(f"Invalid method parameter set, available - {LeminCaptchaEnm.list_values()}")
 
-    def captcha_handler(self, **kwargs):
+    def captcha_handler(self, **kwargs) -> dict:
         """
         Sync solving method
 
@@ -97,7 +99,7 @@ class LeminCaptcha(BaseCaptcha):
         """
         return self._processing_response(**kwargs)
 
-    async def aio_captcha_handler(self):
+    async def aio_captcha_handler(self) -> dict:
         """
         Async solving method
 

@@ -1,3 +1,5 @@
+from typing import Union
+
 from .core.base import BaseCaptcha
 from .core.enums import AmazonWAFCaptchaEnm
 
@@ -9,7 +11,7 @@ class AmazonWAF(BaseCaptcha):
         websiteKey: str,
         iv: str,
         context: str,
-        method: str = AmazonWAFCaptchaEnm.AmazonTaskProxyless.value,
+        method: Union[str, AmazonWAFCaptchaEnm] = AmazonWAFCaptchaEnm.AmazonTaskProxyless,
         *args,
         **kwargs,
     ):

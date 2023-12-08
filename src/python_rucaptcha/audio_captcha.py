@@ -74,7 +74,7 @@ class AudioCaptcha(BaseCaptcha):
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#audio
+            https://rucaptcha.com/api-docs/audio
         """
 
         super().__init__(method=AudioCaptchaEnm.AudioTask.value, *args, **kwargs)

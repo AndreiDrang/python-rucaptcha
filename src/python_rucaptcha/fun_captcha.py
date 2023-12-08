@@ -1,3 +1,5 @@
+from typing import Union
+
 from .core.base import BaseCaptcha
 from .core.enums import FunCaptchaEnm
 
@@ -7,7 +9,7 @@ class FunCaptcha(BaseCaptcha):
         self,
         websiteURL: str,
         websitePublicKey: str,
-        method: str = FunCaptchaEnm.FunCaptchaTaskProxyless.value,
+        method: Union[str, FunCaptchaEnm] = FunCaptchaEnm.FunCaptchaTaskProxyless,
         *args,
         **kwargs,
     ):
@@ -73,7 +75,7 @@ class FunCaptcha(BaseCaptcha):
         if method not in FunCaptchaEnm.list_values():
             raise ValueError(f"Invalid method parameter set, available - {FunCaptchaEnm.list_values()}")
 
-    def captcha_handler(self, **kwargs):
+    def captcha_handler(self, **kwargs) -> dict:
         """
         Sync solving method
 
@@ -88,7 +90,7 @@ class FunCaptcha(BaseCaptcha):
         """
         return self._processing_response(**kwargs)
 
-    async def aio_captcha_handler(self):
+    async def aio_captcha_handler(self) -> dict:
         """
         Async solving method
 

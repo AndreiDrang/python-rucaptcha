@@ -1,3 +1,5 @@
+from typing import Union
+
 from .core.base import BaseCaptcha
 from .core.enums import ReCaptchaEnm
 
@@ -8,7 +10,7 @@ class ReCaptcha(BaseCaptcha):
         websiteURL: str,
         websiteKey: str,
         minScore: float = 0.3,
-        method: str = ReCaptchaEnm.RecaptchaV2TaskProxyless.value,
+        method: Union[str, ReCaptchaEnm] = ReCaptchaEnm.RecaptchaV2TaskProxyless.value,
         *args,
         **kwargs,
     ):
@@ -127,7 +129,9 @@ class ReCaptcha(BaseCaptcha):
 
         Notes:
             https://rucaptcha.com/api-docs/recaptcha-v2
+
             https://rucaptcha.com/api-docs/recaptcha-v3
+
             https://rucaptcha.com/api-docs/recaptcha-v2-enterprise
         """
         super().__init__(method=method, *args, **kwargs)
@@ -140,7 +144,7 @@ class ReCaptcha(BaseCaptcha):
         if method not in ReCaptchaEnm.list_values():
             raise ValueError(f"Invalid method parameter set, available - {ReCaptchaEnm.list_values()}")
 
-    def captcha_handler(self, **kwargs):
+    def captcha_handler(self, **kwargs) -> dict:
         """
         Sync solving method
 
@@ -155,7 +159,7 @@ class ReCaptcha(BaseCaptcha):
         """
         return self._processing_response(**kwargs)
 
-    async def aio_captcha_handler(self):
+    async def aio_captcha_handler(self) -> dict:
         """
         Async solving method
 
