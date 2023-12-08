@@ -1,6 +1,6 @@
 # python-rucaptcha
 
-![Logo](https://red-panda-dev.xyz/media/original_images/RuCaptchaHigh.png)
+![Logo](https://red-panda-dev.xyz/media/images/RuCaptchaHigh.max-800x600.png)
 
 <a href="https://dashboard.capsolver.com/passport/register?inviteCode=kQTn-tG07Jb1">
     <img src="https://cdn.discordapp.com/attachments/1105172394655625306/1105180101802471575/20221207-160749.gif" alt="Capsolver's Banner">
