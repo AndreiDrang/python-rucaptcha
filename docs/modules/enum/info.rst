@@ -40,7 +40,7 @@ To import this module:
     :members:
     :undoc-members:
 
-.. autoclass:: python_rucaptcha.core.enums.LeminCroppedCaptchaEnm
+.. autoclass:: python_rucaptcha.core.enums.LeminCaptchaEnm
     :members:
     :undoc-members:
 
@@ -56,15 +56,7 @@ To import this module:
     :members:
     :undoc-members:
 
-.. autoclass:: python_rucaptcha.core.enums.TikTokCaptchaEnm
-    :members:
-    :undoc-members:
-
 .. autoclass:: python_rucaptcha.core.enums.ControlEnm
-    :members:
-    :undoc-members:
-
-.. autoclass:: python_rucaptcha.core.enums.YandexSmartCaptchaEnm
     :members:
     :undoc-members:
 

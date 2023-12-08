@@ -3,7 +3,7 @@ import pytest
 from tests.conftest import BaseTest
 from python_rucaptcha.core.enums import SaveFormatsEnm
 from python_rucaptcha.audio_captcha import AudioCaptcha
-from python_rucaptcha.core.serializer import ResponseSer
+from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 
 
 class TestAudioCaptcha(BaseTest):
@@ -18,130 +18,113 @@ class TestAudioCaptcha(BaseTest):
         assert "captcha_handler" in AudioCaptcha.__dict__.keys()
         assert "aio_captcha_handler" in AudioCaptcha.__dict__.keys()
 
+    def test_args(self):
+        instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
+        assert instance.create_task_payload["clientKey"] == self.RUCAPTCHA_KEY
+
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
     def test_basic_data_file(self, save_format):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
 
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-
         result = instance.captcha_handler(captcha_file=self.captcha_file)
 
         assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
+        if not result["errorId"]:
+            assert result["status"] == "ready"
+            assert isinstance(result["solution"]["token"], str) is True
             assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
         else:
-            assert result["error"] is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
     def test_basic_data_link(self, save_format):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
 
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-
         result = instance.captcha_handler(captcha_link=self.captcha_link)
 
         assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
+        if not result["errorId"]:
+            assert result["status"] == "ready"
+            assert isinstance(result["solution"]["token"], str) is True
             assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
         else:
-            assert result["error"] is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
     def test_basic_data_base64(self, save_format):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
 
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-
         with open(self.captcha_file, "rb") as f:
             result = instance.captcha_handler(captcha_base64=f.read())
 
         assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
+        if not result["errorId"]:
+            assert result["status"] == "ready"
+            assert isinstance(result["solution"]["token"], str) is True
             assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
         else:
-            assert result["error"] is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
     async def test_aio_basic_data_file(self, save_format):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
 
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-
         result = await instance.aio_captcha_handler(captcha_file=self.captcha_file)
 
         assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
+        if not result["errorId"]:
+            assert result["status"] == "ready"
+            assert isinstance(result["solution"]["token"], str) is True
             assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
         else:
-            assert result["error"] is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
     async def test_aio_basic_data_link(self, save_format):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
 
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-
         result = await instance.aio_captcha_handler(captcha_link=self.captcha_link)
 
         assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
+        if not result["errorId"]:
+            assert result["status"] == "ready"
+            assert isinstance(result["solution"]["token"], str) is True
             assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
         else:
-            assert result["error"] is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
     @pytest.mark.parametrize("save_format", [SaveFormatsEnm.TEMP, SaveFormatsEnm.CONST])
     async def test_aio_basic_data_base64(self, save_format):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
         with open(self.captcha_file, "rb") as f:
             result = await instance.aio_captcha_handler(captcha_base64=f.read())
 
         assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
+        if not result["errorId"]:
+            assert result["status"] == "ready"
+            assert isinstance(result["solution"]["token"], str) is True
             assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
         else:
-            assert result["error"] is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     """
     Fail tests
@@ -150,108 +133,63 @@ class TestAudioCaptcha(BaseTest):
     def test_no_captcha(self):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
 
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-
         result = instance.captcha_handler()
 
         assert isinstance(result, dict) is True
-        assert result["error"] is True
-        assert result["taskId"] is None
-        assert result["errorBody"] == AudioCaptcha.NO_CAPTCHA_ERR
-        assert result["captchaSolve"] == {}
+        assert result["errorId"] in (12, 5)
 
-        assert result.keys() == ResponseSer().dict().keys()
-
-    @pytest.mark.asyncio
     async def test_aio_no_captcha(self):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
         result = await instance.aio_captcha_handler()
 
         assert isinstance(result, dict) is True
-        assert result["error"] is True
-        assert result["taskId"] is None
-        assert result["errorBody"] == AudioCaptcha.NO_CAPTCHA_ERR
-        assert result["captchaSolve"] == {}
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result["errorId"] in (12, 5)
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_wrong_link(self):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
 
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-
         result = instance.captcha_handler(captcha_link=self.get_random_string(length=50))
 
         assert isinstance(result, dict) is True
-        assert result["error"] is True
-        assert result["taskId"] is None
-        assert result["captchaSolve"] == {}
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result["errorId"] in (12, 5)
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_wrong_path(self):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
 
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-
         with pytest.raises(FileNotFoundError):
-            result = instance.captcha_handler(captcha_file=self.get_random_string(length=50))
-
-            assert isinstance(result, dict) is True
-            assert result["error"] is True
-            assert result["taskId"] is None
-            assert result["captchaSolve"] == {}
-            assert result.keys() == ResponseSer().dict().keys()
+            instance.captcha_handler(captcha_file=self.get_random_string(length=50))
 
     def test_wrong_base64(self):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        result = instance.captcha_handler(captcha_base64=self.get_random_string(length=50).encode(encoding="UTF-8"))
-        assert isinstance(result, dict) is True
-        assert result["error"] is True
-        assert result["taskId"] is None
-        assert result["captchaSolve"] == {}
-        assert result.keys() == ResponseSer().dict().keys()
 
-    @pytest.mark.asyncio
+        result = instance.captcha_handler(captcha_base64=self.get_random_string(length=50).encode(encoding="UTF-8"))
+
+        assert isinstance(result, dict) is True
+        assert result["errorId"] in (12, 5)
+
     async def test_aio_wrong_link(self):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
-
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
 
         result = await instance.aio_captcha_handler(captcha_link=self.get_random_string(length=50))
 
         assert isinstance(result, dict) is True
-        assert result["error"] is True
-        assert result["taskId"] is None
-        assert result["captchaSolve"] == {}
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result["errorId"] in (12, 5)
 
-    @pytest.mark.asyncio
     async def test_aio_wrong_path(self):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
 
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-
         with pytest.raises(FileNotFoundError):
-            result = await instance.aio_captcha_handler(captcha_file=self.get_random_string(length=50))
+            await instance.aio_captcha_handler(captcha_file=self.get_random_string(length=50))
 
-            assert isinstance(result, dict) is True
-            assert result["error"] is True
-            assert result["taskId"] is None
-            assert result["captchaSolve"] == {}
-            assert result.keys() == ResponseSer().dict().keys()
-
-    @pytest.mark.asyncio
     async def test_aio_wrong_base64(self):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
+
         result = await instance.aio_captcha_handler(
             captcha_base64=self.get_random_string(length=50).encode(encoding="UTF-8")
         )
+
         assert isinstance(result, dict) is True
-        assert result["error"] is True
-        assert result["taskId"] is None
-        assert result["captchaSolve"] == {}
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result["errorId"] in (12, 5)

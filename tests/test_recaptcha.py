@@ -1,17 +1,47 @@
 import pytest
 
-from tests.conftest import BaseTest, DeathByTest
-from python_rucaptcha.core.enums import ServiceEnm, ReCaptchaEnm
+from tests.conftest import BaseTest
+from python_rucaptcha.core.enums import ReCaptchaEnm
 from python_rucaptcha.re_captcha import ReCaptcha
-from python_rucaptcha.core.serializer import ResponseSer
+from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 
 
-class BaseReCaptcha(BaseTest):
+class TestReCaptcha(BaseTest):
     googlekey = "6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH"
     pageurl = "https://rucaptcha.com/demo/recaptcha-v2"
+    kwargs_params = {
+        "recaptchaDataSValue": "sample-recaptchaDataSValue",
+        "isInvisible": True,
+        "userAgent": "Some specific user agent",
+        "proxyType": "socks5",
+        "proxyAddress": BaseTest.proxyAddress,
+        "proxyPort": BaseTest.proxyPort,
+    }
 
+    @pytest.mark.parametrize("method", ReCaptchaEnm.list_values())
+    def test_args(self, method: str):
+        instance = ReCaptcha(
+            rucaptcha_key=self.RUCAPTCHA_KEY,
+            websiteURL=self.pageurl,
+            websiteKey=self.googlekey,
+            method=method,
+        )
+        assert instance.create_task_payload["clientKey"] == self.RUCAPTCHA_KEY
+        assert instance.create_task_payload["task"]["type"] == method
+        assert instance.create_task_payload["task"]["websiteURL"] == self.pageurl
+        assert instance.create_task_payload["task"]["websiteKey"] == self.googlekey
 
-class TestReCaptcha(BaseReCaptcha):
+    def test_kwargs(self):
+        instance = ReCaptcha(
+            rucaptcha_key=self.RUCAPTCHA_KEY,
+            websiteURL=self.pageurl,
+            websiteKey=self.googlekey,
+            method=ReCaptchaEnm.RecaptchaV2TaskProxyless,
+            **self.kwargs_params,
+        )
+        assert set(self.kwargs_params.keys()).issubset(set(instance.create_task_payload["task"].keys()))
+        assert set(self.kwargs_params.values()).issubset(set(instance.create_task_payload["task"].values()))
+
     """
     Success tests
     """
@@ -23,82 +53,62 @@ class TestReCaptcha(BaseReCaptcha):
     def test_basic_data(self):
         instance = ReCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            pageurl=self.pageurl,
-            googlekey=self.googlekey,
-            method=ReCaptchaEnm.USER_RECAPTCHA.value,
+            websiteURL=self.pageurl,
+            websiteKey=self.googlekey,
+            method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value,
         )
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == ReCaptchaEnm.USER_RECAPTCHA.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["googlekey"] == self.googlekey
 
         result = instance.captcha_handler()
 
         assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
+        if not result["errorId"]:
+            assert result["status"] == "ready"
+            assert isinstance(result["solution"], dict) is True
             assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
         else:
-            assert result["error"] is True
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
-    @pytest.mark.asyncio
     async def test_aio_basic_data(self):
         instance = ReCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            pageurl=self.pageurl,
-            googlekey=self.googlekey,
-            method=ReCaptchaEnm.USER_RECAPTCHA.value,
+            websiteURL=self.pageurl,
+            websiteKey=self.googlekey,
+            method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value,
         )
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == ReCaptchaEnm.USER_RECAPTCHA.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["googlekey"] == self.googlekey
 
         result = await instance.aio_captcha_handler()
 
         assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
+        if not result["errorId"]:
+            assert result["status"] == "ready"
+            assert isinstance(result["solution"], dict) is True
             assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
         else:
-            assert result["error"] is True
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12)
+            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
-        assert result.keys() == ResponseSer().dict().keys()
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_context_basic_data(self):
         with ReCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            pageurl=self.pageurl,
-            googlekey=self.googlekey,
-            method=ReCaptchaEnm.USER_RECAPTCHA.value,
+            websiteURL=self.pageurl,
+            websiteKey=self.googlekey,
+            method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value,
         ) as instance:
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == ReCaptchaEnm.USER_RECAPTCHA.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["googlekey"] == self.googlekey
+            assert instance.captcha_handler()
 
-    @pytest.mark.asyncio
     async def test_context_aio_basic_data(self):
         async with ReCaptcha(
             rucaptcha_key=self.RUCAPTCHA_KEY,
-            pageurl=self.pageurl,
-            googlekey=self.googlekey,
-            method=ReCaptchaEnm.USER_RECAPTCHA.value,
+            websiteURL=self.pageurl,
+            websiteKey=self.googlekey,
+            method=ReCaptchaEnm.RecaptchaV2TaskProxyless.value,
         ) as instance:
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == ReCaptchaEnm.USER_RECAPTCHA.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["googlekey"] == self.googlekey
+            assert await instance.aio_captcha_handler()
 
     """
     Fail tests
@@ -108,101 +118,7 @@ class TestReCaptcha(BaseReCaptcha):
         with pytest.raises(ValueError):
             ReCaptcha(
                 rucaptcha_key=self.RUCAPTCHA_KEY,
-                pageurl=self.pageurl,
-                googlekey=self.googlekey,
+                websiteURL=self.pageurl,
+                websiteKey=self.googlekey,
                 method=self.get_random_string(length=5),
             )
-
-
-class TestDeathByReCaptcha(BaseReCaptcha, DeathByTest):
-    """
-    Success tests
-    """
-
-    def test_basic_data(self):
-        instance = ReCaptcha(
-            rucaptcha_key=self.RUCAPTCHA_KEY,
-            service_type="deathbycaptcha",
-            pageurl=self.pageurl,
-            googlekey=self.googlekey,
-            method=ReCaptchaEnm.USER_RECAPTCHA.value,
-        )
-        assert instance.params.service_type == ServiceEnm.DEATHBYCAPTCHA
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == ReCaptchaEnm.USER_RECAPTCHA.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["googlekey"] == self.googlekey
-
-        result = instance.captcha_handler()
-
-        assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
-        else:
-            assert result["error"] is True
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
-
-        assert result.keys() == ResponseSer().dict().keys()
-
-    @pytest.mark.asyncio
-    async def test_aio_basic_data(self):
-        instance = ReCaptcha(
-            rucaptcha_key=self.RUCAPTCHA_KEY,
-            service_type="deathbycaptcha",
-            pageurl=self.pageurl,
-            googlekey=self.googlekey,
-            method=ReCaptchaEnm.USER_RECAPTCHA.value,
-        )
-        assert instance.params.service_type == ServiceEnm.DEATHBYCAPTCHA
-        assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-        assert instance.post_payload["method"] == ReCaptchaEnm.USER_RECAPTCHA.value
-        assert instance.post_payload["pageurl"] == self.pageurl
-        assert instance.post_payload["googlekey"] == self.googlekey
-
-        result = await instance.aio_captcha_handler()
-
-        assert isinstance(result, dict) is True
-        if result["error"] is False:
-            assert result["error"] is False
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] is None
-            assert isinstance(result["captchaSolve"], str) is True
-        else:
-            assert result["error"] is True
-            assert isinstance(result["taskId"], int) is True
-            assert result["errorBody"] == "ERROR_CAPTCHA_UNSOLVABLE"
-
-        assert result.keys() == ResponseSer().dict().keys()
-
-    def test_context_basic_data(self):
-        with ReCaptcha(
-            rucaptcha_key=self.RUCAPTCHA_KEY,
-            service_type="deathbycaptcha",
-            pageurl=self.pageurl,
-            googlekey=self.googlekey,
-            method=ReCaptchaEnm.USER_RECAPTCHA.value,
-        ) as instance:
-            assert instance.params.service_type == ServiceEnm.DEATHBYCAPTCHA
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == ReCaptchaEnm.USER_RECAPTCHA.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["googlekey"] == self.googlekey
-
-    @pytest.mark.asyncio
-    async def test_context_aio_basic_data(self):
-        async with ReCaptcha(
-            rucaptcha_key=self.RUCAPTCHA_KEY,
-            service_type="deathbycaptcha",
-            pageurl=self.pageurl,
-            googlekey=self.googlekey,
-            method=ReCaptchaEnm.USER_RECAPTCHA.value,
-        ) as instance:
-            assert instance.params.service_type == ServiceEnm.DEATHBYCAPTCHA
-            assert instance.params.rucaptcha_key == self.RUCAPTCHA_KEY
-            assert instance.post_payload["method"] == ReCaptchaEnm.USER_RECAPTCHA.value
-            assert instance.post_payload["pageurl"] == self.pageurl
-            assert instance.post_payload["googlekey"] == self.googlekey

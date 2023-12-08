@@ -1,7 +1,7 @@
 # python-rucaptcha
 
 
-![](https://github.com/AndreiDrang/python-rucaptcha/blob/master/files/RuCaptcha.png)
+![](files/RuCaptchaHigh.png)
 
 <a href="https://dashboard.capsolver.com/passport/register?inviteCode=kQTn-tG07Jb1">
     <img src="https://cdn.discordapp.com/attachments/1105172394655625306/1105180101802471575/20221207-160749.gif" alt="Capsolver's Banner">
@@ -12,7 +12,7 @@ At the lowest price on the market, you may receive a variety of solutions, inclu
 
 [![PyPI version](https://badge.fury.io/py/python-rucaptcha.svg)](https://badge.fury.io/py/python-rucaptcha)
 [![Python versions](https://img.shields.io/pypi/pyversions/python-rucaptcha.svg?logo=python&logoColor=FBE072)](https://badge.fury.io/py/python-rucaptcha)
-[![Downloads](https://pepy.tech/badge/python-rucaptcha/month)](https://pepy.tech/project/python-rucaptcha)
+[![Downloads](https://static.pepy.tech/badge/python-rucaptcha/month)](https://pepy.tech/project/python-rucaptcha)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/aec93bb04a277cf0dde9/maintainability)](https://codeclimate.com/github/AndreiDrang/python-rucaptcha/maintainability)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b4087362bd024b088b358b3e10e7a62f)](https://www.codacy.com/gh/AndreiDrang/python-rucaptcha/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AndreiDrang/python-rucaptcha&amp;utm_campaign=Badge_Grade)
@@ -63,12 +63,14 @@ Is described in the [documentation-website](https://andreidrang.github.io/python
 
 ### Changelog
 
+For full changelog info check - [Releases page](https://github.com/AndreiDrang/python-rucaptcha/releases).
+
+- v.6.0 - Library refactoring. Stop using `pydantic`, start using `msgspec`. Move to API v2. Drop Python 3.8 support. More details at [Releases page](https://github.com/AndreiDrang/python-rucaptcha/releases). 
 - v.5.3 - Added support for [Death By Captcha](https://www.deathbycaptcha.com?refid=1237267242) and other services by changing `service_type` and `url_request` \ `url_response` parameters.
 - v.5.2 - Added Audio captcha method.
 - v.5.1 - Check [releases page](https://github.com/AndreiDrang/python-rucaptcha/releases).
 - v.5.0 - Added AmazonWAF captcha method.
 - v.4.2 - Added [Yandex Smart Captcha](https://rucaptcha.com/api-rucaptcha#yandex).
-- v.4.0 - Rework classes and methods. Adding `TikTok` captcha. Adding inheritance and serializers. The `Callback server` is deprecated.
 
 ### Get API Key to work with the library
 1. On the page - https://rucaptcha.com/enterpage

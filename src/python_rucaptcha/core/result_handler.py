@@ -1,44 +1,16 @@
 import time
 import asyncio
+import logging
+from typing import Union
 
 import aiohttp
 import requests
 
 from .config import attempts_generator
-from .serializer import ResponseSer, ServiceGetResponseSer
+from .serializer import GetTaskResultRequestSer, GetTaskResultResponseSer
 
 
-def result_processing(captcha_response: ServiceGetResponseSer, result: ResponseSer) -> dict:
-    """
-    Function processing service response status values
-    """
-
-    # on error during solving
-    if captcha_response.status == 0:
-        result.error = True
-        result.errorBody = captcha_response.request
-
-    # if solving is success
-    elif captcha_response.status == 1:
-        result.error = False
-        result.errorBody = None
-        result.captchaSolve = captcha_response.request
-
-        # if this is ReCaptcha v3 then we get it from the server
-        if captcha_response.user_check and captcha_response.user_score:
-            result = result.dict()
-            result.update(
-                {
-                    "user_check": captcha_response.user_check,
-                    "user_score": captcha_response.user_score,
-                }
-            )
-            return result
-
-    return result.dict()
-
-
-def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, result: ResponseSer) -> dict:
+def get_sync_result(get_payload: GetTaskResultRequestSer, sleep_time: int, url_response: str) -> Union[dict, Exception]:
     """
     Function periodically send the SYNC request to service and wait for captcha solving result
     """
@@ -47,23 +19,26 @@ def get_sync_result(get_payload: dict, sleep_time: int, url_response: str, resul
     for _ in attempts:
         try:
             # send a request for the result of solving the captcha
-            captcha_response = ServiceGetResponseSer(**requests.get(url_response, params=get_payload).json())
+            captcha_response = GetTaskResultResponseSer(
+                **requests.post(url_response, json=get_payload.to_dict()).json(), taskId=get_payload.taskId
+            )
+            logging.warning(f"{captcha_response = }")
             # if the captcha has not been resolved yet, wait
-            if captcha_response.request == "CAPCHA_NOT_READY":
+            if captcha_response.status == "processing":
                 time.sleep(sleep_time)
-                result.error = True
-                result.errorBody = "ERROR_CAPTCHA_UNSOLVABLE"
-            else:
-                return result_processing(captcha_response, result)
-
+                continue
+            elif captcha_response.status == "ready":
+                break
+            elif captcha_response.errorId != 0:
+                return captcha_response.to_dict()
         except Exception as error:
-            result.error = True
-            result.errorBody = str(error)
-
-    return result.dict()
+            return error
+    return captcha_response.to_dict()
 
 
-async def get_async_result(get_payload: dict, sleep_time: int, url_response: str, result: ResponseSer) -> dict:
+async def get_async_result(
+    get_payload: GetTaskResultRequestSer, sleep_time: int, url_response: str
+) -> Union[dict, Exception]:
     """
     Function periodically send the ASYNC request to service and wait for captcha solving result
     """
@@ -73,20 +48,18 @@ async def get_async_result(get_payload: dict, sleep_time: int, url_response: str
         for _ in attempts:
             try:
                 # send a request for the result of solving the captcha
-                async with session.get(url_response, params=get_payload, raise_for_status=True) as resp:
+                async with session.post(url_response, json=get_payload.to_dict(), raise_for_status=True) as resp:
                     captcha_response = await resp.json(content_type=None)
-                    captcha_response = ServiceGetResponseSer(**captcha_response)
+                    captcha_response = GetTaskResultResponseSer(**captcha_response, taskId=get_payload.taskId)
 
                     # if the captcha has not been resolved yet, wait
-                    if captcha_response.request == "CAPCHA_NOT_READY":
+                    if captcha_response.status == "processing":
                         await asyncio.sleep(sleep_time)
-                        result.error = True
-                        result.errorBody = "ERROR_CAPTCHA_UNSOLVABLE"
-
-                    else:
-                        return result_processing(captcha_response, result)
-
+                        continue
+                    elif captcha_response.status == "ready":
+                        break
+                    elif captcha_response.errorId != 0:
+                        return captcha_response.to_dict()
             except Exception as error:
-                result.error = True
-                result.errorBody = str(error)
-    return result.dict()
+                return error
+    return captcha_response.to_dict()

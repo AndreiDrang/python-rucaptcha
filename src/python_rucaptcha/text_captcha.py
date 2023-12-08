@@ -1,3 +1,5 @@
+import logging
+
 from .core.base import BaseCaptcha
 from .core.enums import TextCaptchaEnm
 
@@ -5,7 +7,7 @@ from .core.enums import TextCaptchaEnm
 class TextCaptcha(BaseCaptcha):
     def __init__(
         self,
-        language: int = 0,
+        languagePool: str = "en",
         *args,
         **kwargs,
     ):
@@ -14,40 +16,75 @@ class TextCaptcha(BaseCaptcha):
 
         Args:
             rucaptcha_key: User API key
-            language: Captcha text lang:
-                        0 - not defined
-                        1 - captcha contains only Cyrillic
-                        2 - captcha contains only latin characters
+            languagePool: Used to choose the workers for solving the captcha by their language.
+                            Applicable to image-based and text-based captchas.\n
+                            `en` - English-speaking workers\n
+                            `rn` - Russian-speaking workers.
+            kwargs: Additional not required params for this captcha type
 
         Examples:
-            >>> TextCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             language=2).captcha_handler(textcaptcha="Our planet name?")
+            >>> TextCaptcha(rucaptcha_key="aa90...51122",
+            ...             languagePool='en'
+            ...             ).captcha_handler(textcaptcha="If tomorrow is Saturday, what day is today?")
             {
-                'captchaSolve': 'earth',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "text":"SUNDAY"
+               },
+               "cost":0.03669,
+               "ip":"46.53.241.91",
+               "createTime":1695617910,
+               "endTime":1695617965,
+               "solveCount":2,
+               "taskId":5423543
             }
 
-            >>> TextCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122"
-            ...             ).captcha_handler(textcaptcha="Our planet name?")
+            >>> TextCaptcha(rucaptcha_key="aa90...51122",
+            ...             ).captcha_handler(textcaptcha="If tomorrow is Saturday, what day is today?")
             {
-                'captchaSolve': 'earth',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "text":"SUNDAY"
+               },
+               "cost":0.03669,
+               "ip":"46.53.241.91",
+               "createTime":1695617910,
+               "endTime":1695617965,
+               "solveCount":2,
+               "taskId":5423543
+            }
+
+            >>> await TextCaptcha(rucaptcha_key="aa90...51122",
+            ...             ).aio_captcha_handler(textcaptcha="If tomorrow is Saturday, what day is today?")
+            {
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "text":"SUNDAY"
+               },
+               "cost":0.03669,
+               "ip":"46.53.241.91",
+               "createTime":1695617910,
+               "endTime":1695617965,
+               "solveCount":2,
+               "taskId":5423543
             }
 
         Returns:
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_text_captcha
+            https://2captcha.com/api-docs/text
+
+            https://rucaptcha.com/api-docs/text
         """
 
-        super().__init__(method=TextCaptchaEnm.TEXT.value, *args, **kwargs)
+        super().__init__(method=TextCaptchaEnm.TextCaptchaTask.value, *args, **kwargs)
 
-        self.post_payload.update({"language": language})
+        self.create_task_payload.update({"languagePool": languagePool})
+        logging.warning(f"{self.create_task_payload = }")
 
     def captcha_handler(self, textcaptcha: str, **kwargs) -> dict:
         """
@@ -56,24 +93,13 @@ class TextCaptcha(BaseCaptcha):
         Args:
             textcaptcha: Captcha text
 
-        Examples:
-            >>> TextCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             language=2).captcha_handler(textcaptcha="Our planet name?")
-            {
-                'captchaSolve': 'earth',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
-            }
-
         Returns:
             Dict with full server response
 
         Notes:
             Check class docstirng for more info
         """
-        self.post_payload.update({"textcaptcha": textcaptcha})
-
+        self.create_task_payload["task"].update({"comment": textcaptcha})
         return self._processing_response(**kwargs)
 
     async def aio_captcha_handler(self, textcaptcha: str) -> dict:
@@ -83,21 +109,11 @@ class TextCaptcha(BaseCaptcha):
         Args:
             textcaptcha: Captcha text
 
-        Examples:
-            >>> await TextCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             language=2).aio_captcha_handler(textcaptcha="Our planet name?")
-            {
-                'captchaSolve': 'earth',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
-            }
-
         Returns:
             Dict with full server response
 
         Notes:
             Check class docstirng for more info
         """
-        self.post_payload.update({"textcaptcha": textcaptcha})
+        self.create_task_payload["task"].update({"comment": textcaptcha})
         return await self._aio_processing_response()

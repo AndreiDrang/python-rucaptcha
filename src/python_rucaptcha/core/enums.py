@@ -32,40 +32,51 @@ class SaveFormatsEnm(str, MyEnum):
 
 
 class GeetestEnm(str, MyEnum):
-    GEETEST = "geetest"
-    GEETEST_V4 = "geetest_v4"
+    GeeTestTask = "GeeTestTask"
+    GeeTestTaskProxyless = "GeeTestTaskProxyless"
 
 
 class ImageCaptchaEnm(str, MyEnum):
-    BASE64 = "base64"
+    ImageToTextTask = "ImageToTextTask"
 
 
 class CapyPuzzleEnm(str, MyEnum):
-    CAPY = "capy"
+    CapyTask = "CapyTask"
+    CapyTaskProxyless = "CapyTaskProxyless"
 
 
 class FunCaptchaEnm(str, MyEnum):
-    FUNCAPTCHA = "funcaptcha"
+    FunCaptchaTaskProxyless = "FunCaptchaTaskProxyless"
+    FunCaptchaTask = "FunCaptchaTask"
 
 
 class ReCaptchaEnm(str, MyEnum):
-    USER_RECAPTCHA = "userrecaptcha"
+    RecaptchaV2TaskProxyless = "RecaptchaV2TaskProxyless"
+    RecaptchaV2Task = "RecaptchaV2Task"
+
+    RecaptchaV2EnterpriseTaskProxyless = "RecaptchaV2EnterpriseTaskProxyless"
+    RecaptchaV2EnterpriseTask = "RecaptchaV2EnterpriseTask"
+
+    RecaptchaV3TaskProxyless = "RecaptchaV3TaskProxyless"
 
 
-class LeminCroppedCaptchaEnm(str, MyEnum):
-    LEMIN = "lemin"
+class LeminCaptchaEnm(str, MyEnum):
+    LeminTaskProxyless = "LeminTaskProxyless"
+    LeminTask = "LeminTask"
 
 
 class HCaptchaEnm(str, MyEnum):
-    HCAPTCHA = "hcaptcha"
+    HCaptchaTask = "HCaptchaTask"
+    HCaptchaTaskProxyless = "HCaptchaTaskProxyless"
 
 
 class KeyCaptchaEnm(str, MyEnum):
-    KEYCAPTCHA = "keycaptcha"
+    KeyCaptchaTask = "KeyCaptchaTask"
+    KeyCaptchaTaskProxyless = "KeyCaptchaTaskProxyless"
 
 
 class RotateCaptchaEnm(str, MyEnum):
-    ROTATECAPTCHA = "rotatecaptcha"
+    RotateTask = "RotateTask"
 
 
 class TikTokCaptchaEnm(str, MyEnum):
@@ -73,40 +84,28 @@ class TikTokCaptchaEnm(str, MyEnum):
 
 
 class ControlEnm(str, MyEnum):
-    # control method
-    CONTROL = "control"
-
-    # default
-    GET = "get"
-    # https://rucaptcha.com/api-rucaptcha#manage_pingback
-    ADD_PINGBACK = "add_pingback"
-    GET_PINGBACK = "get_pingback"
-    DEL_PINGBACK = "del_pingback"
-
-    # https://rucaptcha.com/api-rucaptcha#additional
-    GETBALANCE = "getbalance"
-    GET2 = "get2"
-
-    # https://rucaptcha.com/api-rucaptcha#complain
-    REPORTGOOD = "reportgood"
-    REPORTBAD = "reportbad"
-
-
-class YandexSmartCaptchaEnm(str, MyEnum):
-    YANDEX = "yandex"
+    control = "control"
+    # https://rucaptcha.com/api-docs/get-balance
+    getBalance = "getBalance"
+    # https://rucaptcha.com/api-docs/report-correct
+    reportCorrect = "reportCorrect"
+    # https://rucaptcha.com/api-docs/report-incorrect
+    reportIncorrect = "reportIncorrect"
 
 
 class TurnstileCaptchaEnm(str, MyEnum):
-    TURNSTILE = "turnstile"
+    TurnstileTaskProxyless = "TurnstileTaskProxyless"
+    TurnstileTask = "TurnstileTask"
 
 
 class AmazonWAFCaptchaEnm(str, MyEnum):
-    AMAZON_WAF = "amazon_waf"
+    AmazonTask = "AmazonTask"
+    AmazonTaskProxyless = "AmazonTaskProxyless"
 
 
 class TextCaptchaEnm(str, MyEnum):
-    TEXT = "text"
+    TextCaptchaTask = "TextCaptchaTask"
 
 
 class AudioCaptchaEnm(str, MyEnum):
-    AUDIO = "audio"
+    AudioTask = "AudioTask"

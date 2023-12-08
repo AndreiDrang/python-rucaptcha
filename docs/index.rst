@@ -2,7 +2,7 @@
 
 python-rucaptcha
 ================
-.. image:: _static/Captcha300x.png
+.. image:: _static/RuCaptchaMedium.png
     :align: center
 
 Python3 library for `RuCaptcha <https://rucaptcha.com/?from=4170435>`_ and `2Captcha <https://2captcha.com/?from=4170435>`_ service API.
@@ -10,6 +10,8 @@ Python3 library for `RuCaptcha <https://rucaptcha.com/?from=4170435>`_ and `2Cap
 The library is intended for software developers and is used to work with the `RuCaptcha <https://rucaptcha.com/?from=4170435>`_ and `2Captcha <https://2captcha.com/?from=4170435>`_ service API.
 
 Support of the service `Death By Captcha <https://deathbycaptcha.com?refid=1237267242>`_ is integrated into this library, more information in the library documentation or in the `service docs <https://deathbycaptcha.com/api/2captcha?refid=1237267242>`_.
+
+Check our other projects here - `RedPandaDev group <https://red-panda-dev.xyz/blog/>`_. For example - `Torrents Tracker bot <https://t.me/torrents_tracker_bot>`_ for Telegram
 
 .. toctree::
    :maxdepth: 1
@@ -36,7 +38,6 @@ Support of the service `Death By Captcha <https://deathbycaptcha.com?refid=12372
    modules/rotate/example.rst
    modules/text/example.rst
    modules/turnstile/example.rst
-   modules/yandex/example.rst
    modules/image/example.rst
    modules/audio/example.rst
    modules/control/example.rst

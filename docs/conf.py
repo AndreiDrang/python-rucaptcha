@@ -16,9 +16,8 @@ from python_rucaptcha import (
     key_captcha,
     text_captcha,
     image_captcha,
+    lemin_captcha,
     rotate_captcha,
-    yandex_smart_captcha,
-    lemin_cropped_captcha,
 )
 from python_rucaptcha.__version__ import __version__
 
@@ -44,8 +43,8 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 html_theme = "jinja"
 html_theme_options = {"index_sidebar_logo": False}
 html_static_path = ["_static"]
-html_favicon = "_static/CaptchaESm.png"
-html_logo = "_static/CaptchaSm.png"
+html_favicon = "_static/RuCaptchaMedium.png"
+html_logo = "_static/RuCaptchaMedium.png"
 html_title = f"python-rucaptcha ({__version__})"
 html_show_sourcelink = False
 
@@ -61,6 +60,7 @@ html_context = {
             "DeathByCaptcha",
             "https://deathbycaptcha.com?refid=1237267242",
         ),
+        ProjectLink("RedPandaDev group", "https://red-panda-dev.xyz/blog/"),
     ]
 }
 html_sidebars = {

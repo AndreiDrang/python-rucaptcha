@@ -1,3 +1,5 @@
+from typing import Union
+
 from .core.base import BaseCaptcha
 from .core.enums import HCaptchaEnm
 
@@ -5,9 +7,9 @@ from .core.enums import HCaptchaEnm
 class HCaptcha(BaseCaptcha):
     def __init__(
         self,
-        sitekey: str,
-        pageurl: str,
-        method: str = HCaptchaEnm.HCAPTCHA.value,
+        websiteURL: str,
+        websiteKey: str,
+        method: Union[str, HCaptchaEnm] = HCaptchaEnm.HCaptchaTaskProxyless,
         *args,
         **kwargs,
     ):
@@ -16,97 +18,76 @@ class HCaptcha(BaseCaptcha):
 
         Args:
             rucaptcha_key: User API key
-            sitekey: The value of the `data-sitekey` parameter found on the site
-            pageurl: Full URL of the captcha page
+            websiteURL: Full URL of the captcha page
+            websiteKey: The value of the `data-sitekey` parameter found on the site
             method: Captcha type
             kwargs: Not required params for task creation request
 
         Examples:
             >>> HCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
-            ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
-            ...             method=HCaptchaEnm.HCAPTCHA.value
+            ...             websiteKey="3ceb8624-1970-4e6b-91d5-70317b70b651",
+            ...             websiteURL="https://rucaptcha.com/demo/hcaptcha",
+            ...             method=HCaptchaEnm.HCaptchaTaskProxyless.value
             ...             ).captcha_handler()
             {
-               "captchaSolve": "P1_eyJ.....cp_J",
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "token":"P1_eyJ0eXAiOiJKV...1LDq89KyJ5A",
+                  "respKey":"E0_eyJ0eXAiOiJK...y2w5_YbP8PGuJBBo",
+                  "userAgent":"Mozilla/5.0 (.......",
+                  "gRecaptchaResponse":"P1_eyJ0eXAiOiJKV...1LDq89KyJ5A"
+               },
+               "cost":"0.00299",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId": 73243152973,
             }
 
             >>> await HCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
-            ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
-            ...             method=HCaptchaEnm.HCAPTCHA.value
+            ...             websiteKey="3ceb8624-1970-4e6b-91d5-70317b70b651",
+            ...             websiteURL="https://rucaptcha.com/demo/hcaptcha",
+            ...             method=HCaptchaEnm.HCaptchaTaskProxyless.value
             ...             ).aio_captcha_handler()
             {
-               "captchaSolve": "P1_eyJ.....cp_J",
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
-            }
-
-            DeathByCaptcha:
-
-            >>> HCaptcha(rucaptcha_key="some_username:some_password",
-            ...             service_type="deathbycaptcha",
-            ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
-            ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
-            ...             method=HCaptchaEnm.HCAPTCHA.value
-            ...             ).captcha_handler()
-            {
-                'captchaSolve': '03A....8h',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
-            }
-
-            >>> await HCaptcha(rucaptcha_key="some_username:some_password",
-            ...             service_type="deathbycaptcha",
-            ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
-            ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
-            ...             method=HCaptchaEnm.HCAPTCHA.value
-            ...             ).aio_captcha_handler()
-            {
-                'captchaSolve': '03A....8h',
-                'taskId': '73043008354',
-                'error': False,
-                'errorBody': None
+               "errorId":0,
+               "status":"ready",
+               "solution":{
+                  "token":"P1_eyJ0eXAiOiJKV...1LDq89KyJ5A",
+                  "respKey":"E0_eyJ0eXAiOiJK...y2w5_YbP8PGuJBBo",
+                  "userAgent":"Mozilla/5.0 (........",
+                  "gRecaptchaResponse":"P1_eyJ0eXAiOiJKV...1LDq89KyJ5A"
+               },
+               "cost":"0.00299",
+               "ip":"1.2.3.4",
+               "createTime":1692863536,
+               "endTime":1692863556,
+               "solveCount":1,
+               "taskId": 73243152973,
             }
 
         Returns:
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-rucaptcha#solving_hcaptcha
+            https://rucaptcha.com/api-docs/hcaptcha
         """
         super().__init__(method=method, *args, **kwargs)
 
-        self.post_payload.update({"pageurl": pageurl, "sitekey": sitekey})
+        self.create_task_payload["task"].update({"websiteURL": websiteURL, "websiteKey": websiteKey})
 
         # check user params
         if method not in HCaptchaEnm.list_values():
             raise ValueError(f"Invalid method parameter set, available - {HCaptchaEnm.list_values()}")
 
-    def captcha_handler(self, **kwargs):
+    def captcha_handler(self, **kwargs) -> dict:
         """
         Sync solving method
 
         Args:
             kwargs: Parameters for the `requests` library
-
-        Examples:
-            >>> HCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
-            ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
-            ...             method=HCaptchaEnm.HCAPTCHA.value
-            ...             ).captcha_handler()
-            {
-               "captchaSolve": "P1_eyJ.....cp_J",
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
-            }
 
         Returns:
             Dict with full server response
@@ -117,22 +98,9 @@ class HCaptcha(BaseCaptcha):
 
         return self._processing_response(**kwargs)
 
-    async def aio_captcha_handler(self):
+    async def aio_captcha_handler(self) -> dict:
         """
         Async solving method
-
-        Examples:
-            >>> await HCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             sitekey="3ceb8624-1970-4e6b-91d5-70317b70b651",
-            ...             pageurl="https://rucaptcha.com/demo/hcaptcha",
-            ...             method=HCaptchaEnm.HCAPTCHA.value
-            ...             ).aio_captcha_handler()
-            {
-               "captchaSolve": "P1_eyJ.....cp_J",
-               "taskId": 73052314114,
-               "error": False,
-               "errorBody": None
-            }
 
         Returns:
             Dict with full server response
