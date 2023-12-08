@@ -67,3 +67,7 @@ To import this module:
 .. autoclass:: python_rucaptcha.core.enums.AmazonWAFCaptchaEnm
     :members:
     :undoc-members:
+
+.. autoclass:: python_rucaptcha.core.enums.CutCaptchaEnm
+    :members:
+    :undoc-members:

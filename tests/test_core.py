@@ -4,7 +4,7 @@ from urllib3.util.retry import Retry
 
 from tests.conftest import BaseTest
 from python_rucaptcha.core.base import BaseCaptcha
-from python_rucaptcha.core.enums import MyEnum, ControlEnm
+from python_rucaptcha.core.enums import MyEnum, ControlEnm, ServiceEnm
 from python_rucaptcha.core.config import RETRIES, ASYNC_RETRIES, attempts_generator
 
 
@@ -104,3 +104,12 @@ class TestConfig(BaseTest):
         for attempt in attempts:
             assert isinstance(attempt, int)
         assert attempt == 4
+
+
+class TestDeathbycaptcha(BaseTest):
+    def test_attempts_generator(self):
+        BaseCaptcha(
+            rucaptcha_key=self.RUCAPTCHA_KEY,
+            service_type=ServiceEnm.DEATHBYCAPTCHA.value,
+            method=ControlEnm.control.value,
+        )

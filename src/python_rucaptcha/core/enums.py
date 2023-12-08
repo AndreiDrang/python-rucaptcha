@@ -109,3 +109,8 @@ class TextCaptchaEnm(str, MyEnum):
 
 class AudioCaptchaEnm(str, MyEnum):
     AudioTask = "AudioTask"
+
+
+class CutCaptchaEnm(str, MyEnum):
+    CutCaptchaTask = "CutCaptchaTask"
+    CutCaptchaTaskProxyless = "CutCaptchaTaskProxyless"

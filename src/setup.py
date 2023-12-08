@@ -11,7 +11,7 @@ from python_rucaptcha.__version__ import __version__
 
 # Package meta-data.
 NAME = "python-rucaptcha"
-DESCRIPTION = "Python 3.7+ RuCaptcha library with AIO module."
+DESCRIPTION = "Python 3.9+ RuCaptcha library with AIO module."
 URL = "https://andreidrang.github.io/python-rucaptcha/"
 EMAIL = "python-captcha@pm.me"
 AUTHOR = "AndreiDrang, redV0ID"

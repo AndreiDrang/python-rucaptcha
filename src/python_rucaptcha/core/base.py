@@ -3,15 +3,14 @@ import time
 import uuid
 import base64
 import asyncio
-from typing import Union, Optional
+from typing import Optional
 from pathlib import Path
 
 import aiohttp
 import requests
 from requests.adapters import HTTPAdapter
 
-from . import enums
-from .enums import SaveFormatsEnm
+from .enums import ServiceEnm, SaveFormatsEnm
 from .config import RETRIES, ASYNC_RETRIES
 from .serializer import TaskSer, CaptchaOptionsSer, CreateTaskBaseSer, GetTaskResultRequestSer, GetTaskResultResponseSer
 from .result_handler import get_sync_result, get_async_result
@@ -25,7 +24,7 @@ class BaseCaptcha:
         rucaptcha_key: str,
         method: str,
         sleep_time: int = 10,
-        service_type: str = enums.ServiceEnm.TWOCAPTCHA.value,
+        service_type: str = ServiceEnm.TWOCAPTCHA.value,
         **kwargs,
     ):
         """
@@ -56,7 +55,7 @@ class BaseCaptcha:
         self.session.mount("http://", HTTPAdapter(max_retries=RETRIES))
         self.session.mount("https://", HTTPAdapter(max_retries=RETRIES))
 
-    def _processing_response(self, **kwargs: dict) -> Union[dict, Exception]:
+    def _processing_response(self, **kwargs: dict) -> dict:
         """
         Method processing captcha solving task creation result
         :param kwargs: additional params for Requests library
@@ -71,7 +70,10 @@ class BaseCaptcha:
             else:
                 return response.to_dict()
         except Exception as error:
-            return error
+            self.result.errorId = 12
+            self.result.errorCode = self.NO_CAPTCHA_ERR
+            self.result.errorDescription = str(error)
+            return self.result.to_dict()
 
         # wait captcha solving
         time.sleep(self.params.sleep_time)
@@ -96,7 +98,7 @@ class BaseCaptcha:
                     async with session.get(url=url, **kwargs) as resp:
                         return await resp.content.read()
 
-    async def _aio_processing_response(self) -> Union[dict, Exception]:
+    async def _aio_processing_response(self) -> dict:
         """
         Method processing async captcha solving task creation result
         """
@@ -109,7 +111,10 @@ class BaseCaptcha:
             else:
                 return response.to_dict()
         except Exception as error:
-            return error
+            self.result.errorId = 12
+            self.result.errorCode = self.NO_CAPTCHA_ERR
+            self.result.errorDescription = str(error)
+            return self.result.to_dict()
 
         # wait captcha solving
         await asyncio.sleep(self.params.sleep_time)
