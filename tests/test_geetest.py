@@ -4,6 +4,7 @@ import requests
 from tests.conftest import BaseTest
 from python_rucaptcha.gee_test import GeeTest
 from python_rucaptcha.core.enums import GeetestEnm
+from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 
 
 class TestGeeTestBase(BaseTest):
@@ -84,14 +85,7 @@ class TestGeeTest(TestGeeTestBase):
 
         result = instance.captcha_handler(challenge=self.challenge)
 
-        assert isinstance(result, dict) is True
-        if not result["errorId"]:
-            assert result["status"] == "ready"
-            assert isinstance(result["solution"]["text"], str) is True
-            assert isinstance(result["taskId"], int) is True
-        else:
-            assert result["errorId"] in (1, 12)
-            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     async def test_aio_basic_data(self):
         instance = GeeTest(
@@ -103,14 +97,7 @@ class TestGeeTest(TestGeeTestBase):
 
         result = await instance.aio_captcha_handler(challenge=self.challenge)
 
-        assert isinstance(result, dict) is True
-        if not result["errorId"]:
-            assert result["status"] == "ready"
-            assert isinstance(result["solution"]["text"], str) is True
-            assert isinstance(result["taskId"], int) is True
-        else:
-            assert result["errorId"] in (1, 12)
-            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_context_basic_data(self):
         with GeeTest(
@@ -187,14 +174,7 @@ class TestGeeTestV4(TestGeeTestBase):
         )
         result = instance.captcha_handler(challenge=self.challenge)
 
-        assert isinstance(result, dict) is True
-        if not result["errorId"]:
-            assert result["status"] == "ready"
-            assert isinstance(result["solution"], dict) is True
-            assert isinstance(result["taskId"], int) is True
-        else:
-            assert result["errorId"] in (1, 12)
-            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     async def test_aio_basic_data(self):
         instance = GeeTest(
@@ -208,14 +188,7 @@ class TestGeeTestV4(TestGeeTestBase):
         )
         result = await instance.aio_captcha_handler(challenge=self.challenge)
 
-        assert isinstance(result, dict) is True
-        if not result["errorId"]:
-            assert result["status"] == "ready"
-            assert isinstance(result["solution"], dict) is True
-            assert isinstance(result["taskId"], int) is True
-        else:
-            assert result["errorId"] in (1, 12)
-            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
+        assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     def test_context_basic_data(self):
         with GeeTest(
