@@ -109,5 +109,7 @@ class TestConfig(BaseTest):
 class TestDeathbycaptcha(BaseTest):
     def test_attempts_generator(self):
         BaseCaptcha(
-            rucaptcha_key=self.RUCAPTCHA_KEY, service_type=ServiceEnm.DEATHBYCAPTCHA, method=ControlEnm.control.value
+            rucaptcha_key=self.RUCAPTCHA_KEY,
+            service_type=ServiceEnm.DEATHBYCAPTCHA.value,
+            method=ControlEnm.control.value,
         )
