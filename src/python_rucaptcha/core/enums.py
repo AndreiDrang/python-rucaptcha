@@ -114,3 +114,7 @@ class AudioCaptchaEnm(str, MyEnum):
 class CutCaptchaEnm(str, MyEnum):
     CutCaptchaTask = "CutCaptchaTask"
     CutCaptchaTaskProxyless = "CutCaptchaTaskProxyless"
+
+
+class DataDomeSliderEnm(str, MyEnum):
+    DataDomeSliderTask = "DataDomeSliderTask"
