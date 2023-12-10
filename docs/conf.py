@@ -19,6 +19,7 @@ from python_rucaptcha import (
     lemin_captcha,
     rotate_captcha,
     datadome_captcha,
+    cyber_siara_captcha,
 )
 from python_rucaptcha.__version__ import __version__
 

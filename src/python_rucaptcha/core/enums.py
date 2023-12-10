@@ -118,3 +118,8 @@ class CutCaptchaEnm(str, MyEnum):
 
 class DataDomeSliderEnm(str, MyEnum):
     DataDomeSliderTask = "DataDomeSliderTask"
+
+
+class CyberSiARAEnm(str, MyEnum):
+    AntiCyberSiAraTask = "AntiCyberSiAraTask"
+    AntiCyberSiAraTaskProxyless = "AntiCyberSiAraTaskProxyless"
