@@ -71,3 +71,7 @@ To import this module:
 .. autoclass:: python_rucaptcha.core.enums.CutCaptchaEnm
     :members:
     :undoc-members:
+
+.. autoclass:: python_rucaptcha.core.enums.DataDomeSliderEnm
+    :members:
+    :undoc-members:
