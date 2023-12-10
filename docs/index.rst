@@ -41,6 +41,7 @@ Check our other projects here - `RedPandaDev group <https://red-panda-dev.xyz/bl
    modules/image/example.rst
    modules/audio/example.rst
    modules/cut-captcha/example.rst
+   modules/datadome-captcha/example.rst
    modules/control/example.rst
 
 .. toctree::
