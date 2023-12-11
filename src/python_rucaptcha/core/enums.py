@@ -123,3 +123,8 @@ class DataDomeSliderEnm(str, MyEnum):
 class CyberSiARAEnm(str, MyEnum):
     AntiCyberSiAraTask = "AntiCyberSiAraTask"
     AntiCyberSiAraTaskProxyless = "AntiCyberSiAraTaskProxyless"
+
+
+class MTCaptchaEnm(str, MyEnum):
+    MtCaptchaTask = "MtCaptchaTask"
+    MtCaptchaTaskProxyless = "MtCaptchaTaskProxyless"
