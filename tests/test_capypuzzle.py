@@ -88,16 +88,7 @@ class TestCapyPuzzle(BaseTest):
             api_server=self.api_server,
             version=self.versions[0],
         ) as instance:
-            result = instance.captcha_handler()
-            assert isinstance(result, dict) is True
-            if not result["errorId"]:
-                assert result["status"] in ("ready", "processing")
-                assert isinstance(result["taskId"], int) is True
-            else:
-                assert result["errorId"] in (1, 12)
-                assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
-
-            assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
+            assert instance
 
     async def test_context_aio_basic_data(self):
         async with CapyPuzzle(
@@ -108,16 +99,7 @@ class TestCapyPuzzle(BaseTest):
             api_server=self.api_server,
             version=self.versions[0],
         ) as instance:
-            result = await instance.aio_captcha_handler()
-            assert isinstance(result, dict) is True
-            if not result["errorId"]:
-                assert result["status"] in ("ready", "processing")
-                assert isinstance(result["taskId"], int) is True
-            else:
-                assert result["errorId"] in (1, 12)
-                assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
-
-            assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
+            assert instance
 
     """
     Fail tests

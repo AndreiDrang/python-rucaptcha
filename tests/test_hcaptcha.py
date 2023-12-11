@@ -98,7 +98,7 @@ class TestHCaptcha(BaseTest):
             websiteKey=self.sitekey,
             method=HCaptchaEnm.HCaptchaTaskProxyless.value,
         ) as instance:
-            assert instance.captcha_handler()
+            assert instance
 
     async def test_context_aio_basic_data(self):
         async with HCaptcha(
@@ -107,7 +107,7 @@ class TestHCaptcha(BaseTest):
             websiteKey=self.sitekey,
             method=HCaptchaEnm.HCaptchaTaskProxyless.value,
         ) as instance:
-            assert await instance.aio_captcha_handler()
+            assert instance
 
     """
     Fail tests

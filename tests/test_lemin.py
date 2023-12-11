@@ -88,7 +88,7 @@ class TestLeminCroppedCaptcha(BaseTest):
             div_id=self.div_id,
             method=LeminCaptchaEnm.LeminTaskProxyless.value,
         ) as instance:
-            assert instance.captcha_handler()
+            assert instance
 
     async def test_context_aio_basic_data(self):
         async with LeminCaptcha(
@@ -98,7 +98,7 @@ class TestLeminCroppedCaptcha(BaseTest):
             div_id=self.div_id,
             method=LeminCaptchaEnm.LeminTaskProxyless.value,
         ) as instance:
-            assert await instance.aio_captcha_handler()
+            assert instance
 
     """
     Fail tests

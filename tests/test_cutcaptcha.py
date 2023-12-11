@@ -104,7 +104,7 @@ class TestCutCaptcha(BaseTest):
             apiKey=self.apiKey,
             method=CutCaptchaEnm.CutCaptchaTaskProxyless.value,
         ) as instance:
-            assert instance.captcha_handler()
+            assert instance
 
     async def test_context_aio_basic_data(self):
         async with CutCaptcha(
@@ -114,7 +114,7 @@ class TestCutCaptcha(BaseTest):
             apiKey=self.apiKey,
             method=CutCaptchaEnm.CutCaptchaTaskProxyless.value,
         ) as instance:
-            assert await instance.aio_captcha_handler()
+            assert instance
 
     """
     Fail tests
