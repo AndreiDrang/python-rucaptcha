@@ -128,3 +128,7 @@ class CyberSiARAEnm(str, MyEnum):
 class MTCaptchaEnm(str, MyEnum):
     MtCaptchaTask = "MtCaptchaTask"
     MtCaptchaTaskProxyless = "MtCaptchaTaskProxyless"
+
+
+class BoundingBoxCaptchaEnm(str, MyEnum):
+    BoundingBoxTask = "BoundingBoxTask"
