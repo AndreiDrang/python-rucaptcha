@@ -136,3 +136,7 @@ class BoundingBoxCaptchaEnm(str, MyEnum):
 
 class DrawAroundCaptchaEnm(str, MyEnum):
     DrawAroundTask = "DrawAroundTask"
+
+
+class CoordinatesCaptchaEnm(str, MyEnum):
+    CoordinatesTask = "CoordinatesTask"
