@@ -140,3 +140,7 @@ class DrawAroundCaptchaEnm(str, MyEnum):
 
 class CoordinatesCaptchaEnm(str, MyEnum):
     CoordinatesTask = "CoordinatesTask"
+
+
+class GridCaptchaEnm(str, MyEnum):
+    GridTask = "GridTask"
