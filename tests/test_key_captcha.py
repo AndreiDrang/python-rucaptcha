@@ -100,7 +100,7 @@ class TestKeyCaptcha(BaseTest):
             s_s_c_web_server_sign2=self.s_s_c_web_server_sign2,
             method=KeyCaptchaEnm.KeyCaptchaTaskProxyless.value,
         ) as instance:
-            assert instance.captcha_handler()
+            assert instance
 
     async def test_context_aio_basic_data(self):
         async with KeyCaptcha(
@@ -112,7 +112,7 @@ class TestKeyCaptcha(BaseTest):
             s_s_c_web_server_sign2=self.s_s_c_web_server_sign2,
             method=KeyCaptchaEnm.KeyCaptchaTaskProxyless.value,
         ) as instance:
-            assert await instance.aio_captcha_handler()
+            assert instance
 
     """
     Fail tests

@@ -79,3 +79,23 @@ To import this module:
 .. autoclass:: python_rucaptcha.core.enums.CyberSiARAEnm
     :members:
     :undoc-members:
+
+.. autoclass:: python_rucaptcha.core.enums.MTCaptchaEnm
+    :members:
+    :undoc-members:
+
+.. autoclass:: python_rucaptcha.core.enums.BoundingBoxCaptchaEnm
+    :members:
+    :undoc-members:
+
+.. autoclass:: python_rucaptcha.core.enums.DrawAroundCaptchaEnm
+    :members:
+    :undoc-members:
+
+.. autoclass:: python_rucaptcha.core.enums.CoordinatesCaptchaEnm
+    :members:
+    :undoc-members:
+
+.. autoclass:: python_rucaptcha.core.enums.GridCaptchaEnm
+    :members:
+    :undoc-members:

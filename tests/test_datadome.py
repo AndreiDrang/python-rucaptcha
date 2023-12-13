@@ -5,7 +5,7 @@ from python_rucaptcha.core.enums import DataDomeSliderEnm
 from python_rucaptcha.datadome_captcha import DataDomeCaptcha
 
 
-class TestHCaptcha(BaseTest):
+class TestDatadome(BaseTest):
     websiteURL = "https://www.pokemoncenter.com/"
     captchaUrl = "https://geo.captcha-delivery.com/captcha/?initialCid=AHrlqAAAAAMAlk-FmAyNOW8AUyTH_g%3D%3D&hash=5B45875B653A484CC79E57036CE9FC&cid=noJuZstmvINksqOxaXWQogbPBd01y3VaH3r-CZ4eqK4roZuelJMHVhO2rR0IySRieoAivkg74B4UpJ.xj.jVNB6-aLaW.Bwvik7__EncryD6COavwx8RmOqgZ7DK_3v&t=fe&referer=https%3A%2F%2Fwww.pokemoncenter.com%2F&s=9817&e=2b1d5a78107ded0dcdc8317aa879979ed5083a2b3a95b734dbe7871679e1403"
     userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"

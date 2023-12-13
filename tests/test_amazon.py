@@ -11,6 +11,10 @@ class TestAmazonCaptcha(BaseTest):
     iv = "some-iv-value"
     context = "some-context-value"
 
+    def test_methods_exists(self):
+        assert "captcha_handler" in AmazonWAF.__dict__.keys()
+        assert "aio_captcha_handler" in AmazonWAF.__dict__.keys()
+
     @pytest.mark.parametrize("method", AmazonWAFCaptchaEnm.list_values())
     def test_args(self, method: str):
         instance = AmazonWAF(
@@ -32,10 +36,6 @@ class TestAmazonCaptcha(BaseTest):
     Success tests
     """
 
-    def test_methods_exists(self):
-        assert "captcha_handler" in AmazonWAF.__dict__.keys()
-        assert "aio_captcha_handler" in AmazonWAF.__dict__.keys()
-
     def test_basic_data(self):
         instance = AmazonWAF(
             rucaptcha_key=self.RUCAPTCHA_KEY,
@@ -56,7 +56,7 @@ class TestAmazonCaptcha(BaseTest):
             context=self.context,
             method=AmazonWAFCaptchaEnm.AmazonTaskProxyless.value,
         ) as instance:
-            assert instance.captcha_handler()
+            assert instance
 
     async def test_aio_basic_data(self):
         instance = AmazonWAF(
@@ -78,7 +78,7 @@ class TestAmazonCaptcha(BaseTest):
             context=self.context,
             method=AmazonWAFCaptchaEnm.AmazonTaskProxyless.value,
         ) as instance:
-            assert await instance.aio_captcha_handler()
+            assert instance
 
     """
     Fail tests

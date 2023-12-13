@@ -1,6 +1,7 @@
 import pytest
 
 from tests.conftest import BaseTest
+from python_rucaptcha.core.enums import TextCaptchaEnm
 from python_rucaptcha.text_captcha import TextCaptcha
 from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 
@@ -19,6 +20,7 @@ class TestTextCaptcha(BaseTest):
     def test_args(self):
         instance = TextCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
         assert instance.create_task_payload["clientKey"] == self.RUCAPTCHA_KEY
+        assert instance.create_task_payload["task"]["type"] == TextCaptchaEnm.TextCaptchaTask
 
     @pytest.mark.parametrize("lang_code, question", questions)
     def test_basic(self, lang_code: str, question: str):

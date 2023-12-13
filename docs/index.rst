@@ -43,6 +43,11 @@ Check our other projects here - `RedPandaDev group <https://red-panda-dev.xyz/bl
    modules/cut-captcha/example.rst
    modules/datadome-captcha/example.rst
    modules/cyber-siara-captcha/example.rst
+   modules/grid/example.rst
+   modules/draw-around/example.rst
+   modules/bounding-box/example.rst
+   modules/coordinates/example.rst
+   modules/mt-captcha/example.rst
    modules/control/example.rst
 
 .. toctree::

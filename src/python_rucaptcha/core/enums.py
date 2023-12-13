@@ -123,3 +123,24 @@ class DataDomeSliderEnm(str, MyEnum):
 class CyberSiARAEnm(str, MyEnum):
     AntiCyberSiAraTask = "AntiCyberSiAraTask"
     AntiCyberSiAraTaskProxyless = "AntiCyberSiAraTaskProxyless"
+
+
+class MTCaptchaEnm(str, MyEnum):
+    MtCaptchaTask = "MtCaptchaTask"
+    MtCaptchaTaskProxyless = "MtCaptchaTaskProxyless"
+
+
+class BoundingBoxCaptchaEnm(str, MyEnum):
+    BoundingBoxTask = "BoundingBoxTask"
+
+
+class DrawAroundCaptchaEnm(str, MyEnum):
+    DrawAroundTask = "DrawAroundTask"
+
+
+class CoordinatesCaptchaEnm(str, MyEnum):
+    CoordinatesTask = "CoordinatesTask"
+
+
+class GridCaptchaEnm(str, MyEnum):
+    GridTask = "GridTask"
