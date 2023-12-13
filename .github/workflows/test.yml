@@ -50,6 +50,13 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: /home/runner/work/python-rucaptcha/python-rucaptcha/coverage/coverage.xml
+          files: ${{github.workspace}}/coverage/coverage.xml
           fail_ci_if_error: true
           verbose: true
+
+      - name: Upload coverage to Code Climate
+        uses: paambaati/codeclimate-action@v5.0.0
+        env:
+          CC_TEST_REPORTER_ID: ${{CODE_CLIMATE_COVERAGE_ID}}
+        with:
+          coverageLocations: ${{github.workspace}}/coverage/coverage.xml:coverage.py
