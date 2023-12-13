@@ -10,16 +10,20 @@ from python_rucaptcha import (
     hcaptcha,
     turnstile,
     amazon_waf,
+    mt_captcha,
     re_captcha,
     capy_puzzle,
     fun_captcha,
     key_captcha,
+    grid_captcha,
     text_captcha,
     image_captcha,
     lemin_captcha,
     rotate_captcha,
     datadome_captcha,
     cyber_siara_captcha,
+    draw_around_captcha,
+    bounding_box_captcha,
 )
 from python_rucaptcha.__version__ import __version__
 
