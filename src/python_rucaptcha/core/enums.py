@@ -132,3 +132,7 @@ class MTCaptchaEnm(str, MyEnum):
 
 class BoundingBoxCaptchaEnm(str, MyEnum):
     BoundingBoxTask = "BoundingBoxTask"
+
+
+class DrawAroundCaptchaEnm(str, MyEnum):
+    DrawAroundTask = "DrawAroundTask"
