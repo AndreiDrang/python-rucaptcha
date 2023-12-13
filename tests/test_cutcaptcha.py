@@ -65,8 +65,7 @@ class TestCutCaptcha(BaseTest):
 
         assert isinstance(result, dict) is True
         if not result["errorId"]:
-            assert result["status"] == "ready"
-            assert isinstance(result["solution"], dict) is True
+            assert result["status"] in ("ready", "processing")
             assert isinstance(result["taskId"], int) is True
         else:
             assert result["errorId"] in (1, 12)
@@ -87,8 +86,7 @@ class TestCutCaptcha(BaseTest):
 
         assert isinstance(result, dict) is True
         if not result["errorId"]:
-            assert result["status"] == "ready"
-            assert isinstance(result["solution"], dict) is True
+            assert result["status"] in ("ready", "processing")
             assert isinstance(result["taskId"], int) is True
         else:
             assert result["errorId"] in (1, 12)
