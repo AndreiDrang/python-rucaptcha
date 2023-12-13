@@ -6,11 +6,8 @@ from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 from python_rucaptcha.bounding_box_captcha import BoundingBoxCaptcha
 
 
-class BaseImageCaptcha(BaseTest):
+class TestBoundingBoxCaptcha(BaseTest):
     captcha_file = "src/examples/bounding_box_start.png"
-
-
-class TestImageCaptcha(BaseImageCaptcha):
     kwargs_params = {
         "comment": "None",
         "imgInstructions": "None",
