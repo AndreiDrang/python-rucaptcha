@@ -86,7 +86,7 @@ class TestKeyCaptcha(BaseTest):
             method=KeyCaptchaEnm.KeyCaptchaTaskProxyless.value,
         )
 
-        result = instance.captcha_handler()
+        result = await instance.aio_captcha_handler()
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
