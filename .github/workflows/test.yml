@@ -26,6 +26,7 @@ jobs:
     env:
       RUCAPTCHA_KEY: ${{ secrets.RUCAPTCHA_KEY }}
       DEATHBYCAPTCHA_KEY: ${{ secrets.DEATHBYCAPTCHA_KEY }}
+      CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_COVERAGE_ID }}
     strategy:
       fail-fast: false
       matrix:
@@ -56,7 +57,5 @@ jobs:
 
       - name: Upload coverage to Code Climate
         uses: paambaati/codeclimate-action@v5.0.0
-        env:
-          CC_TEST_REPORTER_ID: ${{CODE_CLIMATE_COVERAGE_ID}}
         with:
           coverageLocations: ${{github.workspace}}/coverage/coverage.xml:coverage.py
