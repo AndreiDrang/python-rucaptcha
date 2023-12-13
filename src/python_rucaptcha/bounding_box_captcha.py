@@ -9,6 +9,7 @@ from .core.enums import SaveFormatsEnm, BoundingBoxCaptchaEnm
 class BoundingBoxCaptcha(BaseCaptcha):
     def __init__(
         self,
+        comment: str = "Draw Around Bounding Box",
         save_format: Union[str, SaveFormatsEnm] = SaveFormatsEnm.TEMP,
         img_clearing: bool = True,
         img_path: str = "PythonRuCaptchaBoundingBox",
@@ -232,6 +233,7 @@ class BoundingBoxCaptcha(BaseCaptcha):
         self.save_format = save_format
         self.img_clearing = img_clearing
         self.img_path = img_path
+        self.create_task_payload["task"].update({"comment": comment})
 
     def captcha_handler(
         self,
