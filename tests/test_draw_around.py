@@ -10,7 +10,7 @@ class BaseImageCaptcha(BaseTest):
     captcha_file = "src/examples/bounding_box_start.png"
 
 
-class TestDrawAroundCaptchaCaptcha(BaseImageCaptcha):
+class TestDrawAroundCaptcha(BaseImageCaptcha):
     kwargs_params = {
         "comment": "None",
         "imgInstructions": "None",
