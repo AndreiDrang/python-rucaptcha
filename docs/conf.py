@@ -38,6 +38,7 @@ extensions = (
     "sphinx.ext.napoleon",
     "pallets_sphinx_themes",
     "sphinxcontrib.autodoc_pydantic",
+    "enum_tools.autoenum",
 )
 myst_enable_extensions = ["deflist"]
 intersphinx_mapping = {"python": ("https://docs.python.org/3.10/", None)}
