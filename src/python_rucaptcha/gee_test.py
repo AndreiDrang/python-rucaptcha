@@ -194,11 +194,7 @@ class GeeTest(BaseCaptcha):
         Notes:
             Check class docstirng for more info
         """
-        if self.method == GeetestEnm.GeeTestTaskProxyless.value:
-            if challenge is not None:
-                self.create_task_payload["task"].update({"challenge": challenge})
-            else:
-                raise ValueError(f"For {self.method} challenge is required")
+        self.create_task_payload["task"].update({"challenge": challenge})
 
         return self._processing_response(**kwargs)
 
@@ -215,10 +211,6 @@ class GeeTest(BaseCaptcha):
         Notes:
             Check class docstirng for more info
         """
-        if self.method == GeetestEnm.GeeTestTaskProxyless.value:
-            if challenge is not None:
-                self.create_task_payload["task"].update({"challenge": challenge})
-            else:
-                raise ValueError(f"For {self.method} challenge is required")
+        self.create_task_payload["task"].update({"challenge": challenge})
 
         return await self._aio_processing_response()
