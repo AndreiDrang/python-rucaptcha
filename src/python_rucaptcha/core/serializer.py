@@ -20,11 +20,6 @@ class TaskSer(MyBaseModel):
     type: str
 
 
-class ErrorFieldsSer(Struct):
-    errorCode: str = None
-    errorDescription: str = None
-
-
 class CreateTaskBaseSer(MyBaseModel):
     clientKey: str
     task: TaskSer = {}
@@ -62,8 +57,7 @@ HTTP API Response
 """
 
 
-class GetTaskResultResponseSer(MyBaseModel, ErrorFieldsSer):
-    errorId: int = 0
+class GetTaskResultResponseSer(MyBaseModel):
     status: str = "ready"
     solution: dict = None
     cost: float = None
@@ -74,3 +68,7 @@ class GetTaskResultResponseSer(MyBaseModel, ErrorFieldsSer):
     taskId: int = None
     # control method params
     balance: float = None
+    # error info
+    errorId: int = 0
+    errorCode: str = None
+    errorDescription: str = None
