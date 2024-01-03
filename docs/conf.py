@@ -21,6 +21,7 @@ from python_rucaptcha import (
     lemin_captcha,
     rotate_captcha,
     datadome_captcha,
+    friendly_captcha,
     cyber_siara_captcha,
     draw_around_captcha,
     bounding_box_captcha,
