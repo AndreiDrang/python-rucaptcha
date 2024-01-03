@@ -144,3 +144,8 @@ class CoordinatesCaptchaEnm(str, MyEnum):
 
 class GridCaptchaEnm(str, MyEnum):
     GridTask = "GridTask"
+
+
+class FriendlyCaptchaEnm(str, MyEnum):
+    FriendlyCaptchaTaskProxyless = "FriendlyCaptchaTaskProxyless"
+    FriendlyCaptchaTask = "FriendlyCaptchaTask"
