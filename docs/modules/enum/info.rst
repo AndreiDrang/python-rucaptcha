@@ -76,3 +76,6 @@ To import this module:
 
 .. autoenum:: python_rucaptcha.core.enums.GridCaptchaEnm
     :members:
+
+.. autoenum:: python_rucaptcha.core.enums.FriendlyCaptchaEnm
+    :members:

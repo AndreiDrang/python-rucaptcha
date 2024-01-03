@@ -115,6 +115,7 @@ setup(
 				turnstile
 				amazon
 				amazon_waf
+				friendly-captcha
                """,
     python_requires=REQUIRES_PYTHON,
     zip_safe=False,
