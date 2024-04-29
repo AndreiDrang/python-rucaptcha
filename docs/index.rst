@@ -49,6 +49,8 @@ Check our other projects here - `RedPandaDev group <https://red-panda-dev.xyz/bl
    modules/coordinates/example.rst
    modules/mt-captcha/example.rst
    modules/friendly-captcha/example.rst
+   modules/tencent/example.rst
+   modules/atb-captcha/example.rst
    modules/control/example.rst
 
 .. toctree::
