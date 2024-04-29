@@ -108,6 +108,8 @@ setup(
 				captcha
 				security
 				tiktok
+				tencent
+				atb_captcha
 				python-library
 				python-rucaptcha
 				rucaptcha-client
