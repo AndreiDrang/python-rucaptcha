@@ -1,5 +1,5 @@
 install:
-	cd src/ && pip3 install -e .
+	pip3 install -e .
 
 remove:
 	pip3 uninstall python_rucaptcha -y
