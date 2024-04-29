@@ -149,3 +149,13 @@ class GridCaptchaEnm(str, MyEnum):
 class FriendlyCaptchaEnm(str, MyEnum):
     FriendlyCaptchaTaskProxyless = "FriendlyCaptchaTaskProxyless"
     FriendlyCaptchaTask = "FriendlyCaptchaTask"
+
+
+class TencentEnm(str, MyEnum):
+    TencentTask = "TencentTask"
+    TencentTaskProxyless = "TencentTaskProxyless"
+
+
+class atbCaptchaEnm(str, MyEnum):
+    AtbCaptchaTask = "AtbCaptchaTask"
+    AtbCaptchaTaskProxyless = "AtbCaptchaTaskProxyless"

@@ -57,6 +57,9 @@ class Control(BaseCaptcha):
             https://rucaptcha.com/api-docs/get-balance
             https://rucaptcha.com/api-docs/report-correct
             https://rucaptcha.com/api-docs/report-incorrect
+            https://2captcha.com/api-docs/get-balance
+            https://2captcha.com/api-docs/report-correct
+            https://2captcha.com/api-docs/report-incorrect
         """
 
         super().__init__(method=ControlEnm.control, *args, **kwargs)
