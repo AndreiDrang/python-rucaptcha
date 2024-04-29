@@ -79,3 +79,9 @@ To import this module:
 
 .. autoenum:: python_rucaptcha.core.enums.FriendlyCaptchaEnm
     :members:
+
+.. autoenum:: python_rucaptcha.core.enums.TencentEnm
+    :members:
+
+.. autoenum:: python_rucaptcha.core.enums.atbCaptchaEnm
+    :members:
