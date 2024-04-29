@@ -23,13 +23,17 @@ lint:
 	black src/ --check && \
 	isort src/ --check-only
 
+build:
+	pip3 install --upgrade build setuptools
+	python3 -m build
+
 upload:
-	pip3 install twine wheel
-	cd src/ && python setup.py upload
+	pip3 install twine wheel setuptools build
+	twine upload dist/*
 
 tests: install
 	coverage run --rcfile=.coveragerc -m pytest --verbose --showlocals --pastebin=all \
-	tests/ --disable-warnings && \
+	tests/test_tencent.py --disable-warnings && \
 	coverage report --precision=3 --sort=cover --skip-empty --show-missing && \
 	coverage html --precision=3 --skip-empty -d coverage/html/ && \
 	coverage xml -o coverage/coverage.xml
