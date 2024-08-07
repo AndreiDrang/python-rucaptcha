@@ -11,7 +11,7 @@ The library is intended for software developers and is used to work with the `Ru
 
 Support of the service `Death By Captcha <https://deathbycaptcha.com?refid=1237267242>`_ is integrated into this library, more information in the library documentation or in the `service docs <https://deathbycaptcha.com/api/2captcha?refid=1237267242>`_.
 
-Check our other projects here - `RedPandaDev group <https://red-panda-dev.xyz/blog/>`_. For example - `Torrents Tracker bot <https://t.me/torrents_tracker_bot>`_ for Telegram
+Check our other projects here - `RedPandaDev group <https://red-panda-dev.xyz/blog/>`_.
 
 .. toctree::
    :maxdepth: 1
