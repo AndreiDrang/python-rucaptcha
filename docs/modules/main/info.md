@@ -3,6 +3,10 @@
 
 ![](../../_static/RuCaptchaMedium.png)
 
+### [Capsolver](https://capsolver.com?utm_source=github&utm_medium=banner_github&utm_campaign=python-rucaptcha)
+
+[![Capsolver](../../_static/capsolver.png)](https://capsolver.com?utm_source=github&utm_medium=banner_github&utm_campaign=python-rucaptcha)
+
 <hr>
 
 [![PyPI version](https://badge.fury.io/py/python-rucaptcha.svg)](https://badge.fury.io/py/python-rucaptcha)
