@@ -19,7 +19,8 @@ class Tencent(BaseCaptcha):
         Args:
             rucaptcha_key: User API key
             websiteURL: The full URL of target web page where the captcha is loaded.
-                            We do not open the page, not a problem if it is available only for authenticated users
+                            We do not open the page, not a problem if it is available
+                            only for authenticated users
             appId: The value of `appId` parameter in the website source code.
             method: Captcha type
 
@@ -81,7 +82,8 @@ class Tencent(BaseCaptcha):
 
         # check user params
         if method not in TencentEnm.list_values():
-            raise ValueError(f"Invalid method parameter set, available - {TencentEnm.list_values()}")
+            raise ValueError(
+                f"Invalid method parameter set, available - {TencentEnm.list_values()}")
 
     def captcha_handler(self, **kwargs) -> dict:
         """
