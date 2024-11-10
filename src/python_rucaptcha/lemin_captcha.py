@@ -78,11 +78,14 @@ class LeminCaptcha(BaseCaptcha):
         """
         super().__init__(method=method, *args, **kwargs)
 
-        self.create_task_payload["task"].update({"websiteURL": websiteURL, "captchaId": captchaId, "div_id": div_id})
+        self.create_task_payload["task"].update({"websiteURL": websiteURL,
+                                                 "captchaId": captchaId,
+                                                 "div_id": div_id})
 
         # check user params
         if method not in LeminCaptchaEnm.list_values():
-            raise ValueError(f"Invalid method parameter set, available - {LeminCaptchaEnm.list_values()}")
+            raise ValueError(
+                f"Invalid method parameter set, available - {LeminCaptchaEnm.list_values()}")
 
     def captcha_handler(self, **kwargs) -> dict:
         """
