@@ -12,7 +12,13 @@ from requests.adapters import HTTPAdapter
 
 from .enums import ServiceEnm, SaveFormatsEnm
 from .config import RETRIES, ASYNC_RETRIES
-from .serializer import TaskSer, CaptchaOptionsSer, CreateTaskBaseSer, GetTaskResultRequestSer, GetTaskResultResponseSer
+from .serializer import (
+    TaskSer,
+    CaptchaOptionsSer,
+    CreateTaskBaseSer,
+    GetTaskResultRequestSer,
+    GetTaskResultResponseSer,
+)
 from .result_handler import get_sync_result, get_async_result
 
 
@@ -79,7 +85,9 @@ class BaseCaptcha:
         time.sleep(self.params.sleep_time)
 
         return get_sync_result(
-            get_payload=self.get_task_payload, sleep_time=self.params.sleep_time, url_response=self.params.url_response
+            get_payload=self.get_task_payload,
+            sleep_time=self.params.sleep_time,
+            url_response=self.params.url_response,
         )
 
     def url_open(self, url: str, **kwargs):
@@ -174,7 +182,9 @@ class BaseCaptcha:
             )
         # if the file is transferred in base64 encoding
         elif captcha_base64:
-            self.create_task_payload["task"].update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
+            self.create_task_payload["task"].update(
+                {"body": base64.b64encode(captcha_base64).decode("utf-8")}
+            )
         # if a URL is passed
         elif captcha_link:
             try:
@@ -209,7 +219,9 @@ class BaseCaptcha:
             )
         # if the file is transferred in base64 encoding
         elif captcha_base64:
-            self.create_task_payload["task"].update({"body": base64.b64encode(captcha_base64).decode("utf-8")})
+            self.create_task_payload["task"].update(
+                {"body": base64.b64encode(captcha_base64).decode("utf-8")}
+            )
         # if a URL is passed
         elif captcha_link:
             try:

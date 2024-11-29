@@ -82,8 +82,7 @@ class Tencent(BaseCaptcha):
 
         # check user params
         if method not in TencentEnm.list_values():
-            raise ValueError(
-                f"Invalid method parameter set, available - {TencentEnm.list_values()}")
+            raise ValueError(f"Invalid method parameter set, available - {TencentEnm.list_values()}")
 
     def captcha_handler(self, **kwargs) -> dict:
         """

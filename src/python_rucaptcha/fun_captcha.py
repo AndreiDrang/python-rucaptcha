@@ -69,7 +69,9 @@ class FunCaptcha(BaseCaptcha):
         """
         super().__init__(method=method, *args, **kwargs)
 
-        self.create_task_payload["task"].update({"websiteURL": websiteURL, "websitePublicKey": websitePublicKey})
+        self.create_task_payload["task"].update(
+            {"websiteURL": websiteURL, "websitePublicKey": websitePublicKey}
+        )
 
         # check user params
         if method not in FunCaptchaEnm.list_values():

@@ -75,7 +75,9 @@ class atbCaptcha(BaseCaptcha):
         """
         super().__init__(method=method, *args, **kwargs)
 
-        self.create_task_payload["task"].update({"websiteURL": websiteURL, "appId": appId, "apiServer": apiServer})
+        self.create_task_payload["task"].update(
+            {"websiteURL": websiteURL, "appId": appId, "apiServer": apiServer}
+        )
 
         # check user params
         if method not in atbCaptchaEnm.list_values():

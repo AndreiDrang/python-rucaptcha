@@ -76,13 +76,11 @@ class HCaptcha(BaseCaptcha):
         """
         super().__init__(method=method, *args, **kwargs)
 
-        self.create_task_payload["task"].update({"websiteURL": websiteURL,
-                                                 "websiteKey": websiteKey})
+        self.create_task_payload["task"].update({"websiteURL": websiteURL, "websiteKey": websiteKey})
 
         # check user params
         if method not in HCaptchaEnm.list_values():
-            raise ValueError(
-                f"Invalid method parameter set, available - {HCaptchaEnm.list_values()}")
+            raise ValueError(f"Invalid method parameter set, available - {HCaptchaEnm.list_values()}")
 
     def captcha_handler(self, **kwargs) -> dict:
         """

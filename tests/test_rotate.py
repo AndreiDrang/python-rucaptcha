@@ -136,7 +136,9 @@ class TestRotateCaptcha(BaseTest):
     @pytest.mark.parametrize("save_format", SaveFormatsEnm.list_values())
     @pytest.mark.parametrize("img_clearing", (True, False))
     def test_const_data_link(self, save_format: str, img_clearing: bool):
-        instance = RotateCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format, img_clearing=img_clearing)
+        instance = RotateCaptcha(
+            rucaptcha_key=self.RUCAPTCHA_KEY, save_format=save_format, img_clearing=img_clearing
+        )
 
         result = instance.captcha_handler(captcha_link=self.captcha_url)
 
@@ -199,7 +201,9 @@ class TestRotateCaptcha(BaseTest):
     def test_wrong_base64(self):
         instance = RotateCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
 
-        result = instance.captcha_handler(captcha_base64=self.get_random_string(length=50).encode(encoding="UTF-8"))
+        result = instance.captcha_handler(
+            captcha_base64=self.get_random_string(length=50).encode(encoding="UTF-8")
+        )
 
         assert isinstance(result, dict) is True
         assert result["errorId"] != 0

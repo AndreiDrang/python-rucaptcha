@@ -165,7 +165,9 @@ class TestAudioCaptcha(BaseTest):
     def test_wrong_base64(self):
         instance = AudioCaptcha(rucaptcha_key=self.RUCAPTCHA_KEY)
 
-        result = instance.captcha_handler(captcha_base64=self.get_random_string(length=50).encode(encoding="UTF-8"))
+        result = instance.captcha_handler(
+            captcha_base64=self.get_random_string(length=50).encode(encoding="UTF-8")
+        )
 
         assert isinstance(result, dict) is True
         assert result["errorId"] in (12, 5)

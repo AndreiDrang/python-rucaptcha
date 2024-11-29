@@ -80,8 +80,7 @@ class KeyCaptcha(BaseCaptcha):
 
         # check user params
         if method not in KeyCaptchaEnm.list_values():
-            raise ValueError(
-                f"Invalid method parameter set, available - {KeyCaptchaEnm.list_values()}")
+            raise ValueError(f"Invalid method parameter set, available - {KeyCaptchaEnm.list_values()}")
 
     def captcha_handler(self, **kwargs) -> dict:
         """

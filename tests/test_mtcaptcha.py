@@ -22,7 +22,10 @@ class TestMTCaptcha(BaseTest):
     @pytest.mark.parametrize("method", MTCaptchaEnm.list_values())
     def test_args(self, method: str):
         instance = MTCaptcha(
-            rucaptcha_key=self.RUCAPTCHA_KEY, websiteURL=self.websiteURL, websiteKey=self.websiteKey, method=method
+            rucaptcha_key=self.RUCAPTCHA_KEY,
+            websiteURL=self.websiteURL,
+            websiteKey=self.websiteKey,
+            method=method,
         )
         assert instance.create_task_payload["clientKey"] == self.RUCAPTCHA_KEY
         assert instance.create_task_payload["task"]["type"] == method

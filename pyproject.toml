@@ -1,5 +1,5 @@
 [tool.black]
-line-length = 120
+line-length = 110
 target-version = ['py311']
 exclude = '''
 /(
@@ -18,7 +18,7 @@ exclude = '''
 [tool.isort]
 profile = "black"
 skip_glob = "examples/**"
-line_length = 120
+line_length = 110
 length_sort = true
 
 [tool.pytest.ini_options]
