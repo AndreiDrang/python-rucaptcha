@@ -32,9 +32,7 @@ from python_rucaptcha.__version__ import __version__
 
 # -- Project information -----------------------------------------------------
 project = "python-rucaptcha"
-copyright = (f"{date.today().year}, " +
-             f"AndreiDrang; Release - {__version__};" +
-             f"Last update - {date.today()}")
+copyright = f"{date.today().year}, " + f"AndreiDrang; Release - {__version__};" + f"Last update - {date.today()}"
 author = "AndreiDrang"
 
 # -- General configuration ---------------------------------------------------
@@ -44,6 +42,7 @@ extensions = (
     "pallets_sphinx_themes",
     "sphinxcontrib.autodoc_pydantic",
     "enum_tools.autoenum",
+    "notfound.extension",
 )
 myst_enable_extensions = ["deflist"]
 intersphinx_mapping = {"python": ("https://docs.python.org/3.10/", None)}
