@@ -142,8 +142,7 @@ class ReCaptcha(BaseCaptcha):
 
         # check user params
         if method not in ReCaptchaEnm.list_values():
-            raise ValueError(
-                f"Invalid method parameter set, available - {ReCaptchaEnm.list_values()}")
+            raise ValueError(f"Invalid method parameter set, available - {ReCaptchaEnm.list_values()}")
 
     def captcha_handler(self, **kwargs) -> dict:
         """

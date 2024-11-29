@@ -15,7 +15,9 @@ class TestGeeTestBase(BaseTest):
 
     @property
     def challenge(self):
-        return requests.get("https://www.geetest.com/demo/gt/register-enFullpage-official").json()["challenge"]
+        return requests.get("https://www.geetest.com/demo/gt/register-enFullpage-official").json()[
+            "challenge"
+        ]
 
 
 class TestGeeTestCore(TestGeeTestBase):

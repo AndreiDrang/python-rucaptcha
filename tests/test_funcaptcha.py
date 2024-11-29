@@ -8,9 +8,7 @@ from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 
 class TestFunCaptcha(BaseTest):
     publickey = "69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC"
-    pageurl = (
-        "https://api.funcaptcha.com/tile-game-lite-mode/fc/api/nojs/?pkey=69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC&lang=en"
-    )
+    pageurl = "https://api.funcaptcha.com/tile-game-lite-mode/fc/api/nojs/?pkey=69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC&lang=en"
     surl = "https://client-api.arkoselabs.com"
     kwargs_params = {
         "funcaptchaApiJSSubdomain": "sample-api.arkoselabs.com",

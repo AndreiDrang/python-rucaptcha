@@ -103,13 +103,11 @@ class CapyPuzzle(BaseCaptcha):
         """
         super().__init__(method=method, *args, **kwargs)
 
-        self.create_task_payload["task"].update({"websiteURL": websiteURL,
-                                                 "websiteKey": websiteKey})
+        self.create_task_payload["task"].update({"websiteURL": websiteURL, "websiteKey": websiteKey})
 
         # check user params
         if method not in CapyPuzzleEnm.list_values():
-            raise ValueError(
-                f"Invalid method parameter set, available - {CapyPuzzleEnm.list_values()}")
+            raise ValueError(f"Invalid method parameter set, available - {CapyPuzzleEnm.list_values()}")
 
     def captcha_handler(self, **kwargs) -> dict:
         """

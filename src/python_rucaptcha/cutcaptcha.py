@@ -81,14 +81,13 @@ class CutCaptcha(BaseCaptcha):
         """
         super().__init__(method=method, *args, **kwargs)
 
-        self.create_task_payload["task"].update({"websiteURL": websiteURL,
-                                                 "miseryKey": miseryKey,
-                                                 "apiKey": apiKey})
+        self.create_task_payload["task"].update(
+            {"websiteURL": websiteURL, "miseryKey": miseryKey, "apiKey": apiKey}
+        )
 
         # check user params
         if method not in CutCaptchaEnm.list_values():
-            raise ValueError(
-                f"Invalid method parameter set, available - {CutCaptchaEnm.list_values()}")
+            raise ValueError(f"Invalid method parameter set, available - {CutCaptchaEnm.list_values()}")
 
     def captcha_handler(self, **kwargs) -> dict:
         """
