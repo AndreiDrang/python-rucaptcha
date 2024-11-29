@@ -20,8 +20,10 @@ class DataDomeCaptcha(BaseCaptcha):
         Args:
             rucaptcha_key: User API key
             websiteURL: Full URL of the captcha page
-            captchaUrl: The value of the `src` parameter for the `iframe` element containing the captcha on the page.
-            userAgent: User-Agent of your browser will be used to load the captcha. Use only modern browser's User-Agents
+            captchaUrl: The value of the `src` parameter for the `iframe` element
+                            containing the captcha on the page.
+            userAgent: User-Agent of your browser will be used to load the captcha.
+                            Use only modern browser's User-Agents
             proxyType: Proxy type - `http`, `socks4`, `socks5`
             proxyAddress: Proxy IP address or hostname
             proxyPort: Proxy port

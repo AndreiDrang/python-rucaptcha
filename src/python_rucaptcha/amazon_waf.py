@@ -77,7 +77,8 @@ class AmazonWAF(BaseCaptcha):
 
         # check user params
         if method not in AmazonWAFCaptchaEnm.list_values():
-            raise ValueError(f"Invalid method parameter set, available - {AmazonWAFCaptchaEnm.list_values()}")
+            raise ValueError(
+                f"Invalid method parameter set, available - {AmazonWAFCaptchaEnm.list_values()}")
         # insert `gt` param to payload
         self.create_task_payload["task"].update(
             {
