@@ -81,7 +81,8 @@ class Turnstile(BaseCaptcha):
 
         # check user params
         if method not in TurnstileCaptchaEnm.list_values():
-            raise ValueError(f"Invalid method parameter set, available - {TurnstileCaptchaEnm.list_values()}")
+            raise ValueError(
+                f"Invalid method parameter set, available - {TurnstileCaptchaEnm.list_values()}")
 
     def captcha_handler(self, **kwargs) -> dict:
         """

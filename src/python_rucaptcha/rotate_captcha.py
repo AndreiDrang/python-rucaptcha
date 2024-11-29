@@ -74,7 +74,8 @@ class RotateCaptcha(BaseCaptcha):
             }
 
             >>> await RotateCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...                     angle=45).aio_captcha_handler(captcha_file="examples/rotate/rotate_ex.png")
+            ...                     angle=45).aio_captcha_handler(
+            ...                                     captcha_file="examples/rotate/rotate_ex.png")
             {
                "errorId":0,
                "status":"ready",
