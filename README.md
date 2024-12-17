@@ -1,10 +1,10 @@
 # python-rucaptcha
 
-![Logo](https://red-panda-dev.xyz/media/images/RuCaptchaHigh_zkkPoYF.original.png)
+[![RuCaptchaHigh.png](https://s.vyjava.xyz/files/2024/12-December/17/45247a56/RuCaptchaHigh.png)](https://vyjava.xyz/dashboard/image/45247a56-3332-48ee-8df8-fc95bcfc52f0)
 
 ### [Capsolver](https://www.capsolver.com/?utm_source=github&utm_medium=repo&utm_campaign=scraping&utm_term=python-rucaptcha)
 
-[![Capsolver](files/capsolver.jpg)](https://www.capsolver.com/?utm_source=github&utm_medium=repo&utm_campaign=scraping&utm_term=python-rucaptcha)
+[![capsolver.jpg](https://s.vyjava.xyz/files/2024/12-December/17/54e1db0e/capsolver.jpg)](https://www.capsolver.com/?utm_source=github&utm_medium=repo&utm_campaign=scraping&utm_term=python-rucaptcha)
 
 <hr>
 
@@ -69,4 +69,4 @@ For full changelog info check - [Releases page](https://github.com/AndreiDrang/p
 
 ### Get API Key to work with the library
 1. On the page - https://rucaptcha.com/enterpage
-2. Find it: ![img.png](https://github.com/AndreiDrang/python-rucaptcha/blob/master/files/img.png)
+2. Find it: [![img.png](https://s.vyjava.xyz/files/2024/12-December/17/ac679557/img.png)](https://vyjava.xyz/dashboard/image/ac679557-f3cc-402f-bf95-6c45d252a2ef)
