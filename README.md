@@ -22,11 +22,11 @@
 [![Tests](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/test.yml)
 [![Lint](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/lint.yml/badge.svg?branch=master)](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/lint.yml)
 
-Python3 library for [RuCaptcha](https://rucaptcha.com/) and [2Captcha](https://2captcha.com/) service API.
+Python3 library for [RuCaptcha](https://rucaptcha.com/?from=4170435) and [2Captcha](https://2captcha.com/?from=4170435) service API.
 
 Tested on UNIX based OS.
 
-The library is intended for software developers and is used to work with the [RuCaptcha](https://rucaptcha.com/) and [2Captcha](https://2captcha.com/) service API.
+The library is intended for software developers and is used to work with the [RuCaptcha](https://rucaptcha.com/?from=4170435) and [2Captcha](https://2captcha.com/?from=4170435) service API.
 
 Support of the service [Death By Captcha](https://deathbycaptcha.com?refid=1237267242) is integrated into this library, more information in the library documentation or in the [service docs](https://deathbycaptcha.com/api/2captcha?refid=1237267242).
 ***
