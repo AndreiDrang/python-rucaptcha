@@ -31,13 +31,7 @@ The library is intended for software developers and is used to work with the [Ru
 
 Support of the service [Death By Captcha](https://deathbycaptcha.com?refid=1237267242) is integrated into this library, more information in the library documentation or in the [service docs](https://deathbycaptcha.com/api/2captcha?refid=1237267242).
 
-***
-
 Application in [RuCaptcha software](https://rucaptcha.com/software/python-rucaptcha) and [2Captcha software](https://2captcha.com/software/python-rucaptcha).
-
-If you have any questions, please send a message to the [Telegram](https://t.me/pythoncaptcha) chat room.
-
-Or email python-captcha@pm.me
 
 ***
 
