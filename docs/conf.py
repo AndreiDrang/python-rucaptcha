@@ -42,7 +42,6 @@ extensions = (
     "myst_parser",
     "sphinx.ext.napoleon",
     "pallets_sphinx_themes",
-    "sphinxcontrib.autodoc_pydantic",
     "enum_tools.autoenum",
     "notfound.extension",
 )
@@ -105,7 +104,3 @@ napoleon_attr_annotations = True
 autodoc_preserve_defaults = False
 autodoc_member_order = "bysource"
 autodoc_class_signature = "mixed"
-
-# Pydantic
-autodoc_pydantic_model_show_json = True
-autodoc_pydantic_settings_show_json = False
