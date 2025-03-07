@@ -74,6 +74,7 @@ class Tencent(BaseCaptcha):
 
         Notes:
             https://rucaptcha.com/api-docs/tencent
+
             https://2captcha.com/api-docs/tencent
         """
         super().__init__(method=method, *args, **kwargs)

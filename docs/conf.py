@@ -6,6 +6,7 @@ from pallets_sphinx_themes import ProjectLink
 from python_rucaptcha import (
     core,
     control,
+    prosopo,
     tencent,
     gee_test,
     hcaptcha,
