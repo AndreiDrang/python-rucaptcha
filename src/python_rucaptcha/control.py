@@ -55,10 +55,15 @@ class Control(BaseCaptcha):
 
         Notes:
             https://rucaptcha.com/api-docs/get-balance
+
             https://rucaptcha.com/api-docs/report-correct
+
             https://rucaptcha.com/api-docs/report-incorrect
+
             https://2captcha.com/api-docs/get-balance
+
             https://2captcha.com/api-docs/report-correct
+
             https://2captcha.com/api-docs/report-incorrect
         """
 

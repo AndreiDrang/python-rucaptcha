@@ -159,3 +159,8 @@ class TencentEnm(str, MyEnum):
 class atbCaptchaEnm(str, MyEnum):
     AtbCaptchaTask = "AtbCaptchaTask"
     AtbCaptchaTaskProxyless = "AtbCaptchaTaskProxyless"
+
+
+class ProsopoEnm(str, MyEnum):
+    ProsopoTask = "ProsopoTask"
+    ProsopoTaskProxyless = "ProsopoTaskProxyless "
