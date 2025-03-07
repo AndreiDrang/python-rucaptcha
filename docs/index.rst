@@ -50,6 +50,7 @@ Check our other projects here - `RedPandaDev group <https://red-panda-dev.xyz/bl
    modules/mt-captcha/example.rst
    modules/friendly-captcha/example.rst
    modules/tencent/example.rst
+   modules/prosopo/example.rst
    modules/atb-captcha/example.rst
    modules/control/example.rst
 
