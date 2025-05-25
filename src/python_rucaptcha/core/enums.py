@@ -164,3 +164,7 @@ class atbCaptchaEnm(str, MyEnum):
 class ProsopoEnm(str, MyEnum):
     ProsopoTask = "ProsopoTask"
     ProsopoTaskProxyless = "ProsopoTaskProxyless "
+
+
+class CaptchaFoxEnm(str, MyEnum):
+    CaptchaFoxTask = "CaptchaFoxTask"
