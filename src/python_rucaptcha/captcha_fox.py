@@ -1,12 +1,12 @@
 from .core.base import BaseCaptcha
-from .core.enums import DataDomeSliderEnm
+from .core.enums import CaptchaFoxEnm
 
 
-class DataDomeCaptcha(BaseCaptcha):
+class CaptchaFox(BaseCaptcha):
     def __init__(
         self,
         websiteURL: str,
-        captchaUrl: str,
+        websiteKey: str,
         userAgent: str,
         proxyType: str,
         proxyAddress: str,
@@ -15,13 +15,13 @@ class DataDomeCaptcha(BaseCaptcha):
         **kwargs,
     ):
         """
-        The class is used to work with HCaptcha.
+        The class is used to work with CaptchaFox.
 
         Args:
             rucaptcha_key: User API key
             websiteURL: Full URL of the captcha page
-            captchaUrl: The value of the `src` parameter for the `iframe` element
-                            containing the captcha on the page.
+            websiteKey: The value of the `key` parameter.
+                            It can be found in the page source code or captured in network requests during page loading.
             userAgent: User-Agent of your browser will be used to load the captcha.
                             Use only modern browser's User-Agents
             proxyType: Proxy type - `http`, `socks4`, `socks5`
@@ -31,9 +31,9 @@ class DataDomeCaptcha(BaseCaptcha):
             kwargs: Not required params for task creation request
 
         Examples:
-            >>> DataDomeCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
+            >>> CaptchaFox(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             websiteURL="3ceb8624-1970-4e6b-91d5-70317b70b651",
-            ...             captchaUrl="https://rucaptcha.com/demo/hcaptcha",
+            ...             websiteKey="sk_xtNxpk6fCdFbxh1_xJeGflSdCE9tn99G",
             ...             userAgent="Mozilla/5.0 .....",
             ...             proxyType="socks5",
             ...             proxyAddress="1.2.3.4",
@@ -43,19 +43,19 @@ class DataDomeCaptcha(BaseCaptcha):
                "errorId":0,
                "status":"ready",
                "solution":{
-                    "cookie": "datadome=4ZXwCBlyHx9ktZhSnycMF...; Path=/; Secure; SameSite=Lax"
+                  "token":"142000f.....er"
                },
-               "cost":"0.00299",
+               "cost":"0.002",
                "ip":"1.2.3.4",
                "createTime":1692863536,
                "endTime":1692863556,
-               "solveCount":1,
+               "solveCount":0,
                "taskId": 73243152973,
             }
 
-            >>> await DataDomeCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
+            >>> await CaptchaFox(rucaptcha_key="aa9011f31111181111168611f1151122",
             ...             websiteURL="3ceb8624-1970-4e6b-91d5-70317b70b651",
-            ...             captchaUrl="https://rucaptcha.com/demo/hcaptcha",
+            ...             websiteKey="sk_xtNxpk6fCdFbxh1_xJeGflSdCE9tn99G",
             ...             userAgent="Mozilla/5.0 .....",
             ...             proxyType="socks5",
             ...             proxyAddress="1.2.3.4",
@@ -65,13 +65,13 @@ class DataDomeCaptcha(BaseCaptcha):
                "errorId":0,
                "status":"ready",
                "solution":{
-                    "cookie": "datadome=4ZXwCBlyHx9ktZhSnycMF...; Path=/; Secure; SameSite=Lax"
+                  "token":"142000f.....er"
                },
-               "cost":"0.00299",
+               "cost":"0.002",
                "ip":"1.2.3.4",
                "createTime":1692863536,
                "endTime":1692863556,
-               "solveCount":1,
+               "solveCount":0,
                "taskId": 73243152973,
             }
 
@@ -79,14 +79,16 @@ class DataDomeCaptcha(BaseCaptcha):
             Dict with full server response
 
         Notes:
-            https://rucaptcha.com/api-docs/datadome-slider-captcha
+            https://2captcha.com/api-docs/captchafox
+
+            https://rucaptcha.com/api-docs/captchafox
         """
-        super().__init__(method=DataDomeSliderEnm.DataDomeSliderTask, *args, **kwargs)
+        super().__init__(method=CaptchaFoxEnm.CaptchaFoxTask, *args, **kwargs)
 
         self.create_task_payload["task"].update(
             {
                 "websiteURL": websiteURL,
-                "captchaUrl": captchaUrl,
+                "websiteKey": websiteKey,
                 "userAgent": userAgent,
                 "proxyType": proxyType,
                 "proxyAddress": proxyAddress,
@@ -99,7 +101,7 @@ class DataDomeCaptcha(BaseCaptcha):
         Sync solving method
 
         Args:
-            kwargs: Parameters for the `requests` library
+            kwargs: additional params for `requests` library
 
         Returns:
             Dict with full server response
@@ -107,7 +109,6 @@ class DataDomeCaptcha(BaseCaptcha):
         Notes:
             Check class docstirng for more info
         """
-
         return self._processing_response(**kwargs)
 
     async def aio_captcha_handler(self) -> dict:

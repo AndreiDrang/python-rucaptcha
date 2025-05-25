@@ -15,6 +15,7 @@ from python_rucaptcha import (
     mt_captcha,
     re_captcha,
     atb_captcha,
+    captcha_fox,
     capy_puzzle,
     fun_captcha,
     key_captcha,
