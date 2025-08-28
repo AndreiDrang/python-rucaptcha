@@ -31,15 +31,31 @@ class BaseCaptcha:
         method: str,
         sleep_time: int = 10,
         service_type: ServiceEnm | str = ServiceEnm.TWOCAPTCHA,
-        **kwargs,
+        **kwargs: dict[str, Any],
     ):
         """
-        :param rucaptcha_key: User API key
-        :param method: Captcha type
-        :param sleep_time: Time to wait for captcha solution
-        :param service_type: URL with which the program will work, "2captcha" option is possible (standard)
-                              and "rucaptcha"
-        :param kwargs: Designed to pass OPTIONAL parameters to the payload for a request to RuCaptcha
+        Base class for interacting with CAPTCHA-solving services such as 2Captcha and RuCaptcha.
+
+        This class handles the setup of request payloads, session configuration, and service-specific
+        parameters required to submit CAPTCHA tasks and retrieve their results. It supports optional
+        customization of task parameters via keyword arguments and includes retry logic for HTTP requests.
+
+        Args:
+            rucaptcha_key (str):
+                API key provided by the CAPTCHA-solving service.
+            method (str):
+                Type of CAPTCHA to solve (e.g., "ImageToText", "ReCaptchaV2").
+            sleep_time (int, optional):
+                Time in seconds to wait between polling attempts. Defaults to 10.
+            service_type (ServiceEnm | str, optional):
+                Service provider to use. Accepts `ServiceEnm.TWOCAPTCHA` or `"rucaptcha"`. Defaults to TWOCAPTCHA.
+            **kwargs (dict[str, Any]):
+                Optional parameters to be injected into the task payload (e.g., `websiteURL`, `siteKey`, `proxy`).
+
+        Example:
+            >>> captcha = BaseCaptcha("your-api-key", method="ReCaptchaV2", websiteURL="https://example.com", siteKey="abc123")
+            >>> captcha.create_task_payload
+            {'clientKey': 'your-api-key', 'task': {'type': 'ReCaptchaV2', 'websiteURL': 'https://example.com', 'siteKey': 'abc123'}}
         """
         self.result = GetTaskResultResponseSer()
         # assign args to validator
@@ -48,7 +64,7 @@ class BaseCaptcha:
 
         # prepare create task payload
         self.create_task_payload = CreateTaskBaseSer(
-            clientKey=rucaptcha_key, task=TaskSer(type=method).to_dict()
+            clientKey=rucaptcha_key, task=TaskSer(type=method)
         ).to_dict()
         # prepare get task result data payload
         self.get_task_payload = GetTaskResultRequestSer(clientKey=rucaptcha_key)
@@ -61,7 +77,7 @@ class BaseCaptcha:
         self.session.mount("http://", HTTPAdapter(max_retries=RETRIES))
         self.session.mount("https://", HTTPAdapter(max_retries=RETRIES))
 
-    def _processing_response(self, **kwargs: dict[str, Any]) -> dict[str, Any] | Exception:
+    def _processing_response(self, **kwargs: dict[str, Any]) -> dict[str, Any]:
         """
         Method processing captcha solving task creation result
         :param kwargs: additional params for Requests library
@@ -90,13 +106,13 @@ class BaseCaptcha:
             url_response=self.params.url_response,
         )
 
-    def url_open(self, url: str, **kwargs):
+    def url_open(self, url: str, **kwargs: dict[str, Any]):
         """
         Method open links
         """
         return self.session.get(url=url, **kwargs)
 
-    async def aio_url_read(self, url: str, **kwargs) -> bytes:
+    async def aio_url_read(self, url: str, **kwargs: dict[str, Any]) -> bytes | None:
         """
         Async method read bytes from link
         """
@@ -167,23 +183,24 @@ class BaseCaptcha:
 
     def _body_file_processing(
         self,
-        save_format: SaveFormatsEnm,
+        save_format: SaveFormatsEnm | str,
         file_path: str,
         file_extension: str = "png",
-        captcha_link: Optional[str] = None,
-        captcha_file: Optional[str] = None,
-        captcha_base64: Optional[bytes] = None,
-        **kwargs,
+        image_key: str = "body",
+        captcha_link: str | None = None,
+        captcha_file: str | None = None,
+        captcha_base64: bytes | None = None,
+        **kwargs: dict[str, Any],
     ):
         # if a local file link is passed
         if captcha_file:
             self.create_task_payload["task"].update(
-                {"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")}
+                {image_key: base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")}
             )
         # if the file is transferred in base64 encoding
         elif captcha_base64:
             self.create_task_payload["task"].update(
-                {"body": base64.b64encode(captcha_base64).decode("utf-8")}
+                {image_key: base64.b64encode(captcha_base64).decode("utf-8")}
             )
         # if a URL is passed
         elif captcha_link:
@@ -192,7 +209,9 @@ class BaseCaptcha:
                 # according to the value of the passed parameter, select the function to save the image
                 if save_format == SaveFormatsEnm.CONST.value:
                     self._file_const_saver(content, file_path, file_extension=file_extension)
-                self.create_task_payload["task"].update({"body": base64.b64encode(content).decode("utf-8")})
+                self.create_task_payload["task"].update(
+                    {image_key: base64.b64encode(content).decode("utf-8")}
+                )
             except Exception as error:
                 self.result.errorId = 12
                 self.result.errorCode = self.NO_CAPTCHA_ERR
@@ -204,23 +223,24 @@ class BaseCaptcha:
 
     async def _aio_body_file_processing(
         self,
-        save_format: SaveFormatsEnm,
+        save_format: SaveFormatsEnm | str,
         file_path: str,
         file_extension: str = "png",
+        image_key: str = "body",
         captcha_link: Optional[str] = None,
         captcha_file: Optional[str] = None,
         captcha_base64: Optional[bytes] = None,
-        **kwargs,
+        **kwargs: dict[str, Any],
     ):
         # if a local file link is passed
         if captcha_file:
             self.create_task_payload["task"].update(
-                {"body": base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")}
+                {image_key: base64.b64encode(self._local_file_captcha(captcha_file)).decode("utf-8")}
             )
         # if the file is transferred in base64 encoding
         elif captcha_base64:
             self.create_task_payload["task"].update(
-                {"body": base64.b64encode(captcha_base64).decode("utf-8")}
+                {image_key: base64.b64encode(captcha_base64).decode("utf-8")}
             )
         # if a URL is passed
         elif captcha_link:
@@ -229,7 +249,9 @@ class BaseCaptcha:
                 # according to the value of the passed parameter, select the function to save the image
                 if save_format == SaveFormatsEnm.CONST.value:
                     self._file_const_saver(content, file_path, file_extension=file_extension)
-                self.create_task_payload["task"].update({"body": base64.b64encode(content).decode("utf-8")})
+                self.create_task_payload["task"].update(
+                    {image_key: base64.b64encode(content).decode("utf-8")}
+                )
             except Exception as error:
                 self.result.errorId = 12
                 self.result.errorCode = self.NO_CAPTCHA_ERR

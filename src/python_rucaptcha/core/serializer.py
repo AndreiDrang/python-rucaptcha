@@ -1,4 +1,6 @@
 from typing import Any, Literal
+from decimal import Decimal
+from datetime import date, datetime
 
 from msgspec import Struct
 
@@ -8,7 +10,26 @@ from .config import APP_KEY
 
 class MyBaseModel(Struct):
     def to_dict(self) -> dict[str, Any]:
-        return {f: getattr(self, f) for f in self.__struct_fields__}
+        result = {}
+        for field in self.__struct_fields__:
+            value = getattr(self, field)
+
+            if isinstance(value, MyBaseModel):
+                result[field] = value.to_dict()
+
+            elif isinstance(value, (list, tuple)) and all(isinstance(el, Struct) for el in value):
+                result[field] = [el.to_dict() for el in value]
+
+            elif isinstance(value, (date, datetime)):
+                result[field] = value.isoformat()
+
+            elif isinstance(value, Decimal):
+                result[field] = str(value)
+
+            else:
+                result[field] = value
+
+        return result
 
 
 """
@@ -22,7 +43,7 @@ class TaskSer(MyBaseModel):
 
 class CreateTaskBaseSer(MyBaseModel):
     clientKey: str
-    task: TaskSer = {}
+    task: TaskSer
     languagePool: str = "en"
     callbackUrl: str | None = None
     soft_id: Literal[APP_KEY] = APP_KEY

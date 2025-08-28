@@ -7,23 +7,20 @@ from .core.enums import VKCaptchaEnm
 class VKCaptcha(BaseCaptcha):
     def __init__(
         self,
-        websiteURL: str,
-        websiteKey: str,
+        redirectUri: str,
         userAgent: str,
         proxyType: str,
         proxyAddress: str,
         proxyPort: str,
         *args,
-        **kwargs,
+        **kwargs: dict[str, Any],
     ):
         """
-        The class is used to work with CaptchaFox.
+        The class is used to work with VKCaptchaTask.
 
         Args:
             rucaptcha_key: User API key
-            websiteURL: Full URL of the captcha page
-            websiteKey: The value of the `key` parameter.
-                            It can be found in the page source code or captured in network requests during page loading.
+            redirectUri: The URL that is returned on requests to the captcha API.
             userAgent: User-Agent of your browser will be used to load the captcha.
                             Use only modern browser's User-Agents
             proxyType: Proxy type - `http`, `socks4`, `socks5`
@@ -33,9 +30,8 @@ class VKCaptcha(BaseCaptcha):
             kwargs: Not required params for task creation request
 
         Examples:
-            >>> CaptchaFox(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             websiteURL="3ceb8624-1970-4e6b-91d5-70317b70b651",
-            ...             websiteKey="sk_xtNxpk6fCdFbxh1_xJeGflSdCE9tn99G",
+            >>> VKCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             redirectUri="https://id.vk.com/not_robot_captcha?domain=vk.com...",
             ...             userAgent="Mozilla/5.0 .....",
             ...             proxyType="socks5",
             ...             proxyAddress="1.2.3.4",
@@ -55,9 +51,8 @@ class VKCaptcha(BaseCaptcha):
                "taskId": 73243152973,
             }
 
-            >>> await CaptchaFox(rucaptcha_key="aa9011f31111181111168611f1151122",
-            ...             websiteURL="3ceb8624-1970-4e6b-91d5-70317b70b651",
-            ...             websiteKey="sk_xtNxpk6fCdFbxh1_xJeGflSdCE9tn99G",
+            >>> await VKCaptcha(rucaptcha_key="aa9011f31111181111168611f1151122",
+            ...             redirectUri="https://id.vk.com/not_robot_captcha?domain=vk.com...",
             ...             userAgent="Mozilla/5.0 .....",
             ...             proxyType="socks5",
             ...             proxyAddress="1.2.3.4",
@@ -81,16 +76,15 @@ class VKCaptcha(BaseCaptcha):
             Dict with full server response
 
         Notes:
-            https://2captcha.com/api-docs/captchafox
+            https://2captcha.com/api-docs/vk-captcha
 
-            https://rucaptcha.com/api-docs/captchafox
+            https://rucaptcha.com/api-docs/vk-captcha
         """
         super().__init__(method=VKCaptchaEnm.VKCaptchaTask, *args, **kwargs)
 
         self.create_task_payload["task"].update(
             {
-                "websiteURL": websiteURL,
-                "websiteKey": websiteKey,
+                "websiteURL": redirectUri,
                 "userAgent": userAgent,
                 "proxyType": proxyType,
                 "proxyAddress": proxyAddress,

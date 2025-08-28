@@ -66,6 +66,9 @@ keywords = [    "captcha",
 				"turnstile",
 				"amazon",
 				"amazon_waf",
+				"vk-captcha",
+				"fox-captcha",
+				"temu-captcha",
 				"friendly-captcha"
             ]
 license = "MIT"
