@@ -36,18 +36,12 @@ class TemuCaptcha(BaseCaptcha):
                 Common params include:
                 - redirectUri: URL to confirm CAPTCHA resolution
                 - any other API‐supported parameters
+
         Examples:
-            >>> captcha = TemuCaptcha(
-            ...     clientKey="YOUR_API_KEY",
-            ...     userAgent="Mozilla/5.0 ...",
-            ...     proxyType="socks5",
-            ...     proxyAddress="1.2.3.4",
-            ...     proxyPort="1080"
-            ... )
+            >>> captcha = TemuCaptcha(rucaptcha_key="YOUR_API_KEY")
             >>> response = captcha.captcha_handler(
             ...     parts=["part1_b64", "part2_b64", "part3_b64"],
-            ...     captcha_base64=b"full_image_b64",
-            ...     timeout=120
+            ...     captcha_base64=b"full_image_b64"
             ... )
             >>> print(response)
             {
