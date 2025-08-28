@@ -1,4 +1,4 @@
-from typing import Any, Literal, Optional
+from typing import Any, Literal
 
 from msgspec import Struct
 
@@ -35,10 +35,10 @@ class GetTaskResultRequestSer(MyBaseModel):
 
 class CaptchaOptionsSer(MyBaseModel):
     sleep_time: int = 10
-    service_type: enums.ServiceEnm = enums.ServiceEnm.TWOCAPTCHA
+    service_type: enums.ServiceEnm | str = enums.ServiceEnm.TWOCAPTCHA
 
-    url_request: Optional[str] = None
-    url_response: Optional[str] = None
+    url_request: str = f"http://api.{enums.ServiceEnm.TWOCAPTCHA.value}.com/2captcha/in.php"
+    url_response: str = f"http://api.{enums.ServiceEnm.TWOCAPTCHA.value}.com/2captcha/res.php"
 
     def urls_set(self):
         """
