@@ -3,7 +3,7 @@
 
 ![](../../_static/RuCaptchaMedium.png)
 
-### [Capsolver](https://www.capsolver.com/?utm_source=github&utm_medium=repo&utm_campaign=scraping&utm_term=python-rucaptcha)
+## [Capsolver](https://www.capsolver.com/?utm_source=github&utm_medium=repo&utm_campaign=scraping&utm_term=python-rucaptcha)
 
 [![Capsolver](../../_static/capsolver.jpg)](https://www.capsolver.com/?utm_source=github&utm_medium=repo&utm_campaign=scraping&utm_term=python-rucaptcha)
 
