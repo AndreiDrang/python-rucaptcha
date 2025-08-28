@@ -65,6 +65,9 @@ class CaptchaOptionsSer(MyBaseModel):
         """
         Set request/response URLs if they not set previously
         """
+        if isinstance(self.service_type, enums.ServiceEnm):
+            self.service_type = self.service_type.value
+
         if self.service_type == enums.ServiceEnm.DEATHBYCAPTCHA:
             self.url_request = f"http://api.{self.service_type}.com/2captcha/in.php"
             self.url_response = f"http://api.{self.service_type}.com/2captcha/res.php"
