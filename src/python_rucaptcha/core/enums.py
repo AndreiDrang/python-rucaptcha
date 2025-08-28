@@ -168,3 +168,11 @@ class ProsopoEnm(str, MyEnum):
 
 class CaptchaFoxEnm(str, MyEnum):
     CaptchaFoxTask = "CaptchaFoxTask"
+
+
+class VKCaptchaEnm(str, MyEnum):
+    VKCaptchaTask = "VKCaptchaTask"
+
+
+class TemuCaptchaEnm(str, MyEnum):
+    TemuCaptchaTask = "TemuCaptchaTask"
