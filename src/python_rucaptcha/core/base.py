@@ -3,7 +3,7 @@ import time
 import uuid
 import base64
 import asyncio
-from typing import Optional
+from typing import Any, Optional
 from pathlib import Path
 
 import aiohttp
@@ -30,7 +30,7 @@ class BaseCaptcha:
         rucaptcha_key: str,
         method: str,
         sleep_time: int = 10,
-        service_type: str = ServiceEnm.TWOCAPTCHA.value,
+        service_type: ServiceEnm | str = ServiceEnm.TWOCAPTCHA,
         **kwargs,
     ):
         """
@@ -61,7 +61,7 @@ class BaseCaptcha:
         self.session.mount("http://", HTTPAdapter(max_retries=RETRIES))
         self.session.mount("https://", HTTPAdapter(max_retries=RETRIES))
 
-    def _processing_response(self, **kwargs: dict) -> dict:
+    def _processing_response(self, **kwargs: dict[str, Any]) -> dict[str, Any] | Exception:
         """
         Method processing captcha solving task creation result
         :param kwargs: additional params for Requests library
@@ -106,7 +106,7 @@ class BaseCaptcha:
                     async with session.get(url=url, **kwargs) as resp:
                         return await resp.content.read()
 
-    async def _aio_processing_response(self) -> dict:
+    async def _aio_processing_response(self) -> dict[str, Any]:
         """
         Method processing async captcha solving task creation result
         """
