@@ -66,6 +66,9 @@ keywords = [    "captcha",
 				"turnstile",
 				"amazon",
 				"amazon_waf",
+				"vk-captcha",
+				"fox-captcha",
+				"temu-captcha",
 				"friendly-captcha"
             ]
 license = "MIT"
@@ -78,6 +81,7 @@ classifiers = [
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "Framework :: AsyncIO",
         "Operating System :: Unix",
         "Operating System :: Microsoft :: Windows",

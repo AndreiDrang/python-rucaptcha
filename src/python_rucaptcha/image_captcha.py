@@ -1,5 +1,5 @@
 import shutil
-from typing import Union, Optional
+from typing import Any, Union, Optional
 
 from .core.base import BaseCaptcha
 from .core.enums import SaveFormatsEnm, ImageCaptchaEnm
@@ -181,8 +181,8 @@ class ImageCaptcha(BaseCaptcha):
         captcha_link: Optional[str] = None,
         captcha_file: Optional[str] = None,
         captcha_base64: Optional[bytes] = None,
-        **kwargs,
-    ) -> dict:
+        **kwargs: dict[str, Any],
+    ) -> dict[str, Any]:
         """
         Sync solving method
 
@@ -215,8 +215,8 @@ class ImageCaptcha(BaseCaptcha):
         captcha_link: Optional[str] = None,
         captcha_file: Optional[str] = None,
         captcha_base64: Optional[bytes] = None,
-        **kwargs,
-    ) -> dict:
+        **kwargs: dict[str, Any],
+    ) -> dict[str, Any]:
         """
         Async solving method
 
