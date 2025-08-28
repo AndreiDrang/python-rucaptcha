@@ -14,12 +14,14 @@ from python_rucaptcha import (
     amazon_waf,
     mt_captcha,
     re_captcha,
+    vk_captcha,
     atb_captcha,
     captcha_fox,
     capy_puzzle,
     fun_captcha,
     key_captcha,
     grid_captcha,
+    temu_captcha,
     text_captcha,
     image_captcha,
     lemin_captcha,
@@ -100,7 +102,6 @@ napoleon_use_ivar = True
 napoleon_use_param = True
 napoleon_use_rtype = True
 napoleon_preprocess_types = True
-napoleon_type_aliases = True
 napoleon_attr_annotations = True
 
 autodoc_preserve_defaults = False
