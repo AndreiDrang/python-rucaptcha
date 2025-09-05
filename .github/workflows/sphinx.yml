@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
 
       - name: Build docs requirements
         run: pip install -r docs/requirements.txt
