@@ -2,10 +2,6 @@
 
 [![RuCaptchaHigh.png](https://s.vyjava.xyz/files/2024/12-December/17/45247a56/RuCaptchaHigh.png)](https://vyjava.xyz/dashboard/image/45247a56-3332-48ee-8df8-fc95bcfc52f0)
 
-### [Capsolver](https://www.capsolver.com/?utm_source=github&utm_medium=repo&utm_campaign=scraping&utm_term=python-rucaptcha)
-
-[![capsolver.jpg](https://s.vyjava.xyz/files/2024/12-December/17/54e1db0e/capsolver.jpg)](https://www.capsolver.com/?utm_source=github&utm_medium=repo&utm_campaign=scraping&utm_term=python-rucaptcha)
-
 <hr>
 
 [![PyPI version](https://badge.fury.io/py/python-rucaptcha.svg)](https://badge.fury.io/py/python-rucaptcha)
