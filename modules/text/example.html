@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TextCaptcha &#8212; python-rucaptcha (6.5.0)</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=7a9665a2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jinja.css?v=85659ec6" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script data-project="python-rucaptcha" data-version="" src="../../_static/describe_version.js?v=fa7f30d0"></script>
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Turnstile" href="../turnstile/example.html" />
+    <link rel="prev" title="RotateCaptcha" href="../rotate/example.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../turnstile/example.html" title="Turnstile"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../rotate/example.html" title="RotateCaptcha"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-rucaptcha (6.5.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">TextCaptcha</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="textcaptcha">
+<h1>TextCaptcha<a class="headerlink" href="#textcaptcha" title="Link to this heading">¶</a></h1>
+<p>To import this module:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">python_rucaptcha.text_captcha</span><span class="w"> </span><span class="kn">import</span> <span class="n">TextCaptcha</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="python_rucaptcha.text_captcha.TextCaptcha">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_rucaptcha.text_captcha.</span></span><span class="sig-name descname"><span class="pre">TextCaptcha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">languagePool</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'en'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_rucaptcha.text_captcha.TextCaptcha" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_rucaptcha.text_captcha.TextCaptcha.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">languagePool</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'en'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_rucaptcha.text_captcha.TextCaptcha.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>The class is used to work with Text Captcha.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rucaptcha_key</strong> – User API key</p></li>
+<li><p><strong>languagePool</strong> (<em>str</em>) – <p>Used to choose the workers for solving the captcha by their language.
+Applicable to image-based and text-based captchas.</p>
+<p><cite>en</cite> - English-speaking workers</p>
+<p><cite>rn</cite> - Russian-speaking workers.</p>
+</p></li>
+<li><p><strong>kwargs</strong> – Additional not required params for this captcha type</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TextCaptcha</span><span class="p">(</span><span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;aa90...51122&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">languagePool</span><span class="o">=</span><span class="s1">&#39;en&#39;</span>
+<span class="gp">... </span>            <span class="p">)</span><span class="o">.</span><span class="n">captcha_handler</span><span class="p">(</span><span class="n">textcaptcha</span><span class="o">=</span><span class="s2">&quot;If tomorrow is Saturday, what day is today?&quot;</span><span class="p">)</span>
+<span class="go">{</span>
+<span class="go">   &quot;errorId&quot;:0,</span>
+<span class="go">   &quot;status&quot;:&quot;ready&quot;,</span>
+<span class="go">   &quot;solution&quot;:{</span>
+<span class="go">      &quot;text&quot;:&quot;SUNDAY&quot;</span>
+<span class="go">   },</span>
+<span class="go">   &quot;cost&quot;:0.03669,</span>
+<span class="go">   &quot;ip&quot;:&quot;46.53.241.91&quot;,</span>
+<span class="go">   &quot;createTime&quot;:1695617910,</span>
+<span class="go">   &quot;endTime&quot;:1695617965,</span>
+<span class="go">   &quot;solveCount&quot;:2,</span>
+<span class="go">   &quot;taskId&quot;:5423543</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TextCaptcha</span><span class="p">(</span><span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;aa90...51122&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="p">)</span><span class="o">.</span><span class="n">captcha_handler</span><span class="p">(</span><span class="n">textcaptcha</span><span class="o">=</span><span class="s2">&quot;If tomorrow is Saturday, what day is today?&quot;</span><span class="p">)</span>
+<span class="go">{</span>
+<span class="go">   &quot;errorId&quot;:0,</span>
+<span class="go">   &quot;status&quot;:&quot;ready&quot;,</span>
+<span class="go">   &quot;solution&quot;:{</span>
+<span class="go">      &quot;text&quot;:&quot;SUNDAY&quot;</span>
+<span class="go">   },</span>
+<span class="go">   &quot;cost&quot;:0.03669,</span>
+<span class="go">   &quot;ip&quot;:&quot;46.53.241.91&quot;,</span>
+<span class="go">   &quot;createTime&quot;:1695617910,</span>
+<span class="go">   &quot;endTime&quot;:1695617965,</span>
+<span class="go">   &quot;solveCount&quot;:2,</span>
+<span class="go">   &quot;taskId&quot;:5423543</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">TextCaptcha</span><span class="p">(</span><span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;aa90...51122&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="p">)</span><span class="o">.</span><span class="n">aio_captcha_handler</span><span class="p">(</span><span class="n">textcaptcha</span><span class="o">=</span><span class="s2">&quot;If tomorrow is Saturday, what day is today?&quot;</span><span class="p">)</span>
+<span class="go">{</span>
+<span class="go">   &quot;errorId&quot;:0,</span>
+<span class="go">   &quot;status&quot;:&quot;ready&quot;,</span>
+<span class="go">   &quot;solution&quot;:{</span>
+<span class="go">      &quot;text&quot;:&quot;SUNDAY&quot;</span>
+<span class="go">   },</span>
+<span class="go">   &quot;cost&quot;:0.03669,</span>
+<span class="go">   &quot;ip&quot;:&quot;46.53.241.91&quot;,</span>
+<span class="go">   &quot;createTime&quot;:1695617910,</span>
+<span class="go">   &quot;endTime&quot;:1695617965,</span>
+<span class="go">   &quot;solveCount&quot;:2,</span>
+<span class="go">   &quot;taskId&quot;:5423543</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict with full server response</p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p><a class="reference external" href="https://2captcha.com/api-docs/text">https://2captcha.com/api-docs/text</a></p>
+<p><a class="reference external" href="https://rucaptcha.com/api-docs/text">https://rucaptcha.com/api-docs/text</a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_rucaptcha.text_captcha.TextCaptcha.captcha_handler">
+<span class="sig-name descname"><span class="pre">captcha_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">textcaptcha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#python_rucaptcha.text_captcha.TextCaptcha.captcha_handler" title="Link to this definition">¶</a></dt>
+<dd><p>Synchronous method for captcha solving</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>textcaptcha</strong> (<em>str</em>) – Captcha text</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict with full server response</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p>Check class docstirng for more info</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_rucaptcha.text_captcha.TextCaptcha.aio_captcha_handler">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">aio_captcha_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">textcaptcha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#python_rucaptcha.text_captcha.TextCaptcha.aio_captcha_handler" title="Link to this definition">¶</a></dt>
+<dd><p>Asynchronous method for captcha solving</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>textcaptcha</strong> (<em>str</em>) – Captcha text</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict with full server response</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p>Check class docstirng for more info</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/RuCaptchaMedium.png" alt="Logo of python-rucaptcha"/>
+            </a></p>
+  
+
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">TextCaptcha</a><ul>
+<li><a class="reference internal" href="#python_rucaptcha.text_captcha.TextCaptcha"><code class="docutils literal notranslate"><span class="pre">TextCaptcha</span></code></a><ul>
+<li><a class="reference internal" href="#python_rucaptcha.text_captcha.TextCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">TextCaptcha.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#python_rucaptcha.text_captcha.TextCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">TextCaptcha.captcha_handler()</span></code></a></li>
+<li><a class="reference internal" href="#python_rucaptcha.text_captcha.TextCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">TextCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+  <li><a href="../../index.html">Overview</a>
+    <ul>
+          <li>Previous: <a href="../rotate/example.html" title="previous chapter">RotateCaptcha</a>
+          <li>Next: <a href="../turnstile/example.html" title="next chapter">Turnstile</a>
+    </ul>
+  </li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, AndreiDrang; Release - 6.5.0; Last update - 2025-09-29.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.3.0.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>python-rucaptcha &#8212; python-rucaptcha (6.5.0)</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=7a9665a2" />
+    <link rel="stylesheet" type="text/css" href="_static/jinja.css?v=85659ec6" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script data-project="python-rucaptcha" data-version="" src="_static/describe_version.js?v=fa7f30d0"></script>
+    <link rel="icon" href="_static/favicon.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introduction" href="modules/main/info.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modules/main/info.html" title="Introduction"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">python-rucaptcha (6.5.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">python-rucaptcha</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section class="hide-header" id="python-rucaptcha">
+<h1>python-rucaptcha<a class="headerlink" href="#python-rucaptcha" title="Link to this heading">¶</a></h1>
+<img alt="_images/RuCaptchaMedium.png" class="align-center" src="_images/RuCaptchaMedium.png" />
+<p>Python3 library for <a class="reference external" href="https://rucaptcha.com/?from=4170435">RuCaptcha</a> and <a class="reference external" href="https://2captcha.com/?from=4170435">2Captcha</a> service API.</p>
+<p>The library is intended for software developers and is used to work with the <a class="reference external" href="https://rucaptcha.com/?from=4170435">RuCaptcha</a> and <a class="reference external" href="https://2captcha.com/?from=4170435">2Captcha</a> service API.</p>
+<p>Support of the service <a class="reference external" href="https://deathbycaptcha.com?refid=1237267242">Death By Captcha</a> is integrated into this library, more information in the library documentation or in the <a class="reference external" href="https://deathbycaptcha.com/api/2captcha?refid=1237267242">service docs</a>.</p>
+<p>Check our other projects here - <a class="reference external" href="https://red-panda-dev.xyz/blog/">RedPandaDev group</a>.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Start here:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules/main/info.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/other-libs/info.html">Other captcha-solving services libs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/license/info.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/contacts/info.html">Contacts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/other-captcha-services/info.html">DeathByCaptcha and other services</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Captcha examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules/h-captcha/example.html">HCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/h-captcha/example.html#python_rucaptcha.hcaptcha.HCaptcha"><code class="docutils literal notranslate"><span class="pre">HCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/h-captcha/example.html#python_rucaptcha.hcaptcha.HCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">HCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/h-captcha/example.html#python_rucaptcha.hcaptcha.HCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">HCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/h-captcha/example.html#python_rucaptcha.hcaptcha.HCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">HCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/fun-captcha/example.html">FunCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/fun-captcha/example.html#python_rucaptcha.fun_captcha.FunCaptcha"><code class="docutils literal notranslate"><span class="pre">FunCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/fun-captcha/example.html#python_rucaptcha.fun_captcha.FunCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">FunCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/fun-captcha/example.html#python_rucaptcha.fun_captcha.FunCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">FunCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/fun-captcha/example.html#python_rucaptcha.fun_captcha.FunCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">FunCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/gee-test/example.html">GeeTest</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/gee-test/example.html#python_rucaptcha.gee_test.GeeTest"><code class="docutils literal notranslate"><span class="pre">GeeTest</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/gee-test/example.html#python_rucaptcha.gee_test.GeeTest.__init__"><code class="docutils literal notranslate"><span class="pre">GeeTest.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/gee-test/example.html#python_rucaptcha.gee_test.GeeTest.captcha_handler"><code class="docutils literal notranslate"><span class="pre">GeeTest.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/gee-test/example.html#python_rucaptcha.gee_test.GeeTest.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">GeeTest.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/capy/example.html">CapyPuzzle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/capy/example.html#python_rucaptcha.capy_puzzle.CapyPuzzle"><code class="docutils literal notranslate"><span class="pre">CapyPuzzle</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/capy/example.html#python_rucaptcha.capy_puzzle.CapyPuzzle.__init__"><code class="docutils literal notranslate"><span class="pre">CapyPuzzle.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capy/example.html#python_rucaptcha.capy_puzzle.CapyPuzzle.captcha_handler"><code class="docutils literal notranslate"><span class="pre">CapyPuzzle.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capy/example.html#python_rucaptcha.capy_puzzle.CapyPuzzle.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">CapyPuzzle.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/amazon-waf/example.html">AmazonWAF</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/amazon-waf/example.html#python_rucaptcha.amazon_waf.AmazonWAF"><code class="docutils literal notranslate"><span class="pre">AmazonWAF</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/amazon-waf/example.html#python_rucaptcha.amazon_waf.AmazonWAF.__init__"><code class="docutils literal notranslate"><span class="pre">AmazonWAF.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/amazon-waf/example.html#python_rucaptcha.amazon_waf.AmazonWAF.captcha_handler"><code class="docutils literal notranslate"><span class="pre">AmazonWAF.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/amazon-waf/example.html#python_rucaptcha.amazon_waf.AmazonWAF.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">AmazonWAF.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/key/example.html">KeyCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/key/example.html#python_rucaptcha.key_captcha.KeyCaptcha"><code class="docutils literal notranslate"><span class="pre">KeyCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/key/example.html#python_rucaptcha.key_captcha.KeyCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">KeyCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/key/example.html#python_rucaptcha.key_captcha.KeyCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">KeyCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/key/example.html#python_rucaptcha.key_captcha.KeyCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">KeyCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/lemin/example.html">LeminCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/lemin/example.html#python_rucaptcha.lemin_captcha.LeminCaptcha"><code class="docutils literal notranslate"><span class="pre">LeminCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/lemin/example.html#python_rucaptcha.lemin_captcha.LeminCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">LeminCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/lemin/example.html#python_rucaptcha.lemin_captcha.LeminCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">LeminCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/lemin/example.html#python_rucaptcha.lemin_captcha.LeminCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">LeminCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/re-captcha/example.html">ReCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/re-captcha/example.html#python_rucaptcha.re_captcha.ReCaptcha"><code class="docutils literal notranslate"><span class="pre">ReCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/re-captcha/example.html#python_rucaptcha.re_captcha.ReCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">ReCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/re-captcha/example.html#python_rucaptcha.re_captcha.ReCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">ReCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/re-captcha/example.html#python_rucaptcha.re_captcha.ReCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">ReCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/rotate/example.html">RotateCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/rotate/example.html#python_rucaptcha.rotate_captcha.RotateCaptcha"><code class="docutils literal notranslate"><span class="pre">RotateCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/rotate/example.html#python_rucaptcha.rotate_captcha.RotateCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">RotateCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/rotate/example.html#python_rucaptcha.rotate_captcha.RotateCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">RotateCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/rotate/example.html#python_rucaptcha.rotate_captcha.RotateCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">RotateCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/text/example.html">TextCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/text/example.html#python_rucaptcha.text_captcha.TextCaptcha"><code class="docutils literal notranslate"><span class="pre">TextCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/text/example.html#python_rucaptcha.text_captcha.TextCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">TextCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/text/example.html#python_rucaptcha.text_captcha.TextCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">TextCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/text/example.html#python_rucaptcha.text_captcha.TextCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">TextCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/turnstile/example.html">Turnstile</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/turnstile/example.html#python_rucaptcha.turnstile.Turnstile"><code class="docutils literal notranslate"><span class="pre">Turnstile</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/turnstile/example.html#python_rucaptcha.turnstile.Turnstile.__init__"><code class="docutils literal notranslate"><span class="pre">Turnstile.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/turnstile/example.html#python_rucaptcha.turnstile.Turnstile.captcha_handler"><code class="docutils literal notranslate"><span class="pre">Turnstile.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/turnstile/example.html#python_rucaptcha.turnstile.Turnstile.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">Turnstile.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/image/example.html">ImageCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/image/example.html#python_rucaptcha.image_captcha.ImageCaptcha"><code class="docutils literal notranslate"><span class="pre">ImageCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/image/example.html#python_rucaptcha.image_captcha.ImageCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">ImageCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/image/example.html#python_rucaptcha.image_captcha.ImageCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">ImageCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/image/example.html#python_rucaptcha.image_captcha.ImageCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">ImageCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/audio/example.html">AudioCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/audio/example.html#python_rucaptcha.audio_captcha.AudioCaptcha"><code class="docutils literal notranslate"><span class="pre">AudioCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/audio/example.html#python_rucaptcha.audio_captcha.AudioCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">AudioCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/audio/example.html#python_rucaptcha.audio_captcha.AudioCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">AudioCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/audio/example.html#python_rucaptcha.audio_captcha.AudioCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">AudioCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/cut-captcha/example.html">CutCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/cut-captcha/example.html#python_rucaptcha.cutcaptcha.CutCaptcha"><code class="docutils literal notranslate"><span class="pre">CutCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/cut-captcha/example.html#python_rucaptcha.cutcaptcha.CutCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">CutCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cut-captcha/example.html#python_rucaptcha.cutcaptcha.CutCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">CutCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cut-captcha/example.html#python_rucaptcha.cutcaptcha.CutCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">CutCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/datadome-captcha/example.html">DataDome</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/datadome-captcha/example.html#python_rucaptcha.datadome_captcha.DataDomeCaptcha"><code class="docutils literal notranslate"><span class="pre">DataDomeCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/datadome-captcha/example.html#python_rucaptcha.datadome_captcha.DataDomeCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">DataDomeCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/datadome-captcha/example.html#python_rucaptcha.datadome_captcha.DataDomeCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">DataDomeCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/datadome-captcha/example.html#python_rucaptcha.datadome_captcha.DataDomeCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">DataDomeCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/cyber-siara-captcha/example.html">CyberSiARA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/cyber-siara-captcha/example.html#python_rucaptcha.cyber_siara_captcha.CyberSiARACaptcha"><code class="docutils literal notranslate"><span class="pre">CyberSiARACaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/cyber-siara-captcha/example.html#python_rucaptcha.cyber_siara_captcha.CyberSiARACaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">CyberSiARACaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cyber-siara-captcha/example.html#python_rucaptcha.cyber_siara_captcha.CyberSiARACaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">CyberSiARACaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cyber-siara-captcha/example.html#python_rucaptcha.cyber_siara_captcha.CyberSiARACaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">CyberSiARACaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/grid/example.html">GridCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/grid/example.html#python_rucaptcha.grid_captcha.GridCaptcha"><code class="docutils literal notranslate"><span class="pre">GridCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/grid/example.html#python_rucaptcha.grid_captcha.GridCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">GridCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/grid/example.html#python_rucaptcha.grid_captcha.GridCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">GridCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/grid/example.html#python_rucaptcha.grid_captcha.GridCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">GridCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/draw-around/example.html">DrawAroundCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/draw-around/example.html#python_rucaptcha.draw_around_captcha.DrawAroundCaptcha"><code class="docutils literal notranslate"><span class="pre">DrawAroundCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/draw-around/example.html#python_rucaptcha.draw_around_captcha.DrawAroundCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">DrawAroundCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/draw-around/example.html#python_rucaptcha.draw_around_captcha.DrawAroundCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">DrawAroundCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/draw-around/example.html#python_rucaptcha.draw_around_captcha.DrawAroundCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">DrawAroundCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/bounding-box/example.html">BoundingBoxCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/bounding-box/example.html#python_rucaptcha.bounding_box_captcha.BoundingBoxCaptcha"><code class="docutils literal notranslate"><span class="pre">BoundingBoxCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/bounding-box/example.html#python_rucaptcha.bounding_box_captcha.BoundingBoxCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">BoundingBoxCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bounding-box/example.html#python_rucaptcha.bounding_box_captcha.BoundingBoxCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">BoundingBoxCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bounding-box/example.html#python_rucaptcha.bounding_box_captcha.BoundingBoxCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">BoundingBoxCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/coordinates/example.html">CoordinatesCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/coordinates/example.html#python_rucaptcha.coordinates_captcha.CoordinatesCaptcha"><code class="docutils literal notranslate"><span class="pre">CoordinatesCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/coordinates/example.html#python_rucaptcha.coordinates_captcha.CoordinatesCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">CoordinatesCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/coordinates/example.html#python_rucaptcha.coordinates_captcha.CoordinatesCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">CoordinatesCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/coordinates/example.html#python_rucaptcha.coordinates_captcha.CoordinatesCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">CoordinatesCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/mt-captcha/example.html">MTCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/mt-captcha/example.html#python_rucaptcha.mt_captcha.MTCaptcha"><code class="docutils literal notranslate"><span class="pre">MTCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/mt-captcha/example.html#python_rucaptcha.mt_captcha.MTCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">MTCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/mt-captcha/example.html#python_rucaptcha.mt_captcha.MTCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">MTCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/mt-captcha/example.html#python_rucaptcha.mt_captcha.MTCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">MTCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/friendly-captcha/example.html">FriendlyCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/friendly-captcha/example.html#python_rucaptcha.friendly_captcha.FriendlyCaptcha"><code class="docutils literal notranslate"><span class="pre">FriendlyCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/friendly-captcha/example.html#python_rucaptcha.friendly_captcha.FriendlyCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">FriendlyCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/friendly-captcha/example.html#python_rucaptcha.friendly_captcha.FriendlyCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">FriendlyCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/friendly-captcha/example.html#python_rucaptcha.friendly_captcha.FriendlyCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">FriendlyCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/tencent/example.html">Tencent</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/tencent/example.html#python_rucaptcha.tencent.Tencent"><code class="docutils literal notranslate"><span class="pre">Tencent</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/tencent/example.html#python_rucaptcha.tencent.Tencent.__init__"><code class="docutils literal notranslate"><span class="pre">Tencent.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/tencent/example.html#python_rucaptcha.tencent.Tencent.captcha_handler"><code class="docutils literal notranslate"><span class="pre">Tencent.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/tencent/example.html#python_rucaptcha.tencent.Tencent.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">Tencent.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/prosopo/example.html">Prosopo</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/prosopo/example.html#python_rucaptcha.prosopo.Prosopo"><code class="docutils literal notranslate"><span class="pre">Prosopo</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/prosopo/example.html#python_rucaptcha.prosopo.Prosopo.__init__"><code class="docutils literal notranslate"><span class="pre">Prosopo.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/prosopo/example.html#python_rucaptcha.prosopo.Prosopo.captcha_handler"><code class="docutils literal notranslate"><span class="pre">Prosopo.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/prosopo/example.html#python_rucaptcha.prosopo.Prosopo.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">Prosopo.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/atb-captcha/example.html">atbCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/atb-captcha/example.html#python_rucaptcha.atb_captcha.atbCaptcha"><code class="docutils literal notranslate"><span class="pre">atbCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/atb-captcha/example.html#python_rucaptcha.atb_captcha.atbCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">atbCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/atb-captcha/example.html#python_rucaptcha.atb_captcha.atbCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">atbCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/atb-captcha/example.html#python_rucaptcha.atb_captcha.atbCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">atbCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/captcha-fox/example.html">CaptchaFox</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/captcha-fox/example.html#python_rucaptcha.captcha_fox.CaptchaFox"><code class="docutils literal notranslate"><span class="pre">CaptchaFox</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/captcha-fox/example.html#python_rucaptcha.captcha_fox.CaptchaFox.__init__"><code class="docutils literal notranslate"><span class="pre">CaptchaFox.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/captcha-fox/example.html#python_rucaptcha.captcha_fox.CaptchaFox.captcha_handler"><code class="docutils literal notranslate"><span class="pre">CaptchaFox.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/captcha-fox/example.html#python_rucaptcha.captcha_fox.CaptchaFox.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">CaptchaFox.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/captcha-temu/example.html">TemuCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/captcha-temu/example.html#python_rucaptcha.temu_captcha.TemuCaptcha"><code class="docutils literal notranslate"><span class="pre">TemuCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/captcha-temu/example.html#python_rucaptcha.temu_captcha.TemuCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">TemuCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/captcha-temu/example.html#python_rucaptcha.temu_captcha.TemuCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">TemuCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/captcha-temu/example.html#python_rucaptcha.temu_captcha.TemuCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">TemuCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/captcha-vk/example.html">VKCaptcha</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/captcha-vk/example.html#python_rucaptcha.vk_captcha.VKCaptcha"><code class="docutils literal notranslate"><span class="pre">VKCaptcha</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/captcha-vk/example.html#python_rucaptcha.vk_captcha.VKCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">VKCaptcha.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/captcha-vk/example.html#python_rucaptcha.vk_captcha.VKCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">VKCaptcha.captcha_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/captcha-vk/example.html#python_rucaptcha.vk_captcha.VKCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">VKCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/control/example.html">Control</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/control/example.html#python_rucaptcha.control.Control"><code class="docutils literal notranslate"><span class="pre">Control</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/control/example.html#python_rucaptcha.control.Control.__init__"><code class="docutils literal notranslate"><span class="pre">Control.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/control/example.html#python_rucaptcha.control.Control.reportCorrect"><code class="docutils literal notranslate"><span class="pre">Control.reportCorrect()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/control/example.html#python_rucaptcha.control.Control.aio_reportCorrect"><code class="docutils literal notranslate"><span class="pre">Control.aio_reportCorrect()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/control/example.html#python_rucaptcha.control.Control.reportIncorrect"><code class="docutils literal notranslate"><span class="pre">Control.reportIncorrect()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/control/example.html#python_rucaptcha.control.Control.aio_reportIncorrect"><code class="docutils literal notranslate"><span class="pre">Control.aio_reportIncorrect()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/control/example.html#python_rucaptcha.control.Control.getBalance"><code class="docutils literal notranslate"><span class="pre">Control.getBalance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/control/example.html#python_rucaptcha.control.Control.aio_getBalance"><code class="docutils literal notranslate"><span class="pre">Control.aio_getBalance()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Additional modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules/enum/info.html">Enum</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.MyEnum"><code class="docutils literal notranslate"><span class="pre">MyEnum</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.ServiceEnm"><code class="docutils literal notranslate"><span class="pre">ServiceEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.SaveFormatsEnm"><code class="docutils literal notranslate"><span class="pre">SaveFormatsEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.GeetestEnm"><code class="docutils literal notranslate"><span class="pre">GeetestEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.ImageCaptchaEnm"><code class="docutils literal notranslate"><span class="pre">ImageCaptchaEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.CapyPuzzleEnm"><code class="docutils literal notranslate"><span class="pre">CapyPuzzleEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.FunCaptchaEnm"><code class="docutils literal notranslate"><span class="pre">FunCaptchaEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.ReCaptchaEnm"><code class="docutils literal notranslate"><span class="pre">ReCaptchaEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.LeminCaptchaEnm"><code class="docutils literal notranslate"><span class="pre">LeminCaptchaEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.HCaptchaEnm"><code class="docutils literal notranslate"><span class="pre">HCaptchaEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.KeyCaptchaEnm"><code class="docutils literal notranslate"><span class="pre">KeyCaptchaEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.RotateCaptchaEnm"><code class="docutils literal notranslate"><span class="pre">RotateCaptchaEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.ControlEnm"><code class="docutils literal notranslate"><span class="pre">ControlEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.TurnstileCaptchaEnm"><code class="docutils literal notranslate"><span class="pre">TurnstileCaptchaEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.AmazonWAFCaptchaEnm"><code class="docutils literal notranslate"><span class="pre">AmazonWAFCaptchaEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.CutCaptchaEnm"><code class="docutils literal notranslate"><span class="pre">CutCaptchaEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.DataDomeSliderEnm"><code class="docutils literal notranslate"><span class="pre">DataDomeSliderEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.CyberSiARAEnm"><code class="docutils literal notranslate"><span class="pre">CyberSiARAEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.MTCaptchaEnm"><code class="docutils literal notranslate"><span class="pre">MTCaptchaEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.BoundingBoxCaptchaEnm"><code class="docutils literal notranslate"><span class="pre">BoundingBoxCaptchaEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.DrawAroundCaptchaEnm"><code class="docutils literal notranslate"><span class="pre">DrawAroundCaptchaEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.CoordinatesCaptchaEnm"><code class="docutils literal notranslate"><span class="pre">CoordinatesCaptchaEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.GridCaptchaEnm"><code class="docutils literal notranslate"><span class="pre">GridCaptchaEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.FriendlyCaptchaEnm"><code class="docutils literal notranslate"><span class="pre">FriendlyCaptchaEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.TencentEnm"><code class="docutils literal notranslate"><span class="pre">TencentEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.ProsopoEnm"><code class="docutils literal notranslate"><span class="pre">ProsopoEnm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/enum/info.html#python_rucaptcha.core.enums.atbCaptchaEnm"><code class="docutils literal notranslate"><span class="pre">atbCaptchaEnm</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/serializer/info.html">Serializer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/serializer/info.html#python_rucaptcha.core.serializer.GetTaskResultResponseSer"><code class="docutils literal notranslate"><span class="pre">GetTaskResultResponseSer</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://pypi.org/project/python-rucaptcha/">PyPI Releases</a>
+  
+    <li><a href="https://github.com/AndreiDrang/python-rucaptcha">Source Code</a>
+  
+    <li><a href="https://rucaptcha.com/?from=4170435">2Captcha/RuCaptcha</a>
+  
+    <li><a href="https://deathbycaptcha.com?refid=1237267242">DeathByCaptcha</a>
+  
+    <li><a href="https://red-panda-dev.xyz/blog/">RedPandaDev group</a>
+  </ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, AndreiDrang; Release - 6.5.0; Last update - 2025-09-29.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.3.0.
+    </div>
+  </body>
+</html>

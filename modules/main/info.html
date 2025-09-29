@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Introduction &#8212; python-rucaptcha (6.5.0)</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=7a9665a2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jinja.css?v=85659ec6" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script data-project="python-rucaptcha" data-version="" src="../../_static/describe_version.js?v=fa7f30d0"></script>
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Other captcha-solving services libs" href="../other-libs/info.html" />
+    <link rel="prev" title="python-rucaptcha" href="../../index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../other-libs/info.html" title="Other captcha-solving services libs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../../index.html" title="python-rucaptcha"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-rucaptcha (6.5.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Introduction</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h1>
+<p><img alt="" src="../../_images/RuCaptchaMedium.png" /></p>
+<hr>
+<p><a class="reference external" href="https://badge.fury.io/py/python-rucaptcha"><img alt="PyPI version" src="https://badge.fury.io/py/python-rucaptcha.svg" /></a>
+<a class="reference external" href="https://badge.fury.io/py/python-rucaptcha"><img alt="Python versions" src="https://img.shields.io/pypi/pyversions/python-rucaptcha.svg?logo=python&amp;logoColor=FBE072" /></a>
+<a class="reference external" href="https://pepy.tech/project/python-rucaptcha"><img alt="Downloads" src="https://pepy.tech/badge/python-rucaptcha/month" /></a>
+<a class="reference external" href="https://andreidrang.github.io/python-rucaptcha/"><img alt="Static Badge" src="https://img.shields.io/badge/docs-Sphinx-green?label=Documentation&amp;labelColor=gray" /></a></p>
+<p><a class="reference external" href="https://codeclimate.com/github/AndreiDrang/python-rucaptcha/maintainability"><img alt="Maintainability" src="https://api.codeclimate.com/v1/badges/aec93bb04a277cf0dde9/maintainability" /></a>
+<a class="reference external" href="https://www.codacy.com/gh/AndreiDrang/python-rucaptcha/dashboard?utm_source=github.com&amp;amp;utm_medium=referral&amp;amp;utm_content=AndreiDrang/python-rucaptcha&amp;amp;utm_campaign=Badge_Grade"><img alt="Codacy Badge" src="https://app.codacy.com/project/badge/Grade/b4087362bd024b088b358b3e10e7a62f" /></a>
+<a class="reference external" href="https://codecov.io/gh/AndreiDrang/python-rucaptcha"><img alt="codecov" src="https://codecov.io/gh/AndreiDrang/python-rucaptcha/branch/master/graph/badge.svg?token=doybTUCfbD" /></a></p>
+<p><a class="reference external" href="https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/build.yml"><img alt="Build" src="https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/build.yml/badge.svg?branch=master" /></a>
+<a class="reference external" href="https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/install.yml"><img alt="Installation" src="https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/install.yml/badge.svg?branch=master" /></a>
+<a class="reference external" href="https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/test.yml"><img alt="Tests" src="https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/test.yml/badge.svg?branch=master" /></a>
+<a class="reference external" href="https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/lint.yml"><img alt="Lint" src="https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/lint.yml/badge.svg?branch=master" /></a></p>
+<p>Python3 library for <a class="reference external" href="https://rucaptcha.com/?from=4170435">RuCaptcha</a> and <a class="reference external" href="https://2captcha.com/?from=4170435">2Captcha</a> service API.</p>
+<p>Tested on UNIX based OS.</p>
+<p>The library is intended for software developers and is used to work with the <a class="reference external" href="https://rucaptcha.com/?from=4170435">RuCaptcha</a> and <a class="reference external" href="https://2captcha.com/?from=4170435">2Captcha</a> service API.</p>
+<p>Support of the service <a class="reference external" href="https://deathbycaptcha.com?refid=1237267242">Death By Captcha</a> is integrated into this library, more information in the library documentation or in the <a class="reference external" href="https://deathbycaptcha.com/api/2captcha?refid=1237267242">service docs</a>.</p>
+<p>Application in <a class="reference external" href="https://rucaptcha.com/software/python-rucaptcha">RuCaptcha software</a> and <a class="reference external" href="https://2captcha.com/software/python-rucaptcha">2Captcha software</a>.</p>
+<hr class="docutils" />
+<p>You can check our other projects here - <a class="reference external" href="https://red-panda-dev.xyz/blog/">RedPandaDev group</a>.</p>
+<hr class="docutils" />
+<section id="how-to-install">
+<h2>How to install?<a class="headerlink" href="#how-to-install" title="Link to this heading">¶</a></h2>
+<section id="pip">
+<h3>pip<a class="headerlink" href="#pip" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>python-rucaptcha
+</pre></div>
+</div>
+</section>
+</section>
+<section id="how-to-test">
+<h2>How to test?<a class="headerlink" href="#how-to-test" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>You need set <code class="docutils literal notranslate"><span class="pre">RUCAPTCHA_KEY</span></code> in your environment(get this value from you account).</p></li>
+<li><p>You need set <code class="docutils literal notranslate"><span class="pre">DEATHBYCAPTCHA_KEY</span></code> in your environment(get this value from you account).</p></li>
+<li><p>Run command <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">tests</span></code>, from root directory.</p></li>
+</ol>
+<section id="changelog">
+<h3>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">¶</a></h3>
+<p>Check <a class="reference external" href="https://github.com/AndreiDrang/python-rucaptcha/releases">releases page</a>.</p>
+</section>
+<section id="contacts">
+<h3>Contacts<a class="headerlink" href="#contacts" title="Link to this heading">¶</a></h3>
+<p>If you have any questions, please send a message to the <a class="reference external" href="https://t.me/pythoncaptcha">Telegram</a> chat room.</p>
+<p>Or email python-captcha&#64;pm.me</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/RuCaptchaMedium.png" alt="Logo of python-rucaptcha"/>
+            </a></p>
+  
+
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#how-to-install">How to install?</a><ul>
+<li><a class="reference internal" href="#pip">pip</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#how-to-test">How to test?</a><ul>
+<li><a class="reference internal" href="#changelog">Changelog</a></li>
+<li><a class="reference internal" href="#contacts">Contacts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+  <li><a href="../../index.html">Overview</a>
+    <ul>
+          <li>Previous: <a href="../../index.html" title="previous chapter">python-rucaptcha</a>
+          <li>Next: <a href="../other-libs/info.html" title="next chapter">Other captcha-solving services libs</a>
+    </ul>
+  </li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, AndreiDrang; Release - 6.5.0; Last update - 2025-09-29.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.3.0.
+    </div>
+  </body>
+</html>

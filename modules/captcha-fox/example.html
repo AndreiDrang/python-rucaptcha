@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CaptchaFox &#8212; python-rucaptcha (6.5.0)</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=7a9665a2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jinja.css?v=85659ec6" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script data-project="python-rucaptcha" data-version="" src="../../_static/describe_version.js?v=fa7f30d0"></script>
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="TemuCaptcha" href="../captcha-temu/example.html" />
+    <link rel="prev" title="atbCaptcha" href="../atb-captcha/example.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../captcha-temu/example.html" title="TemuCaptcha"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../atb-captcha/example.html" title="atbCaptcha"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-rucaptcha (6.5.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">CaptchaFox</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="captchafox">
+<h1>CaptchaFox<a class="headerlink" href="#captchafox" title="Link to this heading">¶</a></h1>
+<p>To import this module:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">python_rucaptcha.captcha_fox</span><span class="w"> </span><span class="kn">import</span> <span class="n">CaptchaFox</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="python_rucaptcha.captcha_fox.CaptchaFox">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_rucaptcha.captcha_fox.</span></span><span class="sig-name descname"><span class="pre">CaptchaFox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">websiteURL</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">websiteKey</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">userAgent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxyType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxyAddress</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxyPort</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_rucaptcha.captcha_fox.CaptchaFox" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_rucaptcha.captcha_fox.CaptchaFox.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">websiteURL</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">websiteKey</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">userAgent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxyType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxyAddress</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxyPort</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_rucaptcha.captcha_fox.CaptchaFox.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>The class is used to work with CaptchaFox.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rucaptcha_key</strong> – User API key</p></li>
+<li><p><strong>websiteURL</strong> (<em>str</em>) – Full URL of the captcha page</p></li>
+<li><p><strong>websiteKey</strong> (<em>str</em>) – The value of the <cite>key</cite> parameter.
+It can be found in the page source code or captured in network requests during page loading.</p></li>
+<li><p><strong>userAgent</strong> (<em>str</em>) – User-Agent of your browser will be used to load the captcha.
+Use only modern browser’s User-Agents</p></li>
+<li><p><strong>proxyType</strong> (<em>str</em>) – Proxy type - <cite>http</cite>, <cite>socks4</cite>, <cite>socks5</cite></p></li>
+<li><p><strong>proxyAddress</strong> (<em>str</em>) – Proxy IP address or hostname</p></li>
+<li><p><strong>proxyPort</strong> (<em>str</em>) – Proxy port</p></li>
+<li><p><strong>method</strong> – Captcha type</p></li>
+<li><p><strong>kwargs</strong> – Not required params for task creation request</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CaptchaFox</span><span class="p">(</span><span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;aa9011f31111181111168611f1151122&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">websiteURL</span><span class="o">=</span><span class="s2">&quot;3ceb8624-1970-4e6b-91d5-70317b70b651&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">websiteKey</span><span class="o">=</span><span class="s2">&quot;sk_xtNxpk6fCdFbxh1_xJeGflSdCE9tn99G&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">userAgent</span><span class="o">=</span><span class="s2">&quot;Mozilla/5.0 .....&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">proxyType</span><span class="o">=</span><span class="s2">&quot;socks5&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">proxyAddress</span><span class="o">=</span><span class="s2">&quot;1.2.3.4&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">proxyPort</span><span class="o">=</span><span class="s2">&quot;445&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="p">)</span><span class="o">.</span><span class="n">captcha_handler</span><span class="p">()</span>
+<span class="go">{</span>
+<span class="go">   &quot;errorId&quot;:0,</span>
+<span class="go">   &quot;status&quot;:&quot;ready&quot;,</span>
+<span class="go">   &quot;solution&quot;:{</span>
+<span class="go">      &quot;token&quot;:&quot;142000f.....er&quot;</span>
+<span class="go">   },</span>
+<span class="go">   &quot;cost&quot;:&quot;0.002&quot;,</span>
+<span class="go">   &quot;ip&quot;:&quot;1.2.3.4&quot;,</span>
+<span class="go">   &quot;createTime&quot;:1692863536,</span>
+<span class="go">   &quot;endTime&quot;:1692863556,</span>
+<span class="go">   &quot;solveCount&quot;:0,</span>
+<span class="go">   &quot;taskId&quot;: 73243152973,</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">CaptchaFox</span><span class="p">(</span><span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;aa9011f31111181111168611f1151122&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">websiteURL</span><span class="o">=</span><span class="s2">&quot;3ceb8624-1970-4e6b-91d5-70317b70b651&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">websiteKey</span><span class="o">=</span><span class="s2">&quot;sk_xtNxpk6fCdFbxh1_xJeGflSdCE9tn99G&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">userAgent</span><span class="o">=</span><span class="s2">&quot;Mozilla/5.0 .....&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">proxyType</span><span class="o">=</span><span class="s2">&quot;socks5&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">proxyAddress</span><span class="o">=</span><span class="s2">&quot;1.2.3.4&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">proxyPort</span><span class="o">=</span><span class="s2">&quot;445&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="p">)</span><span class="o">.</span><span class="n">aio_captcha_handler</span><span class="p">()</span>
+<span class="go">{</span>
+<span class="go">   &quot;errorId&quot;:0,</span>
+<span class="go">   &quot;status&quot;:&quot;ready&quot;,</span>
+<span class="go">   &quot;solution&quot;:{</span>
+<span class="go">      &quot;token&quot;:&quot;142000f.....er&quot;</span>
+<span class="go">   },</span>
+<span class="go">   &quot;cost&quot;:&quot;0.002&quot;,</span>
+<span class="go">   &quot;ip&quot;:&quot;1.2.3.4&quot;,</span>
+<span class="go">   &quot;createTime&quot;:1692863536,</span>
+<span class="go">   &quot;endTime&quot;:1692863556,</span>
+<span class="go">   &quot;solveCount&quot;:0,</span>
+<span class="go">   &quot;taskId&quot;: 73243152973,</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict with full server response</p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p><a class="reference external" href="https://2captcha.com/api-docs/captchafox">https://2captcha.com/api-docs/captchafox</a></p>
+<p><a class="reference external" href="https://rucaptcha.com/api-docs/captchafox">https://rucaptcha.com/api-docs/captchafox</a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_rucaptcha.captcha_fox.CaptchaFox.captcha_handler">
+<span class="sig-name descname"><span class="pre">captcha_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#python_rucaptcha.captcha_fox.CaptchaFox.captcha_handler" title="Link to this definition">¶</a></dt>
+<dd><p>Sync solving method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>kwargs</strong> – additional params for <cite>requests</cite> library</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict with full server response</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p>Check class docstirng for more info</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_rucaptcha.captcha_fox.CaptchaFox.aio_captcha_handler">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">aio_captcha_handler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#python_rucaptcha.captcha_fox.CaptchaFox.aio_captcha_handler" title="Link to this definition">¶</a></dt>
+<dd><p>Async solving method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict with full server response</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p>Check class docstirng for more info</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/RuCaptchaMedium.png" alt="Logo of python-rucaptcha"/>
+            </a></p>
+  
+
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">CaptchaFox</a><ul>
+<li><a class="reference internal" href="#python_rucaptcha.captcha_fox.CaptchaFox"><code class="docutils literal notranslate"><span class="pre">CaptchaFox</span></code></a><ul>
+<li><a class="reference internal" href="#python_rucaptcha.captcha_fox.CaptchaFox.__init__"><code class="docutils literal notranslate"><span class="pre">CaptchaFox.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#python_rucaptcha.captcha_fox.CaptchaFox.captcha_handler"><code class="docutils literal notranslate"><span class="pre">CaptchaFox.captcha_handler()</span></code></a></li>
+<li><a class="reference internal" href="#python_rucaptcha.captcha_fox.CaptchaFox.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">CaptchaFox.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+  <li><a href="../../index.html">Overview</a>
+    <ul>
+          <li>Previous: <a href="../atb-captcha/example.html" title="previous chapter">atbCaptcha</a>
+          <li>Next: <a href="../captcha-temu/example.html" title="next chapter">TemuCaptcha</a>
+    </ul>
+  </li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, AndreiDrang; Release - 6.5.0; Last update - 2025-09-29.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.3.0.
+    </div>
+  </body>
+</html>

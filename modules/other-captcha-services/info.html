@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DeathByCaptcha and other services &#8212; python-rucaptcha (6.5.0)</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=7a9665a2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jinja.css?v=85659ec6" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script data-project="python-rucaptcha" data-version="" src="../../_static/describe_version.js?v=fa7f30d0"></script>
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="HCaptcha" href="../h-captcha/example.html" />
+    <link rel="prev" title="Contacts" href="../contacts/info.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../h-captcha/example.html" title="HCaptcha"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../contacts/info.html" title="Contacts"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-rucaptcha (6.5.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">DeathByCaptcha and other services</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="deathbycaptcha-and-other-services">
+<h1>DeathByCaptcha and other services<a class="headerlink" href="#deathbycaptcha-and-other-services" title="Link to this heading">¶</a></h1>
+<p>Using <a class="reference external" href="https://deathbycaptcha.com?refid=1237267242">Death By Captcha</a> and other services is possible by changing “service_type” and “url_request””url_response” parameters.</p>
+<p>More info about <a class="reference external" href="https://deathbycaptcha.com?refid=1237267242">Death By Captcha</a> integration u can find in <a class="reference external" href="https://deathbycaptcha.com/api/2captcha?refid=1237267242">service docs</a>.</p>
+<section id="deathbycaptcha">
+<h2>DeathByCaptcha:<a class="headerlink" href="#deathbycaptcha" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">python_rucaptcha.control</span><span class="w"> </span><span class="kn">import</span> <span class="n">Control</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">python_rucaptcha.core.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">ControlEnm</span><span class="p">,</span> <span class="n">ServiceEnm</span>
+
+<span class="n">serv_username</span><span class="o">=</span> <span class="s1">&#39;your.username&#39;</span>
+<span class="n">serv_password</span> <span class="o">=</span> <span class="s1">&#39;your.passwordQq11&#39;</span>
+<span class="n">deathbycaptcha_api_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">serv_username</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">serv_password</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">Control</span><span class="p">(</span><span class="n">rucaptcha_key</span><span class="o">=</span><span class="n">deathbycaptcha_api_key</span><span class="p">,</span>
+                <span class="n">service_type</span><span class="o">=</span><span class="n">ServiceEnm</span><span class="o">.</span><span class="n">DEATHBYCAPTCHA</span><span class="p">,</span>
+                <span class="n">action</span><span class="o">=</span><span class="n">ControlEnm</span><span class="o">.</span><span class="n">GETBALANCE</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">additional_methods</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">python_rucaptcha.control</span><span class="w"> </span><span class="kn">import</span> <span class="n">Control</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">python_rucaptcha.core.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">ControlEnm</span><span class="p">,</span> <span class="n">ServiceEnm</span>
+
+<span class="n">serv_username</span><span class="o">=</span> <span class="s1">&#39;your.username&#39;</span>
+<span class="n">serv_password</span> <span class="o">=</span> <span class="s1">&#39;your.passwordQq11&#39;</span>
+<span class="n">deathbycaptcha_api_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">serv_username</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">serv_password</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">Control</span><span class="p">(</span><span class="n">rucaptcha_key</span><span class="o">=</span><span class="n">deathbycaptcha_api_key</span><span class="p">,</span>
+                <span class="n">service_type</span><span class="o">=</span><span class="n">ServiceEnm</span><span class="o">.</span><span class="n">DEATHBYCAPTCHA</span><span class="p">,</span>
+                <span class="n">url_request</span><span class="o">=</span><span class="s1">&#39;http://api.deathbycaptcha.com/2captcha/in.php&#39;</span><span class="p">,</span>
+                <span class="n">url_response</span><span class="o">=</span><span class="s1">&#39;http://api.deathbycaptcha.com/2captcha/res.php&#39;</span><span class="p">,</span>
+                <span class="n">action</span><span class="o">=</span><span class="n">ControlEnm</span><span class="o">.</span><span class="n">GETBALANCE</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">additional_methods</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">python_rucaptcha.re_captcha</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReCaptcha</span><span class="p">,</span> <span class="n">ReCaptchaEnm</span>
+
+<span class="n">serv_username</span><span class="o">=</span> <span class="s1">&#39;your.username&#39;</span>
+<span class="n">serv_password</span> <span class="o">=</span> <span class="s1">&#39;your.passwordQq11&#39;</span>
+<span class="n">deathbycaptcha_api_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">serv_username</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">serv_password</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">ReCaptcha</span><span class="p">(</span><span class="n">rucaptcha_key</span><span class="o">=</span><span class="n">deathbycaptcha_api_key</span><span class="p">,</span>
+                 <span class="n">service_type</span><span class="o">=</span><span class="s2">&quot;deathbycaptcha&quot;</span><span class="p">,</span>
+                 <span class="n">pageurl</span><span class="o">=</span><span class="s2">&quot;https://rucaptcha.com/demo/recaptcha-v2&quot;</span><span class="p">,</span>
+                 <span class="n">googlekey</span><span class="o">=</span><span class="s2">&quot;6LeIxboZAAAAAFQy7d8GPzgRZu2bV0GwKS8ue_cH&quot;</span><span class="p">,</span>
+                 <span class="n">method</span><span class="o">=</span><span class="n">ReCaptchaEnm</span><span class="o">.</span><span class="n">USER_RECAPTCHA</span><span class="o">.</span><span class="n">value</span>
+                 <span class="p">)</span><span class="o">.</span><span class="n">captcha_handler</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">python_rucaptcha.hcaptcha</span><span class="w"> </span><span class="kn">import</span> <span class="n">HCaptcha</span><span class="p">,</span> <span class="n">HCaptchaEnm</span>
+
+<span class="n">serv_username</span><span class="o">=</span> <span class="s1">&#39;your.username&#39;</span>
+<span class="n">serv_password</span> <span class="o">=</span> <span class="s1">&#39;your.passwordQq11&#39;</span>
+<span class="n">deathbycaptcha_api_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">serv_username</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">serv_password</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">HCaptcha</span><span class="p">(</span><span class="n">rucaptcha_key</span><span class="o">=</span><span class="n">deathbycaptcha_api_key</span><span class="p">,</span>
+                  <span class="n">service_type</span><span class="o">=</span><span class="s2">&quot;deathbycaptcha&quot;</span><span class="p">,</span>
+                  <span class="n">sitekey</span><span class="o">=</span><span class="s2">&quot;3ceb8624-1970-4e6b-91d5-70317b70b651&quot;</span><span class="p">,</span>
+                  <span class="n">pageurl</span><span class="o">=</span><span class="s2">&quot;https://rucaptcha.com/demo/hcaptcha&quot;</span><span class="p">,</span>
+                  <span class="n">method</span><span class="o">=</span><span class="n">HCaptchaEnm</span><span class="o">.</span><span class="n">HCAPTCHA</span><span class="o">.</span><span class="n">value</span>
+                 <span class="p">)</span><span class="o">.</span><span class="n">captcha_handler</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>And etc, more info in <a class="reference external" href="https://deathbycaptcha.com/api/2captcha?refid=1237267242">service docs</a>.</p>
+</section>
+<section id="or-you-can-use-other-service-which-support-rucaptcha-2captcha-api-like-requests">
+<h2>Or you can use other service which support RuCaptcha\2Captcha API-like requests<a class="headerlink" href="#or-you-can-use-other-service-which-support-rucaptcha-2captcha-api-like-requests" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">python_rucaptcha.control</span><span class="w"> </span><span class="kn">import</span> <span class="n">Control</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">python_rucaptcha.core.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">ControlEnm</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">Control</span><span class="p">(</span><span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;someotherapikey&quot;</span><span class="p">,</span>
+                <span class="n">service_type</span><span class="o">=</span><span class="s1">&#39;SomeOtherGoodService&#39;</span><span class="p">,</span>
+                <span class="n">url_request</span><span class="o">=</span><span class="s1">&#39;http://some-good-server.com/in.php&#39;</span><span class="p">,</span>
+                <span class="n">url_response</span><span class="o">=</span><span class="s1">&#39;http://some-good-server.com/res.php&#39;</span><span class="p">,</span>
+                <span class="n">action</span><span class="o">=</span><span class="n">ControlEnm</span><span class="o">.</span><span class="n">GETBALANCE</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">additional_methods</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/RuCaptchaMedium.png" alt="Logo of python-rucaptcha"/>
+            </a></p>
+  
+
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">DeathByCaptcha and other services</a><ul>
+<li><a class="reference internal" href="#deathbycaptcha">DeathByCaptcha:</a></li>
+<li><a class="reference internal" href="#or-you-can-use-other-service-which-support-rucaptcha-2captcha-api-like-requests">Or you can use other service which support RuCaptcha\2Captcha API-like requests</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+  <li><a href="../../index.html">Overview</a>
+    <ul>
+          <li>Previous: <a href="../contacts/info.html" title="previous chapter">Contacts</a>
+          <li>Next: <a href="../h-captcha/example.html" title="next chapter">HCaptcha</a>
+    </ul>
+  </li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, AndreiDrang; Release - 6.5.0; Last update - 2025-09-29.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.3.0.
+    </div>
+  </body>
+</html>

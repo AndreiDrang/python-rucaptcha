@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TemuCaptcha &#8212; python-rucaptcha (6.5.0)</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=7a9665a2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jinja.css?v=85659ec6" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script data-project="python-rucaptcha" data-version="" src="../../_static/describe_version.js?v=fa7f30d0"></script>
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="VKCaptcha" href="../captcha-vk/example.html" />
+    <link rel="prev" title="CaptchaFox" href="../captcha-fox/example.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../captcha-vk/example.html" title="VKCaptcha"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../captcha-fox/example.html" title="CaptchaFox"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-rucaptcha (6.5.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">TemuCaptcha</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="temucaptcha">
+<h1>TemuCaptcha<a class="headerlink" href="#temucaptcha" title="Link to this heading">¶</a></h1>
+<p>To import this module:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">python_rucaptcha.temu_captcha</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemuCaptcha</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="python_rucaptcha.temu_captcha.TemuCaptcha">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_rucaptcha.temu_captcha.</span></span><span class="sig-name descname"><span class="pre">TemuCaptcha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../enum/info.html#python_rucaptcha.core.enums.SaveFormatsEnm" title="python_rucaptcha.core.enums.SaveFormatsEnm"><span class="pre">SaveFormatsEnm</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">SaveFormatsEnm.TEMP</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_clearing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'PythonRuCaptchaImages'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_rucaptcha.temu_captcha.TemuCaptcha" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_rucaptcha.temu_captcha.TemuCaptcha.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../enum/info.html#python_rucaptcha.core.enums.SaveFormatsEnm" title="python_rucaptcha.core.enums.SaveFormatsEnm"><span class="pre">SaveFormatsEnm</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">SaveFormatsEnm.TEMP</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_clearing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'PythonRuCaptchaImages'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_rucaptcha.temu_captcha.TemuCaptcha.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Solve TemuImageTask CAPTCHA via 2Captcha/RuCaptcha API.</p>
+<p>This class creates and monitors TemuImageTask jobs, which require
+a base64‐encoded background image plus an array of movable image
+pieces (parts) in base64 format.  It extends BaseCaptcha to handle
+the low‐level request/response workflow.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>save_format</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span> <span class="pre">|</span> <span class="pre">SaveFormatsEnm</span></code>) – Where to save temporary images.
+- SaveFormatsEnm.TEMP: use system temp directory
+- SaveFormatsEnm.CONST: keep files in img_path until deletion</p></li>
+<li><p><strong>img_clearing</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – If True and save_format is CONST, delete the
+img_path directory when this instance is destroyed.</p></li>
+<li><p><strong>img_path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Directory under which to store downloaded or decoded
+images before sending to the API.</p></li>
+<li><p><strong>*args</strong> – Positional args forwarded to BaseCaptcha constructor (e.g.
+client_key, method override).</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Keyword args forwarded to BaseCaptcha for task creation.
+Common params include:
+- redirectUri: URL to confirm CAPTCHA resolution
+- any other API‐supported parameters</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">captcha</span> <span class="o">=</span> <span class="n">TemuCaptcha</span><span class="p">(</span><span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;YOUR_API_KEY&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">captcha</span><span class="o">.</span><span class="n">captcha_handler</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">parts</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;part1_b64&quot;</span><span class="p">,</span> <span class="s2">&quot;part2_b64&quot;</span><span class="p">,</span> <span class="s2">&quot;part3_b64&quot;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">captcha_base64</span><span class="o">=</span><span class="sa">b</span><span class="s2">&quot;full_image_b64&quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+<span class="go">{</span>
+<span class="go">    &quot;errorId&quot;: 0,</span>
+<span class="go">    &quot;status&quot;: &quot;ready&quot;,</span>
+<span class="go">    &quot;solution&quot;: {</span>
+<span class="go">        &quot;coordinates&quot;: [{&quot;x&quot;:155,&quot;y&quot;:358}, {&quot;x&quot;:152,&quot;y&quot;:153}, {&quot;x&quot;:251,&quot;y&quot;:333}]</span>
+<span class="go">    },</span>
+<span class="go">    &quot;cost&quot;: &quot;0.0012&quot;,</span>
+<span class="go">    &quot;createTime&quot;: 1754563182,</span>
+<span class="go">    &quot;endTime&quot;: 1754563190,</span>
+<span class="go">    &quot;taskId&quot;: 80306543329,</span>
+<span class="go">    &quot;ip&quot;: &quot;46.53.232.76&quot;,</span>
+<span class="go">    &quot;solveCount&quot;: 1</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p><a class="reference external" href="https://2captcha.com/api-docs/temu-captcha">https://2captcha.com/api-docs/temu-captcha</a></p>
+<p><a class="reference external" href="https://rucaptcha.com/api-docs/temu-captcha">https://rucaptcha.com/api-docs/temu-captcha</a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_rucaptcha.temu_captcha.TemuCaptcha.captcha_handler">
+<span class="sig-name descname"><span class="pre">captcha_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">captcha_link</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">captcha_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">captcha_base64</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#python_rucaptcha.temu_captcha.TemuCaptcha.captcha_handler" title="Link to this definition">¶</a></dt>
+<dd><p>Synchronously solve a TemuImageTask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parts</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list[str]</span></code>) – List of base64‐encoded strings for each
+movable image piece.</p></li>
+<li><p><strong>captcha_link</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span></code>) – URL to background image. Overrides
+captcha_file and captcha_base64 if provided.</p></li>
+<li><p><strong>captcha_file</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span></code>) – Path to an image file to read &amp; send.</p></li>
+<li><p><strong>captcha_base64</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span> <span class="pre">|</span> <span class="pre">None</span></code>) – Raw bytes or base64 string of
+the background image.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Passed through to the HTTP request call (e.g. timeout,
+headers).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Full JSON response from the 2Captcha/RuCaptcha API,</dt><dd><p>including errorId, taskId, status, solution, cost, times, etc.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_rucaptcha.temu_captcha.TemuCaptcha.aio_captcha_handler">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">aio_captcha_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">captcha_link</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">captcha_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">captcha_base64</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#python_rucaptcha.temu_captcha.TemuCaptcha.aio_captcha_handler" title="Link to this definition">¶</a></dt>
+<dd><p>Asynchronously solve a TemuImageTask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parts</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list[str]</span></code>) – List of base64‐encoded strings for each
+movable image piece.</p></li>
+<li><p><strong>captcha_link</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span></code>) – URL to background image.</p></li>
+<li><p><strong>captcha_file</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span></code>) – Path to an image file to read &amp; send.</p></li>
+<li><p><strong>captcha_base64</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span> <span class="pre">|</span> <span class="pre">None</span></code>) – Raw bytes or base64 string of image.</p></li>
+<li><p><strong>**kwargs</strong> – Passed through to the async HTTP request call.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>API response containing task status and solution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/RuCaptchaMedium.png" alt="Logo of python-rucaptcha"/>
+            </a></p>
+  
+
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">TemuCaptcha</a><ul>
+<li><a class="reference internal" href="#python_rucaptcha.temu_captcha.TemuCaptcha"><code class="docutils literal notranslate"><span class="pre">TemuCaptcha</span></code></a><ul>
+<li><a class="reference internal" href="#python_rucaptcha.temu_captcha.TemuCaptcha.__init__"><code class="docutils literal notranslate"><span class="pre">TemuCaptcha.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#python_rucaptcha.temu_captcha.TemuCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">TemuCaptcha.captcha_handler()</span></code></a></li>
+<li><a class="reference internal" href="#python_rucaptcha.temu_captcha.TemuCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">TemuCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+  <li><a href="../../index.html">Overview</a>
+    <ul>
+          <li>Previous: <a href="../captcha-fox/example.html" title="previous chapter">CaptchaFox</a>
+          <li>Next: <a href="../captcha-vk/example.html" title="next chapter">VKCaptcha</a>
+    </ul>
+  </li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, AndreiDrang; Release - 6.5.0; Last update - 2025-09-29.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.3.0.
+    </div>
+  </body>
+</html>

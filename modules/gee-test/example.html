@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GeeTest &#8212; python-rucaptcha (6.5.0)</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=7a9665a2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jinja.css?v=85659ec6" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script data-project="python-rucaptcha" data-version="" src="../../_static/describe_version.js?v=fa7f30d0"></script>
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="CapyPuzzle" href="../capy/example.html" />
+    <link rel="prev" title="FunCaptcha" href="../fun-captcha/example.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../capy/example.html" title="CapyPuzzle"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../fun-captcha/example.html" title="FunCaptcha"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-rucaptcha (6.5.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">GeeTest</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="geetest">
+<h1>GeeTest<a class="headerlink" href="#geetest" title="Link to this heading">¶</a></h1>
+<p>To import this module:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">python_rucaptcha.gee_test</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeeTest</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="python_rucaptcha.gee_test.GeeTest">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_rucaptcha.gee_test.</span></span><span class="sig-name descname"><span class="pre">GeeTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">websiteURL</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../enum/info.html#python_rucaptcha.core.enums.GeetestEnm" title="python_rucaptcha.core.enums.GeetestEnm"><span class="pre">GeetestEnm</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initParameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_rucaptcha.gee_test.GeeTest" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_rucaptcha.gee_test.GeeTest.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">websiteURL</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../enum/info.html#python_rucaptcha.core.enums.GeetestEnm" title="python_rucaptcha.core.enums.GeetestEnm"><span class="pre">GeetestEnm</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initParameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_rucaptcha.gee_test.GeeTest.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>The class is used to work with GeeTest.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rucaptcha_key</strong> – User API key</p></li>
+<li><p><strong>websiteURL</strong> (<em>str</em>) – Full URL of the captcha page</p></li>
+<li><p><strong>gt</strong> (<em>str</em>) – The value of the <cite>gt</cite> parameter found on the site</p></li>
+<li><p><strong>version</strong> (<em>int</em>) – GeeTest V4 captcha should be set to 4.</p></li>
+<li><p><strong>initParameters</strong> (<em>dict</em>) – Required for GeeTest V4. The parameter that is passed in the initGeetest4 function call must contain the captcha_id value.
+Example of usage: { “captcha_id” : “e392e1d7fd421dc63325744d5a2b9c73”}</p></li>
+<li><p><strong>method</strong> (<a class="reference internal" href="../enum/info.html#python_rucaptcha.core.enums.GeetestEnm" title="python_rucaptcha.core.enums.GeetestEnm"><em>GeetestEnm</em></a><em> | </em><em>str</em>) – Captcha type</p></li>
+<li><p><strong>kwargs</strong> – Not required params for task creation request</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resp_data</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.geetest.com/demo/gt/register-enFullpage-official&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">resp_data</span><span class="p">)</span>
+<span class="go">{</span>
+<span class="go">    &#39;success&#39;: 1,</span>
+<span class="go">    &#39;challenge&#39;: &#39;1ad03db8aff920037fb8117827eab171&#39;,</span>
+<span class="go">    &#39;gt&#39;: &#39;022397c99c9f646f6477822485f30404&#39;,</span>
+<span class="go">    &#39;new_captcha&#39;: True</span>
+<span class="go">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">GeeTest</span><span class="p">(</span><span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;aa9011f31111181111168611f1151122&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">gt</span><span class="o">=</span><span class="n">resp_data</span><span class="p">[</span><span class="s2">&quot;gt&quot;</span><span class="p">],</span>
+<span class="gp">... </span>            <span class="n">websiteURL</span><span class="o">=</span><span class="s2">&quot;https://www.geetest.com/en/demo&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">method</span><span class="o">=</span><span class="n">GeetestEnm</span><span class="o">.</span><span class="n">GeeTestTaskProxyless</span><span class="o">.</span><span class="n">value</span>
+<span class="gp">... </span>            <span class="p">)</span><span class="o">.</span><span class="n">captcha_handler</span><span class="p">(</span><span class="n">challenge</span><span class="o">=</span><span class="n">resp_data</span><span class="p">[</span><span class="s2">&quot;challenge&quot;</span><span class="p">])</span>
+<span class="go">{</span>
+<span class="go">   &quot;errorId&quot;:0,</span>
+<span class="go">   &quot;status&quot;:&quot;ready&quot;,</span>
+<span class="go">   &quot;solution&quot;:{</span>
+<span class="go">      &quot;captcha_id&quot;:&quot;e392e1d7fd421dc63325744d5a2b9c73&quot;,</span>
+<span class="go">      &quot;lot_number&quot;:&quot;e6c3bed2854f41f880662c48afff5dcb&quot;,</span>
+<span class="go">      &quot;pass_token&quot;:&quot;fad5eb52fc83bf7617402fcccfb211a21e0aa1d1044&quot;,</span>
+<span class="go">      &quot;gen_time&quot;:&quot;1693924478&quot;,</span>
+<span class="go">      &quot;captcha_output&quot;:&quot;fN36ufW6cQN4SQ-JRDQC70nSq9UcQBg==&quot;</span>
+<span class="go">   },</span>
+<span class="go">   &quot;cost&quot;:&quot;0.00299&quot;,</span>
+<span class="go">   &quot;ip&quot;:&quot;1.2.3.4&quot;,</span>
+<span class="go">   &quot;createTime&quot;:1692863536,</span>
+<span class="go">   &quot;endTime&quot;:1692863556,</span>
+<span class="go">   &quot;solveCount&quot;:1,</span>
+<span class="go">   &quot;taskId&quot;:75190409731</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">GeeTest</span><span class="p">(</span><span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;aa9011f31111181111168611f1151122&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">gt</span><span class="o">=</span><span class="n">resp_data</span><span class="p">[</span><span class="s2">&quot;gt&quot;</span><span class="p">],</span>
+<span class="gp">... </span>            <span class="n">websiteURL</span><span class="o">=</span><span class="s2">&quot;https://www.geetest.com/en/demo&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">method</span><span class="o">=</span><span class="n">GeetestEnm</span><span class="o">.</span><span class="n">GeeTestTaskProxyless</span><span class="o">.</span><span class="n">value</span>
+<span class="gp">... </span>            <span class="p">)</span><span class="o">.</span><span class="n">aio_captcha_handler</span><span class="p">(</span><span class="n">challenge</span><span class="o">=</span><span class="n">resp_data</span><span class="p">[</span><span class="s2">&quot;challenge&quot;</span><span class="p">])</span>
+<span class="go">{</span>
+<span class="go">   &quot;errorId&quot;:0,</span>
+<span class="go">   &quot;status&quot;:&quot;ready&quot;,</span>
+<span class="go">   &quot;solution&quot;:{</span>
+<span class="go">      &quot;captcha_id&quot;:&quot;e392e1d7fd421dc63325744d5a2b9c73&quot;,</span>
+<span class="go">      &quot;lot_number&quot;:&quot;e6c3bed2854f41f880662c48afff5dcb&quot;,</span>
+<span class="go">      &quot;pass_token&quot;:&quot;fad5eb52fc83bf7617402fcccfb211a21e0aa1d1044&quot;,</span>
+<span class="go">      &quot;gen_time&quot;:&quot;1693924478&quot;,</span>
+<span class="go">      &quot;captcha_output&quot;:&quot;fN36ufW6cQN4SQ-JRDQC70nSq9UcQBg==&quot;</span>
+<span class="go">   },</span>
+<span class="go">   &quot;cost&quot;:&quot;0.00299&quot;,</span>
+<span class="go">   &quot;ip&quot;:&quot;1.2.3.4&quot;,</span>
+<span class="go">   &quot;createTime&quot;:1692863536,</span>
+<span class="go">   &quot;endTime&quot;:1692863556,</span>
+<span class="go">   &quot;solveCount&quot;:1,</span>
+<span class="go">   &quot;taskId&quot;:75190409731</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">GeeTest</span><span class="p">(</span><span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;aa9011f31111181111168611f1151122&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">websiteURL</span><span class="o">=</span><span class="s2">&quot;https://rucaptcha.com/demo/geetest-v4&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">method</span><span class="o">=</span><span class="n">GeetestEnm</span><span class="o">.</span><span class="n">GeeTestTaskProxyless</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">version</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">initParameters</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;captcha_id&quot;</span><span class="p">:</span> <span class="s2">&quot;e392e1d7fd421dc63325744d5a2b9c73&quot;</span><span class="p">},</span>
+<span class="gp">... </span>            <span class="p">)</span><span class="o">.</span><span class="n">captcha_handler</span><span class="p">(</span><span class="n">challenge</span><span class="o">=</span><span class="n">resp_data</span><span class="p">[</span><span class="s2">&quot;challenge&quot;</span><span class="p">])</span>
+<span class="go">{</span>
+<span class="go">   &quot;errorId&quot;:0,</span>
+<span class="go">   &quot;status&quot;:&quot;ready&quot;,</span>
+<span class="go">   &quot;solution&quot;:{</span>
+<span class="go">      &quot;captcha_id&quot;:&quot;e392e1d7fd421dc63325744d5a2b9c73&quot;,</span>
+<span class="go">      &quot;lot_number&quot;:&quot;e6c3bed2854f41f880662c48afff5dcb&quot;,</span>
+<span class="go">      &quot;pass_token&quot;:&quot;fad5eb52fc83bf7617402fcccfb211a21e0aa1d1044&quot;,</span>
+<span class="go">      &quot;gen_time&quot;:&quot;1693924478&quot;,</span>
+<span class="go">      &quot;captcha_output&quot;:&quot;fN36ufW6cQN4SQ-JRDQC70nSq9UcQBg==&quot;</span>
+<span class="go">   },</span>
+<span class="go">   &quot;cost&quot;:&quot;0.00299&quot;,</span>
+<span class="go">   &quot;ip&quot;:&quot;1.2.3.4&quot;,</span>
+<span class="go">   &quot;createTime&quot;:1692863536,</span>
+<span class="go">   &quot;endTime&quot;:1692863556,</span>
+<span class="go">   &quot;solveCount&quot;:1,</span>
+<span class="go">   &quot;taskId&quot;:75190409731</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">GeeTest</span><span class="p">(</span><span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;aa9011f31111181111168611f1151122&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">websiteURL</span><span class="o">=</span><span class="s2">&quot;https://rucaptcha.com/demo/geetest-v4&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">method</span><span class="o">=</span><span class="n">GeetestEnm</span><span class="o">.</span><span class="n">GeeTestTaskProxyless</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">version</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">initParameters</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;captcha_id&quot;</span><span class="p">:</span> <span class="s2">&quot;e392e1d7fd421dc63325744d5a2b9c73&quot;</span><span class="p">},</span>
+<span class="gp">... </span>            <span class="p">)</span><span class="o">.</span><span class="n">aio_captcha_handler</span><span class="p">(</span><span class="n">challenge</span><span class="o">=</span><span class="n">resp_data</span><span class="p">[</span><span class="s2">&quot;challenge&quot;</span><span class="p">])</span>
+<span class="go">{</span>
+<span class="go">   &quot;errorId&quot;:0,</span>
+<span class="go">   &quot;status&quot;:&quot;ready&quot;,</span>
+<span class="go">   &quot;solution&quot;:{</span>
+<span class="go">      &quot;captcha_id&quot;:&quot;e392e1d7fd421dc63325744d5a2b9c73&quot;,</span>
+<span class="go">      &quot;lot_number&quot;:&quot;e6c3bed2854f41f880662c48afff5dcb&quot;,</span>
+<span class="go">      &quot;pass_token&quot;:&quot;fad5eb52fc83bf7617402fcccfb211a21e0aa1d1044&quot;,</span>
+<span class="go">      &quot;gen_time&quot;:&quot;1693924478&quot;,</span>
+<span class="go">      &quot;captcha_output&quot;:&quot;fN36ufW6cQN4SQ-JRDQC70nSq9UcQBg==&quot;</span>
+<span class="go">   },</span>
+<span class="go">   &quot;cost&quot;:&quot;0.00299&quot;,</span>
+<span class="go">   &quot;ip&quot;:&quot;1.2.3.4&quot;,</span>
+<span class="go">   &quot;createTime&quot;:1692863536,</span>
+<span class="go">   &quot;endTime&quot;:1692863556,</span>
+<span class="go">   &quot;solveCount&quot;:1,</span>
+<span class="go">   &quot;taskId&quot;:75190409731</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">GeeTest</span><span class="p">(</span><span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;aa9011f31111181111168611f1151122&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">gt</span><span class="o">=</span><span class="n">resp_data</span><span class="p">[</span><span class="s2">&quot;gt&quot;</span><span class="p">],</span>
+<span class="gp">... </span>            <span class="n">websiteURL</span><span class="o">=</span><span class="s2">&quot;https://www.geetest.com/en/demo&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">method</span><span class="o">=</span><span class="n">GeetestEnm</span><span class="o">.</span><span class="n">GeeTestTaskProxyless</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">userAgent</span><span class="o">=</span><span class="s2">&quot;Some specific user agent&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">proxyType</span><span class="o">=</span><span class="s2">&quot;socks5&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">proxyAddress</span><span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">proxyPort</span><span class="o">=</span><span class="mi">443</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="p">)</span><span class="o">.</span><span class="n">captcha_handler</span><span class="p">(</span><span class="n">challenge</span><span class="o">=</span><span class="n">resp_data</span><span class="p">[</span><span class="s2">&quot;challenge&quot;</span><span class="p">])</span>
+<span class="go">{</span>
+<span class="go">   &quot;errorId&quot;:0,</span>
+<span class="go">   &quot;status&quot;:&quot;ready&quot;,</span>
+<span class="go">   &quot;solution&quot;:{</span>
+<span class="go">      &quot;captcha_id&quot;:&quot;e392e1d7fd421dc63325744d5a2b9c73&quot;,</span>
+<span class="go">      &quot;lot_number&quot;:&quot;e6c3bed2854f41f880662c48afff5dcb&quot;,</span>
+<span class="go">      &quot;pass_token&quot;:&quot;fad5eb52fc83bf7617402fcccfb211a21e0aa1d1044&quot;,</span>
+<span class="go">      &quot;gen_time&quot;:&quot;1693924478&quot;,</span>
+<span class="go">      &quot;captcha_output&quot;:&quot;fN36ufW6cQN4SQ-JRDQC70nSq9UcQBg==&quot;</span>
+<span class="go">   },</span>
+<span class="go">   &quot;cost&quot;:&quot;0.00299&quot;,</span>
+<span class="go">   &quot;ip&quot;:&quot;1.2.3.4&quot;,</span>
+<span class="go">   &quot;createTime&quot;:1692863536,</span>
+<span class="go">   &quot;endTime&quot;:1692863556,</span>
+<span class="go">   &quot;solveCount&quot;:1,</span>
+<span class="go">   &quot;taskId&quot;:75190409731</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict with full server response</p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p><a class="reference external" href="https://rucaptcha.com/api-docs/geetest">https://rucaptcha.com/api-docs/geetest</a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_rucaptcha.gee_test.GeeTest.captcha_handler">
+<span class="sig-name descname"><span class="pre">captcha_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">challenge</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#python_rucaptcha.gee_test.GeeTest.captcha_handler" title="Link to this definition">¶</a></dt>
+<dd><p>Sync solving method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>challenge</strong> (<em>str</em>) – The value of the challenge parameter found on the site</p></li>
+<li><p><strong>kwargs</strong> – Parameters for the <cite>requests</cite> library</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict with full server response</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p>Check class docstirng for more info</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_rucaptcha.gee_test.GeeTest.aio_captcha_handler">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">aio_captcha_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">challenge</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#python_rucaptcha.gee_test.GeeTest.aio_captcha_handler" title="Link to this definition">¶</a></dt>
+<dd><p>Async solving method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>challenge</strong> (<em>str</em>) – The value of the challenge parameter found on the site</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict with full server response</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p>Check class docstirng for more info</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/RuCaptchaMedium.png" alt="Logo of python-rucaptcha"/>
+            </a></p>
+  
+
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">GeeTest</a><ul>
+<li><a class="reference internal" href="#python_rucaptcha.gee_test.GeeTest"><code class="docutils literal notranslate"><span class="pre">GeeTest</span></code></a><ul>
+<li><a class="reference internal" href="#python_rucaptcha.gee_test.GeeTest.__init__"><code class="docutils literal notranslate"><span class="pre">GeeTest.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#python_rucaptcha.gee_test.GeeTest.captcha_handler"><code class="docutils literal notranslate"><span class="pre">GeeTest.captcha_handler()</span></code></a></li>
+<li><a class="reference internal" href="#python_rucaptcha.gee_test.GeeTest.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">GeeTest.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+  <li><a href="../../index.html">Overview</a>
+    <ul>
+          <li>Previous: <a href="../fun-captcha/example.html" title="previous chapter">FunCaptcha</a>
+          <li>Next: <a href="../capy/example.html" title="next chapter">CapyPuzzle</a>
+    </ul>
+  </li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, AndreiDrang; Release - 6.5.0; Last update - 2025-09-29.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.3.0.
+    </div>
+  </body>
+</html>
