@@ -67,6 +67,19 @@ result = ImageCaptcha(api_key).captcha_handler(
 )
 ```
 
+**ALTCHA:**
+```python
+from python_rucaptcha import AltchaCaptcha
+from python_rucaptcha.core.enums import AltchaEnm
+
+result = AltchaCaptcha(
+    rucaptcha_key=api_key,
+    websiteURL="https://example.com",
+    challengeURL="https://example.com/altcha/challenge",
+    method=AltchaEnm.AltchaTaskProxyless,
+).captcha_handler()
+```
+
 **Using async:**
 ```python
 import asyncio
@@ -94,6 +107,7 @@ token = asyncio.run(solve())
 | GeeTest | `GeeTest` | Chinese geetest puzzles |
 | KeyCaptcha | `KeyCaptcha` | KeyCAPTCHA service |
 | Amazon WAF | `AmazonWaf` | AWS WAF challenge |
+| ALTCHA | `AltchaCaptcha` | ALTCHA challenge |
 | Grid | `GridCaptcha` | Select grid cells |
 | Coordinates | `CoordinatesCaptcha` | Click on coordinates |
 | And 20+ more | ... | See [full docs](https://andreidrang.github.io/python-rucaptcha/) |

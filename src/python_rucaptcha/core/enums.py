@@ -98,6 +98,11 @@ class TurnstileCaptchaEnm(str, MyEnum):
     TurnstileTask = "TurnstileTask"
 
 
+class AltchaEnm(str, MyEnum):
+    AltchaTaskProxyless = "AltchaTaskProxyless"
+    AltchaTask = "AltchaTask"
+
+
 class AmazonWAFCaptchaEnm(str, MyEnum):
     AmazonTask = "AmazonTask"
     AmazonTaskProxyless = "AmazonTaskProxyless"
