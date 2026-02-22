@@ -1,70 +1,145 @@
 # python-rucaptcha
 
-[![RuCaptchaHigh.png](https://s.vyjava.xyz/files/2024/12-December/17/45247a56/RuCaptchaHigh.png)](https://vyjava.xyz/dashboard/image/45247a56-3332-48ee-8df8-fc95bcfc52f0)
-
-<hr>
-
 [![PyPI version](https://badge.fury.io/py/python-rucaptcha.svg)](https://badge.fury.io/py/python-rucaptcha)
 [![Python versions](https://img.shields.io/pypi/pyversions/python-rucaptcha.svg?logo=python&logoColor=FBE072)](https://badge.fury.io/py/python-rucaptcha)
 [![Downloads](https://static.pepy.tech/badge/python-rucaptcha/month)](https://pepy.tech/project/python-rucaptcha)
-[![Static Badge](https://img.shields.io/badge/docs-Sphinx-green?label=Documentation&labelColor=gray)](https://andreidrang.github.io/python-rucaptcha/)
+[![Documentation](https://img.shields.io/badge/docs-Sphinx-green)](https://andreidrang.github.io/python-rucaptcha/)
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/aec93bb04a277cf0dde9/maintainability)](https://codeclimate.com/github/AndreiDrang/python-rucaptcha/maintainability)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b4087362bd024b088b358b3e10e7a62f)](https://www.codacy.com/gh/AndreiDrang/python-rucaptcha/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AndreiDrang/python-rucaptcha&amp;utm_campaign=Badge_Grade)
-[![codecov](https://codecov.io/gh/AndreiDrang/python-rucaptcha/branch/master/graph/badge.svg?token=doybTUCfbD)](https://codecov.io/gh/AndreiDrang/python-rucaptcha)
+**Python 3.9+ library to solve CAPTCHAs automatically using RuCaptcha, 2Captcha, or DeathByCaptcha services.**
 
-[![Sphinx docs](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/sphinx.yml/badge.svg?branch=release)](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/sphinx.yml)
-[![Build](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/build.yml)
-[![Installation](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/install.yml/badge.svg?branch=master)](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/install.yml)
-[![Tests](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/test.yml)
-[![Lint](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/lint.yml/badge.svg?branch=master)](https://github.com/AndreiDrang/python-rucaptcha/actions/workflows/lint.yml)
+## What is this?
 
-Python3 library for [RuCaptcha](https://rucaptcha.com/?from=4170435) and [2Captcha](https://2captcha.com/?from=4170435) service API.
+This library automates CAPTCHA solving by connecting to third-party services. When your code encounters a CAPTCHA, python-rucaptcha sends it to the service, waits for a human to solve it, and returns the solution to your application.
 
-Tested on UNIX based OS.
+**Supports 30+ CAPTCHA types:**
+- reCAPTCHA v2/v3, hCaptcha, Cloudflare Turnstile
+- Image captchas, Audio captchas
+- GeeTest, KeyCaptcha, Amazon WAF, Tencent
+- And many more...
 
-The library is intended for software developers and is used to work with the [RuCaptcha](https://rucaptcha.com/?from=4170435) and [2Captcha](https://2captcha.com/?from=4170435) service API.
+## Quick Start
 
-Support of the service [Death By Captcha](https://deathbycaptcha.com?refid=1237267242) is integrated into this library, more information in the library documentation or in the [service docs](https://deathbycaptcha.com/api/2captcha?refid=1237267242).
-
-Application in [RuCaptcha software](https://rucaptcha.com/software/python-rucaptcha) and [2Captcha software](https://2captcha.com/software/python-rucaptcha).
-
-## How to install?
-
-### pip
+### 1. Install
 
 ```bash
 pip install python-rucaptcha
 ```
 
+### 2. Get an API Key
 
-## How to use?
+Sign up at [RuCaptcha](https://rucaptcha.com) or [2Captcha](https://2captcha.com), then copy your API key from the dashboard.
 
-Is described in the [documentation-website](https://andreidrang.github.io/python-rucaptcha/).
+### 3. Solve a CAPTCHA
 
-## How to test?
+```python
+from python_rucaptcha import HCaptcha
 
-1. You need set ``RUCAPTCHA_KEY`` in your environment(get this value from you account).
-2. Run command ``make tests``, from root directory.
+# Your API key
+key = "your_api_key_here"
 
+# Solve hCaptcha
+result = HCaptcha(aptcha_key=key).captcha_handler(site_url="https://example.com", site_key="abc123")
 
-### Changelog
+if result['code'] == 0:
+    print(f"Solved! Token: {result['token']}")
+else:
+    print(f"Error: {result['message']}")
+```
 
-For full changelog info check - [Releases page](https://github.com/AndreiDrang/python-rucaptcha/releases).
+### Solving Different CAPTCHA Types
 
-- v.6.0 - Library refactoring. Stop using `pydantic`, start using `msgspec`. Move to API v2. Drop Python 3.8 support. More details at [Releases page](https://github.com/AndreiDrang/python-rucaptcha/releases). 
-- v.5.3 - Added support for [Death By Captcha](https://www.deathbycaptcha.com?refid=1237267242) and other services by changing `service_type` and `url_request` \ `url_response` parameters.
-- v.5.2 - Added Audio captcha method.
-- v.5.1 - Check [releases page](https://github.com/AndreiDrang/python-rucaptcha/releases).
-- v.5.0 - Added AmazonWAF captcha method.
-- v.4.2 - Added [Yandex Smart Captcha](https://rucaptcha.com/api-rucaptcha#yandex).
+**reCAPTCHA v2:**
+```python
+from python_rucaptcha import ReCaptcha
 
-### Get API Key to work with the library
-1. On the page - https://rucaptcha.com/enterpage
-2. Find it: [![img.png](https://s.vyjava.xyz/files/2024/12-December/17/ac679557/img.png)](https://vyjava.xyz/dashboard/image/ac679557-f3cc-402f-bf95-6c45d252a2ef)
+result = ReCaptcha(api_key).captcha_handler(
+    site_url="https://example.com",
+    site_key="your_site_key"
+)
+```
 
-### Contacts
+**Image CAPTCHA:**
+```python
+from python_rucaptcha import ImageCaptcha
 
-If you have any questions, please send a message to the [Telegram](https://t.me/pythoncaptcha) chat room.
+result = ImageCaptcha(api_key).captcha_handler(
+    image_link="https://example.com/captcha.jpg"
+)
+```
 
-Or email python-captcha@pm.me
+**Using async:**
+```python
+import asyncio
+from python_rucaptcha import HCaptcha
+
+async def solve():
+    result = await HCaptcha(api_key).aio_captcha_handler(
+        site_url="https://example.com",
+        site_key="abc123"
+    )
+    return result
+
+token = asyncio.run(solve())
+```
+
+## Supported CAPTCHA Types
+
+| CAPTCHA | Module | Description |
+|---------|--------|-------------|
+| reCAPTCHA v2/v3 | `ReCaptcha` | Google reCAPTCHA |
+| hCaptcha | `HCaptcha` | hCaptcha challenge |
+| Cloudflare Turnstile | `Turnstile` | Cloudflare protection |
+| Image | `ImageCaptcha` | Type the text from image |
+| Audio | `AudioCaptcha` | Listen and type audio |
+| GeeTest | `GeeTest` | Chinese geetest puzzles |
+| KeyCaptcha | `KeyCaptcha` | KeyCAPTCHA service |
+| Amazon WAF | `AmazonWaf` | AWS WAF challenge |
+| Grid | `GridCaptcha` | Select grid cells |
+| Coordinates | `CoordinatesCaptcha` | Click on coordinates |
+| And 20+ more | ... | See [full docs](https://andreidrang.github.io/python-rucaptcha/) |
+
+## Switching Services
+
+Use the same code with different services:
+
+```python
+from python_rucaptcha import HCaptcha
+from python_rucaptcha.core.enums import ServiceEnm
+
+# Use 2Captcha (default)
+result = HCaptcha("2captcha_key").captcha_handler(...)
+
+# Use RuCaptcha
+result = HCaptcha("rucaptcha_key", service_type=ServiceEnm.RuCaptcha).captcha_handler(...)
+
+# Use DeathByCaptcha
+result = HCaptcha("dbc_user:dbc_pass", service_type=ServiceEnm.DeathByCaptcha).captcha_handler(...)
+```
+
+## Testing
+
+```bash
+# Set your API key
+export RUCAPTCHA_KEY="your_key_here"
+
+# Run tests
+make tests
+```
+
+## Documentation
+
+For advanced usage, configuration options, and all CAPTCHA types, see the [full documentation](https://andreidrang.github.io/python-rucaptcha/).
+
+## Support
+
+- **Telegram:** [pythoncaptcha](https://t.me/pythoncaptcha)
+- **Email:** python-captcha@pm.me
+- **Issues:** [GitHub Issues](https://github.com/AndreiDrang/python-rucaptcha/issues)
+
+## Changelog
+
+See [Releases](https://github.com/AndreiDrang/python-rucaptcha/releases) for full changelog.
+
+- **v6.0** - Refactored to use msgspec (faster), API v2, dropped Python 3.8
+- **v5.3** - Added DeathByCaptcha support
+- **v5.2** - Added audio CAPTCHA solving
