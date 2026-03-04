@@ -1,5 +1,5 @@
 sphinx==9.1.0
-pallets_sphinx_themes==2.3.0
+pallets_sphinx_themes==2.5.0
 myst-parser==5.0.0
 enum-tools[sphinx]==0.13.0
 requests>=2.32.4 # not directly required, pinned by Snyk to avoid a vulnerability
