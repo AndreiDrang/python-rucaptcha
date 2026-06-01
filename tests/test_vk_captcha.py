@@ -1,8 +1,8 @@
 import pytest
 
 from tests.conftest import BaseTest
-from python_rucaptcha.vk_captcha import VKCaptcha
 from python_rucaptcha.core.enums import VKCaptchaEnm
+from python_rucaptcha.vk_captcha import VKCaptcha
 from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 
 
