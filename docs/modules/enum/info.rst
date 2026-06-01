@@ -88,3 +88,6 @@ To import this module:
 
 .. autoenum:: python_rucaptcha.core.enums.atbCaptchaEnm
     :members:
+
+.. autoenum:: python_rucaptcha.core.enums.BinanceCaptchaEnm
+    :members:
