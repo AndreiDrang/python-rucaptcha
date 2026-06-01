@@ -177,6 +177,7 @@ class CaptchaFoxEnm(str, MyEnum):
 
 class VKCaptchaEnm(str, MyEnum):
     VKCaptchaTask = "VKCaptchaTask"
+    VKCaptchaImageTask = "VKCaptchaImageTask"
 
 
 class TemuCaptchaEnm(str, MyEnum):
