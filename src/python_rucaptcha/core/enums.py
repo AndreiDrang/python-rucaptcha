@@ -193,3 +193,7 @@ class YidunEnm(str, MyEnum):
     YidunTaskProxyless = "YidunTaskProxyless"
     YidunTask = "YidunTask"
 
+
+class YandexSmartCaptchaEnm(str, MyEnum):
+    YandexSmartCaptchaTaskProxyless = "YandexSmartCaptchaTaskProxyless"
+    YandexSmartCaptchaTask = "YandexSmartCaptchaTask"
