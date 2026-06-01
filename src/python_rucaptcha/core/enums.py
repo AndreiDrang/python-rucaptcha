@@ -182,3 +182,8 @@ class VKCaptchaEnm(str, MyEnum):
 
 class TemuCaptchaEnm(str, MyEnum):
     TemuCaptchaTask = "TemuCaptchaTask"
+
+
+class BinanceCaptchaEnm(str, MyEnum):
+    BinanceTaskProxyless = "BinanceTaskProxyless"
+    BinanceTask = "BinanceTask"

@@ -108,6 +108,7 @@ token = asyncio.run(solve())
 | KeyCaptcha | `KeyCaptcha` | KeyCAPTCHA service |
 | Amazon WAF | `AmazonWaf` | AWS WAF challenge |
 | ALTCHA | `AltchaCaptcha` | ALTCHA challenge |
+| Binance | `BinanceCaptcha` | Token-based Binance challenge |
 | Grid | `GridCaptcha` | Select grid cells |
 | Coordinates | `CoordinatesCaptcha` | Click on coordinates |
 | And 20+ more | ... | See [full docs](https://andreidrang.github.io/python-rucaptcha/) |

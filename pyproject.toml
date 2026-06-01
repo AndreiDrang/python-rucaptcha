@@ -69,7 +69,8 @@ keywords = [    "captcha",
 				"vk-captcha",
 				"fox-captcha",
 				"temu-captcha",
-				"friendly-captcha"
+				"friendly-captcha",
+				"binance-captcha"
             ]
 license = "MIT"
 classifiers = [
