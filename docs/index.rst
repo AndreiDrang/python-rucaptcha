@@ -52,9 +52,12 @@ Check our other projects here - `RedPandaDev group <https://red-panda-dev.xyz/bl
    modules/tencent/example.rst
    modules/prosopo/example.rst
    modules/atb-captcha/example.rst
+   modules/captcha-binance/example.rst
    modules/captcha-fox/example.rst
    modules/captcha-temu/example.rst
    modules/captcha-vk/example.rst
+   modules/yidun-necaptcha/example.rst
+   modules/yandex-smart-captcha/example.rst
    modules/control/example.rst
 
 .. toctree::

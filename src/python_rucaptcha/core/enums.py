@@ -98,6 +98,11 @@ class TurnstileCaptchaEnm(str, MyEnum):
     TurnstileTask = "TurnstileTask"
 
 
+class AltchaEnm(str, MyEnum):
+    AltchaTaskProxyless = "AltchaTaskProxyless"
+    AltchaTask = "AltchaTask"
+
+
 class AmazonWAFCaptchaEnm(str, MyEnum):
     AmazonTask = "AmazonTask"
     AmazonTaskProxyless = "AmazonTaskProxyless"
@@ -172,7 +177,23 @@ class CaptchaFoxEnm(str, MyEnum):
 
 class VKCaptchaEnm(str, MyEnum):
     VKCaptchaTask = "VKCaptchaTask"
+    VKCaptchaImageTask = "VKCaptchaImageTask"
 
 
 class TemuCaptchaEnm(str, MyEnum):
     TemuCaptchaTask = "TemuCaptchaTask"
+
+
+class BinanceCaptchaEnm(str, MyEnum):
+    BinanceTaskProxyless = "BinanceTaskProxyless"
+    BinanceTask = "BinanceTask"
+
+
+class YidunEnm(str, MyEnum):
+    YidunTaskProxyless = "YidunTaskProxyless"
+    YidunTask = "YidunTask"
+
+
+class YandexSmartCaptchaEnm(str, MyEnum):
+    YandexSmartCaptchaTaskProxyless = "YandexSmartCaptchaTaskProxyless"
+    YandexSmartCaptchaTask = "YandexSmartCaptchaTask"
