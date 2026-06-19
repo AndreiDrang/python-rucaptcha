@@ -119,7 +119,7 @@ def solve(
     data = {"key": key, "method": method, "json": 1, **extra}
     try:
         created = requests.post(url_request, data=data).json()
-    except Exception as error:  # noqa: BLE001
+    except (requests.RequestException, ValueError) as error:
         return _err(f"ERROR_SUBMIT {error}")
     if created.get("status") != 1:
         return _err(created.get("request"))
@@ -133,7 +133,7 @@ def solve(
                 params={"key": key, "action": "get", "id": captcha_id, "json": 1},
             ).json()
             logging.info(f"CaptchaAI sync result - {res = }")
-        except Exception as error:  # noqa: BLE001
+        except (requests.RequestException, ValueError) as error:
             return _err(f"ERROR_POLL {error}")
         if res.get("status") == 1:
             return GetTaskResultResponseSer(
@@ -167,7 +167,7 @@ async def aio_solve(
         try:
             async with session.post(url_request, data=data) as resp:
                 created = await resp.json(content_type=None)
-        except Exception as error:  # noqa: BLE001
+        except (aiohttp.ClientError, ValueError) as error:
             return _err(f"ERROR_SUBMIT {error}")
         if created.get("status") != 1:
             return _err(created.get("request"))
@@ -182,7 +182,7 @@ async def aio_solve(
                 ) as resp:
                     res = await resp.json(content_type=None)
                     logging.info(f"CaptchaAI async result - {res = }")
-            except Exception as error:  # noqa: BLE001
+            except (aiohttp.ClientError, ValueError) as error:
                 return _err(f"ERROR_POLL {error}")
             if res.get("status") == 1:
                 return GetTaskResultResponseSer(
