@@ -5,4 +5,4 @@ enum-tools[sphinx]==0.13.0
 requests>=2.32.4 # not directly required, pinned by Snyk to avoid a vulnerability
 urllib3>=2.7.0 # not directly required, pinned by Snyk to avoid a vulnerability
 zipp>=4.1.0 # not directly required, pinned by Snyk to avoid a vulnerability
-idna>=3.15 # not directly required, pinned by Snyk to avoid a vulnerability
+idna>=3.18 # not directly required, pinned by Snyk to avoid a vulnerability
