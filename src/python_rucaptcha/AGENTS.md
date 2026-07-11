@@ -1,46 +1,35 @@
-# python_rucaptcha Package
+# AGENTS.md
 
-**Parent:** ./AGENTS.md
+## Scope and inheritance
 
-## OVERVIEW
-Main package containing 30+ CAPTCHA solver modules. Each module implements a specific CAPTCHA type.
+Applies to: `src/python_rucaptcha/` and its descendants.
 
-## STRUCTURE
-```
+Inherits repository-wide guidance from `../../AGENTS.md`.
+
+This file defines only local differences for this package subtree.
+
+## What lives here
+
+```text
 src/python_rucaptcha/
-├── __init__.py           # Exports __version__, package info
-├── core/                 # Base classes (base.py, config.py, enums.py, serializer.py)
-├── _captcha.py          # Internal helpers
-├── hcaptcha.py          # hCaptcha solver
-├── re_captcha.py        # reCaptcha v2/v3 solver
-├── turnstile.py         # Cloudflare Turnstile solver
-├── image_captcha.py     # Image captcha solver
-├── audio_captcha.py     # Audio captcha solver
-├── gee_test.py          # GeeTest solver
-├── key_captcha.py       # KeyCaptcha solver
-├── ...                  # 20+ more captcha types
-└── control.py          # Balance/status checker
+├── *_captcha.py        # Concrete CAPTCHA task builders and handlers
+├── control.py          # Balance/status-style service operations
+├── __init__.py         # Package version exposure
+└── core/               # Shared request flow and data models
 ```
 
-## WHERE TO LOOK
-| Task | File |
-|------|------|
-| Add new CAPTCHA type | Create new `*_captcha.py` module |
-| Modify BaseCaptcha | `core/base.py` |
-| Add new enum | `core/enums.py` |
+## Local boundaries and invariants
 
-## CONVENTIONS
-- **Module naming**: `*_captcha.py` pattern
-- **Class naming**: `{CaptchaType}Captcha` (e.g., `HCaptcha`, `ReCaptcha`)
-- **Enum naming**: `{CaptchaType}Enm` (e.g., `HCaptchaEnm`)
-- **Inheritance**: All captcha classes extend `BaseCaptcha`
+- Concrete modules are deliberately flat and inherit from `core.base.BaseCaptcha`.
+- A solver owns its service task fields, method validation, and sync/async handler entry points; shared transport and polling remain in `core/`.
+- Keep module names in the existing `*_captcha.py` style and enum names in the `{CaptchaType}Enm` style, including established exceptions such as `re_captcha.py` and `hcaptcha.py`.
 
-## ADDING NEW CAPTCHA
-1. Create `src/python_rucaptcha/new_captcha.py`
-2. Define enum `NewCaptchaEnm` in `core/enums.py`
-3. Create class `NewCaptcha(BaseCaptcha)` implementing required methods
-4. Add tests in `tests/test_new_captcha.py`
+## Safe change rules
 
-## ANTI-PATTERNS
-- DO NOT modify core files without understanding the inheritance chain
-- DO NOT add captcha-specific logic directly in BaseCaptcha
+When adding a CAPTCHA type, add the module, its enum in `core/enums.py`, a corresponding `tests/test_<captcha>.py`, and the relevant `docs/modules/*` example/toctree entry. Reuse `BaseCaptcha` rather than introducing a second transport path.
+
+Before changing a core call or payload contract for one solver, inspect the sibling modules and the shared core instruction file; a local workaround should not become a global branch.
+
+## Validation
+
+For focused feedback, run the matching test module, for example `pytest tests/test_hcaptcha.py`, then use the root-level `make lint` and `make tests` checks as appropriate. API-key and live-service requirements are documented in `tests/AGENTS.md`.
