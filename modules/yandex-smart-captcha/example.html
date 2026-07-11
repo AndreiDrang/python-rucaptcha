@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Yandex SmartCaptcha &#8212; python-rucaptcha (6.8.0)</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=7a9665a2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jinja.css?v=3dd10d86" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script data-project="python-rucaptcha" data-version="" src="../../_static/describe_version.js?v=fa7f30d0"></script>
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="TSPD" href="../tspd-captcha/example.html" />
+    <link rel="prev" title="Yidun" href="../yidun-necaptcha/example.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../tspd-captcha/example.html" title="TSPD"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../yidun-necaptcha/example.html" title="Yidun"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-rucaptcha (6.8.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Yandex SmartCaptcha</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="yandex-smartcaptcha">
+<h1>Yandex SmartCaptcha<a class="headerlink" href="#yandex-smartcaptcha" title="Link to this heading">¶</a></h1>
+<p>To import this module:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">python_rucaptcha.yandex_smart_captcha</span><span class="w"> </span><span class="kn">import</span> <span class="n">YandexSmartCaptcha</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="python_rucaptcha.yandex_smart_captcha.YandexSmartCaptcha">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_rucaptcha.yandex_smart_captcha.</span></span><span class="sig-name descname"><span class="pre">YandexSmartCaptcha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">websiteURL</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">websiteKey</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">YandexSmartCaptchaEnm</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../enum/info.html#python_rucaptcha.core.enums.CoordinatesCaptchaEnm" title="python_rucaptcha.core.enums.CoordinatesCaptchaEnm"><span class="pre">CoordinatesCaptchaEnm</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">YandexSmartCaptchaEnm.YandexSmartCaptchaTaskProxyless</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">userAgent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cookies</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxyType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxyAddress</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxyPort</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxyLogin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxyPassword</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imgType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../enum/info.html#python_rucaptcha.core.enums.SaveFormatsEnm" title="python_rucaptcha.core.enums.SaveFormatsEnm"><span class="pre">SaveFormatsEnm</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">SaveFormatsEnm.TEMP</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_clearing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'PythonRuCaptchaYandexSmart'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_rucaptcha.yandex_smart_captcha.YandexSmartCaptcha" title="Link to this definition">¶</a></dt>
+<dd><p>The class is used to work with Yandex SmartCaptcha.</p>
+<dl class="simple">
+<dt>Supports three 2Captcha task types:</dt><dd><ul class="simple">
+<li><p>YandexSmartCaptchaTaskProxyless (token, no proxy)</p></li>
+<li><p>YandexSmartCaptchaTask          (token, user proxy)</p></li>
+<li><p>CoordinatesTask                 (image, two imgType modes: smart_captcha, pazl_smart_captcha)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rucaptcha_key</strong> – User API key</p></li>
+<li><p><strong>websiteURL</strong> (<em>str</em><em> | </em><em>None</em>) – Full URL of the page where the captcha is loaded (token methods)</p></li>
+<li><p><strong>websiteKey</strong> (<em>str</em><em> | </em><em>None</em>) – Sitekey from the page source (token methods)</p></li>
+<li><p><strong>method</strong> (<em>str</em><em> | </em><em>YandexSmartCaptchaEnm</em><em> | </em><a class="reference internal" href="../enum/info.html#python_rucaptcha.core.enums.CoordinatesCaptchaEnm" title="python_rucaptcha.core.enums.CoordinatesCaptchaEnm"><em>CoordinatesCaptchaEnm</em></a>) – Captcha type. Default YandexSmartCaptchaTaskProxyless.</p></li>
+<li><p><strong>userAgent</strong> (<em>str</em><em> | </em><em>None</em>) – Browser User-Agent to use (token methods, optional)</p></li>
+<li><p><strong>cookies</strong> (<em>str</em><em> | </em><em>None</em>) – Cookies to send in the request (token methods, optional, format “name1=value1;name2=value2”)</p></li>
+<li><p><strong>proxyType</strong> (<em>str</em><em> | </em><em>None</em>) – Proxy type (http, https, socks4, socks5) - required for YandexSmartCaptchaTask</p></li>
+<li><p><strong>proxyAddress</strong> (<em>str</em><em> | </em><em>None</em>) – Proxy IP/hostname - required for YandexSmartCaptchaTask</p></li>
+<li><p><strong>proxyPort</strong> (<em>int</em><em> | </em><em>None</em>) – Proxy port - required for YandexSmartCaptchaTask</p></li>
+<li><p><strong>proxyLogin</strong> (<em>str</em><em> | </em><em>None</em>) – Proxy login (optional)</p></li>
+<li><p><strong>proxyPassword</strong> (<em>str</em><em> | </em><em>None</em>) – Proxy password (optional)</p></li>
+<li><p><strong>imgType</strong> (<em>str</em><em> | </em><em>None</em>) – Image variant type - “smart_captcha” or “pazl_smart_captcha” (CoordinatesTask only)</p></li>
+<li><p><strong>comment</strong> (<em>str</em><em> | </em><em>None</em>) – Text hint for the worker - required for imgType=”smart_captcha”</p></li>
+<li><p><strong>save_format</strong> (<em>str</em><em> | </em><a class="reference internal" href="../enum/info.html#python_rucaptcha.core.enums.SaveFormatsEnm" title="python_rucaptcha.core.enums.SaveFormatsEnm"><em>SaveFormatsEnm</em></a>) – How to save the image - “temp” or “const” (CoordinatesTask only)</p></li>
+<li><p><strong>img_clearing</strong> (<em>bool</em>) – Whether to delete the image folder on instance destruction</p></li>
+<li><p><strong>img_path</strong> (<em>str</em>) – Folder name for saved images</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">YandexSmartCaptcha</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;aa9011f31111181111168611f1151122&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">websiteURL</span><span class="o">=</span><span class="s2">&quot;https://example.com/&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">websiteKey</span><span class="o">=</span><span class="s2">&quot;Y5Lh0ti...&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span><span class="o">.</span><span class="n">captcha_handler</span><span class="p">()</span>
+<span class="go">{&quot;errorId&quot;: 0, &quot;status&quot;: &quot;ready&quot;, &quot;solution&quot;: {&quot;token&quot;: &quot;...&quot;}, &quot;taskId&quot;: ...}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">YandexSmartCaptcha</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;aa9011f31111181111168611f1151122&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">websiteURL</span><span class="o">=</span><span class="s2">&quot;https://example.com/&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">websiteKey</span><span class="o">=</span><span class="s2">&quot;Y5Lh0ti...&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">method</span><span class="o">=</span><span class="n">YandexSmartCaptchaEnm</span><span class="o">.</span><span class="n">YandexSmartCaptchaTask</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">proxyType</span><span class="o">=</span><span class="s2">&quot;http&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">proxyAddress</span><span class="o">=</span><span class="s2">&quot;1.2.3.4&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">proxyPort</span><span class="o">=</span><span class="mi">8080</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span><span class="o">.</span><span class="n">aio_captcha_handler</span><span class="p">()</span>
+<span class="go">{&quot;errorId&quot;: 0, &quot;status&quot;: &quot;ready&quot;, &quot;solution&quot;: {&quot;token&quot;: &quot;...&quot;}, &quot;taskId&quot;: ...}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">YandexSmartCaptcha</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;aa9011f31111181111168611f1151122&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">method</span><span class="o">=</span><span class="n">CoordinatesCaptchaEnm</span><span class="o">.</span><span class="n">CoordinatesTask</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">imgType</span><span class="o">=</span><span class="s2">&quot;smart_captcha&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">comment</span><span class="o">=</span><span class="s2">&quot;select objects in the order of the instruction&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span><span class="o">.</span><span class="n">captcha_handler</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">captcha_file</span><span class="o">=</span><span class="s2">&quot;src/examples/088636.png&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">imgInstructions_file</span><span class="o">=</span><span class="s2">&quot;src/examples/bounding_box_start.png&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">{&quot;errorId&quot;: 0, &quot;status&quot;: &quot;ready&quot;, &quot;solution&quot;: {&quot;coordinates&quot;: [{&quot;x&quot;: 57, &quot;y&quot;: 82}, ...]}, &quot;taskId&quot;: ...}</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p><a class="reference external" href="https://2captcha.com/api-docs/yandex-smart-captcha">https://2captcha.com/api-docs/yandex-smart-captcha</a></p>
+<p><a class="reference external" href="https://rucaptcha.com/api-docs/yandex-smart-captcha">https://rucaptcha.com/api-docs/yandex-smart-captcha</a></p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="python_rucaptcha.yandex_smart_captcha.YandexSmartCaptcha.captcha_handler">
+<span class="sig-name descname"><span class="pre">captcha_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">captcha_link</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">captcha_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">captcha_base64</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imgInstructions_link</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imgInstructions_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imgInstructions_base64</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#python_rucaptcha.yandex_smart_captcha.YandexSmartCaptcha.captcha_handler" title="Link to this definition">¶</a></dt>
+<dd><p>Sync solving method.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_rucaptcha.yandex_smart_captcha.YandexSmartCaptcha.aio_captcha_handler">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">aio_captcha_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">captcha_link</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">captcha_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">captcha_base64</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imgInstructions_link</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imgInstructions_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imgInstructions_base64</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#python_rucaptcha.yandex_smart_captcha.YandexSmartCaptcha.aio_captcha_handler" title="Link to this definition">¶</a></dt>
+<dd><p>Async solving method.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/RuCaptchaMedium.png" alt="Logo of python-rucaptcha"/>
+            </a></p>
+  
+
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">Yandex SmartCaptcha</a><ul>
+<li><a class="reference internal" href="#python_rucaptcha.yandex_smart_captcha.YandexSmartCaptcha"><code class="docutils literal notranslate"><span class="pre">YandexSmartCaptcha</span></code></a><ul>
+<li><a class="reference internal" href="#python_rucaptcha.yandex_smart_captcha.YandexSmartCaptcha.captcha_handler"><code class="docutils literal notranslate"><span class="pre">YandexSmartCaptcha.captcha_handler()</span></code></a></li>
+<li><a class="reference internal" href="#python_rucaptcha.yandex_smart_captcha.YandexSmartCaptcha.aio_captcha_handler"><code class="docutils literal notranslate"><span class="pre">YandexSmartCaptcha.aio_captcha_handler()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+  <li><a href="../../index.html">Overview</a>
+    <ul>
+          <li>Previous: <a href="../yidun-necaptcha/example.html" title="previous chapter">Yidun</a>
+          <li>Next: <a href="../tspd-captcha/example.html" title="next chapter">TSPD</a>
+    </ul>
+  </li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2026, AndreiDrang; Release - 6.8.0; Last update - 2026-07-11.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+  </body>
+</html>

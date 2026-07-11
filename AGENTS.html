@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AGENTS.md &#8212; python-rucaptcha (6.8.0)</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=7a9665a2" />
+    <link rel="stylesheet" type="text/css" href="_static/jinja.css?v=3dd10d86" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script data-project="python-rucaptcha" data-version="" src="_static/describe_version.js?v=fa7f30d0"></script>
+    <link rel="icon" href="_static/favicon.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">python-rucaptcha (6.8.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AGENTS.md</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="agents-md">
+<h1>AGENTS.md<a class="headerlink" href="#agents-md" title="Link to this heading">¶</a></h1>
+<section id="scope-and-inheritance">
+<h2>Scope and inheritance<a class="headerlink" href="#scope-and-inheritance" title="Link to this heading">¶</a></h2>
+<p>Applies to: <code class="docutils literal notranslate"><span class="pre">docs/</span></code> and its descendants.</p>
+<p>Inherits repository-wide guidance from <code class="docutils literal notranslate"><span class="pre">../AGENTS.md</span></code>.</p>
+<p>This file defines only local differences for the Sphinx documentation subtree.</p>
+</section>
+<section id="what-lives-here">
+<h2>What lives here<a class="headerlink" href="#what-lives-here" title="Link to this heading">¶</a></h2>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>docs/
+├── conf.py             # Sphinx extensions, autodoc imports, theme, metadata
+├── index.rst           # Main toctrees and documentation navigation
+├── modules/             # Per-CAPTCHA examples and supporting Markdown/RST
+├── _static/             # Images and other published assets
+├── requirements.txt     # Documentation-only dependencies
+└── Makefile             # Local Sphinx build wrapper
+</pre></div>
+</div>
+</section>
+<section id="local-boundaries-and-invariants">
+<h2>Local boundaries and invariants<a class="headerlink" href="#local-boundaries-and-invariants" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Sphinx configuration imports the package’s solver modules directly and uses autodoc; documentation builds therefore depend on importable, current Python modules.</p></li>
+<li><p>User-facing solver additions should have a matching example under <code class="docutils literal notranslate"><span class="pre">docs/modules/</span></code> and an entry in the appropriate <code class="docutils literal notranslate"><span class="pre">index.rst</span></code> toctree. Keep example parameter names aligned with the actual solver payload.</p></li>
+<li><p>Keep generated <code class="docutils literal notranslate"><span class="pre">_build/</span></code> output out of source edits. Static images belong in <code class="docutils literal notranslate"><span class="pre">docs/_static/</span></code> when they are part of the published docs.</p></li>
+</ul>
+</section>
+<section id="validation">
+<h2>Validation<a class="headerlink" href="#validation" title="Link to this heading">¶</a></h2>
+<p>From the repository root, run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">doc</span></code>; it installs the package and invokes the Sphinx build in <code class="docutils literal notranslate"><span class="pre">docs/</span></code>. For a docs-only iteration, <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">docs</span> <span class="pre">&amp;&amp;</span> <span class="pre">make</span> <span class="pre">html</span> <span class="pre">-e</span></code> uses the local documentation Makefile after its requirements are installed.</p>
+</section>
+<section id="nearby-docs">
+<h2>Nearby docs<a class="headerlink" href="#nearby-docs" title="Link to this heading">¶</a></h2>
+<p>Read <code class="docutils literal notranslate"><span class="pre">docs/index.rst</span></code> when changing navigation and <code class="docutils literal notranslate"><span class="pre">docs/conf.py</span></code> when changing extensions, autodoc imports, theme settings, or published metadata.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/RuCaptchaMedium.png" alt="Logo of python-rucaptcha"/>
+            </a></p>
+  
+
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">AGENTS.md</a><ul>
+<li><a class="reference internal" href="#scope-and-inheritance">Scope and inheritance</a></li>
+<li><a class="reference internal" href="#what-lives-here">What lives here</a></li>
+<li><a class="reference internal" href="#local-boundaries-and-invariants">Local boundaries and invariants</a></li>
+<li><a class="reference internal" href="#validation">Validation</a></li>
+<li><a class="reference internal" href="#nearby-docs">Nearby docs</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+  <li><a href="index.html">Overview</a>
+    
+  </li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2026, AndreiDrang; Release - 6.8.0; Last update - 2026-07-11.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+  </body>
+</html>

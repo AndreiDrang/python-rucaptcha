@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CaptchaAI &#8212; python-rucaptcha (6.8.0)</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=7a9665a2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jinja.css?v=3dd10d86" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script data-project="python-rucaptcha" data-version="" src="../../_static/describe_version.js?v=fa7f30d0"></script>
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Yidun" href="../yidun-necaptcha/example.html" />
+    <link rel="prev" title="VKCaptcha" href="../captcha-vk/example.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../yidun-necaptcha/example.html" title="Yidun"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../captcha-vk/example.html" title="VKCaptcha"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-rucaptcha (6.8.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">CaptchaAI</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="captchaai">
+<h1>CaptchaAI<a class="headerlink" href="#captchaai" title="Link to this heading">¶</a></h1>
+<p>CaptchaAI uses a classic multipart <code class="docutils literal notranslate"><span class="pre">in.php</span></code> / <code class="docutils literal notranslate"><span class="pre">res.php</span></code> API. Existing
+high-level solvers can use <code class="docutils literal notranslate"><span class="pre">service_type=ServiceEnm.CAPTCHAAI</span></code> where a
+compatibility profile is available. For every documented CaptchaAI method, use
+the native client with provider field names.</p>
+<section id="documented-profile">
+<h2>Documented profile<a class="headerlink" href="#documented-profile" title="Link to this heading">¶</a></h2>
+<p>A profile validates the documented required fields and supplies documented
+defaults. The profile list is available through <code class="docutils literal notranslate"><span class="pre">CaptchaAI.profiles()</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">python_rucaptcha.captchaai</span><span class="w"> </span><span class="kn">import</span> <span class="n">CaptchaAI</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">CaptchaAI</span><span class="p">(</span>
+    <span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;CAPTCHAAI_KEY&quot;</span><span class="p">,</span>
+    <span class="n">profile</span><span class="o">=</span><span class="s2">&quot;cloudflare-challenge&quot;</span><span class="p">,</span>
+    <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;pageurl&quot;</span><span class="p">:</span> <span class="s2">&quot;https://example.com/protected&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;proxy&quot;</span><span class="p">:</span> <span class="s2">&quot;user:pass@203.0.113.7:3128&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;proxytype&quot;</span><span class="p">:</span> <span class="s2">&quot;HTTPS&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">)</span><span class="o">.</span><span class="n">captcha_handler</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="future-provider-methods">
+<h2>Future provider methods<a class="headerlink" href="#future-provider-methods" title="Link to this heading">¶</a></h2>
+<p>The client does not restrict the native <code class="docutils literal notranslate"><span class="pre">method</span></code> string. A newly released
+CaptchaAI classic API method can be used before this package adds a profile.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">python_rucaptcha.captchaai</span><span class="w"> </span><span class="kn">import</span> <span class="n">CaptchaAI</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">CaptchaAI</span><span class="p">(</span>
+    <span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;CAPTCHAAI_KEY&quot;</span><span class="p">,</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;provider_future_method&quot;</span><span class="p">,</span>
+    <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;provider_field&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">},</span>
+<span class="p">)</span><span class="o">.</span><span class="n">captcha_handler</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="file-uploads-and-controls">
+<h2>File uploads and controls<a class="headerlink" href="#file-uploads-and-controls" title="Link to this heading">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">CaptchaAIFile</span></code> for API methods that require a real multipart file part,
+such as Normal or Grid image CAPTCHA requests.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">python_rucaptcha.captchaai</span><span class="w"> </span><span class="kn">import</span> <span class="n">CaptchaAI</span><span class="p">,</span> <span class="n">CaptchaAIFile</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">CaptchaAI</span><span class="p">(</span>
+    <span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;CAPTCHAAI_KEY&quot;</span><span class="p">,</span>
+    <span class="n">profile</span><span class="o">=</span><span class="s2">&quot;normal-solve-file&quot;</span><span class="p">,</span>
+    <span class="n">files</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="n">CaptchaAIFile</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;... image bytes ...&quot;</span><span class="p">,</span> <span class="s2">&quot;captcha.png&quot;</span><span class="p">,</span> <span class="s2">&quot;image/png&quot;</span><span class="p">)},</span>
+<span class="p">)</span><span class="o">.</span><span class="n">captcha_handler</span><span class="p">()</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">CaptchaAI</span><span class="p">(</span><span class="n">rucaptcha_key</span><span class="o">=</span><span class="s2">&quot;CAPTCHAAI_KEY&quot;</span><span class="p">,</span> <span class="n">profile</span><span class="o">=</span><span class="s2">&quot;turnstile&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+    <span class="s2">&quot;sitekey&quot;</span><span class="p">:</span> <span class="s2">&quot;SITE_KEY&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pageurl&quot;</span><span class="p">:</span> <span class="s2">&quot;https://example.com&quot;</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="n">balance</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_balance</span><span class="p">()</span>
+<span class="n">threads</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_threads_info</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/RuCaptchaMedium.png" alt="Logo of python-rucaptcha"/>
+            </a></p>
+  
+
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">CaptchaAI</a><ul>
+<li><a class="reference internal" href="#documented-profile">Documented profile</a></li>
+<li><a class="reference internal" href="#future-provider-methods">Future provider methods</a></li>
+<li><a class="reference internal" href="#file-uploads-and-controls">File uploads and controls</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+  <li><a href="../../index.html">Overview</a>
+    <ul>
+          <li>Previous: <a href="../captcha-vk/example.html" title="previous chapter">VKCaptcha</a>
+          <li>Next: <a href="../yidun-necaptcha/example.html" title="next chapter">Yidun</a>
+    </ul>
+  </li>
+</ul>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><div id="ethical-ad-placement"></div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2026, AndreiDrang; Release - 6.8.0; Last update - 2026-07-11.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+  </body>
+</html>
