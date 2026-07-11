@@ -99,6 +99,9 @@ dependencies = [
 where = ["src"]
 include = ["python_rucaptcha*"]
 
+[tool.setuptools.package-data]
+python_rucaptcha = ["core/data/*.json"]
+
 [tool.setuptools.dynamic]
 version = {attr = "python_rucaptcha.__version__"}
 

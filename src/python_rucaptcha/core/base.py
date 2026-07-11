@@ -91,6 +91,7 @@ class BaseCaptcha:
                 url_request=self.params.url_request,
                 url_response=self.params.url_response,
                 sleep_time=self.params.sleep_time,
+                session=self.session,
             )
         try:
             response = GetTaskResultResponseSer(

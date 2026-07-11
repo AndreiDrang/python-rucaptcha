@@ -7,9 +7,8 @@
 
 **Python 3.9+ library to solve CAPTCHAs automatically using RuCaptcha, 2Captcha, DeathByCaptcha, or CaptchaAI services.**
 
-> **Using CaptchaAI:** pass `service_type=ServiceEnm.CAPTCHAAI` to any captcha class. CaptchaAI is
-> 2Captcha-API-compatible via the classic `in.php`/`res.php` endpoints; supported task types: Turnstile,
-> reCAPTCHA v2 (incl. Enterprise), reCAPTCHA v3, and ImageToText.
+> **Using CaptchaAI:** compatible high-level classes can pass `service_type=ServiceEnm.CAPTCHAAI`.
+> CaptchaAI uses the classic multipart `in.php`/`res.php` endpoints.
 > ```python
 > from python_rucaptcha.turnstile import Turnstile
 > from python_rucaptcha.core.enums import ServiceEnm
@@ -19,6 +18,48 @@
 >     websiteURL="https://example.com",
 >     websiteKey="0x4AAAAAAA...",
 >     userAgent="Mozilla/5.0 ...",
+> ).captcha_handler()
+> ```
+>
+> Proxy task types require `proxyType`, `proxyAddress`, and `proxyPort`; credentials are optional:
+> ```python
+> from python_rucaptcha.re_captcha import ReCaptcha
+> from python_rucaptcha.core.enums import ReCaptchaEnm, ServiceEnm
+>
+> result = ReCaptcha(
+>     rucaptcha_key="CAPTCHAAI_KEY",
+>     service_type=ServiceEnm.CAPTCHAAI,
+>     websiteURL="https://example.com/login",
+>     websiteKey="SITE_KEY",
+>     method=ReCaptchaEnm.RecaptchaV2Task,
+>     proxyType="HTTPS",
+>     proxyAddress="203.0.113.7",
+>     proxyPort=3128,
+>     proxyLogin="user",
+>     proxyPassword="pass",
+> ).captcha_handler()
+> ```
+>
+> For every documented CaptchaAI method—or a provider method released after this package—use the native,
+> type-free client. `profile` validates a packaged documented contract; omit it to pass provider-native fields
+> through unchanged.
+> ```python
+> from python_rucaptcha.captchaai import CaptchaAI, CaptchaAIFile
+>
+> result = CaptchaAI(
+>     rucaptcha_key="CAPTCHAAI_KEY",
+>     profile="cloudflare-challenge",
+>     params={
+>         "pageurl": "https://example.com/protected",
+>         "proxy": "user:pass@203.0.113.7:3128",
+>         "proxytype": "HTTPS",
+>     },
+> ).captcha_handler()
+>
+> image = CaptchaAI(
+>     rucaptcha_key="CAPTCHAAI_KEY",
+>     profile="normal-solve-file",
+>     files={"file": CaptchaAIFile(b"... PNG bytes ...", "captcha.png", "image/png")},
 > ).captcha_handler()
 > ```
 

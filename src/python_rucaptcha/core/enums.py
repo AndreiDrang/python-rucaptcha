@@ -59,6 +59,7 @@ class ReCaptchaEnm(str, MyEnum):
     RecaptchaV2EnterpriseTask = "RecaptchaV2EnterpriseTask"
 
     RecaptchaV3TaskProxyless = "RecaptchaV3TaskProxyless"
+    RecaptchaV3EnterpriseTaskProxyless = "RecaptchaV3EnterpriseTaskProxyless"
 
 
 class LeminCaptchaEnm(str, MyEnum):
