@@ -5,7 +5,22 @@
 [![Downloads](https://static.pepy.tech/badge/python-rucaptcha/month)](https://pepy.tech/project/python-rucaptcha)
 [![Documentation](https://img.shields.io/badge/docs-Sphinx-green)](https://andreidrang.github.io/python-rucaptcha/)
 
-**Python 3.9+ library to solve CAPTCHAs automatically using RuCaptcha, 2Captcha, or DeathByCaptcha services.**
+**Python 3.9+ library to solve CAPTCHAs automatically using RuCaptcha, 2Captcha, DeathByCaptcha, or CaptchaAI services.**
+
+> **Using CaptchaAI:** pass `service_type=ServiceEnm.CAPTCHAAI` to any captcha class. CaptchaAI is
+> 2Captcha-API-compatible via the classic `in.php`/`res.php` endpoints; supported task types: Turnstile,
+> reCAPTCHA v2 (incl. Enterprise), reCAPTCHA v3, and ImageToText.
+> ```python
+> from python_rucaptcha.turnstile import Turnstile
+> from python_rucaptcha.core.enums import ServiceEnm
+> result = Turnstile(
+>     rucaptcha_key="CAPTCHAAI_KEY",
+>     service_type=ServiceEnm.CAPTCHAAI,
+>     websiteURL="https://example.com",
+>     websiteKey="0x4AAAAAAA...",
+>     userAgent="Mozilla/5.0 ...",
+> ).captcha_handler()
+> ```
 
 ## What is this?
 
