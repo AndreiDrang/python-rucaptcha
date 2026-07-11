@@ -16,6 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
 
       - name: Build docs requirements
         run: pip install -r docs/requirements.txt
