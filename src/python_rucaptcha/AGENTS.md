@@ -12,10 +12,12 @@ This file defines only local differences for this package subtree.
 
 ```text
 src/python_rucaptcha/
-├── *_captcha.py        # Concrete CAPTCHA task builders and handlers
+├── *_captcha.py        # Concrete CAPTCHA task builders and handlers (inherit BaseCaptcha)
+├── captchaai.py        # Native CaptchaAI client — data-driven, NOT a BaseCaptcha solver
 ├── control.py          # Balance/status-style service operations
-├── __init__.py         # Package version exposure
-└── core/               # Shared request flow and data models
+├── __init__.py         # Package re-exports
+├── __version__.py      # Single source of the package version
+└── core/               # Shared request flow, serializers, enums, CaptchaAI profile data
 ```
 
 ## Local boundaries and invariants
@@ -23,6 +25,7 @@ src/python_rucaptcha/
 - Concrete modules are deliberately flat and inherit from `core.base.BaseCaptcha`.
 - A solver owns its service task fields, method validation, and sync/async handler entry points; shared transport and polling remain in `core/`.
 - Keep module names in the existing `*_captcha.py` style and enum names in the `{CaptchaType}Enm` style, including established exceptions such as `re_captcha.py` and `hcaptcha.py`.
+- `captchaai.py` is the deliberate exception to the `BaseCaptcha` pattern: it is a data-driven native client that validates against packaged profiles in `core/data/` and passes provider-native params through. Do not merge it into `BaseCaptcha`, and do not add per-method task branches to it.
 
 ## Safe change rules
 

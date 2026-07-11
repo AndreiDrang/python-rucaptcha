@@ -13,10 +13,12 @@ This file defines only local differences for this foundation subtree.
 ```text
 core/
 ├── base.py           # BaseCaptcha sync/async transport, polling, file handling
+├── captchaai.py      # CaptchaAI classic multipart transport (data-driven, profile-validated)
 ├── config.py         # Retry settings and application/service configuration
 ├── serializer.py     # msgspec Struct request/response models
 ├── enums.py          # Service, task-method, and save-format enums
-└── result_handler.py # Sync/async result polling helpers
+├── result_handler.py # Sync/async result polling helpers
+└── data/             # Packaged CaptchaAI profile JSON (runtime metadata, shipped in the wheel)
 ```
 
 ## Local boundaries and invariants
@@ -25,6 +27,7 @@ core/
 - Request and response models use `msgspec`; preserve `MyBaseModel.to_dict()` behavior and the serialized field names expected by the remote APIs.
 - `CaptchaOptionsSer.urls_set()` selects the 2Captcha/RuCaptcha create-task endpoints and the DeathByCaptcha-compatible endpoints. Keep service selection and response/error shapes compatible with concrete modules.
 - CAPTCHA-specific behavior belongs in the leaf solver modules, not in `base.py` or another shared model.
+- `captchaai.py` loads and validates provider contracts from `data/captchaai_profiles.json` and `data/captchaai_legacy_profiles.json` (cached via `lru_cache`). These JSON files are packaged runtime metadata declared in `pyproject.toml` as `package-data = ["core/data/*.json"]`; renaming, moving, or deleting them also requires updating that declaration so the wheel still ships both files.
 
 ## Safe change rules
 

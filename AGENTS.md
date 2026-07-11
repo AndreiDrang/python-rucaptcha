@@ -2,7 +2,7 @@
 
 ## Repository overview
 
-- `python-rucaptcha` is a Python 3.9+ setuptools library for the 2Captcha, RuCaptcha, and DeathByCaptcha APIs.
+- `python-rucaptcha` is a Python 3.9+ setuptools library for the 2Captcha, RuCaptcha, DeathByCaptcha, and CaptchaAI APIs.
 - The package uses a `src/` layout and provides synchronous and asynchronous CAPTCHA solver handlers.
 - The repository is a single package, not a monorepo. The root `AGENTS.md` applies everywhere unless a nearer local file applies.
 
@@ -16,7 +16,7 @@
 
 ```text
 src/python_rucaptcha/       # CAPTCHA implementations and package API
-└── core/                   # Base request flow, service config, serializers, enums
+└── core/                   # Base request flow, service config, serializers, enums, CaptchaAI profile data
  tests/                     # Pytest suite and shared fixtures
  docs/                      # Sphinx sources and per-CAPTCHA examples
  pyproject.toml             # setuptools, Black, isort, and pytest configuration
@@ -30,6 +30,7 @@ Do not hand-edit `dist/` or `src/python_rucaptcha.egg-info/`; they are build/pac
 - Concrete CAPTCHA modules inherit from `BaseCaptcha` in `src/python_rucaptcha/core/base.py`. Keep CAPTCHA-specific payload preparation in the concrete module, not in the shared base flow.
 - `core/` owns request/polling behavior, service URL selection, msgspec serialization, result models, and shared enums. Changes there can affect every solver.
 - Each solver's synchronous and asynchronous handlers must preserve the same task semantics and response shape. Service task field names are part of the external API contract.
+- The data-driven `captchaai` client (top-level `captchaai.py` + `core/captchaai.py`) is deliberately separate from the `BaseCaptcha` flow: it validates packaged JSON profiles in `core/data/` instead of branching on task types. Do not refactor it into the `BaseCaptcha` pattern or add per-method branches to it.
 
 ## Context routing
 
