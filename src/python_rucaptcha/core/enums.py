@@ -191,6 +191,24 @@ class BinanceCaptchaEnm(str, MyEnum):
     BinanceTask = "BinanceTask"
 
 
+class TSPDEnm(str, MyEnum):
+    TspdTask = "tspdtask"
+
+
+class BasiliskEnm(str, MyEnum):
+    BasiliskTaskProxyless = "BasiliskTaskProxyless"
+    BasiliskTask = "BasiliskTask"
+
+
+class AlibabaEnm(str, MyEnum):
+    AlibabaTaskProxyless = "AlibabaTaskProxyless"
+    AlibabaTask = "AlibabaTask"
+
+
+class IncapsulaEnm(str, MyEnum):
+    IncapsulaTask = "IncapsulaTask"
+
+
 class YidunEnm(str, MyEnum):
     YidunTaskProxyless = "YidunTaskProxyless"
     YidunTask = "YidunTask"

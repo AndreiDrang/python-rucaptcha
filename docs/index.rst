@@ -59,6 +59,10 @@ Check our other projects here - `RedPandaDev group <https://red-panda-dev.xyz/bl
    modules/captchaai/example.rst
    modules/yidun-necaptcha/example.rst
    modules/yandex-smart-captcha/example.rst
+   modules/tspd-captcha/example.rst
+   modules/basilisk-captcha/example.rst
+   modules/alibaba-captcha/example.rst
+   modules/incapsula-captcha/example.rst
    modules/control/example.rst
 
 .. toctree::

@@ -164,6 +164,10 @@ token = asyncio.run(solve())
 | KeyCaptcha | `KeyCaptcha` | KeyCAPTCHA service |
 | Amazon WAF | `AmazonWaf` | AWS WAF challenge |
 | ALTCHA | `AltchaCaptcha` | ALTCHA challenge |
+| TSPD | `TSPDCaptcha` | Cookie-based TSPD protection |
+| Basilisk | `BasiliskCaptcha` | Token-based Basilisk challenge |
+| Alibaba | `AlibabaCaptcha` | Token-based Alibaba challenge |
+| Imperva/Incapsula | `IncapsulaCaptcha` | Cookie-based Imperva protection |
 | Binance | `BinanceCaptcha` | Token-based Binance challenge |
 | Grid | `GridCaptcha` | Select grid cells |
 | Coordinates | `CoordinatesCaptcha` | Click on coordinates |
