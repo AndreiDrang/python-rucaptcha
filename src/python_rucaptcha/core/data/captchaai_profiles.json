@@ -1,0 +1,26 @@
+{
+  "profiles": {
+    "normal-base64": {"method": "base64", "required": ["body"], "aliases": {"text": "request"}},
+    "normal-file": {"method": "post", "required": ["file"], "file_fields": ["file"], "aliases": {"text": "request"}},
+    "normal-solve-base64": {"method": "base64", "required": ["body"], "submit_path": "/solve.php", "poll": false, "aliases": {"text": "request"}},
+    "normal-solve-file": {"method": "post", "required": ["file"], "file_fields": ["file"], "submit_path": "/solve.php", "poll": false, "aliases": {"text": "request"}},
+    "grid-base64": {"method": "base64", "required": ["body", "instructions", "grid_size"], "defaults": {"img_type": "recaptcha"}, "aliases": {"click": "request"}},
+    "grid-file": {"method": "post", "required": ["file", "instructions", "grid_size"], "file_fields": ["file"], "defaults": {"img_type": "recaptcha"}, "aliases": {"click": "request"}},
+    "recaptcha-v2": {"method": "userrecaptcha", "required": ["googlekey", "pageurl"], "aliases": {"token": "request", "gRecaptchaResponse": "request"}},
+    "recaptcha-v2-invisible": {"method": "userrecaptcha", "required": ["googlekey", "pageurl", "invisible"], "defaults": {"invisible": 1}, "aliases": {"token": "request", "gRecaptchaResponse": "request"}},
+    "recaptcha-v2-enterprise": {"method": "userrecaptcha", "required": ["googlekey", "pageurl", "enterprise"], "defaults": {"enterprise": 1}, "aliases": {"token": "result", "gRecaptchaResponse": "result"}},
+    "recaptcha-v3": {"method": "userrecaptcha", "required": ["googlekey", "pageurl", "version"], "defaults": {"version": "v3"}, "aliases": {"token": "request", "gRecaptchaResponse": "request"}},
+    "recaptcha-v3-enterprise": {"method": "userrecaptcha", "required": ["googlekey", "pageurl", "version", "enterprise"], "defaults": {"version": "v3", "enterprise": 1}, "aliases": {"token": "result", "gRecaptchaResponse": "result"}},
+    "turnstile": {"method": "turnstile", "required": ["sitekey", "pageurl"], "aliases": {"token": "request", "gRecaptchaResponse": "request"}},
+    "geetest-v3": {"method": "geetest", "required": ["gt", "challenge", "pageurl"], "success_fields": ["challenge", "validate", "seccode"]},
+    "friendly-captcha": {"method": "friendly_captcha", "required": ["pageurl", "sitekey"], "aliases": {"token": "request"}},
+    "lemin": {"method": "lemin", "required": ["pageurl", "captcha_id"], "aliases": {"token": "request"}},
+    "captchafox": {"method": "captchafox", "required": ["pageurl", "sitekey", "proxy", "proxytype"], "aliases": {"token": "request"}},
+    "cloudflare-challenge": {"method": "cloudflare_challenge", "required": ["pageurl", "proxy", "proxytype"], "aliases": {"cf_clearance": "result"}},
+    "bls": {"method": "bls", "required": ["instructions", "image_base64_1", "image_base64_2", "image_base64_3", "image_base64_4", "image_base64_5", "image_base64_6", "image_base64_7", "image_base64_8", "image_base64_9"], "aliases": {"click": "request"}}
+  },
+  "controls": {
+    "balance": {"action": "getbalance", "aliases": {"balance": "request"}},
+    "threads_info": {"action": "threadsinfo"}
+  }
+}

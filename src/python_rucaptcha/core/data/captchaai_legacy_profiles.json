@@ -1,0 +1,19 @@
+{
+  "RecaptchaV2TaskProxyless": {"profile": "recaptcha-v2", "fields": {"websiteKey": "googlekey", "websiteURL": "pageurl", "apiDomain": "domain", "recaptchaDataSValue": "data-s", "cookies": "cookies", "userAgent": "userAgent", "isInvisible": "invisible"}, "bool_int": ["isInvisible"]},
+  "RecaptchaV2Task": {"profile": "recaptcha-v2", "fields": {"websiteKey": "googlekey", "websiteURL": "pageurl", "apiDomain": "domain", "recaptchaDataSValue": "data-s", "cookies": "cookies", "userAgent": "userAgent", "isInvisible": "invisible"}, "bool_int": ["isInvisible"], "proxy": true},
+  "RecaptchaV2EnterpriseTaskProxyless": {"profile": "recaptcha-v2-enterprise", "fields": {"websiteKey": "googlekey", "websiteURL": "pageurl", "cookies": "cookies", "userAgent": "userAgent"}},
+  "RecaptchaV2EnterpriseTask": {"profile": "recaptcha-v2-enterprise", "fields": {"websiteKey": "googlekey", "websiteURL": "pageurl", "cookies": "cookies", "userAgent": "userAgent"}, "proxy": true},
+  "RecaptchaV3TaskProxyless": {"profile": "recaptcha-v3", "fields": {"websiteKey": "googlekey", "websiteURL": "pageurl", "pageAction": "action", "apiDomain": "domain", "recaptchaDataSValue": "data-s", "cookies": "cookies", "userAgent": "userAgent"}},
+  "RecaptchaV3EnterpriseTaskProxyless": {"profile": "recaptcha-v3-enterprise", "fields": {"websiteKey": "googlekey", "websiteURL": "pageurl", "pageAction": "action", "cookies": "cookies", "userAgent": "userAgent"}},
+  "TurnstileTaskProxyless": {"profile": "turnstile", "fields": {"websiteKey": "sitekey", "websiteURL": "pageurl", "action": "action"}},
+  "TurnstileTask": {"profile": "turnstile", "fields": {"websiteKey": "sitekey", "websiteURL": "pageurl", "action": "action"}, "proxy": true},
+  "ImageToTextTask": {"profile": "normal-base64", "fields": {"body": "body"}},
+  "GeeTestTask": {"profile": "geetest-v3", "fields": {"websiteURL": "pageurl", "gt": "gt", "challenge": "challenge", "userAgent": "userAgent"}},
+  "GeeTestTaskProxyless": {"profile": "geetest-v3", "fields": {"websiteURL": "pageurl", "gt": "gt", "challenge": "challenge", "userAgent": "userAgent"}},
+  "FriendlyCaptchaTask": {"profile": "friendly-captcha", "fields": {"websiteURL": "pageurl", "websiteKey": "sitekey"}, "proxy": true},
+  "FriendlyCaptchaTaskProxyless": {"profile": "friendly-captcha", "fields": {"websiteURL": "pageurl", "websiteKey": "sitekey"}},
+  "LeminTask": {"profile": "lemin", "fields": {"websiteURL": "pageurl", "captchaId": "captcha_id", "div_id": "div_id"}},
+  "LeminTaskProxyless": {"profile": "lemin", "fields": {"websiteURL": "pageurl", "captchaId": "captcha_id", "div_id": "div_id"}},
+  "CaptchaFoxTask": {"profile": "captchafox", "fields": {"websiteURL": "pageurl", "websiteKey": "sitekey", "userAgent": "userAgent"}, "proxy": true},
+  "GridTask": {"profile": "grid-base64", "fields": {"body": "body", "comment": "instructions", "grid_size": "grid_size"}}
+}
