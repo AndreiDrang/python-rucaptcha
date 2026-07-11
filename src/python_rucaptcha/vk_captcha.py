@@ -7,7 +7,7 @@ from .core.enums import VKCaptchaEnm, SaveFormatsEnm
 class VKCaptcha(BaseCaptcha):
     def __init__(
         self,
-        method: Union[str, VKCaptchaEnm] = VKCaptchaEnm.VKCaptchaTask,
+        method: Union[str, VKCaptchaEnm] = VKCaptchaEnm.VKCaptchaImageTask,
         redirectUri: Optional[str] = None,
         userAgent: Optional[str] = None,
         proxyType: Optional[str] = None,

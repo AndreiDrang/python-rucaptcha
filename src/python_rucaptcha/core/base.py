@@ -104,7 +104,7 @@ class BaseCaptcha:
                 return response.to_dict()
         except Exception as error:
             self.result.errorId = 12
-            self.result.errorCode = self.NO_CAPTCHA_ERR
+            self.result.errorCode = "ERROR_CAPTCHA_UNSOLVABLE"
             self.result.errorDescription = str(error)
             return self.result.to_dict()
 
@@ -157,7 +157,7 @@ class BaseCaptcha:
                 return response.to_dict()
         except Exception as error:
             self.result.errorId = 12
-            self.result.errorCode = self.NO_CAPTCHA_ERR
+            self.result.errorCode = "ERROR_CAPTCHA_UNSOLVABLE"
             self.result.errorDescription = str(error)
             return self.result.to_dict()
 

@@ -55,7 +55,7 @@ def get_sync_result(
         except Exception as error:
             response_ser.status = "failed"
             response_ser.errorId = 12
-            response_ser.errorCode = "System error"
+            response_ser.errorCode = "ERROR_CAPTCHA_UNSOLVABLE"
             response_ser.errorDescription = str(error)
     return response_ser.to_dict()
 
@@ -110,6 +110,6 @@ async def get_async_result(
             except Exception as error:
                 response_ser.status = "failed"
                 response_ser.errorId = 12
-                response_ser.errorCode = "System error"
+                response_ser.errorCode = "ERROR_CAPTCHA_UNSOLVABLE"
                 response_ser.errorDescription = str(error)
     return response_ser.to_dict()
