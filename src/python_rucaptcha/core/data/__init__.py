@@ -1,0 +1,1 @@
+"""Packaged CaptchaAI provider metadata."""

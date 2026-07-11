@@ -1,7 +1,7 @@
 import pytest
 
 from tests.conftest import BaseTest
-from python_rucaptcha.core.enums import YandexSmartCaptchaEnm, CoordinatesCaptchaEnm, SaveFormatsEnm
+from python_rucaptcha.core.enums import CoordinatesCaptchaEnm, YandexSmartCaptchaEnm
 from python_rucaptcha.core.serializer import GetTaskResultResponseSer
 from python_rucaptcha.yandex_smart_captcha import YandexSmartCaptcha
 
@@ -26,7 +26,9 @@ class TestYandexSmartCaptcha(BaseTest):
         assert "captcha_handler" in YandexSmartCaptcha.__dict__.keys()
         assert "aio_captcha_handler" in YandexSmartCaptcha.__dict__.keys()
 
-    @pytest.mark.parametrize("method", YandexSmartCaptchaEnm.list_values() + [CoordinatesCaptchaEnm.CoordinatesTask.value])
+    @pytest.mark.parametrize(
+        "method", YandexSmartCaptchaEnm.list_values() + [CoordinatesCaptchaEnm.CoordinatesTask.value]
+    )
     def test_args(self, method: str):
         kwargs = {}
         if method == YandexSmartCaptchaEnm.YandexSmartCaptchaTask.value:

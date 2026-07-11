@@ -68,7 +68,11 @@ class CaptchaOptionsSer(MyBaseModel):
         if isinstance(self.service_type, enums.ServiceEnm):
             self.service_type = self.service_type.value
 
-        if self.service_type == enums.ServiceEnm.DEATHBYCAPTCHA:
+        if self.service_type == enums.ServiceEnm.CAPTCHAAI:
+            # CaptchaAI exposes the classic 2captcha in.php/res.php API.
+            self.url_request = "https://ocr.captchaai.com/in.php"
+            self.url_response = "https://ocr.captchaai.com/res.php"
+        elif self.service_type == enums.ServiceEnm.DEATHBYCAPTCHA:
             self.url_request = f"http://api.{self.service_type}.com/2captcha/in.php"
             self.url_response = f"http://api.{self.service_type}.com/2captcha/res.php"
         else:
@@ -83,13 +87,13 @@ HTTP API Response
 
 class GetTaskResultResponseSer(MyBaseModel):
     status: str = "ready"
-    solution: dict[str, str] | None = None
+    solution: dict[str, Any] | None = None
     cost: float = 0.0
     ip: str | None = None
     createTime: int | None = None
     endTime: int | None = None
     solveCount: int | None = None
-    taskId: int | None = None
+    taskId: int | str | None = None
     # control method params
     balance: float | None = None
     # error info

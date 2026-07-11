@@ -24,6 +24,7 @@ class ServiceEnm(str, MyEnum):
     TWOCAPTCHA = "2captcha"
     RUCAPTCHA = "rucaptcha"
     DEATHBYCAPTCHA = "deathbycaptcha"
+    CAPTCHAAI = "captchaai"
 
 
 class SaveFormatsEnm(str, MyEnum):
@@ -58,6 +59,7 @@ class ReCaptchaEnm(str, MyEnum):
     RecaptchaV2EnterpriseTask = "RecaptchaV2EnterpriseTask"
 
     RecaptchaV3TaskProxyless = "RecaptchaV3TaskProxyless"
+    RecaptchaV3EnterpriseTaskProxyless = "RecaptchaV3EnterpriseTaskProxyless"
 
 
 class LeminCaptchaEnm(str, MyEnum):
@@ -187,6 +189,24 @@ class TemuCaptchaEnm(str, MyEnum):
 class BinanceCaptchaEnm(str, MyEnum):
     BinanceTaskProxyless = "BinanceTaskProxyless"
     BinanceTask = "BinanceTask"
+
+
+class TSPDEnm(str, MyEnum):
+    TspdTask = "tspdtask"
+
+
+class BasiliskEnm(str, MyEnum):
+    BasiliskTaskProxyless = "BasiliskTaskProxyless"
+    BasiliskTask = "BasiliskTask"
+
+
+class AlibabaEnm(str, MyEnum):
+    AlibabaTaskProxyless = "AlibabaTaskProxyless"
+    AlibabaTask = "AlibabaTask"
+
+
+class IncapsulaEnm(str, MyEnum):
+    IncapsulaTask = "IncapsulaTask"
 
 
 class YidunEnm(str, MyEnum):

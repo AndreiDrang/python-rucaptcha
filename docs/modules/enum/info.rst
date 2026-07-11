@@ -92,5 +92,17 @@ To import this module:
 .. autoenum:: python_rucaptcha.core.enums.BinanceCaptchaEnm
     :members:
 
+.. autoenum:: python_rucaptcha.core.enums.TSPDEnm
+    :members:
+
+.. autoenum:: python_rucaptcha.core.enums.BasiliskEnm
+    :members:
+
+.. autoenum:: python_rucaptcha.core.enums.AlibabaEnm
+    :members:
+
+.. autoenum:: python_rucaptcha.core.enums.IncapsulaEnm
+    :members:
+
 .. autoenum:: python_rucaptcha.core.enums.YidunEnm
     :members:

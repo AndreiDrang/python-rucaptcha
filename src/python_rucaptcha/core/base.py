@@ -82,6 +82,17 @@ class BaseCaptcha:
         Method processing captcha solving task creation result
         :param kwargs: additional params for Requests library
         """
+        # CaptchaAI speaks the classic in.php/res.php API, not the JSON createTask API.
+        if self.params.service_type == ServiceEnm.CAPTCHAAI.value:
+            from . import captchaai
+
+            return captchaai.solve(
+                create_task_payload=self.create_task_payload,
+                url_request=self.params.url_request,
+                url_response=self.params.url_response,
+                sleep_time=self.params.sleep_time,
+                session=self.session,
+            )
         try:
             response = GetTaskResultResponseSer(
                 **self.session.post(self.params.url_request, json=self.create_task_payload, **kwargs).json()
@@ -126,6 +137,16 @@ class BaseCaptcha:
         """
         Method processing async captcha solving task creation result
         """
+        # CaptchaAI speaks the classic in.php/res.php API, not the JSON createTask API.
+        if self.params.service_type == ServiceEnm.CAPTCHAAI.value:
+            from . import captchaai
+
+            return await captchaai.aio_solve(
+                create_task_payload=self.create_task_payload,
+                url_request=self.params.url_request,
+                url_response=self.params.url_response,
+                sleep_time=self.params.sleep_time,
+            )
         try:
             # make async or sync request
             response = await self.__aio_create_task()
