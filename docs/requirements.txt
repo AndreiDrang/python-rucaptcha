@@ -1,4 +1,4 @@
-sphinx==8.2.3
+sphinx==9.1.0
 pallets_sphinx_themes==2.5.0
 myst-parser==5.1.0
 enum-tools[sphinx]==0.13.0
