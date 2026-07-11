@@ -1,68 +1,60 @@
-# PROJECT KNOWLEDGE BASE
+# AGENTS.md
 
-**Generated:** 2026-02-20
-**Commit:** 86ee3e6
-**Branch:** master
+## Repository overview
 
-## OVERVIEW
-Python 3.9+ library for RuCaptcha/2Captcha/DeathByCaptcha service APIs. Supports 30+ CAPTCHA types with dual sync/async interfaces.
+- `python-rucaptcha` is a Python 3.9+ setuptools library for the 2Captcha, RuCaptcha, and DeathByCaptcha APIs.
+- The package uses a `src/` layout and provides synchronous and asynchronous CAPTCHA solver handlers.
+- The repository is a single package, not a monorepo. The root `AGENTS.md` applies everywhere unless a nearer local file applies.
 
-## STRUCTURE
-```
-./
-├── src/python_rucaptcha/    # Main package (30+ captcha modules)
-│   └── core/                # Base classes, serializers, enums
-├── tests/                   # Pytest test suite (23+ files)
-├── docs/                    # Sphinx documentation
-├── pyproject.toml           # Build config (black 110, isort, pytest)
-└── Makefile                 # Build automation
-```
+## Instruction scope
 
-## WHERE TO LOOK
-| Task | Location | Notes |
-|------|----------|-------|
-| Add new CAPTCHA | `src/python_rucaptcha/` | Create module inheriting `BaseCaptcha` |
-| Modify API flow | `src/python_rucaptcha/core/base.py` | `_processing_response()` methods |
-| Change serialization | `src/python_rucaptcha/core/serializer.py` | `MyBaseModel` class |
-| Add CAPTCHA enum | `src/python_rucaptcha/core/enums.py` | 25+ enum classes |
-| Run tests | `tests/` | Requires `RUCAPTCHA_KEY` env var |
+- Local instruction files are `src/python_rucaptcha/AGENTS.md`, `src/python_rucaptcha/core/AGENTS.md`, `tests/AGENTS.md`, and `docs/AGENTS.md`.
+- A nearer `AGENTS.md` adds local guidance; it does not repeat or silently contradict this file. Sibling files do not affect one another.
+- No `AGENTS.override.md` files are present. If one is introduced, it takes precedence only within its own directory.
 
-## CODE MAP
-| Symbol | Type | Location | Role |
-|--------|------|----------|------|
-| BaseCaptcha | Class | core/base.py | Parent for all captcha solvers |
-| MyBaseModel | Class | core/serializer.py | msgspec Struct wrapper |
-| CaptchaOptionsSer | Class | core/config.py | Service URL abstraction |
-| MyEnum | Class | core/enums.py | Custom enum with utils |
+## Where to work
 
-## CONVENTIONS
-- **Line length**: 110 chars (pyproject.toml)
-- **Async mode**: `asyncio_mode = auto` in pytest
-- **No tox**: Uses Makefile directly for test/lint
-- **Import order**: isort with black profile
-
-## ANTI-PATTERNS (THIS PROJECT)
-- No TODO/FIXME/DEPRECATED comments in code
-- No explicit "DO NOT" directives
-- Logging warnings output full result objects (potential sensitive data)
-
-## UNIQUE STYLES
-- **25+ custom enums**: Each CAPTCHA type has dedicated enum (e.g., `HCaptchaEnm`)
-- **Service abstraction**: Unified API for 2Captcha/RuCaptcha/DeathByCaptcha
-- **msgspec**: Fast serialization (replaced pydantic v6.0)
-- **Dual sync/async**: Every captcha class has both handlers
-
-## COMMANDS
-```bash
-make install    # pip install -e .
-make tests      # Run pytest with coverage
-make lint       # autoflake + black + isort check
-make build      # Build package
-make doc        # Build Sphinx docs
+```text
+src/python_rucaptcha/       # CAPTCHA implementations and package API
+└── core/                   # Base request flow, service config, serializers, enums
+ tests/                     # Pytest suite and shared fixtures
+ docs/                      # Sphinx sources and per-CAPTCHA examples
+ pyproject.toml             # setuptools, Black, isort, and pytest configuration
+ Makefile                   # install, lint, test, build, and documentation workflows
 ```
 
-## NOTES
-- Tests require live API keys (`RUCAPTCHA_KEY`, `DEATHBYCAPTCHA_KEY`)
-- CI runs on Python 3.11 (tests) / 3.12 (lint) — version mismatch
-- No cross-platform testing (only ubuntu-latest)
-- x.py in root is debug script (non-standard)
+Do not hand-edit `dist/` or `src/python_rucaptcha.egg-info/`; they are build/package metadata outputs.
+
+## Architecture and boundaries
+
+- Concrete CAPTCHA modules inherit from `BaseCaptcha` in `src/python_rucaptcha/core/base.py`. Keep CAPTCHA-specific payload preparation in the concrete module, not in the shared base flow.
+- `core/` owns request/polling behavior, service URL selection, msgspec serialization, result models, and shared enums. Changes there can affect every solver.
+- Each solver's synchronous and asynchronous handlers must preserve the same task semantics and response shape. Service task field names are part of the external API contract.
+
+## Context routing
+
+- For public usage and supported solver/service behavior, read `README.md`.
+- For contribution expectations, read `CONTRIBUTING.md` before preparing a project-wide change.
+- For documentation changes, read `docs/index.rst` and `docs/conf.py`; the local rules are in `docs/AGENTS.md`.
+- For build, formatting, test, or packaging changes, read `pyproject.toml`, `Makefile`, and the relevant `.github/workflows/*.yml` file.
+- No `ARCHITECTURE.md` is present; use the core modules and package-local instructions as the current implementation source of truth.
+
+## Change rules
+
+- Adding a solver normally requires a new package module, a matching enum in `core/enums.py`, tests under `tests/`, and a documentation example/toctree entry when it is user-facing.
+- Preserve the existing flat `*_captcha.py` module naming and `{CaptchaType}Captcha`/`{CaptchaType}Enm` naming patterns.
+- Do not put solver-specific branches into `BaseCaptcha` merely to support one CAPTCHA type.
+- Never commit API keys or add diagnostics that expose credentials or complete service responses unnecessarily. The integration tests make external service calls.
+
+## Validation
+
+- Formatting/static checks: `make lint` (autoflake, Black, and isort over `src/`).
+- Integration tests and coverage: `make tests`; collection requires `RUCAPTCHA_KEY`, and DeathByCaptcha coverage may use `DEATHBYCAPTCHA_KEY`.
+- Package build: `make build`.
+- Sphinx documentation: `make doc`.
+- CI runs tests on Python 3.11, lint on 3.12, and build checks on Python 3.9–3.12; account for the supported `requires-python >= 3.9` range.
+
+## Repository-specific gotchas
+
+- `tests/conftest.py` reads `RUCAPTCHA_KEY` while defining `BaseTest`, so missing credentials can prevent normal test collection rather than merely skip a test.
+- The test fixtures deliberately sleep between cases and the suite is not an offline-only unit suite; use targeted tests while iterating, then run the relevant full command before handoff.

@@ -68,7 +68,11 @@ class CaptchaOptionsSer(MyBaseModel):
         if isinstance(self.service_type, enums.ServiceEnm):
             self.service_type = self.service_type.value
 
-        if self.service_type == enums.ServiceEnm.DEATHBYCAPTCHA:
+        if self.service_type == enums.ServiceEnm.CAPTCHAAI:
+            # CaptchaAI exposes the classic 2captcha in.php/res.php API.
+            self.url_request = "https://ocr.captchaai.com/in.php"
+            self.url_response = "https://ocr.captchaai.com/res.php"
+        elif self.service_type == enums.ServiceEnm.DEATHBYCAPTCHA:
             self.url_request = f"http://api.{self.service_type}.com/2captcha/in.php"
             self.url_response = f"http://api.{self.service_type}.com/2captcha/res.php"
         else:

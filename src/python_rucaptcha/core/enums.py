@@ -24,6 +24,7 @@ class ServiceEnm(str, MyEnum):
     TWOCAPTCHA = "2captcha"
     RUCAPTCHA = "rucaptcha"
     DEATHBYCAPTCHA = "deathbycaptcha"
+    CAPTCHAAI = "captchaai"
 
 
 class SaveFormatsEnm(str, MyEnum):
