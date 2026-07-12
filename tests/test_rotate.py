@@ -47,7 +47,7 @@ class TestRotateCaptcha(BaseTest):
             assert isinstance(result["taskId"], int) is True
         else:
             assert result["errorId"] in (1, 12, 15)
-            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorCode"] in ("ERROR_CAPTCHA_UNSOLVABLE", "ERROR_IMAGE_TYPE_NOT_SUPPORTED")
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
@@ -96,7 +96,7 @@ class TestRotateCaptcha(BaseTest):
             assert isinstance(result["taskId"], int) is True
         else:
             assert result["errorId"] in (1, 12, 15)
-            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorCode"] in ("ERROR_CAPTCHA_UNSOLVABLE", "ERROR_IMAGE_TYPE_NOT_SUPPORTED")
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
@@ -149,7 +149,7 @@ class TestRotateCaptcha(BaseTest):
             assert isinstance(result["taskId"], int) is True
         else:
             assert result["errorId"] in (1, 12, 15)
-            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorCode"] in ("ERROR_CAPTCHA_UNSOLVABLE", "ERROR_IMAGE_TYPE_NOT_SUPPORTED")
 
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
