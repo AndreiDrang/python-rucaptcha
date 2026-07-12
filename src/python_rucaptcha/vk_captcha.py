@@ -7,7 +7,7 @@ from .core.enums import VKCaptchaEnm, SaveFormatsEnm
 class VKCaptcha(BaseCaptcha):
     def __init__(
         self,
-        method: Union[str, VKCaptchaEnm] = VKCaptchaEnm.VKCaptchaImageTask,
+        method: Union[str, VKCaptchaEnm, None] = None,
         redirectUri: Optional[str] = None,
         userAgent: Optional[str] = None,
         proxyType: Optional[str] = None,
@@ -113,6 +113,12 @@ class VKCaptcha(BaseCaptcha):
 
             https://rucaptcha.com/api-docs/vk-captcha
         """
+        # VKCaptchaTask is the default task type. Its required fields are only
+        # validated when VKCaptchaTask is selected explicitly via ``method``.
+        method_passed = method is not None
+        if method is None:
+            method = VKCaptchaEnm.VKCaptchaTask
+
         super().__init__(method=method, *args, **kwargs)
 
         if method not in VKCaptchaEnm.list_values():
@@ -123,7 +129,7 @@ class VKCaptcha(BaseCaptcha):
         self.img_path = img_path
 
         if method == VKCaptchaEnm.VKCaptchaTask:
-            if not all([redirectUri, userAgent, proxyType, proxyAddress, proxyPort]):
+            if method_passed and not all([redirectUri, userAgent, proxyType, proxyAddress, proxyPort]):
                 raise ValueError(
                     "redirectUri, userAgent, proxyType, proxyAddress, "
                     "and proxyPort are required for VKCaptchaTask"
