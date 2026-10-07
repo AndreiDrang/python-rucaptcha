@@ -24,6 +24,7 @@ length_sort = true
 [tool.pytest.ini_options]
 minversion = "7.0"
 asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
 testpaths = [
     "tests",
 ]
@@ -83,6 +84,7 @@ classifiers = [
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
         "Framework :: AsyncIO",
         "Operating System :: Unix",
         "Operating System :: Microsoft :: Windows",
@@ -111,3 +113,19 @@ Documentation = "https://andreidrang.github.io/python-rucaptcha/"
 Repository = "https://github.com/AndreiDrang/python-rucaptcha"
 Issues = "https://github.com/AndreiDrang/python-rucaptcha/issues"
 Changelog = "https://github.com/AndreiDrang/python-rucaptcha/releases"
+
+[dependency-groups]
+dev = [
+    "autoflake>=2.3.1",
+    "black>=24.8.0",
+    "coverage>=7.6.1",
+    "isort>=5.13.2",
+    "pytest>=8.3.5",
+    "pytest-asyncio>=0.24.0",
+]
+docs = [
+    "enum-tools[sphinx]>=0.13.0",
+    "myst-parser>=3.0.1",
+    "pallets-sphinx-themes>=2.3.0",
+    "sphinx>=7.1.2,<9",  # <9: enum-tools 0.13 cannot import from Sphinx 9
+]

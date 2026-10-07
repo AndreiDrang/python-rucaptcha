@@ -1,3 +1,0 @@
-pytest==9.*
-coverage==7.*
-pytest-asyncio==1.*

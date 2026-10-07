@@ -1,46 +1,45 @@
+.PHONY: install remove refactor lint build upload tests doc
+
 install:
-	pip3 install -e .
+	uv sync --all-groups
 
 remove:
-	pip3 uninstall python_rucaptcha -y
+	pip uninstall python-rucaptcha -y
 
-refactor:
-	black docs/
-	isort docs/
+refactor: install
+	uv run black docs/
+	uv run isort docs/
 
-	autoflake --in-place \
+	uv run autoflake --in-place \
 				--recursive \
 				--remove-unused-variables \
 				--remove-duplicate-keys \
 				--remove-all-unused-imports \
-				--ignore-init-module-imports \
-				src/ tests/ && \
-	black src/ tests/ && \
-	isort src/ tests/
+				src/ tests/
+	uv run black src/ tests/
+	uv run isort src/ tests/
 
-lint:
-	autoflake --in-place --recursive src/ --check && \
-	black src/ --check && \
-	isort src/ --check-only
+lint: install
+	uv run autoflake --in-place --recursive src/ --check
+	uv run black src/ --check
+	uv run isort src/ --check-only
 
 build:
-	pip3 install --upgrade build setuptools
-	python3 -m build
+	uv build
 
 # PyPI upload token: create one at https://pypi.org/manage/account/token/
 # and save it to the gitignored .pypi-token file:  echo pypi-xxxx > .pypi-token
 upload:
 	@test -f .pypi-token || { echo "missing .pypi-token (see Makefile comment)"; exit 1; }
-	pip3 install twine wheel setuptools build
-	@ TWINE_USERNAME=__token__ TWINE_PASSWORD=`cat .pypi-token` twine upload dist/*
+	@ UV_PUBLISH_TOKEN=`cat .pypi-token` uv publish
 
 tests: install
-	coverage run --rcfile=.coveragerc -m pytest --verbose --showlocals --pastebin=all \
-	tests/ --disable-warnings && \
-	coverage report --precision=3 --sort=cover --skip-empty --show-missing && \
-	coverage html --precision=3 --skip-empty -d coverage/html/ && \
-	coverage xml -o coverage/coverage.xml
+	uv run coverage run --rcfile=.coveragerc -m pytest --verbose --showlocals --disable-warnings \
+	tests/ && \
+	uv run coverage report --precision=3 --sort=cover --skip-empty --show-missing && \
+	uv run coverage html --precision=3 --skip-empty -d coverage/html/ && \
+	uv run coverage xml -o coverage/coverage.xml
 
 doc: install
 	cd docs/ && \
-	make html -e
+	uv run --group docs make html -e
