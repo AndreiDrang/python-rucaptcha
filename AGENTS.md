@@ -19,6 +19,8 @@ src/python_rucaptcha/       # flat solver adapters and package API
 └── core/                   # shared transport, contracts, enums, and CaptchaAI data
  tests/                     # credential-dependent solver and core tests
  docs/                      # Sphinx configuration and per-CAPTCHA examples
+ okf/                       # deep-dive architecture notes; start at okf/index.md
+ files/                     # images referenced by README and docs
  .github/workflows/         # install, test, lint, build, and docs CI
  pyproject.toml             # setuptools, Black, isort, pytest, and uv dependency-group configuration
  Makefile                   # install, lint, test, build, and documentation workflows (uv-driven)
@@ -43,7 +45,7 @@ Read only when relevant:
 - Documentation navigation, autodoc imports, or Sphinx settings → `docs/index.rst`, `docs/conf.py`, and `docs/AGENTS.md`.
 - Core transport, serializer, enum, result, or CaptchaAI profile changes → `src/python_rucaptcha/core/AGENTS.md` and the relevant core modules.
 - Test fixture or integration behavior → `tests/AGENTS.md` and `tests/conftest.py`.
-- Detailed local architecture notes, when cited by architecture work → the relevant file under `okf/`.
+- Detailed local architecture notes, when cited by architecture work → the relevant file under `okf/`; `okf/index.md` maps the bundle.
 
 ## Change rules
 
@@ -55,12 +57,12 @@ Read only when relevant:
 
 ## Validation
 
-- Formatting/static checks: `make lint` (autoflake, Black, and isort over `src/`, run via `uv run` on the locked environment).
+- Formatting/static checks: `make lint` (autoflake, Black, and isort checks over `src/`, run via `uv run` on the locked environment). `make refactor` applies those fixes in place and also formats `tests/` and `docs/`.
 - Focused tests: `pytest tests/test_<captcha>.py`; core changes start with `pytest tests/test_core.py` and add affected solver tests.
 - Full integration/coverage suite: `make tests`; it syncs the uv environment (`uv sync --all-groups`, installing the package), runs pytest, and requires `RUCAPTCHA_KEY` (and `DEATHBYCAPTCHA_KEY` for relevant coverage).
 - Package and docs checks: `make build` (uv build) and `make doc`.
 - Dependency changes go through `pyproject.toml` dependency groups plus `uv lock`; development and docs requirements files no longer exist.
-- CI tests on Python 3.11, lint on 3.12, build/install on Python 3.9–3.12, and docs on 3.12; use the workflow files as the current source for CI details.
+- CI runs tests on Python 3.12 (push/PR to master/release plus a weekly cron), lint on 3.12, build/install across Python 3.9–3.14, and docs builds on 3.12: `build_sphinx.yml` builds on master pushes while `sphinx.yml` builds on release and deploys `docs/_build/html/` to gh-pages. Use the workflow files as the current source for CI details.
 
 ## Repository-specific gotchas
 

@@ -12,12 +12,12 @@ This file defines only local differences for this package subtree.
 
 ```text
 src/python_rucaptcha/
-├── *_captcha.py and established flat modules  # Concrete CAPTCHA adapters
-├── captchaai.py                              # Native CaptchaAI client; not a BaseCaptcha solver
-├── control.py                                # Balance/report-style operations
-├── __init__.py                               # Currently exports the package version
-├── __version__.py                            # Single source of package version
-└── core/                                     # Shared flow, contracts, enums, and profile data
+├── *_captcha.py, gee_test.py, turnstile.py, ...  # ~40 flat concrete solver adapters
+├── captchaai.py     # Native CaptchaAI client; deliberately not a BaseCaptcha solver
+├── control.py       # Balance/report-style operations
+├── __init__.py      # Currently exports the package version only
+├── __version__.py   # Single source of the package version
+└── core/            # Shared flow, contracts, enums, and profile data (own AGENTS.md)
 ```
 
 ## Local boundaries and invariants
