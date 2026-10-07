@@ -19,8 +19,8 @@ tests/
 
 ## Local boundaries and invariants
 
-- Tests exercise the real service-facing library. `conftest.py` reads `RUCAPTCHA_KEY` during test class definition, and DeathByCaptcha-specific tests use `DEATHBYCAPTCHA_KEY` when available.
-- `delay_func` and `delay_class` intentionally throttle cases; do not remove or shorten them just to make the suite look like an offline unit suite.
+- Tests exercise the real service-facing library. `BaseTest` reads `os.environ["RUCAPTCHA_KEY"]` at class-definition time, so a missing variable fails pytest collection outright; `DeathByTest` instead reads `os.getenv("DEATHBYCAPTCHA_KEY")` and only logs a warning when it is unset.
+- `delay_func` (0.5 s per test) and `delay_class` (3 s per class) intentionally throttle cases against the live services; do not remove or shorten them just to make the suite look like an offline unit suite.
 - New solver coverage belongs in a matching `test_<captcha>.py` module. Reuse `BaseTest` for the shared random-string helper and credential setup; use `DeathByTest` for DeathByCaptcha-specific coverage.
 
 ## Safe change rules

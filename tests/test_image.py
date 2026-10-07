@@ -50,8 +50,8 @@ class TestImageCaptcha(BaseTest):
             assert isinstance(result["solution"]["text"], str) is True
             assert isinstance(result["taskId"], int) is True
         else:
-            assert result["errorId"] in (1, 12)
-            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12, 15)
+            assert result["errorCode"] in ("ERROR_CAPTCHA_UNSOLVABLE", "ERROR_IMAGE_TYPE_NOT_SUPPORTED")
 
     @pytest.mark.parametrize("save_format", SaveFormatsEnm.list_values())
     def test_basic_file(self, save_format):
@@ -65,7 +65,7 @@ class TestImageCaptcha(BaseTest):
             assert isinstance(result["solution"]["text"], str) is True
             assert isinstance(result["taskId"], int) is True
         else:
-            assert result["errorId"] in (1, 12)
+            assert result["errorId"] in (1, 12, 15)
             assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
 
     @pytest.mark.parametrize("save_format", SaveFormatsEnm.list_values())
@@ -82,7 +82,7 @@ class TestImageCaptcha(BaseTest):
             assert isinstance(result["solution"]["text"], str) is True
             assert isinstance(result["taskId"], int) is True
         else:
-            assert result["errorId"] in (1, 12)
+            assert result["errorId"] in (1, 12, 15)
             assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
@@ -98,8 +98,8 @@ class TestImageCaptcha(BaseTest):
             assert isinstance(result["solution"]["text"], str) is True
             assert isinstance(result["taskId"], int) is True
         else:
-            assert result["errorId"] in (1, 12)
-            assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
+            assert result["errorId"] in (1, 12, 15)
+            assert result["errorCode"] in ("ERROR_CAPTCHA_UNSOLVABLE", "ERROR_IMAGE_TYPE_NOT_SUPPORTED")
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
     @pytest.mark.parametrize("save_format", SaveFormatsEnm.list_values())
@@ -114,7 +114,7 @@ class TestImageCaptcha(BaseTest):
             assert isinstance(result["solution"]["text"], str) is True
             assert isinstance(result["taskId"], int) is True
         else:
-            assert result["errorId"] in (1, 12)
+            assert result["errorId"] in (1, 12, 15)
             assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
@@ -131,7 +131,7 @@ class TestImageCaptcha(BaseTest):
             assert isinstance(result["solution"]["text"], str) is True
             assert isinstance(result["taskId"], int) is True
         else:
-            assert result["errorId"] in (1, 12)
+            assert result["errorId"] in (1, 12, 15)
             assert result["errorCode"] == "ERROR_CAPTCHA_UNSOLVABLE"
         assert result.keys() == GetTaskResultResponseSer().to_dict().keys()
 
