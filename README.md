@@ -77,8 +77,26 @@ This library automates CAPTCHA solving by connecting to third-party services. Wh
 
 ### 1. Install
 
+Using pip:
+
 ```bash
 pip install python-rucaptcha
+```
+
+Using [uv](https://github.com/astral-sh/uv):
+
+```bash
+# Install uv (if not already installed)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install the package
+uv pip install python-rucaptcha
+```
+
+For local development (from source), sync all dependency groups:
+
+```bash
+uv sync --all-groups
 ```
 
 ### 2. Get an API Key

@@ -15,7 +15,7 @@ confidence: observed
 
 ## Documented usage
 
-The README presents installation with `pip install python-rucaptcha`, API-key-based solver construction, synchronous and asynchronous handlers, service switching through `ServiceEnm`, and examples for common CAPTCHA types [1]. It also documents native CaptchaAI calls with a profile or with provider-native fields [1].
+The README presents installation with pip or uv (`uv pip install python-rucaptcha`) for end users plus `uv sync --all-groups` for local development, API-key-based solver construction, synchronous and asynchronous handlers, service switching through `ServiceEnm`, and examples for common CAPTCHA types [1]. It also documents native CaptchaAI calls with a profile or with provider-native fields [1].
 
 The Sphinx root navigation publishes general modules, many CAPTCHA examples, CaptchaAI examples, control operations, and serializer/enum references [2].
 
@@ -39,7 +39,7 @@ The README examples use imports such as `from python_rucaptcha import HCaptcha` 
 
 # Citations
 
-[1] `README.md` — Documents installation, solver examples, async usage, provider switching, and CaptchaAI usage.
+[1] `README.md` — Documents installation (pip and uv variants plus the local development sync), solver examples, async usage, provider switching, and CaptchaAI usage.
 [2] `docs/index.rst` — Defines the Sphinx toctrees and published example coverage.
 [3] `src/python_rucaptcha/__init__.py` — Currently imports only `__version__`.
 [4] `src/python_rucaptcha/hcaptcha.py` — Defines the `HCaptcha` class in its module.

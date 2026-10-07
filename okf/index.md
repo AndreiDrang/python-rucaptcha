@@ -11,4 +11,4 @@ okf_version: "0.1"
 * [CaptchaAI native client](/captchaai-native-client.md) - Data-driven classic multipart API path.
 * [Public usage surface](/public-usage-surface.md) - Supported usage patterns and an observed import-surface discrepancy.
 * [Testing and validation](/testing-and-validation.md) - Local and CI validation expectations.
-* [Packaging and documentation](/packaging-and-documentation.md) - Setuptools, package data, and Sphinx workflows.
+* [Packaging and documentation](/packaging-and-documentation.md) - uv-driven packaging, package data, and Sphinx workflows.

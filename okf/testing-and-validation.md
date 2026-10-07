@@ -25,20 +25,20 @@ Coverage is organized by solver module, with `test_core.py` covering retry objec
 
 ## Local commands
 
-* `make lint` checks autoflake, Black, and isort over `src/` [4].
-* `make tests` installs the package, runs pytest with coverage, and produces terminal, HTML, and XML coverage reports [4].
-* `make build` builds package artifacts after upgrading build tooling [4].
-* `make doc` installs the package and builds Sphinx documentation [4].
+* `make lint` checks autoflake, Black, and isort over `src/`, executed through `uv run` on the locked environment [4].
+* `make tests` syncs the uv environment with `uv sync --all-groups`, runs pytest with coverage, and produces terminal, HTML, and XML coverage reports [4].
+* `make build` builds package artifacts with `uv build` [4].
+* `make doc` builds Sphinx documentation through the `docs` dependency group [4].
 
 ## CI matrix
 
-The test workflow runs on Python 3.11 with provider credentials supplied as secrets and uploads coverage reports [5]. Lint runs on Python 3.12 [6]. Build checks run on Python 3.9 through 3.12 [7].
+The test workflow runs on Python 3.11 with provider credentials supplied as secrets and uploads coverage reports [5]. Lint runs on Python 3.12 [6]. Build checks run on Python 3.9 through 3.12 [7]. Workflows provision interpreters with `astral-sh/setup-uv` and `uv python install`, and the installation workflow verifies the published package with `uv pip install` [8].
 
 ## Relationships
 
 * Core behavior under test is described in [request lifecycle](/request-lifecycle.md).
 * Packaging and documentation checks are described in [packaging and documentation](/packaging-and-documentation.md).
-* New solver work is expected to add matching test coverage [8].
+* New solver work is expected to add matching test coverage [9].
 
 # Citations
 
@@ -49,4 +49,5 @@ The test workflow runs on Python 3.11 with provider credentials supplied as secr
 [5] `.github/workflows/test.yml` — Defines test CI, Python version, secrets, and coverage uploads.
 [6] `.github/workflows/lint.yml` — Defines lint CI on Python 3.12.
 [7] `.github/workflows/build.yml` — Defines build CI for Python 3.9–3.12.
-[8] `src/python_rucaptcha/AGENTS.md` — Requires a matching test module for new CAPTCHA types.
+[8] `.github/workflows/install.yml` — Defines the uv-based local install and PyPI install checks.
+[9] `src/python_rucaptcha/AGENTS.md` — Requires a matching test module for new CAPTCHA types.
