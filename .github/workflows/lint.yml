@@ -2,19 +2,21 @@ name: Lint
 
 on:
   push:
-    branches: [ "master", "release"]
+    branches: ["master", "release"]
     paths:
       - '.github/workflows/lint.yml'
       - 'src/**'
       - 'Makefile'
-      - 'requirements.style.txt'
+      - 'pyproject.toml'
+      - 'uv.lock'
   pull_request:
-    branches: [ "master", "release"]
+    branches: ["master", "release"]
     paths:
       - '.github/workflows/lint.yml'
       - 'src/**'
       - 'Makefile'
-      - 'requirements.style.txt'
+      - 'pyproject.toml'
+      - 'uv.lock'
 
 jobs:
   lint:
@@ -27,16 +29,13 @@ jobs:
         python-version: ["3.12"]
 
     steps:
-    - uses: actions/checkout@v7
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v7
-      with:
-        python-version: ${{ matrix.python-version }}
+      - uses: actions/checkout@v7
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+      - name: Set up Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
 
-    - name: Install dependencies
-      run: |
-        pip install --upgrade pip
-        pip install -r requirements.style.txt
-
-    - name: Lint
-      run: make lint
+      - name: Lint
+        run: make lint

@@ -2,21 +2,23 @@ name: Tests
 
 on:
   push:
-    branches: [ "master", "release"]
+    branches: ["master", "release"]
     paths:
       - '.github/workflows/test.yml'
       - 'src/**'
       - 'tests/**'
       - 'Makefile'
-      - 'requirements.test.txt'
+      - 'pyproject.toml'
+      - 'uv.lock'
   pull_request:
-    branches: [ "master", "release"]
+    branches: ["master", "release"]
     paths:
       - '.github/workflows/test.yml'
       - 'src/**'
       - 'tests/**'
       - 'Makefile'
-      - 'requirements.test.txt'
+      - 'pyproject.toml'
+      - 'uv.lock'
   schedule:
     - cron: "5 0 * * 1"
 
@@ -30,19 +32,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.11"]
+        python-version: ["3.12"]
 
     steps:
       - uses: actions/checkout@v7
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v7
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
         with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install dependencies
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.test.txt
+          enable-cache: true
+      - name: Set up Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
 
       - name: Test
         run: make tests
@@ -58,4 +57,5 @@ jobs:
       - name: Upload coverage to Code Climate
         uses: paambaati/codeclimate-action@v9.0.0
         with:
-          coverageLocations: ${{github.workspace}}/coverage/coverage.xml:coverage.py
+          coverageLocations: >-
+            ${{github.workspace}}/coverage/coverage.xml:coverage.py

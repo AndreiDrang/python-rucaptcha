@@ -1,10 +1,10 @@
-name: Sphinx docs
+name: Sphinx docs build
 
 on:
   push:
-    branches: ["release"]
+    branches: ["master"]
     paths:
-      - '.github/workflows/sphinx.yml'
+      - '.github/workflows/build_sphinx.yml'
       - 'src/**'
       - 'docs/**'
       - 'files/**'
@@ -24,11 +24,3 @@ jobs:
 
       - name: Build docs
         run: make doc
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          publish_branch: gh-pages
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/_build/html/
-          force_orphan: true
