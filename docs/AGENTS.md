@@ -16,8 +16,10 @@ docs/
 ├── index.rst           # Main toctrees and documentation navigation
 ├── modules/             # Per-CAPTCHA examples and supporting Markdown/RST
 ├── _static/             # Images and other published assets
-├── requirements.txt     # Documentation-only dependencies
 └── Makefile             # Local Sphinx build wrapper
+```
+
+Documentation dependencies live in the `docs` dependency group of the root `pyproject.toml` and are installed by `uv sync` (the `make install` / `make doc` targets).
 ```
 
 ## Local boundaries and invariants
@@ -28,7 +30,7 @@ docs/
 
 ## Validation
 
-From the repository root, run `make doc`; it installs the package and invokes the Sphinx build in `docs/`. For a docs-only iteration, `cd docs && make html -e` uses the local documentation Makefile after its requirements are installed.
+From the repository root, run `make doc`; it syncs the uv environment (including the `docs` dependency group) and invokes the Sphinx build in `docs/`. For a docs-only iteration, `cd docs && uv run --group docs make html -e` uses the local documentation Makefile.
 
 ## Nearby docs
 

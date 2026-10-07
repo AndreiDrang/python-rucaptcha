@@ -20,8 +20,8 @@ src/python_rucaptcha/       # flat solver adapters and package API
  tests/                     # credential-dependent solver and core tests
  docs/                      # Sphinx configuration and per-CAPTCHA examples
  .github/workflows/         # install, test, lint, build, and docs CI
- pyproject.toml             # setuptools, Black, isort, and pytest configuration
- Makefile                   # install, lint, test, build, and documentation workflows
+ pyproject.toml             # setuptools, Black, isort, pytest, and uv dependency-group configuration
+ Makefile                   # install, lint, test, build, and documentation workflows (uv-driven)
 ```
 
 Do not hand-edit `dist/`, build/coverage output, or `src/python_rucaptcha.egg-info/`.
@@ -55,10 +55,11 @@ Read only when relevant:
 
 ## Validation
 
-- Formatting/static checks: `make lint` (autoflake, Black, and isort over `src/`).
+- Formatting/static checks: `make lint` (autoflake, Black, and isort over `src/`, run via `uv run` on the locked environment).
 - Focused tests: `pytest tests/test_<captcha>.py`; core changes start with `pytest tests/test_core.py` and add affected solver tests.
-- Full integration/coverage suite: `make tests`; it installs the package, runs pytest, and requires `RUCAPTCHA_KEY` (and `DEATHBYCAPTCHA_KEY` for relevant coverage).
-- Package and docs checks: `make build` and `make doc`.
+- Full integration/coverage suite: `make tests`; it syncs the uv environment (`uv sync --all-groups`, installing the package), runs pytest, and requires `RUCAPTCHA_KEY` (and `DEATHBYCAPTCHA_KEY` for relevant coverage).
+- Package and docs checks: `make build` (uv build) and `make doc`.
+- Dependency changes go through `pyproject.toml` dependency groups plus `uv lock`; development and docs requirements files no longer exist.
 - CI tests on Python 3.11, lint on 3.12, build/install on Python 3.9–3.12, and docs on 3.12; use the workflow files as the current source for CI details.
 
 ## Repository-specific gotchas
