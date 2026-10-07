@@ -24,3 +24,6 @@ env/
 /docs/_build/
 /coverage/
 .osgrep
+
+# PyPI upload token
+.pypi-token

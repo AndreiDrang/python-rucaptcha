@@ -27,9 +27,12 @@ build:
 	pip3 install --upgrade build setuptools
 	python3 -m build
 
+# PyPI upload token: create one at https://pypi.org/manage/account/token/
+# and save it to the gitignored .pypi-token file:  echo pypi-xxxx > .pypi-token
 upload:
+	@test -f .pypi-token || { echo "missing .pypi-token (see Makefile comment)"; exit 1; }
 	pip3 install twine wheel setuptools build
-	twine upload dist/*
+	@ TWINE_USERNAME=__token__ TWINE_PASSWORD=`cat .pypi-token` twine upload dist/*
 
 tests: install
 	coverage run --rcfile=.coveragerc -m pytest --verbose --showlocals --pastebin=all \
